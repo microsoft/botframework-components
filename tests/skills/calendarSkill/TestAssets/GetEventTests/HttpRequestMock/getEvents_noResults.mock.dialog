@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "../../app.schema",
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "method": "GET",
+  "url": "https://graph.microsoft.com/beta/me/calendarView*",
+  "responses": [
+    {
+      "content-type": "application/json",
+      "content": {
+        "@odata.context": "https://graph.microsoft.com/beta/$metadata#users('d4478b21-9085-4f61-88c9-15e3ee77ddf5')/calendar/calendarView",
+        "value": []
+      }
+    }
+  ]
+}

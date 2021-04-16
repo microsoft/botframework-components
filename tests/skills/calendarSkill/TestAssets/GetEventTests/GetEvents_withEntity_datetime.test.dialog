@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "httpRequestMocks": [
+    "getProfile.mock",
+    "getWorkingHours.mock",
+    "getEvents.mock"
+  ],
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "Calendar",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.text == 'Hi Megan Bowen 🖐, I can help you out with calendar related questions and tasks.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "what meetings do i have tomorrow"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ],
+      "description": "Schedule card response"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"query":"tell me more about Thomas Chung","prediction":{"topIntent":"GetProfile","intents":{"GetProfile":{"score":0.6600905}},"entities":{"contact":["Thomas Chung"]}}}

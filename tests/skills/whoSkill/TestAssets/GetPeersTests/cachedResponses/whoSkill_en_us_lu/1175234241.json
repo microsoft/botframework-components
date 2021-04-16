@@ -1,0 +1,1 @@
+{"query":"Who are the peers of Morgan Stanley?","prediction":{"topIntent":"GetPeers","intents":{"GetPeers":{"score":0.9845068}},"entities":{"contact":["Morgan Stanley"]}}}

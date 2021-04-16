@@ -1,0 +1,1 @@
+{"query":"Who reports to Thomas Chung","prediction":{"topIntent":"GetDirectReports","intents":{"GetDirectReports":{"score":0.9780157}},"entities":{"contact":["Thomas Chung"],"personName":["Thomas Chung"]}}}
