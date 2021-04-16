@@ -1,0 +1,12 @@
+[import](common.lg)
+
+
+# SendActivity_UTkQ6k()
+[Activity
+    Text = I found that ${turn.userFound.displayName} does not have direct reports.
+]
+
+# SendActivity_P6fqO4()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]

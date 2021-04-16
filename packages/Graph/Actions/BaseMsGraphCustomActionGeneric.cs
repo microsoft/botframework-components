@@ -78,7 +78,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             // Write Trace Activity for the http request and response values
             await dc.Context.TraceActivityAsync(
                 name: this.DeclarativeType,
-                value: result,
+                value: null,
                 valueType: this.DeclarativeType,
                 label: this.DeclarativeType,
                 cancellationToken: cancellationToken).ConfigureAwait(false);

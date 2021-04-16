@@ -58,6 +58,21 @@
 }
 ```
 
+# GetProfileAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Profile",
+    "data": {
+        "intent": "GetProfile",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
 # TryAgainAction()
 - ```
 {
