@@ -2,3 +2,8 @@
 
 # SendActivity_Welcome
 - ${WelcomeUser()}
+
+# SendActivity_kMjqz1()
+[Activity
+    Text = Sorry, I didn't get that.
+]

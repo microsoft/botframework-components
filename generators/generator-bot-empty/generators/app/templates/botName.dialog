@@ -1,9 +1,9 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-      "name": "<%= botName %>",
-      "description": "",
-      "id": "A79tBe"
+    "name": "<%= botName %>",
+    "description": "",
+    "id": "A79tBe"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -41,6 +41,21 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "kMjqz1"
+          },
+          "activity": "${SendActivity_kMjqz1()}"
         }
       ]
     }
