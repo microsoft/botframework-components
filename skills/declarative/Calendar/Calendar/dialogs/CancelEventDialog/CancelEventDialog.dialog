@@ -21,7 +21,8 @@
           "$designer": {
             "id": "j6CfN9"
           },
-          "name": "CancelEventDialog.BeginDialog"
+          "name": "CancelEventDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",

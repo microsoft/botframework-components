@@ -19,7 +19,8 @@
           "$designer": {
             "id": "vd6Jx9"
           },
-          "name": "Calendar.Greeting"
+          "name": "Calendar.Greeting",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -70,7 +71,8 @@
           "$designer": {
             "id": "t7QY3g"
           },
-          "name": "Calendar.Cancel"
+          "name": "Calendar.Cancel",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -101,7 +103,8 @@
           "$designer": {
             "id": "aYNWwl"
           },
-          "name": "Calendar.Help"
+          "name": "Calendar.Help",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -126,7 +129,8 @@
           "$designer": {
             "id": "CmEecM"
           },
-          "name": "Calendar.Logout"
+          "name": "Calendar.Logout",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -159,7 +163,8 @@
           "$designer": {
             "id": "n5PmvA"
           },
-          "name": "Calendar.CreateEvent"
+          "name": "Calendar.CreateEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -202,7 +207,8 @@
           "$designer": {
             "id": "5AbqaU"
           },
-          "name": "Calendar.GetEvents"
+          "name": "Calendar.GetEvents",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -245,7 +251,8 @@
           "$designer": {
             "id": "Ecgy1o"
           },
-          "name": "Calendar.GetEventAttendees"
+          "name": "Calendar.GetEventAttendees",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -305,7 +312,8 @@
           "$designer": {
             "id": "zCKzhA"
           },
-          "name": "Calendar.GetEventLocation"
+          "name": "Calendar.GetEventLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -365,7 +373,8 @@
           "$designer": {
             "id": "zFgN9j"
           },
-          "name": "Calendar.GetEventDateTime"
+          "name": "Calendar.GetEventDateTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -408,7 +417,8 @@
           "$designer": {
             "id": "fxyOZM"
           },
-          "name": "Calendar.GetAvailabilityFirst"
+          "name": "Calendar.GetAvailabilityFirst",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -480,7 +490,8 @@
           "$designer": {
             "id": "rP8Uw1"
           },
-          "name": "Calendar.GetAvailabilityLast"
+          "name": "Calendar.GetAvailabilityLast",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -552,7 +563,8 @@
           "$designer": {
             "id": "yGFlO4"
           },
-          "name": "Calendar.GetAvailabilityBreaks"
+          "name": "Calendar.GetAvailabilityBreaks",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -653,7 +665,8 @@
           "$designer": {
             "id": "ZOOVNb"
           },
-          "name": "Calendar.CancelEvent"
+          "name": "Calendar.CancelEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -709,7 +722,8 @@
           "$designer": {
             "id": "L0jE2J"
           },
-          "name": "Calendar.RespondAccept"
+          "name": "Calendar.RespondAccept",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -766,7 +780,8 @@
           "$designer": {
             "id": "ZtBmaG"
           },
-          "name": "Calendar.RespondDecline"
+          "name": "Calendar.RespondDecline",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -823,7 +838,8 @@
           "$designer": {
             "id": "APO98A"
           },
-          "name": "Calendar.RespondTentativelyAccept"
+          "name": "Calendar.RespondTentativelyAccept",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -880,7 +896,8 @@
           "$designer": {
             "id": "qYAELL"
           },
-          "name": "Calendar.UpdateEvent"
+          "name": "Calendar.UpdateEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -960,7 +977,8 @@
           "$designer": {
             "id": "GTJ2DW"
           },
-          "name": "Calendar.SetAttendeesAdd"
+          "name": "Calendar.SetAttendeesAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1037,7 +1055,8 @@
           "$designer": {
             "id": "V96xTJ"
           },
-          "name": "Calendar.SetAttendeesRemove"
+          "name": "Calendar.SetAttendeesRemove",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1114,7 +1133,8 @@
           "$designer": {
             "id": "rGia1Q"
           },
-          "name": "Calendar.SetDateTime"
+          "name": "Calendar.SetDateTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1187,7 +1207,8 @@
           "$designer": {
             "id": "cgtrSW"
           },
-          "name": "Calendar.SetDescription"
+          "name": "Calendar.SetDescription",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1256,7 +1277,8 @@
           "$designer": {
             "id": "6nP9Jr"
           },
-          "name": "Calendar.SetDuration"
+          "name": "Calendar.SetDuration",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1329,7 +1351,8 @@
           "$designer": {
             "id": "ZuIvv3"
           },
-          "name": "Calendar.SetLocation"
+          "name": "Calendar.SetLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1402,7 +1425,8 @@
           "$designer": {
             "id": "ARGOTh"
           },
-          "name": "Calendar.SetOnlineMeetingAdd"
+          "name": "Calendar.SetOnlineMeetingAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1475,7 +1499,8 @@
           "$designer": {
             "id": "X20Zd9"
           },
-          "name": "Calendar.SetOnlineMeetingRemove"
+          "name": "Calendar.SetOnlineMeetingRemove",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1548,7 +1573,8 @@
           "$designer": {
             "id": "7ADziF"
           },
-          "name": "Calendar.SetTitle"
+          "name": "Calendar.SetTitle",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1620,7 +1646,8 @@
           "$designer": {
             "id": "6cuuag"
           },
-          "name": "Calendar.UnknownIntent"
+          "name": "Calendar.UnknownIntent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -1662,7 +1689,8 @@
           "$designer": {
             "id": "ewbuLF"
           },
-          "name": "Calendar.OnCollectFeedbackEvent"
+          "name": "Calendar.OnCollectFeedbackEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -1686,7 +1714,8 @@
           "$designer": {
             "id": "KJHXUC"
           },
-          "name": "Calendar.OnDialogCompletedEvent"
+          "name": "Calendar.OnDialogCompletedEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperty",

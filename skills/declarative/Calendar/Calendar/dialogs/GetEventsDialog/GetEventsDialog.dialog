@@ -19,7 +19,8 @@
           "$designer": {
             "id": "SapBYc"
           },
-          "name": "GetEventsDialog.BeginDialog"
+          "name": "GetEventsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -118,7 +119,8 @@
           "$designer": {
             "id": "zNOogP"
           },
-          "name": "GetEventsDialog.OnEvent_GetParameters"
+          "name": "GetEventsDialog.OnEvent_GetParameters",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -283,7 +285,8 @@
           "$designer": {
             "id": "4B53c5"
           },
-          "name": "GetEventsDialog.OnEvent_GetEventById"
+          "name": "GetEventsDialog.OnEvent_GetEventById",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -326,7 +329,8 @@
           "$designer": {
             "id": "nhPi8u"
           },
-          "name": "GetEventsDialog.OnEvent_GetEvents"
+          "name": "GetEventsDialog.OnEvent_GetEvents",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -378,7 +382,8 @@
           "$designer": {
             "id": "jbwa3R"
           },
-          "name": "GetEventsDialog.OnEvent_SelectEvent"
+          "name": "GetEventsDialog.OnEvent_SelectEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -481,7 +486,8 @@
           "$designer": {
             "id": "axiPsu"
           },
-          "name": "GetEventsDialog.OnEvent_NoEventsFound"
+          "name": "GetEventsDialog.OnEvent_NoEventsFound",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -536,7 +542,8 @@
           "$designer": {
             "id": "eKetEB"
           },
-          "name": "Calendar.OnNoResultsEvent"
+          "name": "Calendar.OnNoResultsEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.ConfirmInput",

@@ -21,7 +21,8 @@
           "$designer": {
             "id": "Y9c7T3"
           },
-          "name": "RespondToEventDialog.BeginDialog"
+          "name": "RespondToEventDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -83,7 +84,8 @@
           "$designer": {
             "id": "Jo6ZBU"
           },
-          "name": "RespondToEventDialog.OnEvent_AcceptEvent"
+          "name": "RespondToEventDialog.OnEvent_AcceptEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -154,7 +156,8 @@
           "$designer": {
             "id": "YIqJpN"
           },
-          "name": "RespondToEventDialog.OnEvent_DeclineEvent"
+          "name": "RespondToEventDialog.OnEvent_DeclineEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -230,7 +233,8 @@
           "$designer": {
             "id": "KDXKf8"
           },
-          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent"
+          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",

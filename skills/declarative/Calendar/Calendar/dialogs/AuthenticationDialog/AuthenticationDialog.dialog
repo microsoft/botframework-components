@@ -20,7 +20,8 @@
           "$designer": {
             "id": "T2hOJH"
           },
-          "name": "AuthenticationDialog.BeginDialog"
+          "name": "AuthenticationDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.OAuthInput",

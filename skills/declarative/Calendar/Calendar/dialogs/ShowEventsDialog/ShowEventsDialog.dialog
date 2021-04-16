@@ -21,7 +21,8 @@
           "$designer": {
             "id": "ojtPG0"
           },
-          "name": "ShowEventsDialog.BeginDialog"
+          "name": "ShowEventsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -83,7 +84,8 @@
           "$designer": {
             "id": "PtMYK2"
           },
-          "name": "ShowEventsDialog.OnEvent_ShowResults"
+          "name": "ShowEventsDialog.OnEvent_ShowResults",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -192,7 +194,8 @@
           "$designer": {
             "id": "uyCvgr"
           },
-          "name": "ShowEventsDialog.OnEvent_ShowEvent"
+          "name": "ShowEventsDialog.OnEvent_ShowEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",

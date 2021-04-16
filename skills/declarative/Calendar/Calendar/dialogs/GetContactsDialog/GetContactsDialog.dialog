@@ -20,7 +20,8 @@
           "$designer": {
             "id": "2D40FY"
           },
-          "name": "GetContactsDialog.BeginDialog"
+          "name": "GetContactsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -135,7 +136,8 @@
           "$designer": {
             "id": "Y3KzlG"
           },
-          "name": "GetContactsDialog.OnEvent_SetContactQuery"
+          "name": "GetContactsDialog.OnEvent_SetContactQuery",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -173,7 +175,8 @@
           "$designer": {
             "id": "1LZsgu"
           },
-          "name": "GetContactsDialog.OnEvent_AddEmailsToContacts"
+          "name": "GetContactsDialog.OnEvent_AddEmailsToContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -235,7 +238,8 @@
           "$designer": {
             "id": "7CLJ9W"
           },
-          "name": "GetContactsDialog.OnEvent_AddPeopleToContacts"
+          "name": "GetContactsDialog.OnEvent_AddPeopleToContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -280,7 +284,8 @@
           "$designer": {
             "id": "84gZul"
           },
-          "name": "GetContactsDialog.OnEvent_LookupContacts"
+          "name": "GetContactsDialog.OnEvent_LookupContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -512,7 +517,8 @@
           "$designer": {
             "id": "LH8sYv"
           },
-          "name": "GetContactsDialog.OnEvent_AddMoreContacts"
+          "name": "GetContactsDialog.OnEvent_AddMoreContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -572,7 +578,8 @@
           "$designer": {
             "id": "oBvJje"
           },
-          "name": "GetContactsDialog.OnIntent_Skip"
+          "name": "GetContactsDialog.OnIntent_Skip",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -596,7 +603,8 @@
           "$designer": {
             "id": "hNtq27"
           },
-          "name": "GetContactsDialog.OnIntent_Cancel"
+          "name": "GetContactsDialog.OnIntent_Cancel",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.CancelAllDialogs",
@@ -621,7 +629,8 @@
           "$designer": {
             "id": "pL6yTk"
           },
-          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd"
+          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
