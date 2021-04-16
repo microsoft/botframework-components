@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{73
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teams", "teams", "{61708441-52A4-48F6-819A-B8D4C279C4C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Teams.Tests", "packages\teams\Microsoft.Bot.Components.Teams.Tests\Microsoft.Bot.Components.Teams.Tests.csproj", "{F6E872DE-52B7-4372-B546-B18B5A495C73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Teams.Tests", "packages\Microsoft.Bot.Components.Teams.Tests\Microsoft.Bot.Components.Teams.Tests.csproj", "{F6E872DE-52B7-4372-B546-B18B5A495C73}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Graph", "..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{9561BF32-D0EE-464F-981B-7E4298ACDDFB}"
 EndProject
