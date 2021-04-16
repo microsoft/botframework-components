@@ -1,0 +1,1 @@
+{"query":"Who is the manager of Morgan Stanley","prediction":{"topIntent":"GetManager","intents":{"GetManager":{"score":0.997974038}},"entities":{"contact":["Morgan Stanley"]}}}

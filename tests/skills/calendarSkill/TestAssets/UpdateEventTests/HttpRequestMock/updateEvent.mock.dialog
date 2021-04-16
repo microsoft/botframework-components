@@ -1,0 +1,96 @@
+{
+  "$kind": "Microsoft.Test.HttpRequestSequenceMock",
+  "Method": "PATCH",
+  "Url": "https://graph.microsoft.com/beta/me/events/*",
+  "Responses": [
+    {
+      "Content": {
+        "allowNewTimeProposals": true,
+        "attendees": [
+          {
+            "@odata.type": "microsoft.graph.attendee",
+            "emailAddress": {
+              "@odata.type": "microsoft.graph.emailAddress",
+              "address": "test@test.com",
+              "name": "test name"
+            },
+            "status": {
+              "@odata.type": "microsoft.graph.responseStatus",
+              "response": "none",
+              "time": "0001-01-01T00:00:00Z"
+            },
+            "type": "required"
+          }
+        ],
+        "body": {
+          "@odata.type": "microsoft.graph.itemBody",
+          "content": "test content",
+          "contentType": "html"
+        },
+        "bodyPreview": "test content",
+        "categories": [
+          "Green Category"
+        ],
+        "createdDateTime": "2019-09-16T21:35:45.0138845Z",
+        "end": {
+          "@odata.type": "microsoft.graph.dateTimeTimeZone",
+          "dateTime": "2020-06-13T00:00:00Z",
+          "timeZone": "UTC"
+        },
+        "hasAttachments": false,
+        "id": "testid",
+        "importance": "normal",
+        "isAllDay": false,
+        "isCancelled": false,
+        "isOnlineMeeting": false,
+        "isOrganizer": true,
+        "isReminderOn": false,
+        "lastModifiedDateTime": "2020-05-20T08:27:40.8898817Z",
+        "location": {
+          "@odata.type": "microsoft.graph.location",
+          "displayName": "Cafeteria",
+          "locationType": "default",
+          "uniqueId": "Cafeteria",
+          "uniqueIdType": "private"
+        },
+        "locations": [
+          {
+            "@odata.type": "microsoft.graph.location",
+            "displayName": "Cafeteria",
+            "locationType": "default",
+            "uniqueId": "Cafeteria",
+            "uniqueIdType": "private"
+          }
+        ],
+        "onlineMeetingProvider": "unknown",
+        "organizer": {
+          "@odata.type": "microsoft.graph.recipient",
+          "emailAddress": {
+            "@odata.type": "microsoft.graph.emailAddress",
+            "address": "test@test.com",
+            "name": "test name"
+          }
+        },
+        "originalEndTimeZone": "Pacific Standard Time",
+        "originalStartTimeZone": "tzone://Microsoft/Custom",
+        "reminderMinutesBeforeStart": 0,
+        "responseRequested": true,
+        "responseStatus": {
+          "@odata.type": "microsoft.graph.responseStatus",
+          "response": "organizer",
+          "time": "0001-01-01T00:00:00Z"
+        },
+        "sensitivity": "normal",
+        "showAs": "tentative",
+        "start": {
+          "@odata.type": "microsoft.graph.dateTimeTimeZone",
+          "dateTime": "2020-06-12T23:00:00Z",
+          "timeZone": "UTC"
+        },
+        "subject": "My event",
+        "type": "occurrence",
+        "webLink": "test link"
+      }
+    }
+  ]
+}
