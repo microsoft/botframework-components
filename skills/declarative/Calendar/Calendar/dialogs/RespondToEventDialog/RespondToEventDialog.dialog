@@ -108,12 +108,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "r6bf1q"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
             "id": "2F9RxQ"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {
@@ -176,12 +184,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8wZGwZ"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
           "$designer": {
             "id": "w2IgGa"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {
@@ -244,12 +260,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MIElov"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
           "$designer": {
             "id": "baSSxn"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {

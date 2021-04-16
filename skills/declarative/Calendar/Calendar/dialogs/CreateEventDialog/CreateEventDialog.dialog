@@ -335,12 +335,20 @@
           "name": "CreateEventDialog.OnEvent_FindMeetingTimes"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "5b98oM"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
           "$designer": {
             "id": "JRs7I1"
           },
           "resultProperty": "$timeslots",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "attendeesProperty": "=$event.attendees",
           "durationProperty": "=int(coalesce($options.duration, settings.defaultValue.duration))",
           "timeZoneProperty": "=user.workingHours.timeZone.name"
@@ -955,12 +963,20 @@
           "condition": "turn.createConfirmResult",
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "2dK0lN"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
               "$kind": "Microsoft.Graph.Calendar.CreateEvent",
               "$designer": {
                 "id": "arM1WX"
               },
               "resultProperty": "$createEventResult",
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "eventToCreateProperty": "=$event",
               "timeZoneProperty": "=user.workingHours.timeZone.name"
             },

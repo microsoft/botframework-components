@@ -283,13 +283,21 @@
           "name": "GetContactsDialog.OnEvent_LookupContacts"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1IGw8o"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.GetContacts",
           "$designer": {
             "id": "Ha1csy"
           },
           "nameProperty": "=turn.dialogEvent.value",
           "resultProperty": "$searchResults",
-          "token": "=user.token.token"
+          "token": "=turn.token.token"
         },
         {
           "$kind": "Microsoft.IfCondition",

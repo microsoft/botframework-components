@@ -286,12 +286,20 @@
           "name": "GetEventsDialog.OnEvent_GetEventById"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "u8Bei9"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.GetEventById",
           "$designer": {
             "id": "HWwB5X"
           },
           "resultProperty": "$event",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventIdProperty": "=$parameters.eventId",
           "timeZoneProperty": "=user.workingHours.timeZone.name"
         },
@@ -321,12 +329,20 @@
           "name": "GetEventsDialog.OnEvent_GetEvents"
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WHqskX"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.GetEvents",
           "$designer": {
             "id": "4jD1d5"
           },
           "resultProperty": "$events",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "endProperty": "=$parameters.end",
           "timeZoneProperty": "=user.workingHours.timeZone.name",
           "dateTimeTypeProperty": "=coalesce($parameters.dateTimeType, \"date\")",

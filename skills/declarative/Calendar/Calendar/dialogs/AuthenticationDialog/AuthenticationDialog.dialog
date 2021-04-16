@@ -31,7 +31,7 @@
           "maxTurnCount": 3,
           "allowInterruptions": true,
           "connectionName": "=settings.oauthConnectionName",
-          "property": "user.token",
+          "property": "turn.token",
           "title": "Sign in",
           "text": "Please sign in with your Microsoft account to access your calendar 🗓 "
         },
@@ -48,7 +48,7 @@
                 "id": "mR0Tzk"
               },
               "resultProperty": "user.profile",
-              "token": "=user.token.token"
+              "token": "=turn.token.token"
             }
           ]
         },
@@ -64,7 +64,7 @@
               "$designer": {
                 "id": "4d4VCn"
               },
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "addressProperty": "=user.profile.userPrincipalName",
               "resultProperty": "user.workingHours"
             }

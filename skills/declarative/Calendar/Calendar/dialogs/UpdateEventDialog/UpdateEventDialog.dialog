@@ -1164,11 +1164,19 @@
           "condition": "$confirmUpdate",
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "rNXOzP"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
               "$kind": "Microsoft.Graph.Calendar.UpdateEvent",
               "$designer": {
                 "id": "DeRuFs"
               },
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "eventToUpdateProperty": "=$event",
               "resultProperty": "$result"
             },

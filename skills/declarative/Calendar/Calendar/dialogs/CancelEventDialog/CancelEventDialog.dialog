@@ -88,11 +88,19 @@
           "condition": "$confirmation",
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bK9PqK"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
               "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
               "$designer": {
                 "id": "gVTXgj"
               },
-              "token": "=user.token.token",
+              "token": "=turn.token.token",
               "eventId": "=$event.id",
               "resultProperty": "$result"
             },
