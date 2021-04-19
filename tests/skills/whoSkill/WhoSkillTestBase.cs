@@ -19,7 +19,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
     using System.Threading;
 
     [TestClass]
-    public abstract class WhoSkillTestBase<T> : PbxDialogTestBase<T>, IHaveComponentsToInitialize
+    public abstract class WhoSkillTestBase<T> : PbxDialogTestBase<T>, IHaveComponentsToInitialize 
         where T : IHaveComponentsToInitialize, new()
     {
         protected List<User> TestUsers
@@ -193,8 +193,8 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         private void SetupSearch()
         {
             var usersSearchResultPage = new Mock<IGraphServiceUsersCollectionPage>();
-            usersSearchResultPage.SetupGet(page => page.CurrentPage).Returns(() => this.TestUsers);
-
+            usersSearchResultPage.SetupGet(page => page.CurrentPage).Returns(() => this.TestUsers); 
+            
             var usersSearchRequest = new Mock<IGraphServiceUsersCollectionRequest>();
             usersSearchRequest.Setup(req => req.Top(It.IsAny<int>())).Returns(usersSearchRequest.Object);
             usersSearchRequest.Setup(req => req.Filter(It.IsAny<string>())).Returns(usersSearchRequest.Object);

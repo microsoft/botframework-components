@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
+    <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
     <None Include="TestAssets\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\..\skills\declarative\whoSkill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+    <None Include="..\..\whoSkill\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
