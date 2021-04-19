@@ -1,0 +1,65 @@
+{
+  "name": "botbuilder-dialogs-adaptive-teams",
+  "author": "Microsoft Corp.",
+  "description": "Rule system for the Microsoft BotBuilder adaptive dialog system, with integration specific to Microsoft Teams.",
+  "version": "4.13.0-preview",
+  "license": "MIT",
+  "keywords": [
+    "botbuilder",
+    "botframework",
+    "bots",
+    "chatbots"
+  ],
+  "bugs": {
+    "url": "https://github.com/microsoft/botframework-components/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/botframework-components.git"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "_ts3.4/*"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "adaptive-expressions": "~4.13.0",
+    "botbuilder": "~4.13.0",
+    "botbuilder-dialogs": "~4.13.0",
+    "botbuilder-dialogs-adaptive": "~4.13.0-preview",
+    "botbuilder-dialogs-adaptive-runtime-core": "~4.13.0-preview",
+    "botbuilder-dialogs-declarative": "~4.13.0-preview",
+    "botbuilder-stdlib": "~4.13.0-internal"
+  },
+  "dependencies": {
+    "lodash": "^4.17.19"
+  },
+  "devDependencies": {
+    "@standardlabs/downlevel-dts": "^0.7.5",
+    "@types/lodash": "^4.14.168",
+    "@types/node-fetch": "^2.5.10",
+    "adaptive-expressions": "4.13.0",
+    "botbuilder": "4.13.0",
+    "botbuilder-dialogs": "4.13.0",
+    "botbuilder-dialogs-adaptive": "4.13.0-preview",
+    "botbuilder-dialogs-adaptive-runtime-core": "4.13.0-preview",
+    "botbuilder-dialogs-declarative": "4.13.0-preview",
+    "botbuilder-stdlib": "4.13.0-internal",
+    "typescript": "^4.0.5"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf _ts3.4 lib tsconfig.tsbuildinfo",
+    "postbuild": "downlevel-dts lib _ts3.4/lib --checksum"
+  },
+  "files": [
+    "_ts3.4",
+    "lib",
+    "schemas",
+    "src"
+  ]
+}
