@@ -3641,7 +3641,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3700,7 +3700,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventToCreateProperty": {
@@ -3763,7 +3763,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3822,7 +3822,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3882,7 +3882,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "attendeesProperty": {
@@ -3951,7 +3951,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "nameProperty": {
@@ -4009,7 +4009,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventIdProperty": {
@@ -4078,7 +4078,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "startProperty": {
@@ -4173,7 +4173,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "addressProperty": {
@@ -4491,7 +4491,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -4550,7 +4550,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventToUpdateProperty": {
@@ -4607,7 +4607,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "userId": {
@@ -4666,7 +4666,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -4733,7 +4733,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "userId": {
@@ -4792,7 +4792,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -4858,7 +4858,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "$kind": {
@@ -4909,7 +4909,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "userId": {
@@ -4968,7 +4968,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -5035,7 +5035,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {

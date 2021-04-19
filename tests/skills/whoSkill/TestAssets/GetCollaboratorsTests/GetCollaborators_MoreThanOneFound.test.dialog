@@ -24,17 +24,30 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found 4 colleagues that collaborates with **Thomas Chung**."
+      "text": "I found 4 colleagues that collaborates with **Thomas Chung**.",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
     },
     {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "3"
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "message",
+        "value": {
+          "intent": "GetProfile",
+          "user": "CF56A5A3-8402-404D-9CE2-0A075581292B",
+          "msteams": {
+            "type": "messageBack"
+          }
+        }
+      }
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
       "assertions": [
-        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ],
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'",
+        "attachments[0].content.body[0].items[0].columns[1].items[0].text == 'John Doe'"
+      ]
     }
   ]
 }
