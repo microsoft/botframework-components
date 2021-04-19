@@ -1,1 +1,0 @@
-{"query":"when do i have breaks tomorrow","prediction":{"topIntent":"GetAvailabilityBreaks","intents":{"GetAvailabilityBreaks":{"score":0.984005034}},"entities":{"date":["tomorrow"]}}}

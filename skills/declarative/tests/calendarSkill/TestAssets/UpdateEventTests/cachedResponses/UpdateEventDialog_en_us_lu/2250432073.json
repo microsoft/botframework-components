@@ -1,1 +1,0 @@
-{"query":"change the duration to 45 minutes","prediction":{"topIntent":"SetDuration","intents":{"SetDuration":{"score":0.6975962}},"entities":{"duration":["45 minutes"]}}}

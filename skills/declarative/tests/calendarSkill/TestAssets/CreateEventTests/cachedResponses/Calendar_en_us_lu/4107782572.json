@@ -1,1 +1,0 @@
-{"query":"new meeting tomorrow at 3pm","prediction":{"topIntent":"CreateEvent","intents":{"CreateEvent":{"score":0.9338472}},"entities":{"date":["tomorrow at 3pm"]}}}
