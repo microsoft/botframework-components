@@ -16,4 +16,4 @@ variables:
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
-  WorkingDirectory: packages/Teams
+  WorkingDirectory: packages/Teams/dotnet
