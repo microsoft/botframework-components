@@ -1,1 +1,0 @@
-{"query":"45 minutes","prediction":{"topIntent":"Logout","intents":{"Logout":{"score":0.1219385}},"entities":{"duration":["45 minutes"]}}}

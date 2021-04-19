@@ -1,1 +1,0 @@
-{"query":"tentatively accept my meeting with lidia","prediction":{"topIntent":"RespondTentativelyAccept","intents":{"RespondTentativelyAccept":{"score":0.898575366}},"entities":{"contact":["lidia"],"personName":["lidia"]}}}
