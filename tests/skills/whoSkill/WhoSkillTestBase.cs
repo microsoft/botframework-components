@@ -28,6 +28,12 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             private set;
         }
 
+        protected Dictionary<string, IUserRequestBuilder> UserRequests
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// Mock test client for graph
         /// </summary>
@@ -38,6 +44,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         {
             this.testGraphClient = new Mock<IGraphServiceClient>();
             this.TestUsers = new List<User>();
+            this.UserRequests = new Dictionary<string, IUserRequestBuilder>(StringComparer.OrdinalIgnoreCase);
 
             this.SetupMe();
             this.SetupSearch();
@@ -60,11 +67,11 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         /// <param name="phoneNumber"></param>
         /// <param name="officeLocation"></param>
         /// <param name="jobTitle"></param>
-        protected User AddUserProfile(string name, string email, string phoneNumber, string officeLocation, string jobTitle, bool addToSearchResult= true)
+        protected User AddUserProfile(Guid id, string name, string email, string phoneNumber, string officeLocation, string jobTitle, bool addToSearchResult = true)
         {
             User user = new User()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = id.ToString(),
                 DisplayName = name,
                 JobTitle = jobTitle,
                 Mail = email,
@@ -93,7 +100,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
 
             if (manager != null)
             {
-                managerDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => new DirectoryObject() { Id = manager.Id } );
+                managerDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(() => new DirectoryObject() { Id = manager.Id });
             }
             else
             {
@@ -137,7 +144,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             if (collaborators != null)
             {
                 var page = new Mock<IUserPeopleCollectionPage>();
-                page.SetupGet(p => p.CurrentPage).Returns(() => collaborators.Select(r => new Person() { Id = r.Id }).ToList());
+                page.SetupGet(p => p.CurrentPage).Returns(() => collaborators.Select(r => new Person() { Id = r.Id, DisplayName = r.DisplayName, Department = r.Department, OfficeLocation = r.OfficeLocation }).ToList());
                 peopleDirectoryRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(page.Object);
             }
             else
@@ -159,7 +166,9 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
             photoRequestBuilder.SetupGet(req => req.Content).Returns(photoContentRequestBuilder.Object);
             userRequestBuilder.SetupGet(req => req.Photo).Returns(photoRequestBuilder.Object);
 
-            this.testGraphClient.SetupGet(client => client.Users[profile.Id]).Returns(userRequestBuilder.Object);
+            this.UserRequests.Add(profile.Id, userRequestBuilder.Object);
+
+            this.testGraphClient.Setup(client => client.Users[It.IsAny<string>()]).Returns((string id) => this.UserRequests[id]);
         }
 
         /// <summary>
@@ -167,7 +176,7 @@ namespace Microsoft.Bot.Dialogs.Tests.WhoSkill
         /// </summary>
         private void SetupMe()
         {
-            User me = this.AddUserProfile("Test User", "testuser@contoso.com", "123-123-1234", "Moon", "Astronaut", false);
+            User me = this.AddUserProfile(Guid.Parse("1B0512D0-6DB7-4D54-8068-6BC4EE83B365"), "Test User", "testuser@contoso.com", "123-123-1234", "Moon", "Astronaut", false);
 
             Mock<IUserRequest> userRequest = new Mock<IUserRequest>();
             userRequest.Setup(req => req.GetAsync(It.IsAny<CancellationToken>())).ReturnsAsync(me);

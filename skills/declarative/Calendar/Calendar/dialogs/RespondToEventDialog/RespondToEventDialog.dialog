@@ -21,7 +21,8 @@
           "$designer": {
             "id": "Y9c7T3"
           },
-          "name": "RespondToEventDialog.BeginDialog"
+          "name": "RespondToEventDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -83,7 +84,8 @@
           "$designer": {
             "id": "Jo6ZBU"
           },
-          "name": "RespondToEventDialog.OnEvent_AcceptEvent"
+          "name": "RespondToEventDialog.OnEvent_AcceptEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -108,12 +110,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "r6bf1q"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
             "id": "2F9RxQ"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {
@@ -146,7 +156,8 @@
           "$designer": {
             "id": "YIqJpN"
           },
-          "name": "RespondToEventDialog.OnEvent_DeclineEvent"
+          "name": "RespondToEventDialog.OnEvent_DeclineEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -176,12 +187,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8wZGwZ"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
           "$designer": {
             "id": "w2IgGa"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {
@@ -214,7 +233,8 @@
           "$designer": {
             "id": "KDXKf8"
           },
-          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent"
+          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -244,12 +264,20 @@
           ]
         },
         {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MIElov"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
           "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
           "$designer": {
             "id": "baSSxn"
           },
           "resultProperty": "$result",
-          "token": "=user.token.token",
+          "token": "=turn.token.token",
           "eventId": "=$event.Id"
         },
         {
