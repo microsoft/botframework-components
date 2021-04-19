@@ -19,7 +19,8 @@
           "$designer": {
             "id": "vd6Jx9"
           },
-          "name": "Calendar.Greeting"
+          "name": "Calendar.Greeting",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -70,7 +71,8 @@
           "$designer": {
             "id": "t7QY3g"
           },
-          "name": "Calendar.Cancel"
+          "name": "Calendar.Cancel",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -101,7 +103,8 @@
           "$designer": {
             "id": "aYNWwl"
           },
-          "name": "Calendar.Help"
+          "name": "Calendar.Help",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -126,7 +129,8 @@
           "$designer": {
             "id": "CmEecM"
           },
-          "name": "Calendar.Logout"
+          "name": "Calendar.Logout",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -159,7 +163,8 @@
           "$designer": {
             "id": "n5PmvA"
           },
-          "name": "Calendar.CreateEvent"
+          "name": "Calendar.CreateEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -178,13 +183,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "YVVKLC"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -202,7 +200,8 @@
           "$designer": {
             "id": "5AbqaU"
           },
-          "name": "Calendar.GetEvents"
+          "name": "Calendar.GetEvents",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -221,13 +220,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "L2PLXH"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -245,7 +237,8 @@
           "$designer": {
             "id": "Ecgy1o"
           },
-          "name": "Calendar.GetEventAttendees"
+          "name": "Calendar.GetEventAttendees",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -281,13 +274,6 @@
             "id": "UKSMPm"
           },
           "activity": "${SendActivity_UKSMPm()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "WHy6Bo"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -305,7 +291,8 @@
           "$designer": {
             "id": "zCKzhA"
           },
-          "name": "Calendar.GetEventLocation"
+          "name": "Calendar.GetEventLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -341,13 +328,6 @@
             "id": "x7EkgW"
           },
           "activity": "${SendActivity_x7EkgW()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "KDqk7Z"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -365,7 +345,8 @@
           "$designer": {
             "id": "zFgN9j"
           },
-          "name": "Calendar.GetEventDateTime"
+          "name": "Calendar.GetEventDateTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -384,13 +365,6 @@
           "options": {
             "options": "=$options"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "jNc5BU"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -408,7 +382,8 @@
           "$designer": {
             "id": "fxyOZM"
           },
-          "name": "Calendar.GetAvailabilityFirst"
+          "name": "Calendar.GetAvailabilityFirst",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -480,7 +455,8 @@
           "$designer": {
             "id": "rP8Uw1"
           },
-          "name": "Calendar.GetAvailabilityLast"
+          "name": "Calendar.GetAvailabilityLast",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -528,13 +504,6 @@
             "id": "IdPxbc"
           },
           "activity": "${SendActivity_IdPxbc()}"
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "W7ue9g"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -552,7 +521,8 @@
           "$designer": {
             "id": "yGFlO4"
           },
-          "name": "Calendar.GetAvailabilityBreaks"
+          "name": "Calendar.GetAvailabilityBreaks",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -629,13 +599,6 @@
               "activity": "${SendActivity_WlmO9l()}"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "3CUd8v"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -653,7 +616,8 @@
           "$designer": {
             "id": "ZOOVNb"
           },
-          "name": "Calendar.CancelEvent"
+          "name": "Calendar.CancelEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -685,13 +649,6 @@
           "options": {
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "fSgPJl"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -709,7 +666,8 @@
           "$designer": {
             "id": "L0jE2J"
           },
-          "name": "Calendar.RespondAccept"
+          "name": "Calendar.RespondAccept",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -742,13 +700,6 @@
             "response": "='accepted'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "KTgFcq"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -766,7 +717,8 @@
           "$designer": {
             "id": "ZtBmaG"
           },
-          "name": "Calendar.RespondDecline"
+          "name": "Calendar.RespondDecline",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -799,13 +751,6 @@
             "response": "='declined'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "DiEzlo"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -823,7 +768,8 @@
           "$designer": {
             "id": "APO98A"
           },
-          "name": "Calendar.RespondTentativelyAccept"
+          "name": "Calendar.RespondTentativelyAccept",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -856,13 +802,6 @@
             "response": "='tentativelyAccepted'",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "u8kRHS"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -880,7 +819,8 @@
           "$designer": {
             "id": "qYAELL"
           },
-          "name": "Calendar.UpdateEvent"
+          "name": "Calendar.UpdateEvent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -913,13 +853,6 @@
             "options": "=$options",
             "event": "=$event"
           }
-        },
-        {
-          "$kind": "Microsoft.EmitEvent",
-          "$designer": {
-            "id": "f95C2A"
-          },
-          "eventName": "dialogCompleted"
         }
       ],
       "condition": "=turn.recognized.score > 0.1"
@@ -960,7 +893,8 @@
           "$designer": {
             "id": "GTJ2DW"
           },
-          "name": "Calendar.SetAttendeesAdd"
+          "name": "Calendar.SetAttendeesAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1037,7 +971,8 @@
           "$designer": {
             "id": "V96xTJ"
           },
-          "name": "Calendar.SetAttendeesRemove"
+          "name": "Calendar.SetAttendeesRemove",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1114,7 +1049,8 @@
           "$designer": {
             "id": "rGia1Q"
           },
-          "name": "Calendar.SetDateTime"
+          "name": "Calendar.SetDateTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1187,7 +1123,8 @@
           "$designer": {
             "id": "cgtrSW"
           },
-          "name": "Calendar.SetDescription"
+          "name": "Calendar.SetDescription",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1256,7 +1193,8 @@
           "$designer": {
             "id": "6nP9Jr"
           },
-          "name": "Calendar.SetDuration"
+          "name": "Calendar.SetDuration",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1329,7 +1267,8 @@
           "$designer": {
             "id": "ZuIvv3"
           },
-          "name": "Calendar.SetLocation"
+          "name": "Calendar.SetLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1402,7 +1341,8 @@
           "$designer": {
             "id": "ARGOTh"
           },
-          "name": "Calendar.SetOnlineMeetingAdd"
+          "name": "Calendar.SetOnlineMeetingAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1475,7 +1415,8 @@
           "$designer": {
             "id": "X20Zd9"
           },
-          "name": "Calendar.SetOnlineMeetingRemove"
+          "name": "Calendar.SetOnlineMeetingRemove",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1548,7 +1489,8 @@
           "$designer": {
             "id": "7ADziF"
           },
-          "name": "Calendar.SetTitle"
+          "name": "Calendar.SetTitle",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -1620,7 +1562,8 @@
           "$designer": {
             "id": "6cuuag"
           },
-          "name": "Calendar.UnknownIntent"
+          "name": "Calendar.UnknownIntent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -1646,85 +1589,6 @@
               "activity": "${SendActivity_UA2sps()}"
             }
           ]
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "UW3KVm",
-        "name": "OnEvent (CollectFeedback)"
-      },
-      "event": "collectFeedback",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "ewbuLF"
-          },
-          "name": "Calendar.OnCollectFeedbackEvent"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "QaDvyy"
-          },
-          "activity": "${SendActivity_QaDvyy()}"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnDialogEvent",
-      "$designer": {
-        "id": "oTlYj2",
-        "name": "OnEvent (DialogCompleted)"
-      },
-      "event": "dialogCompleted",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "KJHXUC"
-          },
-          "name": "Calendar.OnDialogCompletedEvent"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "QCM3um"
-          },
-          "property": "conversation.dialogCount",
-          "value": "= coalesce(conversation.dialogCount, 0) + 1"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "NuS1r3"
-          },
-          "condition": "conversation.dialogCount == 3",
-          "actions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "NjCCRC"
-              },
-              "property": "conversation.dialogCount",
-              "value": "= 0"
-            },
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "BH6jnO"
-              },
-              "eventName": "CollectFeedback"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.CancelAllDialogs",
-          "$designer": {
-            "id": "ePKk2p"
-          }
         }
       ]
     },
@@ -1949,13 +1813,6 @@
                 "id": "mWnyUh"
               },
               "activity": "${SendActivity_mWnyUh()}"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "2q5Pi3"
-              },
-              "activity": "${SendActivity_2q5Pi3()}"
             }
           ]
         }

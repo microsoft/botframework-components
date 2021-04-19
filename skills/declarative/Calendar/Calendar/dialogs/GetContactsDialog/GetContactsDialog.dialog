@@ -20,7 +20,8 @@
           "$designer": {
             "id": "2D40FY"
           },
-          "name": "GetContactsDialog.BeginDialog"
+          "name": "GetContactsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -135,7 +136,8 @@
           "$designer": {
             "id": "Y3KzlG"
           },
-          "name": "GetContactsDialog.OnEvent_SetContactQuery"
+          "name": "GetContactsDialog.OnEvent_SetContactQuery",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -173,7 +175,8 @@
           "$designer": {
             "id": "1LZsgu"
           },
-          "name": "GetContactsDialog.OnEvent_AddEmailsToContacts"
+          "name": "GetContactsDialog.OnEvent_AddEmailsToContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -235,7 +238,8 @@
           "$designer": {
             "id": "7CLJ9W"
           },
-          "name": "GetContactsDialog.OnEvent_AddPeopleToContacts"
+          "name": "GetContactsDialog.OnEvent_AddPeopleToContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -280,7 +284,16 @@
           "$designer": {
             "id": "84gZul"
           },
-          "name": "GetContactsDialog.OnEvent_LookupContacts"
+          "name": "GetContactsDialog.OnEvent_LookupContacts",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "1IGw8o"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
         },
         {
           "$kind": "Microsoft.Graph.Calendar.GetContacts",
@@ -289,7 +302,7 @@
           },
           "nameProperty": "=turn.dialogEvent.value",
           "resultProperty": "$searchResults",
-          "token": "=user.token.token"
+          "token": "=turn.token.token"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -504,7 +517,8 @@
           "$designer": {
             "id": "LH8sYv"
           },
-          "name": "GetContactsDialog.OnEvent_AddMoreContacts"
+          "name": "GetContactsDialog.OnEvent_AddMoreContacts",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.ConfirmInput",
@@ -554,55 +568,6 @@
     {
       "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "8Asary",
-        "name": "OnIntent (Skip)"
-      },
-      "intent": "Skip",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "oBvJje"
-          },
-          "name": "GetContactsDialog.OnIntent_Skip"
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "GPAfJL"
-          },
-          "value": "=$contacts"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "2uRdwA",
-        "name": "OnIntent (Cancel)"
-      },
-      "intent": "Cancel",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "hNtq27"
-          },
-          "name": "GetContactsDialog.OnIntent_Cancel"
-        },
-        {
-          "$kind": "Microsoft.CancelAllDialogs",
-          "$designer": {
-            "id": "4gphM0"
-          },
-          "activityProcessed": true,
-          "eventName": "Cancel"
-        }
-      ]
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
         "id": "Jmd14H",
         "name": "OnIntent (SetAttendeesAdd)"
       },
@@ -613,7 +578,8 @@
           "$designer": {
             "id": "pL6yTk"
           },
-          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd"
+          "name": "GetContactsDialog.OnIntent_SetAttendeesAdd",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -646,13 +612,55 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnDialogEvent",
+      "$kind": "Microsoft.OnIntent",
       "$designer": {
-        "id": "NkFGP3",
-        "name": "OnEvent (SetOptions)"
+        "id": "8Asary",
+        "name": "OnIntent (Skip)"
       },
-      "event": "SetOptions",
-      "actions": []
+      "intent": "Skip",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "oBvJje"
+          },
+          "name": "GetContactsDialog.OnIntent_Skip",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "GPAfJL"
+          },
+          "value": "=$contacts"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "2uRdwA",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "hNtq27"
+          },
+          "name": "GetContactsDialog.OnIntent_Cancel",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "4gphM0"
+          },
+          "activityProcessed": true,
+          "eventName": "Cancel"
+        }
+      ]
     }
   ],
   "generator": "GetContactsDialog.lg",
