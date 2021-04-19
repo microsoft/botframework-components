@@ -1,6 +1,0 @@
-﻿{
-    "$schema": "../app.schema",
-    "$kind": "Microsoft.Test.UserTokenBasicMock",
-    "connectionName": "Outlook",
-    "token": "nomagiccode token"
-}

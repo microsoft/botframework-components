@@ -1,1 +1,0 @@
-{"query":"change the location to seattle","prediction":{"topIntent":"SetLocation","intents":{"SetLocation":{"score":0.9278392}},"entities":{"location":["seattle"],"geographyV2":[{"value":"seattle","type":"city"}]}}}
