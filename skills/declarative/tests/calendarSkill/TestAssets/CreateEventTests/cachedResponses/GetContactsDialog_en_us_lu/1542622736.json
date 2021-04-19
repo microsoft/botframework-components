@@ -1,1 +1,0 @@
-{"query":"add joni","prediction":{"topIntent":"TextInput_Response_sFm17r","intents":{"TextInput_Response_sFm17r":{"score":0.119293608}},"entities":{"contact":["joni"],"personName":["joni"]}}}

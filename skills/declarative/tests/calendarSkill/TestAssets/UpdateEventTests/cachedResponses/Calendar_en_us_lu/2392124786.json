@@ -1,1 +1,0 @@
-{"query":"change the duration of my meeting on Tuesday","prediction":{"topIntent":"SetDuration","intents":{"SetDuration":{"score":0.382958472}},"entities":{"date":["Tuesday"]}}}

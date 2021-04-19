@@ -1,1 +1,0 @@
-{"query":"Who are the peers of John Doe?","prediction":{"topIntent":"GetPeers","intents":{"GetPeers":{"score":0.986835659}},"entities":{"contact":["John"]}}}
