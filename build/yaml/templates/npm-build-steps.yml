@@ -9,4 +9,9 @@ steps:
   displayName: 'Install dependencies'
   workingDirectory: '$(WorkingDirectory)'
 
+- script: |
+    yarn exec npm run build --if-present
+  displayName: 'Run build command (if it exists)'
+  workingDirectory: '$(WorkingDirectory)'
+
 - template: debug-workspace-steps.yml

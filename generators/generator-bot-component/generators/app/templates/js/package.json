@@ -1,0 +1,24 @@
+{
+  "name": "<%= componentName %>",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "botbuilder-core": "~4.13.0",
+    "botbuilder-dialogs-adaptive-runtime-core": "~4.13.0-preview"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "latest",
+    "botbuilder-core": "~4.13.0",
+    "botbuilder-dialogs-adaptive-runtime-core": "^4.13.0-preview",
+    "typescript": "~4.0.5"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "files": [
+    "lib",
+    "exported",
+    "src"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts"
+}

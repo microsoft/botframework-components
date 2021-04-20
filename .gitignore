@@ -398,3 +398,6 @@ package-lock.json
 
 # Ignore test bots
 testing/*
+
+# Ignore typescript metadata files
+*.tsbuildinfo

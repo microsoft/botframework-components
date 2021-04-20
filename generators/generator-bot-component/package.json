@@ -1,0 +1,38 @@
+{
+  "name": "@microsoft/generator-bot-component",
+  "version": "1.0.0",
+  "description": "Yeoman generator for creating an empty bot component for the Azure Bot Framework.",
+  "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator"
+  ],
+  "license": "MIT",
+  "author": "Bot Framework",
+  "main": "./generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "eslint --ext ts ."
+  },
+  "dependencies": {
+    "runtypes": "~5.1.0",
+    "yeoman-generator": "^2.0.5"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "latest",
+    "@types/yeoman-generator": "^2.0.3",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest",
+    "typescript": "~4.0.5"
+  }
+}

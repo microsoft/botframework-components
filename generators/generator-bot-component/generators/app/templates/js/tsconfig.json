@@ -1,0 +1,8 @@
+{
+  "extends": "@tsconfig/recommended",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src"
+  }
+}
