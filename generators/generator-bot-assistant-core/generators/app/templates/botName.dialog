@@ -280,7 +280,7 @@
           "$designer": {
             "id": "2outgQ"
           },
-          "activity": "${SendActivity_2outgQ()}"
+          "activity": "${SendActivity_ErrorOccured()}"
         },
         {
           "$kind": "Microsoft.TraceActivity",

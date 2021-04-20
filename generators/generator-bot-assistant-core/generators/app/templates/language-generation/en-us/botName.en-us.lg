@@ -50,12 +50,12 @@
   buttons = ${BotTourEventAction()}
 ]
 
-# SendActivity_2outgQ()
+# SendActivity_ErrorOccured()
 [Activity
-    Text = ${SendActivity_2outgQ_text()}
+    Text = ${SendActivity_ErrorOccured_text()}
 ]
 
-# SendActivity_2outgQ_text()
+# SendActivity_ErrorOccured_text()
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
