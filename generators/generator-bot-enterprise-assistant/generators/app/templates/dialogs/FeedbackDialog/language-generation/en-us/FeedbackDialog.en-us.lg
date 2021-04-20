@@ -1,15 +1,19 @@
 [import](common.lg)
 
-# SendActivity_ThumbsUpDownPrompt()
+# SendActivity_AskAboutExperiencePrompt()
 [Activity
-    Text = ${SendActivity_ThumbsUpDownPrompt_text()}
-    Attachments = ${SendActivity_ThumbsUpDownPrompt_attachment_N1EQ7u()}
+    Text = ${SendActivity_AskAboutExperiencePrompt_text()}
+    Attachments = ${SendActivity_AskAboutExperiencePrompt_attachment_N1EQ7u()}
 ]
 
-# SendActivity_ThumbsUpDownPrompt_text()
+# SendActivity_AskAboutExperiencePrompt_text()
 - Did the experience meet your expectations?
 - Did the bot meet your expectations?
 - Did you like this interaction with the bot?
+
+# SendActivity_AskAboutExperiencePrompt_attachment_N1EQ7u()
+> LikeDislike Feedback Card
+- ```${json(CardTemplate(FeedbackHeader(),FeedbackBody(),FeedbackActions()))}```
 
 # FeedbackTitle()
 - Feedback
@@ -173,10 +177,6 @@
     ]
 }
 ```
-
-# SendActivity_ThumbsUpDownPrompt_attachment_N1EQ7u()
-> LikeDislike Feedback Card
-- ```${json(CardTemplate(FeedbackHeader(),FeedbackBody(),FeedbackActions()))}```
 
 # SendActivity_ThanksForFeedback()
 [Activity

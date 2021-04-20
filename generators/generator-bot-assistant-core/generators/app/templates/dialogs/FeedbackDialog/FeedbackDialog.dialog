@@ -25,9 +25,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "ThumbsUpDownPrompt"
+            "id": "AskAboutExperiencePrompt"
           },
-          "activity": "${SendActivity_ThumbsUpDownPrompt()}"
+          "activity": "${SendActivity_AskAboutExperiencePrompt()}"
         }
       ]
     },
