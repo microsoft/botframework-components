@@ -38,7 +38,7 @@ namespace <%= botName %>.Triggers
             return new FileStreamResult(new FileStream(filePath, FileMode.Open), contentType);
         }
 
-        bool TryGetFilePath(ExecutionContext context, string relativePath, out string result)
+        private bool TryGetFilePath(ExecutionContext context, string relativePath, out string result)
         {
             result = null;
 
