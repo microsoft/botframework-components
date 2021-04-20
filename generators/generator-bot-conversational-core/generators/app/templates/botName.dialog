@@ -126,9 +126,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "IQMEuO"
+            "id": "DidntGetThat"
           },
-          "activity": "${SendActivity_IQMEuO()}"
+          "activity": "${SendActivity_DidntGetThat()}"
         }
       ]
     }
