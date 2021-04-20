@@ -19,9 +19,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "YRvoei"
+            "id": "BotTourOverview"
           },
-          "activity": "${SendActivity_YRvoei()}"
+          "activity": "${SendActivity_BotTourOverview()}"
         }
       ]
     },
@@ -36,9 +36,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "Z5JucQ"
+            "id": "BotTourFocus"
           },
-          "activity": "${SendActivity_Z5JucQ()}"
+          "activity": "${SendActivity_BotTourFocus()}"
         },
         {
           "$kind": "Microsoft.EndDialog",

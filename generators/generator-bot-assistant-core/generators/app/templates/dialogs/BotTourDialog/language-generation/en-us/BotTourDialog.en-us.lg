@@ -1,9 +1,22 @@
 [import](common.lg)
 
-# SendActivity_YRvoei()
+# SendActivity_BotTourChevronCard()
 [Activity
-    Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourChevronCard_attachment_WGITEE()}
 ]
+
+# SendActivity_BotTourChevronCard_attachment_WGITEE()
+> ChevronCard
+- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
+
+# SendActivity_BotTourFocusCard()
+[Activity
+    Attachments = ${SendActivity_BotTourFocusCard_attachment_cKtuIu()}
+]
+
+# SendActivity_BotTourFocusCard_attachment_cKtuIu()
+> FocusCard
+- ```${json(CardTemplate(BotTourFocusCardHeader(),BotTourFocusCardBody(), BotTourFocusCardActions()))}```
 
 # BotTourTitle()
 - You can ask me...
@@ -205,15 +218,4 @@
 }
 ```
 
-# SendActivity_YRvoei_attachment_WGITEE()
-> Bot tour chevron card
-- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
 
-# SendActivity_Z5JucQ()
-[Activity
-    Attachments = ${SendActivity_Z5JucQ_attachment_cKtuIu()}
-]
-
-# SendActivity_Z5JucQ_attachment_cKtuIu()
-> Focus card
-- ```${json(CardTemplate(BotTourFocusCardHeader(),BotTourFocusCardBody(), BotTourFocusCardActions()))}```

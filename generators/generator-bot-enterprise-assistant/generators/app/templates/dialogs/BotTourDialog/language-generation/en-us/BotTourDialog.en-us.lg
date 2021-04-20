@@ -1,29 +1,29 @@
 [import](common.lg)
 
-# SendActivity_YRvoei()
+# SendActivity_BotTourChevronCard()
 [Activity
-    Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourChevronCard_attachment_WGITEE()}
 ]
 
-# SendActivity_YRvoei_attachment_WGITEE()
-> Bot tour chevron card
+# SendActivity_BotTourChevronCard_attachment_WGITEE()
+> ChevronCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(BotTourOptions(), 5), ''))}
 
 
-# SendActivity_yDMllq()
+# SendActivity_CalendarTour()
 [Activity
-    Attachments = ${SendActivity_yDMllq_attachment_nUDor4()}
+    Attachments = ${SendActivity_CalendarTour_attachment_nUDor4()}
 ]
 
-# SendActivity_yDMllq_attachment_nUDor4()
+# SendActivity_CalendarTour_attachment_nUDor4()
 - ${json(CardTemplate(CalendarTourCardHeader(), BotTourDetailsCardBody(CalendarTourCardText()), CalendarTourCardActions()))}
 
-# SendActivity_l6vgAo()
+# SendActivity_PeopleTour()
 [Activity
-    Attachments = ${SendActivity_l6vgAo_attachment_a0ogKC()}
+    Attachments = ${SendActivity_PeopleTour_attachment_a0ogKC()}
 ]
 
-# SendActivity_l6vgAo_attachment_a0ogKC()
+# SendActivity_PeopleTour_attachment_a0ogKC()
 - ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
 
 # CalendarTourTitle()
