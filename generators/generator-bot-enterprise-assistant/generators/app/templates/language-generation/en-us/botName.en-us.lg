@@ -1,22 +1,22 @@
 [import](common.lg)
 
-# SendActivity_yXbfKT()
+# SendActivity_WelcomeReturningUser()
 [Activity
-    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
+    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
 ]
 
-# SendActivity_XZRD8m()
+# SendActivity_WelcomeNewUser()
 [Activity
-    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
+    Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
 ]
 
-# SendActivity_yXbfKT_attachment_9sGxgG()
+# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
 [HeroCard
   text = ${WelcomeReturningUser()}
   buttons = ${BotTourEventAction()}
 ]
 
-# SendActivity_XZRD8m_attachment_SR7bxz()
+# SendActivity_WelcomeNewUser_attachment_SR7bxz()
 [HeroCard
   text = ${WelcomeNewUser()}
   buttons = ${BotTourEventAction()}

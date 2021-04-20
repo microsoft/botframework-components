@@ -10,28 +10,17 @@
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
 
-# SendActivity_DidntGetThat()
+# SendActivity_WelcomeReturningUser()
 [Activity
-    Text = ${SendActivity_DidntGetThat_text()}
+    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
 ]
 
-# SendActivity_DidntGetThat_text()
-- I'm not sure I understand. Can you please try again?
-- Hmm, I don't understand. Can you try to ask me in a different way?
-- I didn't get that. Would you mind rephrasing and try it again?
-- Unfortunately I misunderstood, please try again.
-
-# SendActivity_yXbfKT()
+# SendActivity_WelcomeNewUser()
 [Activity
-    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
+    Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
 ]
 
-# SendActivity_XZRD8m()
-[Activity
-    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
-]
-
-# SendActivity_yXbfKT_attachment_9sGxgG()
+# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
 [HeroCard
   text = ${WelcomeReturningUser()}
   buttons = ${BotTourEventAction()}
@@ -44,7 +33,7 @@
     value = ${{ intent: "BotTour" }}
 ]
 
-# SendActivity_XZRD8m_attachment_SR7bxz()
+# SendActivity_WelcomeNewUser_attachment_SR7bxz()
 [HeroCard
   text = ${WelcomeNewUser()}
   buttons = ${BotTourEventAction()}
