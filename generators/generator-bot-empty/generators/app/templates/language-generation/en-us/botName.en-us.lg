@@ -7,3 +7,11 @@
 
 # SendActivity_Welcome_text()
 - Welcome to your bot.
+
+# SendActivity_DidntGetThat()
+[Activity
+    Text = ${SendActivity_DidntGetThat_text()}
+]
+
+# SendActivity_DidntGetThat_text()
+- Sorry, I didn't get that.

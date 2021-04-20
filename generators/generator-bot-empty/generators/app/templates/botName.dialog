@@ -43,6 +43,21 @@
           ]
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "kMjqz1"
+          },
+          "activity": "${SendActivity_DidntGetThat()}"
+        }
+      ]
     }
   ],
   "generator": "<%= botName %>.lg",
