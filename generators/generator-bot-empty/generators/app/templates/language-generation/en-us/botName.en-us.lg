@@ -1,4 +1,9 @@
 [import](common.lg)
 
-# SendActivity_Welcome
-- ${WelcomeUser()}
+# SendActivity_Welcome()
+[Activity
+    Text = ${SendActivity_Welcome_text()}
+]
+
+# SendActivity_Welcome_text()
+- Welcome to your bot.
