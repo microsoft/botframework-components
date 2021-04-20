@@ -56,7 +56,7 @@ namespace <%= botName %>.Triggers
         /// The <see cref="IActionResult"/>.
         /// </returns>
         [FunctionName("messages")]
-        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "{adapterRoute}")] HttpRequest req, string adapterRoute)
+        public async Task<IActionResult> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "api/{adapterRoute}")] HttpRequest req, string adapterRoute)
         {
             if (string.IsNullOrEmpty(adapterRoute))
             {
