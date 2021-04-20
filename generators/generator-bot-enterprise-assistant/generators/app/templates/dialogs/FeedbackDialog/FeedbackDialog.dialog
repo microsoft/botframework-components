@@ -25,9 +25,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "GstWEQ"
+            "id": "ThumbsUpDownPrompt"
           },
-          "activity": "${SendActivity_GstWEQ()}"
+          "activity": "${SendActivity_ThumbsUpDownPrompt()}"
         }
       ]
     },
@@ -61,7 +61,7 @@
           "$designer": {
             "id": "639pkl"
           },
-          "activity": "${SendActivity_639pkl()}"
+          "activity": "${SendActivity_ThanksForFeedback()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -99,9 +99,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "YBCkGQ"
+            "id": "639pkl"
           },
-          "activity": "${SendActivity_YBCkGQ()}"
+          "activity": "${SendActivity_ThanksForFeedback()}"
         },
         {
           "$kind": "Microsoft.EndDialog",

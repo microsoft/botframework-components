@@ -1,12 +1,12 @@
 [import](common.lg)
 
-# SendActivity_GstWEQ()
+# SendActivity_ThumbsUpDownPrompt()
 [Activity
-    Text = ${SendActivity_GstWEQ_text()}
-    Attachments = ${SendActivity_GstWEQ_attachment_N1EQ7u()}
+    Text = ${SendActivity_ThumbsUpDownPrompt_text()}
+    Attachments = ${SendActivity_ThumbsUpDownPrompt_attachment_N1EQ7u()}
 ]
 
-# SendActivity_GstWEQ_text()
+# SendActivity_ThumbsUpDownPrompt_text()
 - Did the experience meet your expectations?
 - Did the bot meet your expectations?
 - Did you like this interaction with the bot?
@@ -174,26 +174,16 @@
 }
 ```
 
-# SendActivity_GstWEQ_attachment_N1EQ7u()
+# SendActivity_ThumbsUpDownPrompt_attachment_N1EQ7u()
 > LikeDislike Feedback Card
 - ```${json(CardTemplate(FeedbackHeader(),FeedbackBody(),FeedbackActions()))}```
 
-# SendActivity_639pkl()
+# SendActivity_ThanksForFeedback()
 [Activity
-    Text = ${SendActivity_639pkl_text()}
+    Text = ${SendActivity_ThanksForFeedback_text()}
 ]
 
-# SendActivity_639pkl_text()
-- Thank you for this feedback.
-- Thanks for your feedback.
-- Thank you, I've captured your feedback.
-
-# SendActivity_YBCkGQ()
-[Activity
-    Text = ${SendActivity_YBCkGQ_text()}
-]
-
-# SendActivity_YBCkGQ_text()
+# SendActivity_ThanksForFeedback_text()
 - Thank you for this feedback.
 - Thanks for your feedback.
 - Thank you, I've captured your feedback.

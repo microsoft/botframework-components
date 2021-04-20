@@ -25,9 +25,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "GstWEQ"
+            "id": "ThumbsUpDownPrompt"
           },
-          "activity": "${SendActivity_GstWEQ()}"
+          "activity": "${SendActivity_ThumbsUpDownPrompt()}"
         }
       ]
     },
@@ -101,7 +101,7 @@
           "$designer": {
             "id": "YBCkGQ"
           },
-          "activity": "${SendActivity_YBCkGQ()}"
+          "activity": "${SendActivity_ThanksForFeedback()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
