@@ -1,1 +1,0 @@
-{"query":"who collaborate with me most?","prediction":{"topIntent":"GetCollaborators","intents":{"GetCollaborators":{"score":0.8655931}},"entities":{}}}

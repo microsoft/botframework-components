@@ -1,1 +1,0 @@
-{"query":"Seattle","prediction":{"topIntent":"None","intents":{"None":{"score":0.2200041}},"entities":{"geographyV2":[{"value":"Seattle","type":"city"}]}}}

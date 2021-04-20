@@ -35,7 +35,8 @@ Packages are bits of bots that you can add to your bot project. They can contain
 |:------------:|:------|:-----:|:---:|:-----------|
 |[Welcome](/packages/Welcome) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Welcome?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Welcome/)| [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome) | Declarative assets supporting scenarios that welcome new and returning users. |
 |[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.HelpAndCancel?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel) | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
-|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | | Custom actions for work with calendars and people through the MS Graph API.|
+|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | | Custom actions for working with calendars and people through the MS Graph API.|
+|[Teams](/packages/Teams) | Triggers Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Teams?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Teams/) | | Triggers and actions for working with Microsoft Teams.|
 
 ### Virtual Assistant skills (Legacy)
 

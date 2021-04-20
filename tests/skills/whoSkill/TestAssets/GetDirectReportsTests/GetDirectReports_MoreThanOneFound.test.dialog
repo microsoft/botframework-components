@@ -24,17 +24,31 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "There are 2 people that are part of **Thomas Chung**'s team."
+      "text": "There are 2 people that are part of **Thomas Chung**'s team.",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
     },
+    // Simulate clicking on one of the actions button
     {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "2"
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "message",
+        "value": {
+          "intent": "GetProfile",
+          "user": "9CB044E0-478C-4AC6-9E29-1A11A51113C5",
+          "msteams": {
+            "type": "messageBack"
+          }
+        }
+      }
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
       "assertions": [
-        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
-      ],
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'",
+        "attachments[0].content.body[0].items[0].columns[1].items[0].text == 'John Doe'"
+      ]
     }
   ]
 }

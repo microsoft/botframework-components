@@ -19,7 +19,8 @@
           "$designer": {
             "id": "OwPzzJ"
           },
-          "name": "ResolveDateTimeDialog.BeginDialog"
+          "name": "ResolveDateTimeDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -280,7 +281,8 @@
           "$designer": {
             "id": "8IOu4o"
           },
-          "name": "ResolveDateTimeDialog.RefineDate"
+          "name": "ResolveDateTimeDialog.RefineDate",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -430,7 +432,8 @@
           "$designer": {
             "id": "gXLQ6f"
           },
-          "name": "ResolveDateTimeDialog.RefineDateTime"
+          "name": "ResolveDateTimeDialog.RefineDateTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -580,7 +583,8 @@
           "$designer": {
             "id": "IhxIE6"
           },
-          "name": "ResolveDateTimeDialog.RefineTime"
+          "name": "ResolveDateTimeDialog.RefineTime",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -646,7 +650,8 @@
           "$designer": {
             "id": "okdggz"
           },
-          "name": "ResolveDateTimeDialog.RefineDateRange"
+          "name": "ResolveDateTimeDialog.RefineDateRange",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -712,7 +717,8 @@
           "$designer": {
             "id": "v5ijYF"
           },
-          "name": "ResolveDateTimeDialog.RefineDateTimeRange"
+          "name": "ResolveDateTimeDialog.RefineDateTimeRange",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -778,7 +784,8 @@
           "$designer": {
             "id": "rV7e9v"
           },
-          "name": "ResolveDateTimeDialog.RefineTimeRange"
+          "name": "ResolveDateTimeDialog.RefineTimeRange",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.Foreach",
