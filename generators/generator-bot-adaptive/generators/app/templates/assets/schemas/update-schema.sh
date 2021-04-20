@@ -16,7 +16,7 @@ echo "Running schema merge."
 [ -f "$SCHEMA_FILE" ] && mv "./$SCHEMA_FILE" "./$BACKUP_SCHEMA_FILE"
 [ -f "$UISCHEMA_FILE" ] && mv "./$UISCHEMA_FILE" "./$BACKUP_UISCHEMA_FILE"
 
-bf dialog:merge "*.schema" "!**/sdk-backup.schema" "*.uischema" "!**/sdk-backup.uischema" "!**/sdk.override.uischema" "../*.csproj" "../package.json" -o $SCHEMA_FILE
+bf dialog:merge "*.schema" "!**/sdk-backup.schema" "*.uischema" "!**/sdk-backup.uischema" "!**/sdk.override.uischema" "!**/generated" "../*.csproj" "../package.json" -o $SCHEMA_FILE
 
 if [ -f "$SCHEMA_FILE" ]; then
   rm -rf "./$BACKUP_SCHEMA_FILE"
