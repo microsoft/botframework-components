@@ -1,19 +1,29 @@
 [import](common.lg)
 
-# SendActivity_AskAboutExperiencePrompt()
+# SendActivity_FeedbackExperiencePrompt()
 [Activity
-    Text = ${SendActivity_AskAboutExperiencePrompt_text()}
-    Attachments = ${SendActivity_AskAboutExperiencePrompt_attachment_N1EQ7u()}
+    Text = ${SendActivity_FeedbackExperiencePrompt_text()}
+    Attachments = ${SendActivity_FeedbackExperiencePrompt_attachment_N1EQ7u()}
 ]
 
-# SendActivity_AskAboutExperiencePrompt_text()
+# SendActivity_FeedbackExperiencePrompt_text()
 - Did the experience meet your expectations?
 - Did the bot meet your expectations?
 - Did you like this interaction with the bot?
 
-# SendActivity_AskAboutExperiencePrompt_attachment_N1EQ7u()
+# SendActivity_FeedbackExperiencePrompt_attachment_N1EQ7u()
 > LikeDislike Feedback Card
 - ```${json(CardTemplate(FeedbackHeader(),FeedbackBody(),FeedbackActions()))}```
+
+# SendActivity_FeedbackThanks()
+[Activity
+    Text = ${SendActivity_FeedbackThanks_text()}
+]
+
+# SendActivity_FeedbackThanks_text()
+- Thank you for this feedback.
+- Thanks for your feedback.
+- Thank you, I've captured your feedback.
 
 # FeedbackTitle()
 - Feedback
@@ -177,12 +187,4 @@
 }
 ```
 
-# SendActivity_ThanksForFeedback()
-[Activity
-    Text = ${SendActivity_ThanksForFeedback_text()}
-]
 
-# SendActivity_ThanksForFeedback_text()
-- Thank you for this feedback.
-- Thanks for your feedback.
-- Thank you, I've captured your feedback.
