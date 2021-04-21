@@ -6,14 +6,14 @@
       "condition",
       "*"
     ],
-      "hidden": [
-          "actions"
-      ],
-      "label": "Input.ChoiceSet dynamic query",
-      "subtitle": "Data.Query"
+    "hidden": [
+      "actions"
+    ],
+    "label": "Data.Query (invoke activity)",
+    "subtitle": "Handle Data.Query"
   },
   "trigger": {
     "label": "Data.Query (invoke activity)",
-    "submenu": "Adaptive Card Actions"
+    "submenu": "Adaptive Cards"
   }
 }
