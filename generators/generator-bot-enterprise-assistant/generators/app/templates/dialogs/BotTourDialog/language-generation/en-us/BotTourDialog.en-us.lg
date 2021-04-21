@@ -1,11 +1,11 @@
 [import](common.lg)
 
-# SendActivity_BotTourChevronCard()
+# SendActivity_BotTourOverview()
 [Activity
-    Attachments = ${SendActivity_BotTourChevronCard_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourOverview_attachment_WGITEE()}
 ]
 
-# SendActivity_BotTourChevronCard_attachment_WGITEE()
+# SendActivity_BotTourOverview_attachment_WGITEE()
 > ChevronCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(BotTourOptions(), 5), ''))}
 
