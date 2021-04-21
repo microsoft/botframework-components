@@ -1,5 +1,27 @@
 [import](common.lg)
 
+# SendActivity_WelcomeNewUser()
+[Activity
+    Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
+]
+
+# SendActivity_WelcomeNewUser_attachment_SR7bxz()
+[HeroCard
+  text = ${WelcomeNewUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# SendActivity_WelcomeReturningUser()
+[Activity
+    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
+]
+
+# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
+[HeroCard
+  text = ${WelcomeReturningUser()}
+  buttons = ${BotTourEventAction()}
+]
+
 # SendActivity_ErrorOccured()
 [Activity
     Text = ${SendActivity_ErrorOccured_text()}
@@ -10,22 +32,6 @@
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
 
-# SendActivity_WelcomeReturningUser()
-[Activity
-    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
-]
-
-# SendActivity_WelcomeNewUser()
-[Activity
-    Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
-]
-
-# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
-[HeroCard
-  text = ${WelcomeReturningUser()}
-  buttons = ${BotTourEventAction()}
-]
-
 # BotTourEventAction()
 [CardAction
     title = You can ask me
@@ -33,11 +39,7 @@
     value = ${{ intent: "BotTour" }}
 ]
 
-# SendActivity_WelcomeNewUser_attachment_SR7bxz()
-[HeroCard
-  text = ${WelcomeNewUser()}
-  buttons = ${BotTourEventAction()}
-]
+
 
 # TextInput_Prompt_YQSOpf()
 [Activity

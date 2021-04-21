@@ -1,24 +1,24 @@
 [import](common.lg)
 
-# SendActivity_WelcomeReturningUser()
-[Activity
-    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
-]
-
 # SendActivity_WelcomeNewUser()
 [Activity
     Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
 ]
 
-# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
-[HeroCard
-  text = ${WelcomeReturningUser()}
-  buttons = ${BotTourEventAction()}
-]
-
 # SendActivity_WelcomeNewUser_attachment_SR7bxz()
 [HeroCard
   text = ${WelcomeNewUser()}
+  buttons = ${BotTourEventAction()}
+]
+
+# SendActivity_WelcomeReturningUser()
+[Activity
+    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
+]
+
+# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
+[HeroCard
+  text = ${WelcomeReturningUser()}
   buttons = ${BotTourEventAction()}
 ]
 
@@ -29,12 +29,12 @@
     value = ${{ intent: "BotTour" }}
 ]
 
-# SendActivity_SYFXJJ()
+# SendActivity_ErrorOccured()
 [Activity
     Text = ${SendActivity_SYFXJJ_text()}
 ]
 
-# SendActivity_SYFXJJ_text()
+# SendActivity_ErrorOccured_text()
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?

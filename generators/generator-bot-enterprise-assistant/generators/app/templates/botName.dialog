@@ -428,7 +428,7 @@
               "$designer": {
                 "id": "SYFXJJ"
               },
-              "activity": "${SendActivity_SYFXJJ()}"
+              "activity": "${SendActivity_ErrorOccured()}"
             }
           ]
         }
