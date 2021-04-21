@@ -40,7 +40,7 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "WelcomeReturningUser"
+                        "id": "yXbfKT"
                       },
                       "activity": "${SendActivity_WelcomeReturningUser()}"
                     }
@@ -49,7 +49,7 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "WelcomeNewUser"
+                        "id": "XZRD8m"
                       },
                       "activity": "${SendActivity_WelcomeNewUser()}"
                     },

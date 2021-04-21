@@ -19,7 +19,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "BotTourOverview"
+            "id": "YRvoei"
           },
           "activity": "${SendActivity_BotTourOverview()}"
         }
@@ -36,7 +36,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "CalendarTour"
+            "id": "yDMllq"
           },
           "activity": "${SendActivity_CalendarTour()}"
         }
@@ -53,7 +53,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "PeopleTour"
+            "id": "l6vgAo"
           },
           "activity": "${SendActivity_PeopleTour()}"
         }

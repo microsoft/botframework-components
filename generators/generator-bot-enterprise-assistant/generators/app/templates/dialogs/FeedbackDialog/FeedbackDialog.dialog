@@ -25,7 +25,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "AskAboutExperiencePrompt"
+            "id": "GstWEQ"
           },
           "activity": "${SendActivity_AskAboutExperiencePrompt()}"
         }
@@ -99,7 +99,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "639pkl"
+            "id": "YBCkGQ"
           },
           "activity": "${SendActivity_ThanksForFeedback()}"
         },

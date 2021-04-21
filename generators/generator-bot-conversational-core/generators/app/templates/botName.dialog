@@ -126,7 +126,7 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "DidntGetThat"
+            "id": "IQMEuO"
           },
           "activity": "${SendActivity_DidntGetThat()}"
         }
