@@ -2,7 +2,7 @@
 
 # SendActivity_Greeting()
 [Activity
-    Text = ${SendActivity_Welcome_text()}
+    Text = ${SendActivity_Greeting_text()}
 ]
 
 # SendActivity_Greeting_text()
