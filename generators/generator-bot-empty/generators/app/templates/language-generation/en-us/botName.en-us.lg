@@ -1,11 +1,11 @@
 [import](common.lg)
 
-# SendActivity_Welcome()
+# SendActivity_Greeting()
 [Activity
     Text = ${SendActivity_Welcome_text()}
 ]
 
-# SendActivity_Welcome_text()
+# SendActivity_Greeting_text()
 - Welcome to your bot.
 
 # SendActivity_DidntGetThat()

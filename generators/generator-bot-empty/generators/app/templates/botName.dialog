@@ -36,7 +36,7 @@
                     "id": "859266",
                     "name": "Send a response"
                   },
-                  "activity": "${SendActivity_Welcome()}"
+                  "activity": "${SendActivity_Greeting()}"
                 }
               ]
             }
