@@ -8,7 +8,7 @@
 # SendActivity_GreetingNewUser_attachment_SR7bxz()
 [HeroCard
   text = ${GreetingNewUser_text()}
-  buttons = ${WelcomeBotTourIntent_action()}
+  buttons = ${GreetingBotTourIntent_action()}
 ]
 
 # SendActivity_GreetingReturningUser()
@@ -19,7 +19,7 @@
 # SendActivity_GreetingReturningUser_attachment_9sGxgG()
 [HeroCard
   text = ${GreetingReturningUser_text()}
-  buttons = ${WelcomeBotTourIntent_action()}
+  buttons = ${GreetingBotTourIntent_action()}
 ]
 
 # GreetingNewUser_text()
@@ -34,7 +34,7 @@
 - 🖐️ Hey, there! Let's get started.
 - 🖐️ Hello again! How can I help?
 
-# WelcomeBotTourIntent_action()
+# GreetingBotTourIntent_action()
 [CardAction
     title = You can ask me
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
