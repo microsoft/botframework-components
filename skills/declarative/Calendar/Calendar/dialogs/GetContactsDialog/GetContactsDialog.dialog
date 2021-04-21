@@ -288,6 +288,14 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "ECk0NA"
+          },
+          "property": "$nameProperty",
+          "value": "=turn.dialogEvent.value"
+        },
+        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "1IGw8o"
@@ -300,7 +308,7 @@
           "$designer": {
             "id": "Ha1csy"
           },
-          "nameProperty": "=turn.dialogEvent.value",
+          "nameProperty": "=$nameProperty",
           "resultProperty": "$searchResults",
           "token": "=turn.token.token"
         },
