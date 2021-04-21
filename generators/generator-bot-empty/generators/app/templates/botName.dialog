@@ -55,7 +55,7 @@
           "$designer": {
             "id": "kMjqz1"
           },
-          "activity": "${SendActivity_DidntGetThat()}"
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }

@@ -8,10 +8,10 @@
 # SendActivity_Greeting_text()
 - Welcome to your bot.
 
-# SendActivity_DidntGetThat()
+# SendActivity_DidNotUnderstand()
 [Activity
-    Text = ${SendActivity_DidntGetThat_text()}
+    Text = ${SendActivity_DidNotUnderstand_text()}
 ]
 
-# SendActivity_DidntGetThat_text()
+# SendActivity_DidNotUnderstand_text()
 - Sorry, I didn't get that.

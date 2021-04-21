@@ -112,7 +112,7 @@
           "$designer": {
             "id": "gc2wn4"
           },
-          "activity": "${SendActivity_DidntGetThat()}"
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }

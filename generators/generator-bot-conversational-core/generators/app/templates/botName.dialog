@@ -128,7 +128,7 @@
           "$designer": {
             "id": "IQMEuO"
           },
-          "activity": "${SendActivity_DidntGetThat()}"
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }
