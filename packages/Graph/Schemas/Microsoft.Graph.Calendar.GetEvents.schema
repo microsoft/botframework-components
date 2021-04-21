@@ -27,7 +27,7 @@
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "user.token.token"
+        "turn.token.token"
       ]
     },
     "startProperty": {

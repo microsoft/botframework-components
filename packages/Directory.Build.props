@@ -12,15 +12,13 @@
 
   <PropertyGroup>
     <!-- Rules found at: https://aka.ms/Microsoft-NuGet-Compliance -->
-    <PackageProjectUrl>https://github.com/Microsoft/botframework-components</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/microsoft/botframework-sdk/master/icon.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>https://github.com/Microsoft/botbuilder-components</RepositoryUrl>
     <LicenseUrl>https://github.com/Microsoft/BotBuilder-dotnet/blob/master/LICENSE</LicenseUrl>
-    <PackageTags>msbot-component</PackageTags>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Microsoft/botframework-components</RepositoryUrl>
     <!--
       Suppress a warning about upcoming deprecation of PackageLicenseUrl. When embedding licenses are supported,
       replace PackageLicenseUrl with PackageLicenseExpression.

@@ -1,0 +1,20 @@
+[Common](common.en-us.lg)
+[Profile](profile.en-us.lg)
+
+
+
+# SendActivity_ryFbw6()
+[Activity
+    Attachments = ${json(ProfileCard(turn.Result))}
+]
+
+# SendActivity_dTcyKk()
+[Activity
+    Text = Here is what I found for **${turn.Result.displayName}**:
+]
+
+# SendActivity_lcoztE()
+[Activity
+    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
+]
+

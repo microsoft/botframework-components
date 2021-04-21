@@ -12,7 +12,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.8" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" /><%- packageReferences %>
   </ItemGroup>
@@ -25,6 +27,9 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
     <None Include="<%- settingsIncludePath %>appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="www\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

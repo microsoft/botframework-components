@@ -14,7 +14,6 @@ namespace Microsoft.Bot.Components.Graph
     /// </summary>
     public class MSGraphClient
     {
-#if DEBUG
         private static IGraphServiceClient clientOverride;
 
         /// <summary>
@@ -25,7 +24,6 @@ namespace Microsoft.Bot.Components.Graph
         {
             MSGraphClient.clientOverride = client;
         }
-#endif
 
         /// <summary>
         /// Gets the authenticated <see cref="GraphServiceClient"/>.
@@ -35,12 +33,11 @@ namespace Microsoft.Bot.Components.Graph
         /// <returns>Instance of <see cref="GraphServiceClient"/>.</returns>
         public static IGraphServiceClient GetAuthenticatedClient(string accessToken, HttpClient httpClient)
         {
-#if DEBUG
             if (clientOverride != null)
             {
                 return clientOverride;
             }
-#endif
+
             var client = new GraphServiceClient(httpClient);
             client.AuthenticationProvider = new DelegateAuthenticationProvider(
                     async (requestMessage) =>

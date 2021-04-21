@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.13.0-preview" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Declarative" Version="4.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="testsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Copy the test folders over -->
+    <None Include="TestAssets\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\skills\declarative\Calendar\Calendar\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,14 +1,18 @@
 [Common](common.en-us.lg)
-[UserList](userList.en-us.lg)
+[userList](userList.en-us.lg)
+[Cards](cards.en-us.lg)
 
-# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, pageIndex, pageCount, scenario)
-- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount, scenario), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount))}
+# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount)
+- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount))}
 
-# ListCardHeader(icon, title, totalItemCount, scenario)
-- ${CardHeader(template(icon), template(title, scenario), "", concat(totalItemCount, " results"))}
+# ListCardHeader(icon, title, totalItemCount)
+- ${CardHeader(template(icon), template(title), "", concat(totalItemCount, " results"))}
 
 # ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount)
 - ${PaginatedListCardBody(totalItemCount, pageSize, foreach(pageItems, item, template(itemTemplate, item)), pageIndex, pageCount)}
+
+# SelectedItemCard(item, headerIcon, headerTitle, itemTemplate, actionsTemplate)
+- ${CardTemplate(CardHeader(headerIcon, headerTitle, '', ''), template(itemTemplate, item))}
 
 # SendActivity_BDsmtE()
 - ${template($templates.skipResponse)}
@@ -19,29 +23,38 @@
 # SendActivity_D6gEbV()
 - That's the end of the list.
 
-# ChoiceInput_DefaultValueResponse_dc3QNs()
-- OK, let's move on.
-
-# ChoiceInput_Prompt_dc3QNs()
-- IF: ${$isFirstTurn == true}
-    - ${InitialChoicePrompt(dialog.Scenario, dialog.User, dialog.items)}
-- ELSE: 
-    - ${RepromptChoicePrompt(dialog.Scenario, dialog.User, dialog.items)}
-    
-# InitialChoicePrompt(Scenario, User, Items)
+# InitialChoicePrompt()
 [Activity
     text = ${if($activePrompt != null, template($activePrompt), null)}
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $pageIndex + 1, $pageCount, Scenario))}
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
 
-# RepromptChoicePrompt(Scenario, User, Items)
+# RepromptChoicePrompt()
 [Activity
     deliveryMode = update
     id = ${turn.activity.replyToId}
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $pageIndex + 1, $pageCount, Scenario))}
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
 
 # Bot.SendActivityPlus_Activity_UcmH0c()
 [Activity
-    attachments = ${json(ListCard(count($items), $pageSize, $pageItems, $templates.icon, $templates.title, $templates.item, $pageIndex + 1, $pageCount, ""))}
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
 ]
+
+# ChoiceInput_Prompt_VygDK3()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# SendActivity_HOESBs()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# ChoiceInput_DefaultValueResponse_VygDK3()
+- OK, let's move on.
+
+# SendActivity_nRdr1W()
+- ${CancelMessage()}

@@ -8,7 +8,7 @@
       "methods": [
         "post"
       ],
-      "route": "skills/v3/conversations/{conversationId}/activities/{activityId}"
+      "route": "api/skills/v3/conversations/{conversationId}/activities/{activityId}"
     },
     {
       "type": "http",
