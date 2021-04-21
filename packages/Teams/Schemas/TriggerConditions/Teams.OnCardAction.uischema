@@ -12,6 +12,7 @@
         "subtitle": "Invoke activity with no activity.name"
     },
     "trigger": {
-      "submenu": "Microsoft Teams"
+      "submenu": "Microsoft Teams",
+      "label": "On card action"
     }
 }
