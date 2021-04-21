@@ -11,7 +11,7 @@
 
 # SendActivity_DidntGetThat()
 [Activity
-    Text = ${SendActivity_gc2wn4_text()}
+    Text = ${SendActivity_DidntGetThat_text()}
 ]
 
 # SendActivity_DidntGetThat_text()
