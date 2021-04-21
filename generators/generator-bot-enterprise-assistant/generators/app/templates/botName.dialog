@@ -42,7 +42,7 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "GreetingReturningUser"
+                        "id": "yXbfKT"
                       },
                       "activity": "${SendActivity_GreetingReturningUser()}"
                     }
@@ -51,7 +51,7 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "GreetingNewUser"
+                        "id": "XZRD8m"
                       },
                       "activity": "${SendActivity_GreetingNewUser()}"
                     },
