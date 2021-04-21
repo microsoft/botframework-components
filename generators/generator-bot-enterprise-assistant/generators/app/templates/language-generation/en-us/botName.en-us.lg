@@ -1,28 +1,40 @@
-[import](common.lg)
+﻿[import](common.lg)
 
-# SendActivity_WelcomeNewUser()
+# SendActivity_GreetingNewUser()
 [Activity
-    Attachments = ${SendActivity_WelcomeNewUser_attachment_SR7bxz()}
+    Attachments = ${SendActivity_GreetingNewUser_attachment_SR7bxz()}
 ]
 
-# SendActivity_WelcomeNewUser_attachment_SR7bxz()
+# SendActivity_GreetingNewUser_attachment_SR7bxz()
 [HeroCard
-  text = ${WelcomeNewUser()}
-  buttons = ${BotTourEventAction()}
+  text = ${GreetingNewUser_text()}
+  buttons = ${WelcomeBotTourIntent_action()}
 ]
 
-# SendActivity_WelcomeReturningUser()
+# SendActivity_GreetingReturningUser()
 [Activity
-    Attachments = ${SendActivity_WelcomeReturningUser_attachment_9sGxgG()}
+    Attachments = ${SendActivity_GreetingReturningUser_attachment_9sGxgG()}
 ]
 
-# SendActivity_WelcomeReturningUser_attachment_9sGxgG()
+# SendActivity_GreetingReturningUser_attachment_9sGxgG()
 [HeroCard
-  text = ${WelcomeReturningUser()}
-  buttons = ${BotTourEventAction()}
+  text = ${GreetingReturningUser_text()}
+  buttons = ${WelcomeBotTourIntent_action()}
 ]
 
-# BotTourEventAction()
+# GreetingNewUser_text()
+- 🖐️ Hey, there! How can I help you today?
+- 🖐️ Hi! How can I help?
+- 🖐️ Hello! What do you want to do today?
+
+# GreetingReturningUser_text()
+- 🖐️ Welcome back! How can I help you today?
+- 🖐️ Hello again! What can I help with?
+- 🖐️ Good to see you again. What do you want to do today?
+- 🖐️ Hey, there! Let's get started.
+- 🖐️ Hello again! How can I help?
+
+# WelcomeBotTourIntent_action()
 [CardAction
     title = You can ask me
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
@@ -31,7 +43,7 @@
 
 # SendActivity_ErrorOccured()
 [Activity
-    Text = ${SendActivity_SYFXJJ_text()}
+    Text = ${SendActivity_ErrorOccured_text()}
 ]
 
 # SendActivity_ErrorOccured_text()

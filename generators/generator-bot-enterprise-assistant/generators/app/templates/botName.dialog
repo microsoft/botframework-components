@@ -42,18 +42,18 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "WelcomeReturningUser"
+                        "id": "GreetingReturningUser"
                       },
-                      "activity": "${SendActivity_WelcomeReturningUser()}"
+                      "activity": "${SendActivity_GreetingReturningUser()}"
                     }
                   ],
                   "elseActions": [
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "WelcomeNewUser"
+                        "id": "GreetingNewUser"
                       },
-                      "activity": "${SendActivity_WelcomeNewUser()}"
+                      "activity": "${SendActivity_GreetingNewUser()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperty",

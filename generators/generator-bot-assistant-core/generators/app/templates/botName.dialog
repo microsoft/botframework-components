@@ -42,7 +42,7 @@
                       "$designer": {
                         "id": "yXbfKT"
                       },
-                      "activity": "${SendActivity_WelcomeReturningUser()}"
+                      "activity": "${SendActivity_GreetingReturningUser()}"
                     }
                   ],
                   "elseActions": [
@@ -51,7 +51,7 @@
                       "$designer": {
                         "id": "XZRD8m"
                       },
-                      "activity": "${SendActivity_WelcomeNewUser()}"
+                      "activity": "${SendActivity_GreetingNewUser()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperty",

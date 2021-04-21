@@ -61,7 +61,7 @@
           "$designer": {
             "id": "639pkl"
           },
-          "activity": "${SendActivity_639pkl()}"
+          "activity": "${SendActivity_ThanksForFeedback()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
