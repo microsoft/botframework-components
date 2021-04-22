@@ -41,14 +41,14 @@
           "$designer": {
             "id": "zXbLp8"
           },
-          "condition": "=not(exists(user.profile))",
+          "condition": "=not(exists(turn.user.profile))",
           "actions": [
             {
               "$kind": "Microsoft.Graph.User.GetProfile",
               "$designer": {
                 "id": "mR0Tzk"
               },
-              "resultProperty": "user.profile",
+              "resultProperty": "turn.user.profile",
               "token": "=turn.token.token"
             }
           ]
@@ -66,7 +66,7 @@
                 "id": "4d4VCn"
               },
               "token": "=turn.token.token",
-              "addressProperty": "=user.profile.userPrincipalName",
+              "addressProperty": "=turn.user.profile.userPrincipalName",
               "resultProperty": "user.workingHours"
             }
           ]
