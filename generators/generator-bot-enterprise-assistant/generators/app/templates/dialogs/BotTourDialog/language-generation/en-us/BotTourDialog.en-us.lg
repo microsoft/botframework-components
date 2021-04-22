@@ -6,7 +6,7 @@
 ]
 
 # SendActivity_BotTourOverview_attachment_WGITEE()
-> ChevronCard
+> OverviewCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(BotTourOptions(), 5), ''))}
 
 

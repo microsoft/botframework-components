@@ -6,7 +6,7 @@
 ]
 
 # SendActivity_BotTourOverview_attachment_WGITEE()
-> ChevronCard
+> OverviewCard
 - ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
 
 # SendActivity_BotTourFocus()
@@ -15,8 +15,8 @@
 ]
 
 # SendActivity_BotTourFocus_attachment_cKtuIu()
-> FocusCard
-- ```${json(CardTemplate(BotTourFocusCardHeader(),BotTourFocusCardBody(), BotTourFocusCardActions()))}```
+> DetailsCard
+- ```${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}```
 
 # BotTourTitle()
 - You can ask me...
@@ -33,7 +33,7 @@
 # BotTourContentTextThree()
 - You can also provide samples to trigger connected skills.
 
-# BotTourFocusCardText()
+# BotTourDetailsCardText()
 - You can provide a more detailed description of your skill, as well as sample utterances users can say to get started.
 
 # BotTourHeader
@@ -124,16 +124,16 @@
    ],
    "selectAction":{
       "type":"Action.Submit",
-      "title":"FocusCard",
+      "title":"DetailsCard",
       "data":{
-         "intent":"FocusCard"
+         "intent":"DetailsCard"
       }
    },
    "separator": true
 }
 ```
 
-# BotTourFocusCardHeader()
+# BotTourDetailsCardHeader()
 - ```
 {
     "type": "Container",
@@ -174,21 +174,21 @@
 }
 ```
 
-# BotTourFocusCardBody()
+# BotTourDetailsCardBody()
 -```
 {
     "type": "Container",
     "items": [
         {
             "type": "TextBlock",
-            "text": "${BotTourFocusCardText()}",
+            "text": "${BotTourDetailsCardText()}",
             "wrap": true
         }        
     ]
 }
 ```
 
-# BotTourFocusCardActions()
+# BotTourDetailsCardActions()
 - ```
 {
     "type": "ActionSet",

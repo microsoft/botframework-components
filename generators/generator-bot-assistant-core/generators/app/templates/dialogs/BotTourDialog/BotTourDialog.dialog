@@ -29,9 +29,9 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "pzuSn9",
-        "name": "FocusCard"
+        "name": "DetailsCard"
       },
-      "intent": "FocusCard",
+      "intent": "DetailsCard",
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
