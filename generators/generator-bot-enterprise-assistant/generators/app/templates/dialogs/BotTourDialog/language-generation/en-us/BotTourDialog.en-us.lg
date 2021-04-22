@@ -2,10 +2,10 @@
 
 # SendActivity_BotTourOverview()
 [Activity
-    Attachments = ${SendActivity_BotTourOverview_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourOverview_attachment_AdaptiveCard()}
 ]
 
-# SendActivity_BotTourOverview_attachment_WGITEE()
+# SendActivity_BotTourOverview_attachment_AdaptiveCard()
 > OverviewCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(BotTourOptions(), 5), ''))}
 

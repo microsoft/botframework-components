@@ -2,19 +2,19 @@
 
 # SendActivity_BotTourOverview()
 [Activity
-    Attachments = ${SendActivity_BotTourOverview_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourOverview_attachment_AdaptiveCard()}
 ]
 
-# SendActivity_BotTourOverview_attachment_WGITEE()
+# SendActivity_BotTourOverview_attachment_AdaptiveCard()
 > OverviewCard
 - ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
 
-# SendActivity_BotTourFocus()
+# SendActivity_BotTourDetails()
 [Activity
-    Attachments = ${SendActivity_BotTourFocus_attachment_cKtuIu()}
+    Attachments = ${SendActivity_BotTourDetails_attachment_AdaptiveCard()}
 ]
 
-# SendActivity_BotTourFocus_attachment_cKtuIu()
+# SendActivity_BotTourDetails_attachment_AdaptiveCard()
 > DetailsCard
 - ```${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}```
 

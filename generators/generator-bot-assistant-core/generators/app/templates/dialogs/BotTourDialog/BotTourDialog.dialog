@@ -38,7 +38,7 @@
           "$designer": {
             "id": "Z5JucQ"
           },
-          "activity": "${SendActivity_BotTourFocus()}"
+          "activity": "${SendActivity_BotTourDetails()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
