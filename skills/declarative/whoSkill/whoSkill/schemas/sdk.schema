@@ -5,7 +5,10 @@
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
     {
-      "$ref": "#/definitions/ListDialog.dialog"
+      "$ref": "#/definitions/GetManagerDialog.dialog"
+    },
+    {
+      "$ref": "#/definitions/GetProfileDialog.dialog"
     },
     {
       "$ref": "#/definitions/Microsoft.ActivityTemplate"
@@ -413,20 +416,51 @@
       "$ref": "#/definitions/Microsoft.UrlEntityRecognizer"
     },
     {
-      "$ref": "#/definitions/GetManagerDialog.dialog"
-    },
-    {
-      "$ref": "#/definitions/GetProfileDialog.dialog"
+      "$ref": "#/definitions/ResolveUserDialog.dialog"
     }
   ],
   "definitions": {
-    "ListDialog.dialog": {
+    "GetManagerDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "ListDialog",
+      "title": "GetManagerDialog",
       "type": "object",
       "$result": {
         "type": "object",
         "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
       },
       "required": [
         "$kind"
@@ -439,15 +473,89 @@
         }
       },
       "properties": {
-        "": {
-          "title": ""
+        "nameEntity": {
+          "description": "Name of the entity to search",
+          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
+          "title": "Name Entity"
         },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "ListDialog.dialog"
+          "const": "GetManagerDialog.dialog"
+        },
+        "$designer": {
+          "title": "Designer information",
+          "type": "object",
+          "description": "Extra information for the Bot Framework Composer."
+        }
+      }
+    },
+    "GetProfileDialog.dialog": {
+      "$role": "implements(Microsoft.IDialog)",
+      "title": "GetProfileDialog",
+      "type": "object",
+      "$result": {
+        "type": "object",
+        "properties": {}
+      },
+      "definitions": {
+        "equalsExpression": {
+          "$role": "expression",
+          "type": "string",
+          "title": "Equals Expression",
+          "description": "Expression starting with =.",
+          "pattern": "^=.*\\S.*",
+          "examples": [
+            "=user.name"
+          ]
+        },
+        "stringExpression": {
+          "$role": "expression",
+          "title": "String or expression",
+          "description": "Interpolated string or expression to evaluate.",
+          "oneOf": [
+            {
+              "type": "string",
+              "title": "String",
+              "description": "Interpolated string",
+              "pattern": "^(?!(=)).*",
+              "examples": [
+                "Hello ${user.name}"
+              ]
+            },
+            {
+              "$ref": "#/definitions/GetProfileDialog.dialog/definitions/equalsExpression",
+              "examples": [
+                "=concat('x','y','z')"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "$kind"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$": {
+          "title": "Tooling property",
+          "description": "Open ended property for tooling."
+        }
+      },
+      "properties": {
+        "nameEntity": {
+          "description": "Name entity to search",
+          "$ref": "#/definitions/GetProfileDialog.dialog/definitions/stringExpression",
+          "title": "Name Entity"
+        },
+        "$kind": {
+          "title": "Kind of dialog object",
+          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
+          "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
+          "const": "GetProfileDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
@@ -3686,7 +3794,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3745,7 +3853,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventToCreateProperty": {
@@ -3808,7 +3916,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3867,7 +3975,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -3927,7 +4035,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "attendeesProperty": {
@@ -3996,7 +4104,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "nameProperty": {
@@ -4054,7 +4162,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventIdProperty": {
@@ -4123,7 +4231,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "startProperty": {
@@ -4218,7 +4326,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "addressProperty": {
@@ -4536,7 +4644,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventId": {
@@ -4595,7 +4703,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "eventToUpdateProperty": {
@@ -4652,7 +4760,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "userId": {
@@ -4711,7 +4819,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -4791,7 +4899,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "propertiesToSelect": {
@@ -4863,7 +4971,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -4942,7 +5050,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "$kind": {
@@ -4993,7 +5101,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "propertiesToSelect": {
@@ -5065,7 +5173,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -5145,7 +5253,7 @@
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "turn.token.token"
           ]
         },
         "maxCount": {
@@ -5321,6 +5429,7 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
+          "default": "turn.results",
           "examples": [
             "dialog.contosodata"
           ]
@@ -5433,7 +5542,10 @@
       "$role": "interface",
       "oneOf": [
         {
-          "$ref": "#/definitions/ListDialog.dialog"
+          "$ref": "#/definitions/GetManagerDialog.dialog"
+        },
+        {
+          "$ref": "#/definitions/GetProfileDialog.dialog"
         },
         {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"
@@ -5649,10 +5761,7 @@
           "$ref": "#/definitions/Microsoft.UpdateActivity"
         },
         {
-          "$ref": "#/definitions/GetManagerDialog.dialog"
-        },
-        {
-          "$ref": "#/definitions/GetProfileDialog.dialog"
+          "$ref": "#/definitions/ResolveUserDialog.dialog"
         },
         {
           "type": "string",
@@ -6884,7 +6993,7 @@
     "Microsoft.OAuthInput": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "OAuthInput Dialog",
-      "description": "Collect login information.",
+      "description": "Collect login information before each request.",
       "type": "object",
       "required": [
         "connectionName",
@@ -6948,7 +7057,8 @@
         "property": {
           "$ref": "#/definitions/stringExpression",
           "title": "Token property",
-          "description": "Property to store the OAuth token result.",
+          "description": "Property to store the OAuth token result. WARNING: Changing this location is not recommended as you should call OAuthInput immediately before each use of the token.",
+          "default": "turn.token",
           "examples": [
             "dialog.token"
           ]
@@ -11003,9 +11113,9 @@
         }
       }
     },
-    "GetManagerDialog.dialog": {
+    "ResolveUserDialog.dialog": {
       "$role": "implements(Microsoft.IDialog)",
-      "title": "GetManagerDialog",
+      "title": "ResolveUserDialog",
       "type": "object",
       "$result": {
         "type": "object",
@@ -11037,7 +11147,7 @@
               ]
             },
             {
-              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
+              "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/equalsExpression",
               "examples": [
                 "=concat('x','y','z')"
               ]
@@ -11056,89 +11166,17 @@
         }
       },
       "properties": {
-        "nameEntity": {
-          "description": "Name of the entity to search",
-          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
+        "UserIdFound": {
+          "title": "User Id Found",
+          "description": "Id of the user to look for",
+          "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/stringExpression"
         },
         "$kind": {
           "title": "Kind of dialog object",
           "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetManagerDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "GetProfileDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetProfileDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetProfileDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name entity to search",
-          "$ref": "#/definitions/GetProfileDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetProfileDialog.dialog"
+          "const": "ResolveUserDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",

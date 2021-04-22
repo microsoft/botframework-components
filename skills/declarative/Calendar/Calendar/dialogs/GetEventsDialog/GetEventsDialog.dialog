@@ -352,7 +352,7 @@
           "dateTimeTypeProperty": "=coalesce($parameters.dateTimeType, \"date\")",
           "startProperty": "=$parameters.start",
           "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
-          "userEmailProperty": "=user.profile.mail",
+          "userEmailProperty": "=turn.user.profile.mail",
           "maxResultsProperty": "=25"
         },
         {
