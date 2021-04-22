@@ -24,6 +24,23 @@
           "name": "PeopleSkill.AuthenticationDialog.BeginDialog"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "jf8cXp"
+          },
+          "condition": "=settings.oauthConnectionName == null || not(exists(settings.oauthConnectionName)) || empty(settings.oAuthConnectionName)",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "q8Tnab"
+              },
+              "name": "PeopleSkill.AuthenticationDialog.BeginDialog.Error",
+              "label": "OAuthConnectionNotConfigured"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
             "id": "IQuSlw"
