@@ -28,7 +28,7 @@
           "$designer": {
             "id": "teXtvE"
           },
-          "condition": "=settings.oauthConnectionName == null || not(exists(settings.oauthConnectionName))",
+          "condition": "=settings.oauthConnectionName == null || not(exists(settings.oauthConnectionName)) || empty(settings.oAuthConnectionName)",
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
