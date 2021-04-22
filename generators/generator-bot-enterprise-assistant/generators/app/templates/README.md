@@ -12,6 +12,13 @@ In order to test this bot locally, you will need the following services provisio
 - Language Understanding (LUIS)
 - QnA Maker
 
+#### Configure Microsoft App Password (for your root bot and each skill)
+1. Open your Azure Bot Channels Regisration in the Azure Portal
+2. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
+3. In the Certificates & secrets tab, click **New client secret**
+4. Assign a name and an expiration period, then click **Add**
+5. Copy the secret value and save for later use along with your Microsoft App ID
+
 ### Configure Authentication (Calendar Skill)
 You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
@@ -21,8 +28,8 @@ You must configure an authentication connection on your Azure Bot Registration i
 3. Assign your connection setting a name (save this value for later)
 4. Select **Azure Active Directory v2** from the Service Provider dropdown.
 5. Fill in the following fields and click **Save**:
-    * **Client id**: your Bot App Id
-    * **Client secret**: your Bot App Password
+    * **Client id**: your Microsoft App ID
+    * **Client secret**: your Microsoft App Password
     * **Tenant ID**: your Azure Active Directory tenant ID, or "common" to support any tenant
     * **Scopes**: Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All
 6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
@@ -82,8 +89,8 @@ You must configure an authentication connection on your Azure Bot Registration i
 3. Assign your connection setting a name (save this value for later)
 4. Select **Azure Active Directory v2** from the Service Provider dropdown.
 5. Fill in the following fields and click **Save**:
-    * **Client id**: your Bot App Id
-    * **Client secret**: your Bot App Password
+    * **Client id**: your Microsoft App ID
+    * **Client secret**: your Microsoft App Password
     * **Tenant ID**: your Azure Active Directory tenant ID, or "common" to support any tenant
     * **Scopes**: Contacts.Read Directory.Read.All People.Read People.Read.All User.ReadBasic.All User.Read.All
 6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID

@@ -10,6 +10,13 @@ In order to test this bot locally, you will need the following services provisio
 - Azure Bot Registration
 - Language Understanding (LUIS)
 
+#### Configure Microsoft App Password
+1. Open your Azure Bot Channels Regisration in the Azure Portal
+2. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
+3. In the Certificates & secrets tab, click **New client secret**
+4. Assign a name and an expiration period, then click **Add**
+5. Copy the secret value and save for later use along with your Microsoft App ID
+
 ## Configure Authentication
 You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
