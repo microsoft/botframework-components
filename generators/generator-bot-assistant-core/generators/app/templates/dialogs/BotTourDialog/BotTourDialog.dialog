@@ -47,6 +47,21 @@
           }
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "77kmIw"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "dAfOtV"
+          },
+          "value": false
+        }
+      ]
     }
   ],
   "generator": "BotTourDialog.lg",
