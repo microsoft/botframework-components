@@ -628,28 +628,28 @@
   "Microsoft.Graph.Calendar.Helpers.FilterEvents": {
     "menu": {
       "submenu": [
-        "Calendar Skill Helpers"
+        "Microsoft Graph"
       ]
     }
   },
   "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes": {
     "menu": {
       "submenu": [
-        "Calendar Skill Helpers"
+        "Microsoft Graph"
       ]
     }
   },
   "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate": {
     "menu": {
       "submenu": [
-        "Calendar Skill Helpers"
+        "Microsoft Graph"
       ]
     }
   },
   "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime": {
     "menu": {
       "submenu": [
-        "Calendar Skill Helpers"
+        "Microsoft Graph"
       ]
     }
   },
