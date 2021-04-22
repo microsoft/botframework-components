@@ -34,7 +34,7 @@ You must configure an authentication connection on your Azure Bot Registration i
     * **Scopes**: Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All
 6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
 7. In the API permissions tab, click **Add a permission**
-8. Click **Microsoft Graph** and add the following scopes: 
+8. Click **Microsoft Graph > Delegated Permissions** and add the following scopes: 
     * Calendars.ReadWrite
     * Contacts.Read
     * People.Read
