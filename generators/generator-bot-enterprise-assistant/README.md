@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-This template creates an enterprise assistant, comprised of a root bot based on the Basic Assistant template, and pre-configured with Calendar and People as skills.
+This template creates an enterprise assistant, comprised of a root bot based on the Basic Assistant template, and pre-configured with the Calendar and People templates as skills.
 
 Includes support for:
 
