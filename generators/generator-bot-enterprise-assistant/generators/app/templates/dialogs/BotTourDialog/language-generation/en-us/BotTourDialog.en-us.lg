@@ -12,18 +12,20 @@
 
 # SendActivity_CalendarTour()
 [Activity
-    Attachments = ${SendActivity_CalendarTour_attachment_nUDor4()}
+    Attachments = ${SendActivity_CalendarTour_attachment_AdaptiveCard()}
 ]
 
-# SendActivity_CalendarTour_attachment_nUDor4()
+# SendActivity_CalendarTour_attachment_AdaptiveCard()
+> CalendarDetailsCard
 - ${json(CardTemplate(CalendarTourCardHeader(), BotTourDetailsCardBody(CalendarTourCardText()), CalendarTourCardActions()))}
 
 # SendActivity_PeopleTour()
 [Activity
-    Attachments = ${SendActivity_PeopleTour_attachment_a0ogKC()}
+    Attachments = ${SendActivity_PeopleTour_attachment_AdaptiveCard()}
 ]
 
-# SendActivity_PeopleTour_attachment_a0ogKC()
+# SendActivity_PeopleTour_attachment_AdaptiveCard()
+> PeopleDetailsCard
 - ${json(CardTemplate(PeopleTourCardHeader(), BotTourDetailsCardBody(PeopleTourCardText()), PeopleTourCardActions()))}
 
 # CalendarTourTitle()
