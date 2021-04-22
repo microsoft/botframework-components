@@ -83,7 +83,25 @@
             "id": "6JAmBh"
           },
           "activityProcessed": true,
-          "dialog": "BotTourDialog"
+          "dialog": "BotTourDialog",
+          "resultProperty": "turn.result"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0tDgZH"
+          },
+          "condition": "=not(turn.result)",
+          "elseActions": [],
+          "actions": [
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "JpprmM"
+              },
+              "activityProcessed": false
+            }
+          ]
         }
       ]
     },
