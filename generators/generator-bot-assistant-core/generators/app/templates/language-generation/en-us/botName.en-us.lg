@@ -2,10 +2,10 @@
 
 # SendActivity_GreetingNewUser()
 [Activity
-    Attachments = ${SendActivity_GreetingNewUser_attachment_HeroCard()}
+    Attachments = ${SendActivity_GreetingNewUser_attachment_heroCard()}
 ]
 
-# SendActivity_GreetingNewUser_attachment_HeroCard()
+# SendActivity_GreetingNewUser_attachment_heroCard()
 [HeroCard
   text = ${GreetingNewUser_text()}
   buttons = ${GreetingBotTourIntent_action()}
@@ -13,10 +13,10 @@
 
 # SendActivity_GreetingReturningUser()
 [Activity
-    Attachments = ${SendActivity_GreetingReturningUser_attachment_HeroCard()}
+    Attachments = ${SendActivity_GreetingReturningUser_attachment_heroCard()}
 ]
 
-# SendActivity_GreetingReturningUser_attachment_HeroCard()
+# SendActivity_GreetingReturningUser_attachment_heroCard()
 [HeroCard
   text = ${GreetingReturningUser_text()}
   buttons = ${GreetingBotTourIntent_action()}

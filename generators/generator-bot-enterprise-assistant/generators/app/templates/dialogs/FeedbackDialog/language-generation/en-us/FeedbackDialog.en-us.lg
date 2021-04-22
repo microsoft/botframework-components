@@ -3,7 +3,7 @@
 # SendActivity_FeedbackExperiencePrompt()
 [Activity
     Text = ${SendActivity_FeedbackExperiencePrompt_text()}
-    Attachments = ${SendActivity_FeedbackExperiencePrompt_attachment_AdaptiveCard()}
+    Attachments = ${SendActivity_FeedbackExperiencePrompt_attachment_adaptiveCard()}
 ]
 
 # SendActivity_FeedbackExperiencePrompt_text()
@@ -11,7 +11,7 @@
 - Did the bot meet your expectations?
 - Did you like this interaction with the bot?
 
-# SendActivity_FeedbackExperiencePrompt_attachment_AdaptiveCard()
+# SendActivity_FeedbackExperiencePrompt_attachment_adaptiveCard()
 > LikeDislikeCard
 - ```${json(CardTemplate(FeedbackHeader(),FeedbackBody(),FeedbackActions()))}```
 
