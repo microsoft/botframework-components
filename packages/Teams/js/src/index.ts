@@ -1,9 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 /**
- * @module botbuilder-dialogs-adaptive-teams
- */
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * @module @microsoft/bot-components-teams
  */
 
 export * from './actions';

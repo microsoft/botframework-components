@@ -1,10 +1,5 @@
-/**
- * @module botbuilder-dialogs-adaptive-teams
- */
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 import { Expression } from 'adaptive-expressions';
 import { TurnPath } from 'botbuilder-dialogs';

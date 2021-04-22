@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.AdaptiveCards", "AdaptiveCards\Microsoft.Bot.Components.AdaptiveCards.csproj", "{85A7DFFC-1230-433E-B9EE-7A1FC66B0AFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "Teams\Microsoft.Bot.Components.Teams.csproj", "{FD29CBA6-C18F-498B-9F00-A3C34C1BEC5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "Teams\dotnet\Microsoft.Bot.Components.Teams.csproj", "{FD29CBA6-C18F-498B-9F00-A3C34C1BEC5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

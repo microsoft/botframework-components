@@ -1,8 +1,8 @@
 {
-  "name": "botbuilder-dialogs-adaptive-teams",
+  "name": "@microsoft/bot-components-teams",
   "author": "Microsoft Corp.",
   "description": "Rule system for the Microsoft BotBuilder adaptive dialog system, with integration specific to Microsoft Teams.",
-  "version": "4.13.0-preview",
+  "version": "1.0.0",
   "license": "MIT",
   "keywords": [
     "botbuilder",

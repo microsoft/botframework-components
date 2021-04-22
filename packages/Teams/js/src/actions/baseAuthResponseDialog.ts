@@ -1,10 +1,5 @@
-/**
- * @module botbuilder-dialogs-adaptive-teams
- */
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 import isEmpty from 'lodash/isEmpty';
 import { ActionTypes, Activity, CardAction, TokenResponse } from 'botbuilder';

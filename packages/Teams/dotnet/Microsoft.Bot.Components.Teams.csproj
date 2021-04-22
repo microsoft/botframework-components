@@ -10,7 +10,7 @@
     <ContentTargetFolders>content</ContentTargetFolders>
     <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
 
