@@ -20,7 +20,7 @@ Use this template if you want to...
 
 - Create a conversational experience for common enterprise scenarios (i.e. calendar management and user directory lookup)
 - See examples of more complex conversational flows, and more advanced language understanding and generation
-- See an example of a root bot and skills handling complex user interactions
+- See an example of a root bot and skills handling complex user interactions including interruptions and Adaptive Cards
 
 ## Packages
 
