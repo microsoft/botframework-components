@@ -12,6 +12,7 @@
         "subtitle": "Invoke activity.name='task/submit'"
     },
     "trigger": {
-      "submenu": "Microsoft Teams"
+      "submenu": "Microsoft Teams",
+      "label": "On task module submit"
     }
 }
