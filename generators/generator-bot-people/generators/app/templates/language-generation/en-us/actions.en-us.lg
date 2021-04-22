@@ -1,4 +1,4 @@
- # SkillId
+  # SkillId
  - <%= botName %>
  
  # GetManagerAction(user)
@@ -57,6 +57,22 @@
     "data": {
         "skillId": "${SkillId()}",
         "intent": "GetDirectReports",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# GetProfileAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Profile",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetProfile",
         "user": "${user}",
         "msteams": {
             "type": "messageBack"
