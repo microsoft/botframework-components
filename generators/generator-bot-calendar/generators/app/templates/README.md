@@ -40,7 +40,7 @@ You must configure an authentication connection on your Azure Bot Registration i
 
 9. In the Authentication tab, click **Add a platform**
     1. Select **Web**
-    2. Set the URL to https://token.botframework.com/.auth/web/redirect.
+    2. Set the URL to https://token.botframework.com/.auth/web/redirect
 10. In Bot Framework Composer, open your **Project Settings** and toggle the **Advanced Settings View**
 1. Set the following property to the value from Step 3:
     ```
