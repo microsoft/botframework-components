@@ -7,7 +7,7 @@
       "id": "GnxrCe"
     }
   },
-  "autoEndDialog": false,
+  "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
