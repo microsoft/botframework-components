@@ -1,12 +1,12 @@
 [import](common.lg)
 
-# TextInput_Prompt_C244wC()
+# TextInput_Prompt_QnaMultiTurnResponse()
 [Activity
     Text = ${expandText(@answer)}
     SuggestedActions = ${foreach(turn.recognized.answers[0].context.prompts, x, x.displayText)}
 ]
 
-# SendActivity_hJgJx8()
+# SendActivity_QnaResponse()
 - ${expandText(@answer)}
 
 # SendActivity_DidNotUnderstand()
