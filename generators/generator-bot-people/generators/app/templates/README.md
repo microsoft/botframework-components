@@ -32,7 +32,7 @@ You must configure an authentication connection on your Azure Bot Registration i
     * **Scopes**: Contacts.Read Directory.Read.All People.Read People.Read.All User.ReadBasic.All User.Read.All
 6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
 7. In the API permissions tab, click **Add a permission**
-8. Click **Microsoft Graph** and add the following scopes: 
+8. Click **Microsoft Graph > Delegated Permissions** and add the following scopes: 
     * Contacts.Read
     * Directory.Read.All
     * People.Read 
