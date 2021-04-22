@@ -4,11 +4,11 @@
     "label": "Transfer a call",
     "subtitle": "Call Transfer",
     "order": [
-      "phoneNumber",
+      "targetPhoneNumber",
       "*"
     ],
     "properties": {
-      "phoneNumber": {
+      "targetPhoneNumber": {
         "intellisenseScopes": [
           "variable-scopes"
         ]
@@ -21,6 +21,6 @@
   },
   "flow": {
     "widget": "ActionCard",
-    "body": "=action.phoneNumber"
+    "body": "=action.targetPhoneNumber"
   }
 }

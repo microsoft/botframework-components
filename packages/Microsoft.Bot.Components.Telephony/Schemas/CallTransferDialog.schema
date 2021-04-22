@@ -4,15 +4,12 @@
   "title": "Call Transfer",
   "description": "Phone number to transfer the call to (in E.164 format such as +1425123456)",
   "type": "object",
-  "required": [
-    "phoneNumber"
-  ],
   "additionalProperties": false,
   "properties": {
-    "phoneNumber": {
+    "targetPhoneNumber": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Phone Number",
-      "description": "Phone number to transfer the call to.",
+      "title": "Target Phone Number",
+      "description": "Phone number to transfer the call to",
       "examples": [
         "in E.164 format such as +1425123456"
       ]
