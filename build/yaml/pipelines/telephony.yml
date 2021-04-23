@@ -7,8 +7,6 @@ pool:
 
 extends:
   template: ../templates/component-template.yml
-  parameters:
-    PublishPackageArtifacts: # parameter is set in ADO
 
 variables:
   BuildConfiguration: 'Release'
