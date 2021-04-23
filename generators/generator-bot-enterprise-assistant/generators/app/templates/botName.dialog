@@ -44,7 +44,7 @@
                       "$designer": {
                         "id": "yXbfKT"
                       },
-                      "activity": "${SendActivity_yXbfKT()}"
+                      "activity": "${SendActivity_GreetingReturningUser()}"
                     }
                   ],
                   "elseActions": [
@@ -53,7 +53,7 @@
                       "$designer": {
                         "id": "XZRD8m"
                       },
-                      "activity": "${SendActivity_XZRD8m()}"
+                      "activity": "${SendActivity_GreetingNewUser()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperty",
@@ -145,57 +145,6 @@
             "id": "5BAUTN"
           },
           "activityProcessed": true
-        }
-      ],
-      "condition": "=turn.recognized.score > 0.8"
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "9wETGs",
-        "name": "Help"
-      },
-      "intent": "Help",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "2mE4eA"
-          },
-          "name": "<%= botName %>.OnIntent_Help"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "zlXdEy"
-          },
-          "activity": "${SendActivity_zlXdEy()}"
-        }
-      ],
-      "condition": "=turn.recognized.score > 0.8"
-    },
-    {
-      "$kind": "Microsoft.OnIntent",
-      "$designer": {
-        "id": "pRdAAf",
-        "name": "Feedback"
-      },
-      "intent": "Feedback",
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "tXHBt0"
-          },
-          "name": "<%= botName %>.OnIntent_Feedback"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "2pSztz"
-          },
-          "activityProcessed": true,
-          "dialog": "FeedbackDialog"
         }
       ],
       "condition": "=turn.recognized.score > 0.8"
@@ -332,58 +281,6 @@
       ]
     },
     {
-      "$kind": "Microsoft.OnUnknownIntent",
-      "$designer": {
-        "id": "v9Stie",
-        "name": "Unknown intent"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "nekhCR"
-          },
-          "name": "<%= botName %>.UnknownIntent"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "zG90cd"
-          },
-          "condition": "turn.activity.value.skillId != null",
-          "actions": [
-            {
-              "$kind": "Microsoft.EmitEvent",
-              "$designer": {
-                "id": "ocOoKo"
-              },
-              "eventName": "ConnectToSkill",
-              "eventValue": "=turn.activity.value.skillId"
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "VogQ3v"
-              },
-              "condition": "exists(turn.activity.text)",
-              "actions": [
-                {
-                  "$kind": "Microsoft.BeginDialog",
-                  "$designer": {
-                    "id": "P9A5BW"
-                  },
-                  "activityProcessed": false,
-                  "dialog": "ChitchatDialog"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "$kind": "Microsoft.OnError",
       "$designer": {
         "id": "cTGK2P",
@@ -447,7 +344,110 @@
               "$designer": {
                 "id": "SYFXJJ"
               },
-              "activity": "${SendActivity_SYFXJJ()}"
+              "activity": "${SendActivity_ErrorOccured()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pRdAAf",
+        "name": "Feedback"
+      },
+      "intent": "Feedback",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "tXHBt0"
+          },
+          "name": "<%= botName %>.OnIntent_Feedback"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2pSztz"
+          },
+          "activityProcessed": true,
+          "dialog": "FeedbackDialog"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "9wETGs",
+        "name": "Help"
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "2mE4eA"
+          },
+          "name": "<%= botName %>.OnIntent_Help"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "zlXdEy"
+          },
+          "activity": "${SendActivity_zlXdEy()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "v9Stie",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "nekhCR"
+          },
+          "name": "<%= botName %>.UnknownIntent"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "zG90cd"
+          },
+          "condition": "turn.activity.value.skillId != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "ocOoKo"
+              },
+              "eventName": "ConnectToSkill",
+              "eventValue": "=turn.activity.value.skillId"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "VogQ3v"
+              },
+              "condition": "exists(turn.activity.text)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "P9A5BW"
+                  },
+                  "activityProcessed": false,
+                  "dialog": "ChitchatDialog"
+                }
+              ]
             }
           ]
         }

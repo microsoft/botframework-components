@@ -27,7 +27,7 @@
           "$designer": {
             "id": "GstWEQ"
           },
-          "activity": "${SendActivity_GstWEQ()}"
+          "activity": "${SendActivity_FeedbackExperiencePrompt()}"
         }
       ]
     },
@@ -61,7 +61,7 @@
           "$designer": {
             "id": "639pkl"
           },
-          "activity": "${SendActivity_639pkl()}"
+          "activity": "${SendActivity_FeedbackThanks()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
@@ -101,7 +101,7 @@
           "$designer": {
             "id": "YBCkGQ"
           },
-          "activity": "${SendActivity_YBCkGQ()}"
+          "activity": "${SendActivity_FeedbackThanks()}"
         },
         {
           "$kind": "Microsoft.EndDialog",

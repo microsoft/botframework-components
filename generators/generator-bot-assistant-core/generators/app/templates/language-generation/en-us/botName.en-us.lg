@@ -1,61 +1,52 @@
-[import](common.lg)
+﻿[import](common.lg)
 
-# SendActivity_mM3nez()
+# SendActivity_GreetingNewUser()
 [Activity
-    Text = ${SendActivity_mM3nez_text()}
+    Attachments = ${SendActivity_GreetingNewUser_attachment_heroCard()}
 ]
 
-# SendActivity_mM3nez_text()
-- Oops, looks like I'm stuck. Can you try to ask me in a different way?
-- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
-- Sorry, it looks like something went wrong. Can you please try again?
-
-# SendActivity_CcTxh7()
-[Activity
-    Text = ${SendActivity_CcTxh7_text()}
-]
-
-# SendActivity_CcTxh7_text()
-- I'm not sure I understand. Can you please try again?
-- Hmm, I don't understand. Can you try to ask me in a different way?
-- I didn't get that. Would you mind rephrasing and try it again?
-- Unfortunately I misunderstood, please try again.
-
-# SendActivity_yXbfKT()
-[Activity
-    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
-]
-
-# SendActivity_XZRD8m()
-[Activity
-    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
-]
-
-# SendActivity_yXbfKT_attachment_9sGxgG()
+# SendActivity_GreetingNewUser_attachment_heroCard()
 [HeroCard
-  text = ${WelcomeReturningUser()}
-  buttons = ${BotTourEventAction()}
+  text = ${GreetingNewUser_text()}
+  buttons = ${GreetingBotTourIntent_action()}
 ]
 
-# BotTourEventAction()
+# SendActivity_GreetingReturningUser()
+[Activity
+    Attachments = ${SendActivity_GreetingReturningUser_attachment_heroCard()}
+]
+
+# SendActivity_GreetingReturningUser_attachment_heroCard()
+[HeroCard
+  text = ${GreetingReturningUser_text()}
+  buttons = ${GreetingBotTourIntent_action()}
+]
+
+# GreetingNewUser_text()
+- 🖐️ Hey, there! How can I help you today?
+- 🖐️ Hi! How can I help?
+- 🖐️ Hello! What do you want to do today?
+
+# GreetingReturningUser_text()
+- 🖐️ Welcome back! How can I help you today?
+- 🖐️ Hello again! What can I help with?
+- 🖐️ Good to see you again. What do you want to do today?
+- 🖐️ Hey, there! Let's get started.
+- 🖐️ Hello again! How can I help?
+
+# GreetingBotTourIntent_action()
 [CardAction
     title = You can ask me
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
     value = ${{ intent: "BotTour" }}
 ]
 
-# SendActivity_XZRD8m_attachment_SR7bxz()
-[HeroCard
-  text = ${WelcomeNewUser()}
-  buttons = ${BotTourEventAction()}
-]
-
-# SendActivity_2outgQ()
+# SendActivity_ErrorOccured()
 [Activity
-    Text = ${SendActivity_2outgQ_text()}
+    Text = ${SendActivity_ErrorOccured_text()}
 ]
 
-# SendActivity_2outgQ_text()
+# SendActivity_ErrorOccured_text()
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?

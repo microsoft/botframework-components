@@ -26,7 +26,7 @@
           "maxTurnCount": 3,
           "alwaysPrompt": false,
           "allowInterruptions": false,
-          "prompt": "${ConfirmInput_Prompt_DTdbkd()}",
+          "prompt": "${ConfirmInput_Prompt_AreYouSure()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "choiceOptions": {
@@ -49,7 +49,7 @@
               "$designer": {
                 "id": "zbC0VV"
               },
-              "activity": "${SendActivity_zbC0VV()}"
+              "activity": "${SendActivity_CancelConfirmation()}"
             },
             {
               "$kind": "Microsoft.CancelAllDialogs",
@@ -65,7 +65,7 @@
               "$designer": {
                 "id": "5kB8oO"
               },
-              "activity": "${SendActivity_5kB8oO()}"
+              "activity": "${SendActivity_ContinueConfirmation()}"
             }
           ]
         }

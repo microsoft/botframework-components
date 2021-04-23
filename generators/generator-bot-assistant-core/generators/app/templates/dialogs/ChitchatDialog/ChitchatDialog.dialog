@@ -37,7 +37,7 @@
               "maxTurnCount": 3,
               "alwaysPrompt": true,
               "allowInterruptions": false,
-              "prompt": "${TextInput_Prompt_C244wC()}",
+              "prompt": "${TextInput_Prompt_QnaMultiTurnResponse()}",
               "property": "turn.qnaMultiTurnResponse"
             },
             {
@@ -87,7 +87,7 @@
               "$designer": {
                 "id": "zIdYcy"
               },
-              "activity": "${SendActivity_hJgJx8()}"
+              "activity": "${SendActivity_QnaResponse()}"
             }
           ]
         }
@@ -105,7 +105,7 @@
           "$designer": {
             "id": "gc2wn4"
           },
-          "activity": "${SendActivity_gc2wn4()}"
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }
