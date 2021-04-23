@@ -21,7 +21,8 @@
           "$designer": {
             "id": "V4SpTN"
           },
-          "name": "AuthenticationDialog.BeginDialog"
+          "name": "<%= botName %>.AuthenticationDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.OAuthInput",
@@ -34,7 +35,14 @@
           "connectionName": "=settings.oauthConnectionName",
           "title": "Sign in",
           "text": "Time to sign in with your Microsoft account to access your contacts and company directory, and try out our new 💃🕺 Skill!",
-          "property": "user.Token"
+          "property": "turn.Token"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "vEkDa9"
+          },
+          "value": "=turn.Token"
         }
       ]
     }

@@ -1,0 +1,182 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "nfUy4u",
+    "name": "GetCollaboratorsDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "7urTxr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "oatn8b"
+          },
+          "name": "<%= botName %>.GetCollaboratorsDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ON21f5"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WEryuA"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "nUeEx5"
+          },
+          "condition": "=exists(turn.UserFound)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "puUO79"
+              },
+              "activity": "${SendActivity_puUO79()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "lyEABk"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wHB39C"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "User": "=turn.UserFound",
+            "Scenario": "Collaborator",
+            "AutoChooseFirst": false,
+            "GetListItemEvent": "GetListItems",
+            "doSelection": false
+          },
+          "resultProperty": "turn.DetailUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cKj8jy"
+          },
+          "condition": "=exists(turn.DetailUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Q24GGv"
+              },
+              "activityProcessed": true,
+              "dialog": "GetProfileDialog",
+              "options": {
+                "UserIdFound": "=turn.DetailUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mfLqxa"
+              },
+              "activity": "${SendActivity_mfLqxa()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Stpfkh"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Vqq2HS",
+        "name": "OnEvent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "kTe9ET"
+          },
+          "name": "<%= botName %>.GetCollaboratorsDialog.OnEvent_GetListItems",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "ZKKInz"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetWorksWith",
+          "$designer": {
+            "id": "nt8FTI"
+          },
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "userId": "=turn.UserFound.Id",
+          "resultProperty": "turn.Items"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "vADC8V"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "mq1B9p"
+              },
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "userId": "=turn.foreach.value.Id",
+              "token": "=turn.token.token"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetCollaboratorsDialog.lg",
+  "recognizer": "GetCollaboratorsDialog.lu.qna",
+  "id": "GetCollaboratorsDialog"
+}
