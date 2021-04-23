@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "Teams\Microsoft.Bot.Components.Teams.csproj", "{FD29CBA6-C18F-498B-9F00-A3C34C1BEC5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Telephony", "Microsoft.Bot.Components.Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Telephony", "Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
