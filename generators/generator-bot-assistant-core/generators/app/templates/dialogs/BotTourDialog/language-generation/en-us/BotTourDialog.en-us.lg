@@ -1,9 +1,22 @@
 [import](common.lg)
 
-# SendActivity_YRvoei()
+# SendActivity_BotTourOverview()
 [Activity
-    Attachments = ${SendActivity_YRvoei_attachment_WGITEE()}
+    Attachments = ${SendActivity_BotTourOverview_attachment_adaptiveCard()}
 ]
+
+# SendActivity_BotTourOverview_attachment_adaptiveCard()
+> OverviewCard
+- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
+
+# SendActivity_BotTourDetails()
+[Activity
+    Attachments = ${SendActivity_BotTourDetails_attachment_adaptiveCard()}
+]
+
+# SendActivity_BotTourDetails_attachment_adaptiveCard()
+> DetailsCard
+- ```${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}```
 
 # BotTourTitle()
 - You can ask me...
@@ -20,7 +33,7 @@
 # BotTourContentTextThree()
 - You can also provide samples to trigger connected skills.
 
-# BotTourFocusCardText()
+# BotTourDetailsCardText()
 - You can provide a more detailed description of your skill, as well as sample utterances users can say to get started.
 
 # BotTourHeader
@@ -111,16 +124,16 @@
    ],
    "selectAction":{
       "type":"Action.Submit",
-      "title":"FocusCard",
+      "title":"DetailsCard",
       "data":{
-         "intent":"FocusCard"
+         "intent":"DetailsCard"
       }
    },
    "separator": true
 }
 ```
 
-# BotTourFocusCardHeader()
+# BotTourDetailsCardHeader()
 - ```
 {
     "type": "Container",
@@ -161,21 +174,21 @@
 }
 ```
 
-# BotTourFocusCardBody()
+# BotTourDetailsCardBody()
 -```
 {
     "type": "Container",
     "items": [
         {
             "type": "TextBlock",
-            "text": "${BotTourFocusCardText()}",
+            "text": "${BotTourDetailsCardText()}",
             "wrap": true
         }        
     ]
 }
 ```
 
-# BotTourFocusCardActions()
+# BotTourDetailsCardActions()
 - ```
 {
     "type": "ActionSet",
@@ -205,15 +218,4 @@
 }
 ```
 
-# SendActivity_YRvoei_attachment_WGITEE()
-> Bot tour chevron card
-- ```${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}```
 
-# SendActivity_Z5JucQ()
-[Activity
-    Attachments = ${SendActivity_Z5JucQ_attachment_cKtuIu()}
-]
-
-# SendActivity_Z5JucQ_attachment_cKtuIu()
-> Focus card
-- ```${json(CardTemplate(BotTourFocusCardHeader(),BotTourFocusCardBody(), BotTourFocusCardActions()))}```

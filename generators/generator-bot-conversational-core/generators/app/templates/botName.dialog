@@ -103,7 +103,7 @@
           "$designer": {
             "id": "2outgQ"
           },
-          "activity": "${SendActivity_2outgQ()}"
+          "activity": "${SendActivity_ErrorOccured()}"
         },
         {
           "$kind": "Microsoft.TraceActivity",
@@ -128,7 +128,7 @@
           "$designer": {
             "id": "IQMEuO"
           },
-          "activity": "${SendActivity_IQMEuO()}"
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }
