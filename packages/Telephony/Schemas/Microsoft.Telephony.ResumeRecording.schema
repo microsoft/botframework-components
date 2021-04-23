@@ -1,0 +1,10 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Resume Recording",
+  "description": "Resumes recording the current conversation.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+  }
+}

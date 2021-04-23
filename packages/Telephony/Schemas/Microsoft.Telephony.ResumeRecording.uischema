@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Resume Recording",
+    "subtitle": "Resume Recording",
+    "order": [
+      "*"
+    ],
+    "properties": {
+    }
+  },
+  "menu": {
+    "label": "Resume Recording",
+    "submenu": [ "Channels", "Telephony" ]
+  }
+}

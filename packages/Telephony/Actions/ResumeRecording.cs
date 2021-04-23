@@ -27,7 +27,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Telephony.PauseRecording";
+        public const string Kind = "Microsoft.Telephony.ResumeRecording";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResumeRecording"/> class.
