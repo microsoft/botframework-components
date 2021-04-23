@@ -157,7 +157,7 @@ After provisioning your Azure resources and configuring your authentication conn
     - LUIS endpoint key 
     - LUIS region
     - QnA Maker subscription key
-    - In **Advanced Settings View (json)**, set the app IDs of the skills that will be allowed to communicate with your root bot. For testing you can set this to "*".
+    - In **Advanced Settings View (json)**, set the app IDs of the skills that will be allowed to communicate with your root bot. 
         ```
             "skills": {
               "allowedCallers": [ "<skill app id>" ]
@@ -166,7 +166,7 @@ After provisioning your Azure resources and configuring your authentication conn
 - In your skill bots, set the following properties:
     - Microsoft App Id
     - Microsoft App Password
-    - In **Advanced Settings View (json)**, set the app IDs of the bots that will be allowed to communicate with your skill bot. For testing you can set this to "*".
+    - In **Advanced Settings View (json)**, set the app IDs of the bots that will be allowed to communicate with your skill bot. 
         ```
            "skills": {
             "allowedCallers": [ "<root app id>" ]
