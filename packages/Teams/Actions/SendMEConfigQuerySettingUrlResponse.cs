@@ -21,12 +21,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEConfigQuerySettingUrlResponse : BaseTeamsCacheInfoResponseDialog
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEConfigQuerySettingUrlResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEConfigQuerySettingUrlResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -37,6 +31,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEConfigQuerySettingUrlResponse";
 
         /// <summary>
         /// Gets or sets config url response to send. i.e $"{config.siteUrl}/searchSettings.html?settings={escapedSettings}".

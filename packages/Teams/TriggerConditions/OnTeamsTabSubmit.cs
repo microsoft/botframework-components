@@ -16,14 +16,14 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsTabSubmit : OnInvokeActivity
     {
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnTabSubmit";
-
         [JsonConstructor]
         public OnTeamsTabSubmit(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
         }
+
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnTabSubmit";
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()
