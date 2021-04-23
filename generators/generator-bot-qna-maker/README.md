@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-qna-maker [![NPM version][npm-image]][npm-url]
 
-The this template creates a basic bot, and guides you through connecting that bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
+This template creates an empty bot, and guides you through connecting that bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
 
 ## What this template is for
 
