@@ -4,9 +4,13 @@ This Bot Project was created using the Enterprise Assistant template, and contai
 
 ## Configuring your Enterprise Assistant
 
-To test this bot locally, follow these instructions:
+To test this bot locally, you will need to complete the following steps:
+1. Provision Azure resources for local development of your root bot and each skill
+2. Configure authentication settings for your Calendar skill
+3. Configure authentication settings for your People skill
+4. Configure skill connections with allowedCallers and skill manifests
 
-### Provision Azure Resources to Host Bot
+### 1. Provision Azure Resources
 In order to test this bot locally, you will need the following services provisioned in Azure:
 - An Azure Bot Registration for your **root bot** and **each skill**
 - Language Understanding (LUIS)
@@ -19,7 +23,7 @@ In order to test this bot locally, you will need the following services provisio
 4. Assign a name and an expiration period, then click **Add**
 5. Copy the secret value and save for later use along with your Microsoft App ID
 
-### Configure Authentication (Calendar Skill)
+### 2. Configure Authentication (Calendar Skill)
 You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
 #### Option 1: Using the Azure Portal
@@ -80,7 +84,7 @@ You must configure an authentication connection on your Azure Bot Registration i
     }
     ```
 
-### Configure Authentication (People Skill)
+### 3. Configure Authentication (People Skill)
 You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
 #### Option 1: Using the Azure Portal
@@ -144,7 +148,7 @@ You must configure an authentication connection on your Azure Bot Registration i
     ```
 
 
-### Configure Skill connections
+### 4. Configure Skill connections
 After provisioning your Azure resources and configuring your authentication connections, update the following settings in your Composer bot settings:
 - In your root bot, set the following properties:
     - Microsoft App Id
