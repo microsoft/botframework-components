@@ -42,7 +42,7 @@
                       "$designer": {
                         "id": "yXbfKT"
                       },
-                      "activity": "${SendActivity_yXbfKT()}"
+                      "activity": "${SendActivity_GreetingReturningUser()}"
                     }
                   ],
                   "elseActions": [
@@ -51,7 +51,7 @@
                       "$designer": {
                         "id": "XZRD8m"
                       },
-                      "activity": "${SendActivity_XZRD8m()}"
+                      "activity": "${SendActivity_GreetingNewUser()}"
                     },
                     {
                       "$kind": "Microsoft.SetProperty",
@@ -298,7 +298,7 @@
           "$designer": {
             "id": "2outgQ"
           },
-          "activity": "${SendActivity_2outgQ()}"
+          "activity": "${SendActivity_ErrorOccured()}"
         },
         {
           "$kind": "Microsoft.TraceActivity",

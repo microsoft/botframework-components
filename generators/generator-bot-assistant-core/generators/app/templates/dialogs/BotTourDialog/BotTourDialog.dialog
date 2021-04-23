@@ -21,7 +21,7 @@
           "$designer": {
             "id": "YRvoei"
           },
-          "activity": "${SendActivity_YRvoei()}"
+          "activity": "${SendActivity_BotTourOverview()}"
         }
       ]
     },
@@ -29,16 +29,16 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "pzuSn9",
-        "name": "FocusCard"
+        "name": "DetailsCard"
       },
-      "intent": "FocusCard",
+      "intent": "DetailsCard",
       "actions": [
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "Z5JucQ"
           },
-          "activity": "${SendActivity_Z5JucQ()}"
+          "activity": "${SendActivity_BotTourDetails()}"
         },
         {
           "$kind": "Microsoft.EndDialog",
