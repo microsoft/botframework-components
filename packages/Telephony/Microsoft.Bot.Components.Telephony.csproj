@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Telephony</PackageId>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>0.0.1</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Telephony.</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Telephony.</Summary>
     <SignAssembly>true</SignAssembly>
