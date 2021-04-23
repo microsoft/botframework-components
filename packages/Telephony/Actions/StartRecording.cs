@@ -17,7 +17,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Stars recording the current conversation.
+    /// Starts recording the current conversation.
     /// </summary>
     public class StartRecording : CommandDialog<RecordingStartSettings>
     {
@@ -50,6 +50,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dc"></param>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             if (dc.Context.Activity.ChannelId == Channels.Telephony)

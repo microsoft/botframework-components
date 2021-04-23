@@ -11,15 +11,24 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Bot.Components.Telephony.Common
 {
+    /// <summary>
+    /// Base Command Dialog.
+    /// </summary>
     public class CommandDialog : CommandDialog<object>
     {
 
     }
 
+    /// <summary>
+    /// Base Command Dialog that handles commands with data of type T
+    /// TODO: Command.Value.Data and CommandResult.Value.Data can be of two different types
+    /// Potentially need T1 and T2.
+    /// </summary>
+    /// <typeparam name="T">Type of Command.Value.Data</typeparam>
     public class CommandDialog<T> : Dialog
     {
         /// <summary>
-        /// Gets or sets the phone number to be included when sending the handoff activity.
+        /// Gets or sets the name of the command.
         /// </summary>
         /// <value>
         /// <see cref="StringExpression"/>.
@@ -27,7 +36,7 @@ namespace Microsoft.Bot.Components.Telephony.Common
         protected StringExpression Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the phone number to be included when sending the handoff activity.
+        /// Gets or sets the data payload of the command.
         /// </summary>
         /// <value>
         /// <see cref="StringExpression"/>.
@@ -42,6 +51,8 @@ namespace Microsoft.Bot.Components.Telephony.Common
 
             var response = await dc.Context.SendActivityAsync(startRecordingActivity, cancellationToken).ConfigureAwait(false);
 
+            // TODO: Save command id / activity id for correlation with the command result.
+
             return new DialogTurnResult(DialogTurnStatus.Waiting, startRecordingActivity.Name);
         }
 
@@ -54,14 +65,14 @@ namespace Microsoft.Bot.Components.Telephony.Common
             if (activity.Type == ActivityTypes.CommandResult
                 && activity.Name == this.Name.GetValue(dc.State))
             {
+                // TODO: correlate command id before handling it.
+
                 var commandResult = TelephonyExtensions.GetCommandResultValue(activity);
 
                 if (commandResult.Error != null)
                 {
                     throw new ErrorResponseException($"{commandResult.Error.Code}: {commandResult.Error.Message}");
                 }
-
-                // TODO: correlate command ids
 
                 return new DialogTurnResult(DialogTurnStatus.Complete);
             }

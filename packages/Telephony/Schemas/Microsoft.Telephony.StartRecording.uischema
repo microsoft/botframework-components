@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Start Recording",
+    "subtitle": "Start Recording",
+    "order": [
+      "*"
+    ],
+    "properties": {
+    }
+  },
+  "menu": {
+    "label": "Start Recording",
+    "submenu": [ "Channels", "Telephony" ]
+  }
+}

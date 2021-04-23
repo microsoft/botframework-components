@@ -17,7 +17,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Stops recording the current conversation.
+    /// Pauses recording the current conversation.
     /// </summary>
     public class PauseRecording : CommandDialog
     {
