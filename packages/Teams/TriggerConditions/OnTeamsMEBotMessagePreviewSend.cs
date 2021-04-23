@@ -36,7 +36,7 @@ namespace Microsoft.Bot.Components.Teams.Conditions
             // if name is 'composeExtension/submitAction'
             var expressions = new List<Expression>
             {
-                (Expression.Parse($"{TurnPath.Activity}.ChannelId == '{Channels.Msteams}' && {TurnPath.Activity}.name == 'composeExtension/submitAction' && {TurnPath.Activity}.value.botMessagePreviewAction == 'send'"),
+                Expression.Parse($"{TurnPath.Activity}.ChannelId == '{Channels.Msteams}' && {TurnPath.Activity}.name == 'composeExtension/submitAction' && {TurnPath.Activity}.value.botMessagePreviewAction == 'send'"),
                 base.CreateExpression()
             };
 
