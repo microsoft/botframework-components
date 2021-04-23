@@ -48,7 +48,7 @@ module.exports = class extends BaseGenerator {
 
     // create skill, this derives from a separate template
     this.composeWith(
-      require.resolve('@microsoft/generator-bot-calendar/generators/app'),
+      require.resolve('@microsoft/generator-bot-enterprise-calendar/generators/app'),
       Object.assign({}, this.options, {
         arguments: ['calendar'],
       })

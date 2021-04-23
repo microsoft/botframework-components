@@ -1,5 +1,5 @@
 {
-  "name": "@microsoft/generator-bot-assistant-core",
+  "name": "@microsoft/generator-bot-core-assistant",
   "version": "1.0.0",
   "description": "Yeoman generator for creating an assistant-style bot with NLP built on the Azure Bot Framework.",
   "keywords": [

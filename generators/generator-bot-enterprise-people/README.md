@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-people [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-enterprise-people [![NPM version][npm-image]][npm-url]
 
 This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
 
@@ -38,17 +38,17 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-people using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
+This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-people using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-people
+npm install -g @microsoft/generator-bot-enterprise-people
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/generator-bot-people -botname '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
+yo @microsoft/generator-bot-enterprise-people '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
 ```
 
 ## License
@@ -75,8 +75,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-people
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

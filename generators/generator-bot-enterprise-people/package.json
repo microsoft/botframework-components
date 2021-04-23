@@ -1,5 +1,5 @@
 {
-  "name": "@microsoft/generator-bot-people",
+  "name": "@microsoft/generator-bot-enterprise-people",
   "version": "1.0.0",
   "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the People template.",
   "keywords": [
@@ -13,7 +13,7 @@
     "bf-dotnet-functions",
     "msbot-project-template"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "author": "Bot Framework",
   "main": "./generators/app/index.js",
   "repository": {

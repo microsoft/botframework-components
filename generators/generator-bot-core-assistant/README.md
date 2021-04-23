@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-assistant-core [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-core-assistant [![NPM version][npm-image]][npm-url]
 
 This template creates an assistant-style conversational bot, with example language models and triggers routing to those dialogs. Assistant-style bots typically help their users accomplish multiple different tasks, and will expect support for more varied conversational interactions.
 
@@ -48,11 +48,11 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-assistant-core using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-core-assistant using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-assistant-core
+npm install -g @microsoft/generator-bot-core-assistant
 ```
 
 Then generate your new project:
@@ -85,8 +85,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-assistant-core
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

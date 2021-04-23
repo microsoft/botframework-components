@@ -1,10 +1,10 @@
 name: $(Build.BuildId)
 trigger: none  # ci trigger is set in ADO
 pr: none # pr trigger is set in ADO
- 
+
 pool: 
   vmImage: $[ coalesce( variables['VMImage'], 'windows-2019' ) ] # or 'windows-latest' or 'vs2017-win2016'
-  
+
 extends:
   template: ../templates/component-template.yml
 
@@ -14,4 +14,4 @@ variables:
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
-  WorkingDirectory: generators/generator-bot-conversational-core
+  WorkingDirectory: generators/generator-bot-core-language

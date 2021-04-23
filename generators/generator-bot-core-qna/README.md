@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-qna-maker [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-core-qna [![NPM version][npm-image]][npm-url]
 
 The this template creates a basic bot, and guides you through connecting that bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
 
@@ -33,17 +33,17 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 > You can instantiate this template from the command line, however this approach is NOT recommended, as Composer guides you through connecting to your QnA Maker knowledge base.
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-qna-maker using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-core-qna using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-qna-maker
+npm install -g @microsoft/generator-bot-core-qna
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/bot-conversational-qna-maker '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
+yo @microsoft/generator-bot-core-qna '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
 
 ## License
@@ -70,8 +70,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-qna-maker.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-qna-maker
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-qna.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-qna
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com
