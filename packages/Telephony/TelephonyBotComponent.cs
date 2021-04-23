@@ -19,6 +19,9 @@ namespace Microsoft.Bot.Components.Telephony
         {
             // Conditionals
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<CallTransfer>(CallTransfer.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<PauseRecording>(PauseRecording.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<ResumeRecording>(ResumeRecording.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<StartRecording>(StartRecording.Kind));
         }
     }
 }
