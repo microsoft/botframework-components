@@ -21,12 +21,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEBotMessagePreviewResponse : BaseSendTaskModuleContinueResponse
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEBotMessagePreviewResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEBotMessagePreviewResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -37,6 +31,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEBotMessagePreviewResponse";
 
         /// <summary>
         /// Gets or sets template for the expression containing a Hero Card or Adaptive Card to send.

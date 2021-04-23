@@ -19,12 +19,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendTaskModuleUrlResponse : BaseSendTaskModuleContinueResponse
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendTaskModuleUrlResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendTaskModuleUrlResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -34,6 +28,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendTaskModuleUrlResponse";
 
         /// <summary>
         /// Gets or sets an optional expression for the Url of the Task Module response.

@@ -16,14 +16,14 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsTabFetch : OnInvokeActivity
     {
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnTabFetch";
-
         [JsonConstructor]
         public OnTeamsTabFetch(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
         }
+
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnTabFetch";
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()
