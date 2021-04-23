@@ -3,32 +3,55 @@ This folder contains a Bot Project created with Bot Framework Composer.
 The full documentation for Composer lives here:
 https://github.com/microsoft/botframework-composer
 
-To test this bot locally, follow these instructions:
+To test this bot locally, you will need to complete the following steps:
+1. Provision your Azure resources for local development
+2. Configure your authentication settings
 
-## Provision Azure Resources to Host Bot
+## 1. Provision Azure Resources
 In order to test this bot locally, you will need the following services provisioned in Azure:
 - Azure Bot Registration
 - Language Understanding (LUIS)
 
-## Configure Authentication
-You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. 
+#### Configure Microsoft App Password
+1. Open your Azure Bot Channels Regisration in the Azure Portal
+2. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
+3. In the Certificates & secrets tab, click **New client secret**
+4. Assign a name and an expiration period, then click **Add**
+5. Copy the secret value and save for later use along with your Microsoft App ID
 
-### Using Azure Portal
-* Open your **Azure Bot Service** resource and go to the **Settings** tab
-* Under **OAuth Connection Settings**, click **Add setting**
-* Configure select **Azure Active Directory v2** from the provider dropdown then fill out the fields with the following:
-  * Client Id: Your bot App Id
-  * Client secret: Your bot App Password
-  * Tenant: common
-  * Scopes: **Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All** 
-* In the **Settings** tab, click **Manage** next to your Microsoft App ID
-* In the API permissions tab, add the following scopes: **User.ReadBasic.All Calendars.ReadWrite Contacts.Read People.Read**
-* Add the following property in Bot Settings in composer:
-  ```
-  "oauthConnectionName": "[your connection name]"
-  ```
+## 2. Configure Authentication
+You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
-### Using [Azure CLI]()
+### Option 1: Using the Azure Portal
+1. Open your **Bot Channels Registration** resource and go to the **Configuration** tab
+2. Click **Add OAuth Connection Settings**
+3. Assign your connection setting a name (save this value for later)
+4. Select **Azure Active Directory v2** from the Service Provider dropdown.
+5. Fill in the following fields and click **Save**:
+    * **Client id**: your Bot App Id
+    * **Client secret**: your Bot App Password
+    * **Tenant ID**: your Azure Active Directory tenant ID, or "common" to support any tenant
+    * **Scopes**: Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All
+6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
+7. In the API permissions tab, click **Add a permission**
+8. Click **Microsoft Graph > Delegated Permissions** and add the following scopes: 
+    * Calendars.ReadWrite
+    * Contacts.Read
+    * People.Read
+    * User.ReadBasic.All
+
+9. In the Authentication tab, click **Add a platform**
+    1. Select **Web**
+    2. Set the URL to https://token.botframework.com/.auth/web/redirect
+10. In Bot Framework Composer, open your **Project Settings** and toggle the **Advanced Settings View**
+1. Set the following property to the value from Step 3:
+    ```
+    {
+      "oauthConnectionName": "Outlook",
+    }
+    ```
+
+### Option 2: Using [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 1. Get your Microsoft App Object ID (used in later steps):
     ```
     az ad app show --id <bot-app-id> --query objectId
