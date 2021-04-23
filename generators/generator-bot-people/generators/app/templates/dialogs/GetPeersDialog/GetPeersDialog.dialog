@@ -1,0 +1,192 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "2luWYj",
+    "name": "GetPeersDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "C0rITH"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IozdU8"
+          },
+          "name": "<%= botName %>.GetPeersDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "TqcvPH"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound",
+            "NameEntity": "=$NameEntity"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "F8ARgq"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "qBDQhh"
+          },
+          "condition": "=exists(turn.UserFound)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9JCLK1"
+              },
+              "activity": "${SendActivity_9JCLK1()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "rnko0k"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ldr65P"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "Scenario": "Peers",
+            "User": "=turn.UserFound",
+            "AutoChooseFirst": false,
+            "GetListItemEvent": "GetListItems",
+            "doSelection": false
+          },
+          "resultProperty": "turn.DetailUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2bT4YD"
+          },
+          "condition": "=exists(turn.DetailUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "yuDqlV"
+              },
+              "activityProcessed": true,
+              "dialog": "GetProfileDialog",
+              "options": {
+                "UserIdFound": "=turn.DetailUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "7uCWqD"
+              },
+              "activity": "${SendActivity_7uCWqD()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "YtwbHP"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "qk16FD",
+        "name": "OnEvent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "NouegB"
+          },
+          "name": "<%= botName %>.GetPeersDialog.OnEvent_GetListItems",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "qZ7hQz"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetPeers",
+          "$designer": {
+            "id": "ww53aA"
+          },
+          "resultProperty": "turn.Items",
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "officeLocation",
+            "jobTitle",
+            "department"
+          ],
+          "userId": "=turn.UserFound.Id"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "3NzFtD"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "VsikRa"
+              },
+              "token": "=turn.token.token",
+              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+            }
+          ],
+          "itemsProperty": "turn.Items"
+        }
+      ]
+    }
+  ],
+  "generator": "GetPeersDialog.lg",
+  "recognizer": "GetPeersDialog.lu.qna",
+  "id": "GetPeersDialog"
+}

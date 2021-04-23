@@ -17,6 +17,14 @@
       },
       "actions": [
         {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "16MBLs"
+          },
+          "name": "<%= botName %>.UnknownIntentDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
             "id": "wQNdyx"

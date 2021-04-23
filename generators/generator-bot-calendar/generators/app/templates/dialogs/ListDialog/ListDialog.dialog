@@ -21,7 +21,8 @@
           "$designer": {
             "id": "i6ahnZ"
           },
-          "name": "ListDialog.BeginDialog"
+          "name": "ListDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -115,7 +116,8 @@
           "$designer": {
             "id": "zER0mA"
           },
-          "name": "ListDialog.OnEvent_GetChoices"
+          "name": "ListDialog.OnEvent_GetChoices",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -196,13 +198,6 @@
               "value": "=$choiceItem"
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "vBhsRF"
-          },
-          "name": "Choices"
         }
       ],
       "event": "GetChoices"
@@ -220,7 +215,8 @@
           "$designer": {
             "id": "jJCAos"
           },
-          "name": "ListDialog.OnIntent_Next"
+          "name": "ListDialog.OnIntent_Next",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -327,7 +323,8 @@
           "$designer": {
             "id": "wNTV7x"
           },
-          "name": "ListDialog.OnIntent_Previous"
+          "name": "ListDialog.OnIntent_Previous",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -434,7 +431,8 @@
           "$designer": {
             "id": "73c90n"
           },
-          "name": "ListDialog.OnIntent_Skip"
+          "name": "ListDialog.OnIntent_Skip",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",
@@ -465,7 +463,8 @@
           "$designer": {
             "id": "pzG3IA"
           },
-          "name": "ListDialog.OnIntent_Cancel"
+          "name": "ListDialog.OnIntent_Cancel",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",

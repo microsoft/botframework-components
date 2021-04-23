@@ -48,3 +48,14 @@
 [Activity
     Text = Error: ${turn.dialogEvent.value}
 ]
+
+# WelcomeUser()
+- IF: ${turn.signedInUser.givenName != null}
+    - Hi ${turn.signedInUser.givenName} 🖐, ${IntroMessage()}
+- ELSE: 
+    - Hi there 🖐, ${IntroMessage()}
+
+# IntroMessage()
+- I can help you search for people in your organization.
+- I'm ready to help answer questions about people in your organization.
+- I'm here to help you find people in your organization.

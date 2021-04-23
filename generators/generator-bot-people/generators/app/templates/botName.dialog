@@ -21,7 +21,8 @@
           "$designer": {
             "id": "5oW8CV"
           },
-          "name": "<%= botName %>.Greeting"
+          "name": "<%= botName %>.Greeting",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -43,8 +44,8 @@
               "$designer": {
                 "id": "vTjoP3"
               },
-              "token": "=user.token.token",
-              "resultProperty": "$signedInUser"
+              "token": "=turn.token.token",
+              "resultProperty": "turn.signedInUser"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -87,7 +88,8 @@
           "$designer": {
             "id": "SjeplQ"
           },
-          "name": "<%= botName %>.Logout"
+          "name": "<%= botName %>.OnIntent_Logout",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -120,7 +122,8 @@
           "$designer": {
             "id": "rIjVl9"
           },
-          "name": "<%= botName %>.GetCollaborators"
+          "name": "<%= botName %>.OnIntent_GetCollaborators",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -135,9 +138,9 @@
             "id": "io3AVP"
           },
           "activityProcessed": true,
-          "dialog": "WhoWorksWithMeDialog",
+          "dialog": "GetCollaboratorsDialog",
           "options": {
-            "UserFound": "=$options.user",
+            "UserIdFound": "=$options.user",
             "nameEntity": "=$options.nameEntity"
           }
         }
@@ -156,7 +159,8 @@
           "$designer": {
             "id": "CtN0JN"
           },
-          "name": "<%= botName %>.GetDepartment"
+          "name": "<%= botName %>.OnIntent_GetDepartment",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -171,7 +175,7 @@
             "id": "OlaCZn"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -192,7 +196,8 @@
           "$designer": {
             "id": "UIBrQZ"
           },
-          "name": "<%= botName %>.GetDirectReports"
+          "name": "<%= botName %>.OnIntent_GetDirectReports",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -207,10 +212,10 @@
             "id": "Y2hy7l"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsDirectReportDialog",
+          "dialog": "GetDirectReportsDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]
@@ -228,7 +233,8 @@
           "$designer": {
             "id": "LLDQcc"
           },
-          "name": "<%= botName %>.GetEmailAddress"
+          "name": "<%= botName %>.OnIntent_GetEmailAddress",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -243,7 +249,7 @@
             "id": "Bhz0b5"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -263,7 +269,8 @@
           "$designer": {
             "id": "S2lRYi"
           },
-          "name": "<%= botName %>.GetJobTitle"
+          "name": "<%= botName %>.OnIntent_GetJobTitle",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -278,7 +285,7 @@
             "id": "xiISoH"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -298,7 +305,8 @@
           "$designer": {
             "id": "AF2A5j"
           },
-          "name": "<%= botName %>.GetLocation"
+          "name": "<%= botName %>.OnIntent_GetLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -313,7 +321,7 @@
             "id": "pOJdPA"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -333,7 +341,8 @@
           "$designer": {
             "id": "QPzd0I"
           },
-          "name": "<%= botName %>.GetManager"
+          "name": "<%= botName %>.OnIntent_GetManager",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -348,10 +357,10 @@
             "id": "3vIVVS"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsManagerDialog",
+          "dialog": "GetManagerDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ],
@@ -371,7 +380,8 @@
           "$designer": {
             "id": "v9syx2"
           },
-          "name": "<%= botName %>.GetPeers"
+          "name": "<%= botName %>.OnIntent_GetPeers",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -386,10 +396,10 @@
             "id": "fJItRK"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPeerDialog",
+          "dialog": "GetPeersDialog",
           "options": {
             "nameEntity": "=$options.contactEntity",
-            "UserFound": "=$options.user"
+            "UserIdFound": "=$options.user"
           }
         }
       ]
@@ -407,7 +417,8 @@
           "$designer": {
             "id": "1ZZm4i"
           },
-          "name": "<%= botName %>.GetPhoneNumber"
+          "name": "<%= botName %>.OnIntent_GetPhoneNumber",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -422,7 +433,7 @@
             "id": "sr38K1"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
             "nameEntity": "=$options.contactEntity"
           }
@@ -443,7 +454,8 @@
           "$designer": {
             "id": "wiVPuM"
           },
-          "name": "<%= botName %>.GetProfile"
+          "name": "<%= botName %>.OnIntent_GetProfile",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -458,9 +470,10 @@
             "id": "U3dC5A"
           },
           "activityProcessed": true,
-          "dialog": "WhoIsPersonDialog",
+          "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "nameEntity": "=$options.contactEntity",
+            "userIdFound": "=$options.user"
           }
         }
       ]
@@ -473,6 +486,14 @@
       },
       "event": "SetOptions",
       "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ruudtx"
+          },
+          "name": "<%= botName %>.OnEvent_SetOptions",
+          "value": "=null"
+        },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
@@ -511,7 +532,8 @@
           "$designer": {
             "id": "BnGy6N"
           },
-          "name": "<%= botName %>.OnError"
+          "name": "<%= botName %>.OnError",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -589,34 +611,17 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "G0hNYR"
+            "id": "njVcFH"
           },
-          "name": "<%= botName %>.OnUnknownIntent"
+          "name": "<%= botName %>.UnknownIntent",
+          "value": "=null"
         },
         {
-          "$kind": "Microsoft.IfCondition",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "61Nit8"
+            "id": "HTkwlL"
           },
-          "condition": "=turn.activity.recipient.role == \"skill\"",
-          "actions": [
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "QC2QIx"
-              },
-              "value": false
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "HG1MJM"
-              },
-              "activity": "${SendActivity_HG1MJM()}"
-            }
-          ]
+          "activity": "${SendActivity_HTkwlL()}"
         }
       ]
     }

@@ -14,19 +14,21 @@
       "": [
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
+        "AuthenticationDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ],
-      "Skip": []
+      "Skip": ""
     }
   },
   "GetContactsDialog.en-us": {
     "rootDialog": false,
     "triggers": {
       "": [
+        "AuthenticationDialog.en-us",
         "ListDialog.en-us"
       ],
-      "Skip": [],
-      "SetAttendeesAdd": []
+      "Skip": "",
+      "SetAttendeesAdd": ""
     }
   },
   "GetEventsDialog.en-us": {
@@ -34,6 +36,7 @@
     "triggers": {
       "": [
         "ResolveDateTimeDialog.en-us",
+        "AuthenticationDialog.en-us",
         "ListDialog.en-us"
       ]
     }
@@ -41,10 +44,10 @@
   "ListDialog.en-us": {
     "rootDialog": false,
     "triggers": {
-      "Next": [],
-      "Previous": [],
-      "Skip": [],
-      "Cancel": []
+      "Next": "",
+      "Previous": "",
+      "Skip": "",
+      "Cancel": ""
     }
   },
   "UpdateEventDialog.en-us": {
@@ -53,7 +56,8 @@
       "": [
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
-        "ResolveDateTimeDialog.en-us"
+        "ResolveDateTimeDialog.en-us",
+        "AuthenticationDialog.en-us"
       ]
     }
   }
