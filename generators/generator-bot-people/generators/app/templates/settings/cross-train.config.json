@@ -15,34 +15,34 @@
       ],
       "Logout": [],
       "GetCollaborators": [
-        "WhoWorksWithMeDialog.en-us"
+        "GetCollaboratorsDialog.en-us"
       ],
       "GetDepartment": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ],
       "GetDirectReports": [
-        "WhoIsDirectReportDialog.en-us"
+        "GetDirectReportsDialog.en-us"
       ],
       "GetEmailAddress": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ],
       "GetJobTitle": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ],
       "GetLocation": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ],
       "GetManager": [
-        "WhoIsManagerDialog.en-us"
+        "GetManagerDialog.en-us"
       ],
       "GetPeers": [
-        "WhoIsPeerDialog.en-us"
+        "GetPeersDialog.en-us"
       ],
       "GetPhoneNumber": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ],
       "GetProfile": [
-        "WhoIsPersonDialog.en-us"
+        "GetProfileDialog.en-us"
       ]
     }
   }

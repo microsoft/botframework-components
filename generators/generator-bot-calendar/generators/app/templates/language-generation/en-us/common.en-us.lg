@@ -4,8 +4,8 @@
 [Actions](actions.en-us.lg)
 
 # WelcomeUser()
-- IF: ${user.profile.displayName != null}
-    - Hi ${user.profile.displayName} 🖐, ${IntroMessage()}
+- IF: ${turn.user.profile.displayName != null}
+    - Hi ${turn.user.profile.displayName} 🖐, ${IntroMessage()}
 - ELSE: 
     - Hi there 🖐, ${IntroMessage()}
 

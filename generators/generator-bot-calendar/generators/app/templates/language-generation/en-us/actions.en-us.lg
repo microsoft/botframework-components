@@ -93,13 +93,6 @@
     value = ${{ intent: "LaunchChat" }}
 ]
 
-# OpenSurveyCardAction()
-[CardAction
-    type = openUrl
-	title = Provide feedback
-    value = https://github.com/microsoft/botframework-components/issues/new/choose
-]
-
 # SelectEventAction(event)
 -```
 {

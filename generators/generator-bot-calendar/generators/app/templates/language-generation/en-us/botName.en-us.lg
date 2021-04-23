@@ -14,9 +14,6 @@
 # SendActivity_klrCg4()
 - ${CancelMessage()}
 
-# SendActivity_iHNKPb()
-- Sorry, I'm not sure what you mean. Can you try rephrasing?
-
 # SendActivity_lqvfia()
 [HeroCard
     text = ${WelcomeUser()}
@@ -27,12 +24,6 @@
 [HeroCard
    text = Try the calendar skill now!
    buttons = ${LaunchCardAction()}
-]
-
-# SendActivity_QaDvyy()
-[HeroCard
-   text = Let us know what you think!
-   buttons = ${OpenSurveyCardAction()}
 ]
 
 # SendActivity_OIka7e()
@@ -81,21 +72,5 @@
     attachments = ${json(EventDetailActionsCard(last($events)))}
 ]
 
-# SendActivity_2q5Pi3()
-- ```
-Conversation Id: ${conversation.Id}
-
-${turn.dialogEvent.value}
-```
-
-# SendActivity_WgFfpN()
-[Activity
-    to = turn.activity.from
-    deliveryMode = whisper
-    attachments = ${json(SendActivity_lqvfia())}
-]
-
-# SendActivity_H4Vut2()
-[Activity
-    Text = Conversation Id: ${conversation.id}
-]
+# SendActivity_UA2sps()
+-

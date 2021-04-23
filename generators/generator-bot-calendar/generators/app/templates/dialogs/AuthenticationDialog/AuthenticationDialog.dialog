@@ -20,7 +20,8 @@
           "$designer": {
             "id": "T2hOJH"
           },
-          "name": "AuthenticationDialog.BeginDialog"
+          "name": "AuthenticationDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.OAuthInput",
@@ -31,7 +32,7 @@
           "maxTurnCount": 3,
           "allowInterruptions": true,
           "connectionName": "=settings.oauthConnectionName",
-          "property": "user.token",
+          "property": "turn.token",
           "title": "Sign in",
           "text": "Please sign in with your Microsoft account to access your calendar 🗓 "
         },
@@ -40,15 +41,15 @@
           "$designer": {
             "id": "zXbLp8"
           },
-          "condition": "=not(exists(user.profile))",
+          "condition": "=not(exists(turn.user.profile))",
           "actions": [
             {
               "$kind": "Microsoft.Graph.User.GetProfile",
               "$designer": {
                 "id": "mR0Tzk"
               },
-              "resultProperty": "user.profile",
-              "token": "=user.token.token"
+              "resultProperty": "turn.user.profile",
+              "token": "=turn.token.token"
             }
           ]
         },
@@ -64,8 +65,8 @@
               "$designer": {
                 "id": "4d4VCn"
               },
-              "token": "=user.token.token",
-              "addressProperty": "=user.profile.userPrincipalName",
+              "token": "=turn.token.token",
+              "addressProperty": "=turn.user.profile.userPrincipalName",
               "resultProperty": "user.workingHours"
             }
           ]
