@@ -144,7 +144,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 new QueryOption("$orderBy", "start/dateTime"),
             };
 
-            IUserCalendarViewCollectionPage events = await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken);
+            IUserCalendarViewCollectionPage events = await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken).ConfigureAwait(false);
 
             int index = 0;
             if (events?.Count > 0)
@@ -157,7 +157,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             while (events.NextPageRequest != null)
             {
-                events = await events.NextPageRequest.GetAsync();
+                events = await events.NextPageRequest.GetAsync().ConfigureAwait(false);
                 if (events?.Count > 0)
                 {
                     foreach (var ev in events)

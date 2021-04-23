@@ -43,6 +43,9 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// <summary>
         /// Gets or sets the property name where the result of the action should be stored.
         /// </summary>
+        /// <value>
+        /// The property name where the result of the action should be stored.
+        /// </value>
         [JsonProperty("resultProperty")]
         public StringExpression ResultProperty { get; set; }
 
@@ -97,14 +100,14 @@ namespace Microsoft.Bot.Components.Graph.Actions
             if (titleProperty != null)
             {
                 var title = titleProperty;
-                filteredEvents = filteredEvents.Where(r => r.Subject.ToLower().Contains(title.ToLower())).ToList();
+                filteredEvents = filteredEvents.Where(r => r.Subject.ToLowerInvariant().Contains(title.ToLowerInvariant())).ToList();
             }
 
             // Filter results by location
             if (locationProperty != null)
             {
                 var location = locationProperty;
-                filteredEvents = filteredEvents.Where(r => r.Location.ToLower().Contains(location.ToLower())).ToList();
+                filteredEvents = filteredEvents.Where(r => r.Location.ToLowerInvariant().Contains(location.ToLowerInvariant())).ToList();
             }
 
             // Filter results by attendees
@@ -112,7 +115,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             {
                 // TODO: update to use contacts from graph rather than string matching
                 var attendees = attendeesProperty;
-                filteredEvents = filteredEvents.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLower().Contains(p.ToLower())))).ToList();
+                filteredEvents = filteredEvents.Where(r => attendees.TrueForAll(p => r.Attendees.Any(a => a.EmailAddress.Name.ToLowerInvariant().Contains(p.ToLowerInvariant())))).ToList();
             }
 
             // Get result by order
@@ -143,7 +146,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: filteredEvents, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: filteredEvents, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

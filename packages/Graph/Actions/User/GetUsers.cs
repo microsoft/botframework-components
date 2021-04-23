@@ -67,7 +67,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 request = request.Top(maxCount);
             }
 
-            IGraphServiceUsersCollectionPage result = await request.GetAsync(cancellationToken);
+            IGraphServiceUsersCollectionPage result = await request.GetAsync(cancellationToken).ConfigureAwait(false);
 
             // The "Top" clause in Graph is just more about max number of results per page.
             // This is unlike SQL where by the results are capped to max. In this case we will just

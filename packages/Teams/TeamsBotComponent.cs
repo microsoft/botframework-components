@@ -30,7 +30,7 @@ namespace Microsoft.Bot.Components.Teams
             var settings = configuration.Get<ComponentSettings>() ?? new ComponentSettings();
             if (settings.UseSingleSignOnMiddleware)
             {
-                services.AddSingleton<IMiddleware>(s=> new TeamsSSOTokenExchangeMiddleware(s.GetRequiredService<IStorage>(), settings.ConnectionName));
+                services.AddSingleton<IMiddleware>(s => new TeamsSSOTokenExchangeMiddleware(s.GetRequiredService<IStorage>(), settings.ConnectionName));
             }
 
             // Conditionals

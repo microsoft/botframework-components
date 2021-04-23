@@ -16,15 +16,15 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsMEConfigQuerySettingUrl : OnInvokeActivity
     {
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnMEConfigQuerySettingUrl";
+
         [JsonConstructor]
         public OnTeamsMEConfigQuerySettingUrl(string commandId = null, List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
             CommandId = commandId;
         }
-
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnMEConfigQuerySettingUrl";
 
         [JsonProperty("commandId")]
         public string CommandId { get; set; }

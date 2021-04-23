@@ -58,7 +58,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
                         StartTime: DateTimeTimeZone.FromDateTime(startProperty, "UTC"),
                         EndTime: DateTimeTimeZone.FromDateTime(endProperty, "UTC"))
                     .Request()
-                    .PostAsync();
+                    .PostAsync()
+                    .ConfigureAwait(false);
 
             var workingHours = schedule.First().WorkingHours;
 

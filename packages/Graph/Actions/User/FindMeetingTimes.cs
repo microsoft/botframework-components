@@ -69,8 +69,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
             var duration = (int)parameters["Duration"];
             var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["Timezone"]);
 
-            MeetingTimeSuggestionsResult meetingTimesResult = await client.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
-                                                                             .Request().PostAsync(cancellationToken);
+            MeetingTimeSuggestionsResult meetingTimesResult = await client.Me
+                .FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
+                .Request()
+                .PostAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             var results = new List<CalendarSkillTimeSlotModel>();
             foreach (var timeSlot in meetingTimesResult.MeetingTimeSuggestions)

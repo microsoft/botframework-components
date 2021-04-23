@@ -81,7 +81,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
-            return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken);
+            return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

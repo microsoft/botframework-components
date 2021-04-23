@@ -13,7 +13,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
     /// <summary>
     /// <see cref="BotComponent"/> implementation for the adaptve card types.
     /// </summary>
-    public class AdaptiveBotComponent : BotComponent
+    public class AdaptiveCardsBotComponent : BotComponent
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {

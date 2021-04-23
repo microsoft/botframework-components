@@ -57,7 +57,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 request = request.Top(maxCount);
             }
 
-            IUserPeopleCollectionPage result = await request.GetAsync(cancellationToken);
+            IUserPeopleCollectionPage result = await request.GetAsync(cancellationToken).ConfigureAwait(false);
 
             return result.CurrentPage;
         }

@@ -16,17 +16,17 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 {
     public class GetAdaptiveCardTemplate : Dialog
     {
-        // TODO: Migrate to using MemoryCache class.
-        private static ConcurrentDictionary<string, CacheEntry> cache = new ConcurrentDictionary<string, CacheEntry>();
-        private static HttpClient httpClient = new HttpClient();
-
-        private const int DefaultCachePeriod = 900;
-
         /// <summary>
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Bot.Components.GetAdaptiveCardTemplate";
+
+        private const int DefaultCachePeriod = 900;
+
+        // TODO: Migrate to using MemoryCache class.
+        private static ConcurrentDictionary<string, CacheEntry> cache = new ConcurrentDictionary<string, CacheEntry>();
+        private static HttpClient httpClient = new HttpClient();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAdaptiveCardTemplate"/> class.
@@ -84,7 +84,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             }
 
             var url = this.Location?.GetValue(dc.State);
-            if (String.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(url))
             {
                 throw new Exception($"{this.Id}: a template url wasn't provided.");
             }
@@ -106,7 +106,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             }
 
             var resultProp = this.ResultProperty?.GetValue(dc.State);
-            if (!String.IsNullOrEmpty(resultProp))
+            if (!string.IsNullOrEmpty(resultProp))
             {
                 dc.State.SetValue(resultProp, template);
             }
@@ -124,7 +124,9 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             return $"{this.GetType().Name}({Location?.ToString()})";
         }
 
+#pragma warning disable CA1801 // Review unused parameters. Protected method already shipped, we're leaving dc there.
         protected async Task<JObject> FetchTemplateAsync(DialogContext dc, string url, CancellationToken cancellationToken = default(CancellationToken))
+#pragma warning restore CA1801 // Review unused parameters
         {
             // Fetch template
             JObject template;
@@ -142,9 +144,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             catch (Exception err)
             {
                 throw new Exception($"{this.Id}: error parsing template: {err.Message}");
-
             }
-
 
             return template;
         }
@@ -175,7 +175,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             };
             cache.TryAdd(url, entry);
         }
-
 
         private static void PurgeCache()
         {

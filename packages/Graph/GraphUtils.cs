@@ -7,7 +7,7 @@ namespace Microsoft.Bot.Components.Graph
     using System.Runtime.InteropServices;
     using AdaptiveExpressions;
 
-    public class GraphUtils
+    public static class GraphUtils
     {
         public static TimeZoneInfo ConvertTimeZoneFormat(string timezone)
         {

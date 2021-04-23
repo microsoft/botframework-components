@@ -23,7 +23,8 @@ namespace Microsoft.Bot.Components.AdaptiveCards
         {
             // Write card to memory
             var resultProperty = this.ResultProperty?.GetValue(dc.State);
-            if (!String.IsNullOrEmpty(resultProperty))
+
+            if (!string.IsNullOrEmpty(resultProperty))
             {
                 dc.State.SetValue(resultProperty, card);
             }
