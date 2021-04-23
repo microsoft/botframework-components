@@ -3,9 +3,11 @@ This folder contains a Bot Project created with Bot Framework Composer.
 The full documentation for Composer lives here:
 https://github.com/microsoft/botframework-composer
 
-To test this bot locally, follow these instructions:
+To test this bot locally, you will need to complete the following steps:
+1. Provision your Azure resources for local development
+2. Configure your authentication settings
 
-## Provision Azure Resources to Host Bot
+## 1. Provision Azure Resources
 In order to test this bot locally, you will need the following services provisioned in Azure:
 - Azure Bot Registration
 - Language Understanding (LUIS)
@@ -17,7 +19,7 @@ In order to test this bot locally, you will need the following services provisio
 4. Assign a name and an expiration period, then click **Add**
 5. Copy the secret value and save for later use along with your Microsoft App ID
 
-## Configure Authentication
+## 2. Configure Authentication
 You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
 
 ### Option 1: Using the Azure Portal
