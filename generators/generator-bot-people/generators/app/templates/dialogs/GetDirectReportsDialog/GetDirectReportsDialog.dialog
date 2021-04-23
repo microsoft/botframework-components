@@ -21,7 +21,8 @@
           "$designer": {
             "id": "ARqQ7b"
           },
-          "name": "<%= botName %>.GetDirectReportsDialog.BeginDialog"
+          "name": "<%= botName %>.GetDirectReportsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -133,7 +134,8 @@
           "$designer": {
             "id": "fUH5tK"
           },
-          "name": "<%= botName %>.GetDirectReportsDialog.OnEvent_GetListItems"
+          "name": "<%= botName %>.GetDirectReportsDialog.OnEvent_GetListItems",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

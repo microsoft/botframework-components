@@ -21,7 +21,8 @@
           "$designer": {
             "id": "IUYOm8"
           },
-          "name": "<%= botName %>.GetManagerDialog.BeginDialog"
+          "name": "<%= botName %>.GetManagerDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

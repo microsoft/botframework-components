@@ -21,7 +21,8 @@
           "$designer": {
             "id": "lKyff0"
           },
-          "name": "<%= botName %>.FindPersonDialog.BeginDialog"
+          "name": "<%= botName %>.FindPersonDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -68,7 +69,8 @@
           "$designer": {
             "id": "HM0ZDn"
           },
-          "name": "<%= botName %>.FindPersonDialog.OnEvent_GetListItems"
+          "name": "<%= botName %>.FindPersonDialog.OnEvent_GetListItems",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

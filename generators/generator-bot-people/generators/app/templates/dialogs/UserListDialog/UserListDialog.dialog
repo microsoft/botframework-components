@@ -21,7 +21,8 @@
           "$designer": {
             "id": "479ejy"
           },
-          "name": "<%= botName %>.UserListDialog.BeginDialog"
+          "name": "<%= botName %>.UserListDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

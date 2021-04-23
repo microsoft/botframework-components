@@ -21,7 +21,8 @@
           "$designer": {
             "id": "oatn8b"
           },
-          "name": "<%= botName %>.GetCollaboratorsDialog.BeginDialog"
+          "name": "<%= botName %>.GetCollaboratorsDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -131,7 +132,8 @@
           "$designer": {
             "id": "kTe9ET"
           },
-          "name": "<%= botName %>.GetCollaboratorsDialog.OnEvent_GetListItems"
+          "name": "<%= botName %>.GetCollaboratorsDialog.OnEvent_GetListItems",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

@@ -21,7 +21,8 @@
           "$designer": {
             "id": "V4SpTN"
           },
-          "name": "<%= botName %>.AuthenticationDialog.BeginDialog"
+          "name": "<%= botName %>.AuthenticationDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.OAuthInput",

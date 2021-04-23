@@ -21,7 +21,8 @@
           "$designer": {
             "id": "FPmp8f"
           },
-          "name": "<%= botName %>.GetProfileDialog.BeginDialog"
+          "name": "<%= botName %>.GetProfileDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

@@ -21,7 +21,8 @@
           "$designer": {
             "id": "DkZ1R6"
           },
-          "name": "<%= botName %>.ResolveUserDialog.BeginDialog"
+          "name": "<%= botName %>.ResolveUserDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

@@ -21,7 +21,8 @@
           "$designer": {
             "id": "5oW8CV"
           },
-          "name": "<%= botName %>.Greeting"
+          "name": "<%= botName %>.Greeting",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -87,7 +88,8 @@
           "$designer": {
             "id": "SjeplQ"
           },
-          "name": "<%= botName %>.OnIntent_Logout"
+          "name": "<%= botName %>.OnIntent_Logout",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SignOutUser",
@@ -120,7 +122,8 @@
           "$designer": {
             "id": "rIjVl9"
           },
-          "name": "<%= botName %>.OnIntent_GetCollaborators"
+          "name": "<%= botName %>.OnIntent_GetCollaborators",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -156,7 +159,8 @@
           "$designer": {
             "id": "CtN0JN"
           },
-          "name": "<%= botName %>.OnIntent_GetDepartment"
+          "name": "<%= botName %>.OnIntent_GetDepartment",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -192,7 +196,8 @@
           "$designer": {
             "id": "UIBrQZ"
           },
-          "name": "<%= botName %>.OnIntent_GetDirectReports"
+          "name": "<%= botName %>.OnIntent_GetDirectReports",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -228,7 +233,8 @@
           "$designer": {
             "id": "LLDQcc"
           },
-          "name": "<%= botName %>.OnIntent_GetEmailAddress"
+          "name": "<%= botName %>.OnIntent_GetEmailAddress",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -263,7 +269,8 @@
           "$designer": {
             "id": "S2lRYi"
           },
-          "name": "<%= botName %>.OnIntent_GetJobTitle"
+          "name": "<%= botName %>.OnIntent_GetJobTitle",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -298,7 +305,8 @@
           "$designer": {
             "id": "AF2A5j"
           },
-          "name": "<%= botName %>.OnIntent_GetLocation"
+          "name": "<%= botName %>.OnIntent_GetLocation",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -333,7 +341,8 @@
           "$designer": {
             "id": "QPzd0I"
           },
-          "name": "<%= botName %>.OnIntent_GetManager"
+          "name": "<%= botName %>.OnIntent_GetManager",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -371,7 +380,8 @@
           "$designer": {
             "id": "v9syx2"
           },
-          "name": "<%= botName %>.OnIntent_GetPeers"
+          "name": "<%= botName %>.OnIntent_GetPeers",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -407,7 +417,8 @@
           "$designer": {
             "id": "1ZZm4i"
           },
-          "name": "<%= botName %>.OnIntent_GetPhoneNumber"
+          "name": "<%= botName %>.OnIntent_GetPhoneNumber",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -443,7 +454,8 @@
           "$designer": {
             "id": "wiVPuM"
           },
-          "name": "<%= botName %>.OnIntent_GetProfile"
+          "name": "<%= botName %>.OnIntent_GetProfile",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -479,7 +491,8 @@
           "$designer": {
             "id": "ruudtx"
           },
-          "name": "<%= botName %>.OnEvent_SetOptions"
+          "name": "<%= botName %>.OnEvent_SetOptions",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SetProperties",
@@ -519,7 +532,8 @@
           "$designer": {
             "id": "BnGy6N"
           },
-          "name": "<%= botName %>.OnError"
+          "name": "<%= botName %>.OnError",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
@@ -599,7 +613,8 @@
           "$designer": {
             "id": "njVcFH"
           },
-          "name": "<%= botName %>.UnknownIntent"
+          "name": "<%= botName %>.UnknownIntent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.SendActivity",

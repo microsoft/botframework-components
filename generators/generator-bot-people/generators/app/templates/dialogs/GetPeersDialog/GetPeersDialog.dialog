@@ -21,7 +21,8 @@
           "$designer": {
             "id": "IozdU8"
           },
-          "name": "<%= botName %>.GetPeersDialog.BeginDialog"
+          "name": "<%= botName %>.GetPeersDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -132,7 +133,8 @@
           "$designer": {
             "id": "NouegB"
           },
-          "name": "<%= botName %>.GetPeersDialog.OnEvent_GetListItems"
+          "name": "<%= botName %>.GetPeersDialog.OnEvent_GetListItems",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",

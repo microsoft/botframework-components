@@ -21,7 +21,8 @@
           "$designer": {
             "id": "i6ahnZ"
           },
-          "name": "<%= botName %>.ListDialog.BeginDialog"
+          "name": "<%= botName %>.ListDialog.BeginDialog",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -155,7 +156,7 @@
             "id": "zER0mA"
           },
           "name": "<%= botName %>.ListDialog.OnEvent_GetChoices",
-          "value": "=turn"
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
@@ -278,7 +279,7 @@
             "id": "vBhsRF"
           },
           "name": "ListDialog.Choices",
-          "value": "=turn.choices"
+          "value": "=null"
         }
       ],
       "event": "GetChoices"
