@@ -8,7 +8,8 @@
       "methods": [
         "get",
         "post"
-      ]
+      ],
+      "route": "api/{route}"
     },
     {
       "type": "http",

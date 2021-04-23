@@ -14,6 +14,7 @@
       "": [
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
+        "AuthenticationDialog.en-us",
         "ResolveDateTimeDialog.en-us"
       ],
       "Skip": ""
@@ -23,6 +24,7 @@
     "rootDialog": false,
     "triggers": {
       "": [
+        "AuthenticationDialog.en-us",
         "ListDialog.en-us"
       ],
       "Skip": "",
@@ -34,6 +36,7 @@
     "triggers": {
       "": [
         "ResolveDateTimeDialog.en-us",
+        "AuthenticationDialog.en-us",
         "ListDialog.en-us"
       ]
     }
@@ -53,7 +56,8 @@
       "": [
         "GetContactsDialog.en-us",
         "ListDialog.en-us",
-        "ResolveDateTimeDialog.en-us"
+        "ResolveDateTimeDialog.en-us",
+        "AuthenticationDialog.en-us"
       ]
     }
   }

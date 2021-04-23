@@ -1,21 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version Condition=" '$(PreviewPackageVersion)' == '' ">$(LocalPackageVersion)</Version>
-    <Version Condition=" '$(PreviewPackageVersion)' != '' ">$(PreviewPackageVersion)</Version>
-    <PackageVersion Condition=" '$(PreviewPackageVersion)' == '' ">$(LocalPackageVersion)</PackageVersion>
-    <PackageVersion Condition=" '$(PreviewPackageVersion)' != '' ">$(PreviewPackageVersion)</PackageVersion>
-    <Configurations>Debug;Release</Configurations>
-    <DocumentationFile>bin\$(Configuration)\netstandard2.0\Microsoft.Bot.Builder.Dialogs.Adaptive.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Microsoft.Bot.Components.Teams</PackageId>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Microsoft Teams</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
+    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Teams</PackageProjectUrl>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <PackageTags>msbot-action;msbot-trigger</PackageTags>
+    <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -38,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.13.0-rc4" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.13.0" />
   </ItemGroup>
 
 </Project>

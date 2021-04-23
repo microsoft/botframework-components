@@ -250,7 +250,7 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const sdkVersion = '~4.13.0-preview.rc3';
+    const sdkVersion = '~4.13.0-preview';
 
     const dependencies = {
       [integrations.functions]: {
@@ -273,6 +273,8 @@ module.exports = class extends BaseGenerator {
       dependencies: Object.assign(
         {
           'cross-env': 'latest',
+          'botbuilder-ai-luis': sdkVersion,
+          'botbuilder-ai-qna': sdkVersion,
         },
         this.packageReferences.reduce(
           (acc, { name, version }) => Object.assign(acc, { [name]: version }),
