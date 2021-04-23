@@ -13,39 +13,50 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "FindMeetingTimesDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
     "attendeesProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Attendees",
       "description": "Event attendees",
-      "examples": []
+      "examples": [
+        "=turn.meeting.attendees"
+      ]
     },
     "durationProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Duration",
       "description": "Duration of meeting",
-      "examples": []
+      "examples": [
+        "=turn.meeting.duration"
+      ]
     },
     "timeZoneProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Time zone",
       "description": "Time zone for the meeting",
-      "examples": []
+      "examples": [
+        "=turn.meeting.timezone"
+      ]
     }
   }
 }

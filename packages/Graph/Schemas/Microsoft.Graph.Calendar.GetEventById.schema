@@ -13,20 +13,25 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GetEventByIdDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
     "eventIdProperty": {
@@ -34,7 +39,7 @@
       "title": "Event ID",
       "description": "The ID of the event to lookup.",
       "examples": [
-        "dialog.event.id"
+        "=dialog.event.id"
       ]
     },
     "timeZoneProperty": {
@@ -42,7 +47,7 @@
       "title": "Time zone",
       "description": "Target time zone to display the event in",
       "examples": [
-        "user.timeZone"
+        "=user.timezone"
       ]
     }
   }
