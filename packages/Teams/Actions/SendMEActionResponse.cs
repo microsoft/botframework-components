@@ -20,12 +20,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEActionResponse : BaseSendTaskModuleContinueResponse
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEActionResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEActionResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -36,6 +30,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEActionResponse";
 
         /// <summary>
         /// Gets or sets template for the activity expression containing a Card to send.

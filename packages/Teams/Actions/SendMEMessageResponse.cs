@@ -20,12 +20,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEMessageResponse : BaseTeamsCacheInfoResponseDialog
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEMessageResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEMessageResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -36,6 +30,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEMessageResponse";
 
         /// <summary>
         /// Gets or sets the template or text to use to generate the response message to send.

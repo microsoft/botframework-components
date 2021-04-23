@@ -16,20 +16,35 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsMEQuery : OnInvokeActivity
     {
+        [JsonConstructor]
+        public OnTeamsMEQuery(string commandId = null, List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
+            : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
+        {
+            CommandId = commandId;
+        }
+
         [JsonProperty("$kind")]
         public new const string Kind = "Teams.OnMEQuery";
 
-        [JsonConstructor]
-        public OnTeamsMEQuery(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
-            : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
-        {
-        }
+        [JsonProperty("commandId")]
+        public string CommandId { get; set; }
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()
         {
             // if name is 'composeExtension/query'
-            return Expression.AndExpression(Expression.Parse($"{TurnPath.Activity}.ChannelId == '{Channels.Msteams}' && {TurnPath.Activity}.name == 'composeExtension/query'"), base.CreateExpression());
+            var expressions = new List<Expression>
+            {
+                Expression.Parse($"{TurnPath.Activity}.ChannelId == '{Channels.Msteams}' && {TurnPath.Activity}.name == 'composeExtension/query'"),
+                base.CreateExpression()
+            };
+
+            if (!string.IsNullOrEmpty(CommandId))
+            {
+                expressions.Add(Expression.Parse($"{TurnPath.Activity}.value.commandId == '{CommandId}'"));
+            }
+
+            return Expression.AndExpression(expressions.ToArray());
         }
     }
 }

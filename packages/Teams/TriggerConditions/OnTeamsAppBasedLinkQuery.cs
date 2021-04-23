@@ -15,14 +15,14 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsAppBasedLinkQuery : OnInvokeActivity
     {
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnAppBasedLinkQuery";
-
         [JsonConstructor]
         public OnTeamsAppBasedLinkQuery(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
         }
+
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnAppBasedLinkQuery";
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()
