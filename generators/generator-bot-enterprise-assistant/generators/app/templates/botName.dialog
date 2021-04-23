@@ -331,6 +331,22 @@
               "value": "emulator",
               "actions": [
                 {
+                  "$kind": "Microsoft.IfCondition",
+                  "$designer": {
+                    "id": "QVRnBT"
+                  },
+                  "condition": "=exists(settings.skill) && not(exists(settings.runtimeSettings.skills.allowedCallers))",
+                  "actions": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "UopnaT"
+                      },
+                      "activity": "${SendActivity_UopnaT()}"
+                    }
+                  ]
+                },
+                {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {
                     "id": "EqWeYD"
