@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-conversational-core [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-core-language [![NPM version][npm-image]][npm-url]
 
 This template creates a simple conversational bot containing dialogs for the most common conversational flows, with example language models and triggers routing to those dialogs.
 
@@ -34,11 +34,11 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-conversational-core using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
+First, install [Yeoman][yeoman] and @microsoft/generator-bot-core-language using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-conversational-core
+npm install -g @microsoft/generator-bot-core-language
 ```
 
 Then generate your new project:
@@ -71,8 +71,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-conversational-core
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-language
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com

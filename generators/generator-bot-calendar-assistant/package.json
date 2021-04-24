@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
-    "@microsoft/generator-bot-calendar": "workspace:^1.0.0-preview",
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.0.0-preview",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

@@ -1,12 +1,12 @@
-# @microsoft/generator-bot-people [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot--enterprise-calendar [![NPM version][npm-image]][npm-url]
 
-This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
+This template creates a bot configured to manage Office 365 calendars using the Microsoft Graph API.
 
 ## What this template is for
 
 Use this template if you want to...
 
-- Support searching for Azure Active Directory users
+- Support managing Office 365 calendars using Microsoft Graph
 - Start from an advanced template including dialogs, language understanding, and language generation 
 
 ## Packages
@@ -22,12 +22,10 @@ This bot uses the [Azure Bot Framework component model](https://aka.ms/Component
 
 This template requires the following Azure resources:
 - Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+    - Calendars.ReadWrite
     - Contacts.Read
-    - Directory.Read.All
     - People.Read
-    - People.Read.All
     - User.ReadBasic.All
-    - User.Read.All
 - Language Understanding (LUIS) authoring resource
 
 ## Using this template
@@ -38,17 +36,17 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-people using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
+This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-calendar using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
 
 ```bash
 npm install -g yo
-npm install -g @microsoft/generator-bot-people
+npm install -g @microsoft/generator-bot-enterprise-calendar
 ```
 
 Then generate your new project:
 
 ```bash
-yo @microsoft/generator-bot-people -botname '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
+yo @microsoft/generator-bot-enterprise-calendar '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
 ```
 
 ## License
@@ -75,8 +73,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-people
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-calendar
 [composer]: https://github.com/microsoft/botframework-composer
 [yeoman]: https://yeoman.io
 [npm]: https://npmjs.com
