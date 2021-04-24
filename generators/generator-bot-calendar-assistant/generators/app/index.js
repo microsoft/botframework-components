@@ -24,11 +24,11 @@ module.exports = class extends BaseGenerator {
         packageReferences: [
           {
             name: 'Microsoft.Bot.Components.HelpAndCancel',
-            version: '1.0.0-rc5',
+            version: '1.0.0-rc6',
           },
           {
             name: 'Microsoft.Bot.Components.Welcome',
-            version: '1.0.0-rc5',
+            version: '1.0.0-rc6',
           },
           {
             isPlugin: true,
