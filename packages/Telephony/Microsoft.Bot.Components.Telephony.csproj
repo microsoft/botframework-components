@@ -10,6 +10,7 @@
     <VersionPrefix>0.0.1</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Telephony.</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Telephony.</Summary>
+    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Telephony</PackageProjectUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
