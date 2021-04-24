@@ -14,4 +14,4 @@ variables:
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
-  WorkingDirectory: generators/generator-bot-qna-maker
+  WorkingDirectory: generators/generator-bot-enterprise-calendar
