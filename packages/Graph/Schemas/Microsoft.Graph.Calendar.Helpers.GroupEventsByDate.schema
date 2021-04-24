@@ -14,32 +14,41 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GroupEventsByDateDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "startProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Start",
       "description": "DateTime range start.",
-      "examples": []
+      "examples": [
+        "=turn.groupdatetimestart"
+      ]
     },
     "endProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "End",
       "description": "DateTime range end.",
-      "examples": []
+      "examples": [
+        "=turn.groupdatetimeend"
+      ]
     },
     "eventsProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Events",
       "description": "List of events to sort.",
       "examples": [
-        "dialog.events"
+        "=turn.events"
       ]
     }
   }
