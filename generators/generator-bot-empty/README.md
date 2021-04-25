@@ -25,7 +25,7 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be installed from the [command line][command-line]
+This template can also be installed from the [command line][command-line].
 
 ## License
 

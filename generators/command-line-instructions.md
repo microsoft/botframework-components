@@ -12,3 +12,7 @@ Then generate your new project:
 ```bash
 yo @microsoft/generator-bot-empty -botname '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
 ```
+
+[yeoman]: https://yeoman.io
+[npm]: https://npmjs.com
+[nodejs]: https://nodejs.org/
