@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-command-list [![NPM version][npm-image]][npm-url]
 
-This template creates a bot built around a set of simple commands. It includes cards with "message back" actions for example commands "hello" and "help."
+This template creates a bot built around a set of simple commands. It includes cards with "message back" actions for the commands "hello" and "help."
 
 ## What this template is for
 
