@@ -34,7 +34,13 @@ This template does not rely on any additional Azure Resources.
  * Feel free to [learn more about Yeoman](http://yeoman.io/).
 
 ## License
-Copyright (c) Microsoft Corporation. All rights reserved.
 
+[MIT License][license]
+
+[composer]: https://github.com/microsoft/botframework-composer
+[yeoman]: https://yeoman.io
+[npm]: https://npmjs.com
+[nodejs]: https://nodejs.org/
+[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
 [npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar-assistant.svg
 [npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-calendar-assistant

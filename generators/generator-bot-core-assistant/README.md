@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-core-assistant [![NPM version][npm-image]][npm-url]
 
-This template creates an assistant-style conversational bot, with example language models and triggers routing to those dialogs. Assistant-style bots typically help their users accomplish multiple different tasks, and will expect support for more varied conversational interactions.
+This template creates an assistant-style conversational bot. Assistant-style bots typically help their users accomplish multiple different tasks, and have support for more varied conversational interactions.
 
 Includes support for:
 
@@ -19,14 +19,6 @@ Use this template if you want to...
 
 - Create an assistant-style, or advanced conversational bot
 - See examples of more complex conversational flows, and more advanced language understanding and generation
-
-## Packages
-
-Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
-
-This bot starts with the following packages:
-
-- [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
 
 ## Languages
 
