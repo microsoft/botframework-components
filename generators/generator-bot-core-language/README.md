@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-core-language [![NPM version][npm-image]][npm-url]
 
-This template creates a simple conversational bot containing dialogs for the most common conversational flows, with example language models and triggers routing to those dialogs.
+This template creates a simple conversational bot, with triggers and dialogs for responding to help, welcome and cancel intents, and a simple response for unknown intents.
 
 ## What this template is for
 
@@ -8,15 +8,6 @@ Use this template if you want to...
 
 - Create a basic conversational bot with natural language processing (NLP) with a recognizer like [LUIS][luis].
 - See the basics of how language understanding, language generation, recognizers and dialogs work together.
-
-## Packages
-
-Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
-
-This bot starts with the following packages:
-
-- [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
-- [Welcome dialog](https://www.nuget.org/packages/Microsoft.Bot.Components.Welcome/)
 
 ## Languages
 
@@ -34,29 +25,8 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-core-language using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
-
-```bash
-npm install -g yo
-npm install -g @microsoft/generator-bot-core-language
-```
-
-Then generate your new project:
-
-```bash
-yo @microsoft/bot-conversational-core '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
-```
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
 
 ## License
 
-[MIT License][license]
-
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
-
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-language
-
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)

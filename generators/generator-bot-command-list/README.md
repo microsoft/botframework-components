@@ -1,49 +1,32 @@
 # @microsoft/generator-bot-command-list [![NPM version][npm-image]][npm-url]
 
-This template instantiates a bot built around a set of simple commands. Includes cards with message back actions for example commands "hello" and "help."
+This template creates a bot built around a set of simple commands. It includes cards with "message back" actions for example commands "hello" and "help."
 
-## Installation
+## What this template is for
 
-First, install [Yeoman](http://yeoman.io) and @microsoft/generator-bot-command-list using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+Use this template if you want to...
 
-```bash
-npm install -g yo
-npm install -g @microsoft/generator-bot-command-list
-```
-
-Then generate your new project:
-
-```bash
-yo @microsoft/bot-command-list '{BOT_NAME}'
-```
-
-## Packages
-Adaptive bots can utilize the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend their base functionality. The following component packages are included:
-
-- N/A
+- Create a bot that relies on cards actions and/or regular expressions.
+- Build your bot by composing an ad-hoc set of packages.
 
 ## Languages
-English.
+
+- English (en-US)
 
 ## Azure Resource Deployment
+
 This template does not rely on any additional Azure Resources.
 
-## Getting To Know Yeoman
+## Using this template
 
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
+### From Composer
+
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+
+### From the command-line
+
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
 
 ## License
 
-[MIT License][license]
-
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
-
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-command-list.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-command-list
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)

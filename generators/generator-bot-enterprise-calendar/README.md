@@ -36,28 +36,8 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be used from the command-line. First, install [Yeoman][yeoman] and @microsoft/generator-bot-enterprise-calendar using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
-
-```bash
-npm install -g yo
-npm install -g @microsoft/generator-bot-enterprise-calendar
-```
-
-Then generate your new project:
-
-```bash
-yo @microsoft/generator-bot-enterprise-calendar '{BOT_NAME}' -platform 'dotnet' -integration 'webapp'
-```
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
 
 ## License
 
-[MIT License][license]
-
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
-
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-calendar
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)

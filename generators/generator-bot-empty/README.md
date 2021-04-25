@@ -25,17 +25,8 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-This template can also be installed from the [command line][command-line].
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
 
 ## License
 
-[MIT License][license]
-
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty
-[command-line]: https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
