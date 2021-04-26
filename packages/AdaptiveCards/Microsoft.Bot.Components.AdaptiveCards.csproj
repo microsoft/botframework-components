@@ -30,6 +30,7 @@
     <Content Include="**/*.schema" />
     <Content Include="**/*.uischema" />
     <Content Include="**/*.qna" />
+    <Content Include="README.md" />
   </ItemGroup>
 
   <ItemGroup>
