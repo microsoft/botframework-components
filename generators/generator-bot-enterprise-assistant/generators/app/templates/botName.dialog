@@ -335,7 +335,7 @@
                   "$designer": {
                     "id": "QVRnBT"
                   },
-                  "condition": "=exists(settings.skill) && not(exists(settings.runtimeSettings.skills.allowedCallers))",
+                  "condition": "=exists(settings.skill) && (not(exists(settings.runtimeSettings.skills.allowedCallers)) || count(where(settings.runtimeSettings.skills.allowedCallers, x, x != "")) == 0)",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
