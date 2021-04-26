@@ -1,0 +1,34 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "People",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi there 🖐, I'm ready to help answer questions about people in your organization.",
+        "Hi there 🖐, I can help you search for people in your organization.",
+        "Hi there 🖐, I'm here to help you find people in your organization."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "who collaborate with me most?"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I found that **Thomas Chung** does not have collaborator."
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "Uknjye",
+    "name": "ResolveUserDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "T5HUu8"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "DkZ1R6"
+          },
+          "name": "People.ResolveUserDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "dAYqVS"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DWpCWb"
+          },
+          "condition": "=not(exists($UserIdFound))",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "iLvrQj"
+              },
+              "activityProcessed": true,
+              "dialog": "FindPersonDialog",
+              "resultProperty": "$UserIdFound",
+              "options": {
+                "nameEntity": "=$nameEntity"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "zLf2ZE"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetUserProfile",
+          "$designer": {
+            "id": "JHccSI"
+          },
+          "resultProperty": "turn.Result",
+          "token": "=turn.token.token",
+          "userId": "=$UserIdFound",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "GXCWJY"
+          },
+          "value": "=turn.Result"
+        }
+      ]
+    }
+  ],
+  "generator": "ResolveUserDialog.lg",
+  "recognizer": "ResolveUserDialog.lu.qna",
+  "id": "ResolveUserDialog"
+}
