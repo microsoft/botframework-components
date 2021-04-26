@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "LUIS_People",
+  "recognizers": {
+    "en-us": "People.en-us.lu",
+    "": "People.en-us.lu"
+  }
+}
