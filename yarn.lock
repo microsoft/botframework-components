@@ -119,20 +119,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-command-list@workspace:generators/generator-bot-command-list":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-command-list@workspace:generators/generator-bot-command-list"
-  dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
 "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant"

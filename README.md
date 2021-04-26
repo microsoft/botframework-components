@@ -20,7 +20,6 @@ Templates are pre-built bot projects designed for specific scenarios. We use [ye
 |:------------:|:---:|:------------|
 |[Empty Bot](/generators/generator-bot-empty) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty) | The base empty bot. |
 |[Core Bot with Language](/generators/generator-bot-core-language) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language) | Basic conversational bot with NLP. |
-|[Command list](/generators/generator-bot-command-list) |  | Basic bot using regex and cards. |
 |[Enterprise Calendar Bot](/generators/generator-bot-enterprise-calendar) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar) | A bot for working with Calendars. |
 |[Enterprise People Bot](/generators/generator-bot-enterprise-people) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people) | A bot for searching for people on the MS Graph. |
 |[Adaptive](/generators/generator-bot-adaptive) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
