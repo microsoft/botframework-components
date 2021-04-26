@@ -173,3 +173,8 @@ Try saying:
 * "When do I have breaks today?" or "What is scheduled for tomorrow?"
 * "Who is the manager of" or "Who reports to", and much more!
 ```
+
+# SendActivity_UopnaT()
+[Activity
+    Text = **ERROR**: Your root bot does not have allowed callers configured. Open **Project Settings > Skills Configuration** to specifiy allowed callers.
+]
