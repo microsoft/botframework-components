@@ -1,6 +1,6 @@
 # Microsoft.Bot.Components.Teams
 
-Actions and triggers for working with the Microsoft Teams channel from your BOt Framework bot. This package contains:
+Actions and triggers for working with the Microsoft Teams channel from your Bot Framework bot. This package contains:
 
 - Triggers for responding to Microsoft Teams specific events, like Messaging Extensions, Task Modules, and other invokes.
 - Actions for sending Teams-specific activities.
