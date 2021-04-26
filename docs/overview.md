@@ -25,5 +25,5 @@ Getting started templates are created on top of the component model. They are bu
 For example, the Conversational Core template will take a dependency on two packages - welcome and  help & cancel. It will also include a root dialog that wires up the dialogs in those packages as well as a dialog for handling unknown intents. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
 
 ## Skills
-
+X
 Skills are separate bots you connect your bot to in order to process messages for you. The skill manifest establishes a contract other bots can follow - defining messages and events the skill can handle and any data that will be returned when the skill completes its interaction with your user.
