@@ -1,6 +1,6 @@
 # Microsoft.Bot.Components.Teams
 
-Actions and triggers for working with the Adaptive Cards from your BOt Framework bot. This package contains:
+Actions and triggers for working with the Adaptive Cards from your Bot Framework bot. This package contains:
 
 - Actions for creating, storing, and sending Adaptive Cards
 - Triggers for responding to Adaptive Cards invokes & activities, like Action.Submit, Action.Execute
