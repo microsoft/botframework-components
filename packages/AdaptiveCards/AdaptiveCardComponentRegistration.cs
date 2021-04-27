@@ -9,9 +9,9 @@ namespace Microsoft.Bot.Components.AdaptiveCards
     /// <summary>
     /// <see cref="AdaptiveCardComponentRegistration"/> implementation for legacy runtimes.
     /// </summary>
-    [Obsolete("AdaptiveCardBotComponent is the new component definition.")]
+    [Obsolete("AdaptiveBotComponent is the new component definition.")]
     public class AdaptiveCardComponentRegistration 
-        : DeclarativeComponentRegistrationBridge<AdaptiveCardsBotComponent>
+        : DeclarativeComponentRegistrationBridge<AdaptiveBotComponent>
     {
     }
 }
