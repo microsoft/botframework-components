@@ -8,7 +8,10 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams task module submit",
-        "subtitle": "Invoke activity.name='task/submit'"
+        "label": "Teams task module submit"
+    },
+    "trigger": {
+      "submenu": "Microsoft Teams",
+      "label": "On task module submit"
     }
 }

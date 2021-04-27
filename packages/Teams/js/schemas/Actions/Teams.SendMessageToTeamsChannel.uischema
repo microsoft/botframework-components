@@ -2,7 +2,6 @@
     "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
     "form": {
         "label": "Send a message to a teams channel",
-        "subtitle": "Create a thread and send a message to a teams channel.",
         "order": [
             "activity",
             "teamsChannelId",
@@ -10,5 +9,8 @@
             "conversationReferenceProperty",
             "*"
         ]
+    },
+    "menu": {
+      "submenu": ["Microsoft Teams", "Response"]
     }
 }

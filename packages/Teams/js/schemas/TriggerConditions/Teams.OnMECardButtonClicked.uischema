@@ -8,7 +8,10 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension card button clicked",
-        "subtitle": "Invoke activity.name='composeExtension/onCardButtonClicked'"
+        "label": "Teams messaging extension card button clicked"
+    },
+    "trigger": {
+      "submenu": "Microsoft Teams",
+      "label": "Messaging extension - card button clicked"
     }
 }
