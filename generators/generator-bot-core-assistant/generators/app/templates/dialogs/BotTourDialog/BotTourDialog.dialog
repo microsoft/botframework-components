@@ -45,7 +45,7 @@
           "allowInterruptions": true,
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
-          "prompt": "${ChoiceInput_Prompt_BotTourDetailsSample()}",
+          "prompt": "${ChoiceInput_Prompt_BotTourDetails()}",
           "choiceOptions": {
             "includeNumbers": true,
             "inlineOrMore": ", or ",

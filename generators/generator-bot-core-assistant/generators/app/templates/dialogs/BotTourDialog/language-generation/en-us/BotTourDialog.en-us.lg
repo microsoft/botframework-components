@@ -9,12 +9,12 @@
 > OverviewCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}
 
-# ChoiceInput_Prompt_BotTourDetailsSample()
+# ChoiceInput_Prompt_BotTourDetails()
 [Activity
-    Attachments = ${ChoiceInput_Prompt_BotTourDetailsSample_attachment_adaptiveCard()}
+    Attachments = ${ChoiceInput_Prompt_BotTourDetails_attachment_adaptiveCard()}
 ]
 
-# ChoiceInput_Prompt_BotTourDetailsSample_attachment_adaptiveCard()
+# ChoiceInput_Prompt_BotTourDetails_attachment_adaptiveCard()
 > DetailsCard
 - ${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}
 
