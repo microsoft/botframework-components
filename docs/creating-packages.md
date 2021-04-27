@@ -5,7 +5,6 @@
 Packages are bits of bots that you want to reuse and/or share. They are simply standard NuGet or npm packages that contain any combination of the items listed below.
 
 - Complete sets of dialog files
-
 - Coded extensions like
   - Custom actions and triggers
   - Middleware
@@ -26,7 +25,7 @@ When your package is added to a bot from Package Manager in Composer, the follow
 2. Your declarative files are merged using the [Bot Frameowork CLI's](https://github.com/microsoft/botframework-cli) `dialog:merge` command.
     1. `dialog:merge` adds a copy of any dialog assets (.lu/.lg/.qna/.dialog files) in your package to the corresponding folding in the bot project.
 
->Note: While testing and debugging your package, you may find it useful to manually install and merge your package from the command line, rather than from Composer.
+> Note: While testing and debugging your package, you may find it useful to manually install and merge your package from the command line, rather than from Composer.
 
 ## Declarative files in packages
 
@@ -38,7 +37,7 @@ Declarative files can be added to your package by placing them in a an `exported
             - en-us
                 - YourDialogName.en-us.qna
         - language-generation
-            -en-us
+            - en-us
                 - YourDialogName.en-us.lg
         - language-understanding
             - en-us
@@ -49,7 +48,7 @@ Declarative files can be added to your package by placing them in a an `exported
             - YourDialogName.qna.dialog
         - YourDialogName.dialog
 
-See the [Help and Cancel](/packages/helpandcancel) package for an example of a package containing a dialog.
+See the [Help and Cancel](/packages/HelpAndCancel) package for an example of a package containing a dialog.
 
 ## Code extensions in packages
 
@@ -61,12 +60,15 @@ To dynamically register your action with the Adaptive Runtime, you'll need to de
 
 ```c#
 using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace conversational_core_1.actions
+namespace MyBot
 {
     public class MyBotComponent : BotComponent
     {
-        public override void ConfigureServices(IServiceCollection services, IConfiguration componentConfiguration, ILogger logger)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             // Component type
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<MyCustomAction>(MyCustomAction.Kind));
