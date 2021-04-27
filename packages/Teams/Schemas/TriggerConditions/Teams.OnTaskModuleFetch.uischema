@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams task module fetch",
-        "subtitle": "Invoke activity.name='task/fetch'"
+        "label": "Teams task module fetch"
     },
     "trigger": {
       "submenu": "Microsoft Teams",

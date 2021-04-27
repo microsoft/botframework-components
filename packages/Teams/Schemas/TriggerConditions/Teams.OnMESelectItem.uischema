@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension select item",
-        "subtitle": "Invoke activity.name='composeExtension/selectItem'"
+        "label": "Teams messaging extension select item"
     },
     "trigger": {
       "submenu": "Microsoft Teams",

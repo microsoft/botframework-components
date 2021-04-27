@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension configuration query setting url",
-        "subtitle": "Invoke activity.name='composeExtension/querySettingUrl'"
+        "label": "Teams messaging extension configuration query setting url"
     },
     "trigger": {
       "submenu": "Microsoft Teams",

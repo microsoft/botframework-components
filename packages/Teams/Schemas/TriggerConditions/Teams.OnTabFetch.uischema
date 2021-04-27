@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams tab fetch",
-        "subtitle": "Invoke activity.name='tab/fetch'"
+        "label": "Teams tab fetch"
     },
     "trigger": {
       "submenu": "Microsoft Teams",
