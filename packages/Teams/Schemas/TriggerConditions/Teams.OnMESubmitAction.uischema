@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension submit action",
-        "subtitle": "Invoke activity.name='composeExtension/submitAction'"
+        "label": "Teams messaging extension submit action"
     },
     "trigger": {
       "submenu": "Microsoft Teams",
