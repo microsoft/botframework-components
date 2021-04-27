@@ -1,5 +1,4 @@
-
-name: pr-style.yml
+name: PR Style
 
 on:
   pull_request:
