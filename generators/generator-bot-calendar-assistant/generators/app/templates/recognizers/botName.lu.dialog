@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_<%= botName %>",
-  "recognizers": {
-    "en-us": "<%= botName %>.en-us.lu",
-    "": "<%= botName %>.en-us.lu"
-  }
-}
