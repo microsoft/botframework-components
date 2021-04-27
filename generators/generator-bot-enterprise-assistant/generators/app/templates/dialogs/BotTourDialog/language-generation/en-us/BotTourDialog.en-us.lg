@@ -70,9 +70,9 @@
 {
     "type": "ActionSet",
     "actions": [
-        ${BuildSubmitAction("Who is a peer of...", "People")},
-        ${BuildSubmitAction("Who is the manager of...", "People")},
-        ${BuildSubmitAction("Who reports to...", "People")}
+        ${BuildSubmitAction("Who are Joni's peers?", "People")},
+        ${BuildSubmitAction("Who is Allan's manager?", "People")},
+        ${BuildSubmitAction("Who reports to Nestor?", "People")}
     ]
 }
 ```
