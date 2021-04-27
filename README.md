@@ -18,14 +18,14 @@ Templates are pre-built bot projects designed for specific scenarios. We use [ye
 
 | Name         | npm | Description |
 |:------------:|:---:|:------------|
-|[Empty bot](/generators/generator-bot-empty) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty) | The base empty bot. |
-|[Conversational Core](/generators/generator-bot-conversational-core) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-conversational-core) | Basic conversational bot with NLP. |
+|[Empty Bot](/generators/generator-bot-empty) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty) | The base empty bot. |
+|[Core Bot with Language](/generators/generator-bot-core-language) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-language) | Basic conversational bot with NLP. |
 |[Command list](/generators/generator-bot-command-list) |  | Basic bot using regex and cards. |
-|[Calendar](/generators/generator-bot-calendar) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-calendar) | A bot for working with Calendars. |
-|[People](/generators/generator-bot-people) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-people) | A bot for searching for people on the MS Graph. |
+|[Core Assistant Bot](/generators/generator-bot-core-assistant) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant) | Basic assistant bot with no skills. |
+|[Enterprise Assistant Bot](/generators/generator-bot-enterprise-assistant) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills. |
+|[Enterprise Calendar Bot](/generators/generator-bot-enterprise-calendar) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar) | A bot for working with Calendars. |
+|[Enterprise People Bot](/generators/generator-bot-enterprise-people) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people) | A bot for searching for people on the MS Graph. |
 |[Adaptive](/generators/generator-bot-adaptive) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
-|[Assistant Core](/generators/generator-bot-assistant-core) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-assistant-core) | Basic assistant bot with no skills. |
-|[Enterprise Assistant](/generators/generator-bot-enterprise-assistant) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant) | Assistant Core + Calendar & People as skills. |
 
 ### Packages
 
@@ -35,7 +35,8 @@ Packages are bits of bots that you can add to your bot project. They can contain
 |:------------:|:------|:-----:|:---:|:-----------|
 |[Welcome](/packages/Welcome) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Welcome?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Welcome/)| [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-welcome) | Declarative assets supporting scenarios that welcome new and returning users. |
 |[HelpAndCancel](/packages/HelpAndCancel) | Dialogs | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.HelpAndCancel?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel.svg)](https://badge.fury.io/js/%40microsoft%2Fbot-components-helpandcancel) | Declarative assets supporting scenarios for "help" and "cancel" utterances. |
-|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | | Custom actions for work with calendars and people through the MS Graph API.|
+|[Graph](/packages/Graph) | Custom Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Graph?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/) | | Custom actions for working with calendars and people through the MS Graph API.|
+|[Teams](/packages/Teams) | Triggers Actions | [![NuGet Badge](https://buildstats.info/nuget/Microsoft.Bot.Components.Teams?includePreReleases=true)](https://www.nuget.org/packages/Microsoft.Bot.Components.Teams/) | | Triggers and actions for working with Microsoft Teams.|
 
 ### Virtual Assistant skills (Legacy)
 

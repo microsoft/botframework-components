@@ -30,7 +30,7 @@
               "$designer": {
                 "id": "PsAJ3p"
               },
-              "activity": "${SendActivity_PsAJ3p()}"
+              "activity": "${SendActivity_WelcomeReturningUser()}"
             }
           ],
           "elseActions": [
@@ -39,7 +39,7 @@
               "$designer": {
                 "id": "f3uG2y"
               },
-              "activity": "${SendActivity_f3uG2y()}"
+              "activity": "${SendActivity_WelcomeNewUser()}"
             },
             {
               "$kind": "Microsoft.SetProperty",

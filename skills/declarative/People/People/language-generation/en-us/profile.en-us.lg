@@ -1,0 +1,178 @@
+[Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
+
+# ProfileCardTemplate(body, actions)
+- ```
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        ${body},
+        ${actions}
+    ]
+}
+```
+
+# ProfileCard(profile)
+- ${ProfileCardTemplate(ProfileBody(profile, ContactImageIconUrl(profile.Photo)), ProfileActions(profile))}
+
+# ProfileBody(profile, photo)
+- ```
+{
+    "type": "Container",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "spacing" : "Medium",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${photo}",
+                            "style": "Person",
+                            "width": "90px",
+                            "height": "90px"
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "spacing": "Medium",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${profile.displayName}",
+                            "wrap": true,
+                            "size": "Large",
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${profile.jobTitle}",
+                            "wrap": true,
+                            "size": "Medium",
+                            "spacing": "None"
+                        },
+                        {
+                            "type": "Container",
+                            "width": "stretch",
+                            "spacing": "Small",
+                            "items": [
+                                ${ProfileProperty(profile.mail)},
+                                ${ProfileProperty(ShowPhoneNumber(profile.businessPhones, "No phone number found."))},
+                                ${ProfileProperty(profile.department)},
+                                ${ProfileProperty(profile.officeLocation)},
+                                ${ProfileContacts(profile)}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# ShowPhoneNumber(Object, TextIfNotFound)
+- IF: ${ Object == null || Object == "" || (Object!= null && isArray(Object) && count(Object) == 0)}
+    - ${TextIfNotFound}
+- ELSEIF : ${ isArray(Object) }
+    - ${Object[0]}
+- ELSE:
+    - ${Object}
+
+# ProfileProperty(text)
+- ```
+{
+    "type": "TextBlock",
+    "text": "${text}",
+    "wrap": true,
+    "size": "Small",
+    "spacing": "None"
+}
+```
+
+# ProfileContacts(profile)
+- ```
+{
+    "type": "Container",
+    "spacing" : "Padding",
+    "items": [
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${ChatIconUrl()}",
+                            "width" : "24px",
+                            "height" : "24px",
+                            "selectAction": {
+                                "type": "Action.OpenUrl",
+                                "url": "https://teams.microsoft.com/l/chat/0/0?users=${profile.mail}"
+                            }
+                        }
+                    ],
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${MailIconUrl()}",
+                            "width" : "29px",
+                            "height" : "18px",
+                            "selectAction": {
+                                "type": "Action.OpenUrl",
+                                "url": "mailto:${profile.mail}"
+                            }
+                        }
+                    ],
+                    "spacing": "Medium"
+                },
+                {
+                    "type": "Column",
+                    "width": "auto",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${PhoneIconUrl()}",
+                            "width" : "22px",
+                            "height" : "22px",
+                            "selectAction": {
+                                "type": "Action.OpenUrl",
+                                "url": "https://teams.microsoft.com/l/call/0/0?users=${profile.mail}"
+                            }
+                        }
+                    ],
+                    "spacing": "Medium"
+                }
+            ]
+        }
+    ]
+}
+```
+
+# ProfileActions(profile)
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${GetManagerAction(profile.id)},
+        ${GetCollaboratorsAction(profile.id)},
+        ${GetPeersAction(profile.id)},
+        ${GetTeamAction(profile.id)}
+    ]
+}
+```

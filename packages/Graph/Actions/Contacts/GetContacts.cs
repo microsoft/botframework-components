@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
 
             // Get the current user's profile.
-            IUserContactsCollectionPage contacts = await client.Me.Contacts.Request(optionList).GetAsync(cancellationToken);
+            IUserContactsCollectionPage contacts = await client.Me.Contacts.Request(optionList).Select("displayName,emailAddresses,imAddresses").GetAsync(cancellationToken);
 
             var contactsResult = new List<CalendarSkillContactModel>();
             if (contacts?.Count > 0)
@@ -81,7 +81,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 }
             }
 
-            IUserPeopleCollectionPage people = await client.Me.People.Request(optionList).GetAsync(cancellationToken);
+            IUserPeopleCollectionPage people = await client.Me.People.Request(optionList).Select("displayName,emailAddresses").GetAsync(cancellationToken);
 
             if (people?.Count > 0)
             {

@@ -12,27 +12,34 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "UpdateEventDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "user.token.token"
+        "=turn.token.token"
       ]
     },
     "eventToUpdateProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Updated event",
       "description": "Updated event object",
-      "examples": []
+      "examples": [
+        "=turn.eventsToUpdate"
+      ]
     }
   }
 }

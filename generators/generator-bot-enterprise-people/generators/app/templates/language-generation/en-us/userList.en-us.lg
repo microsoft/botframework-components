@@ -1,0 +1,138 @@
+[Common](common.en-us.lg)
+[Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
+[Cards](cards.en-us.lg)
+
+# UserListPrompt()
+- IF: ${count(turn.Items) > 1}
+    - ${MultipleResultFound()}
+- ELSE:
+    - ${SingleResultFound()}
+
+#SingleResultFound()
+- SWITCH: ${dialog.Scenario}
+- CASE: ${"Collaborator"}
+    - I found 1 colleague that collaborates with **${turn.UserFound.displayName}**.
+- CASE: ${"Peers"}
+    - I found 1 colleague that share the same manager as **${turn.UserFound.displayName}**.
+- CASE: ${"DirectReports"}
+    - I found 1 colleague that reports to **${turn.UserFound.displayName}**.
+- DEFAULT:
+    - I found one result:
+
+#MultipleResultFound()
+- SWITCH: ${dialog.Scenario}
+- CASE: ${"Collaborator"}
+    - I found ${count(turn.Items)} colleagues that collaborates with **${turn.UserFound.displayName}**.
+- CASE: ${"Peers"}
+    - There are ${count(turn.Items)} colleagues that share the same manager as **${turn.UserFound.displayName}**.
+- CASE: ${"DirectReports"}
+    - There are ${count(turn.Items)} people that are part of **${turn.UserFound.displayName}**'s team.
+- CASE: ${"PersonSearch"}
+    - I found multiple matches for **${dialog.User}**. Please pick one:
+- DEFAULT:
+    - I found multiple results:
+
+# UserListShowMorePrompt()
+- How about these options?
+
+# UserListSkipResponse()
+- Sure. Let's move on.
+
+# UserListDefaultValueResponse()
+- OK, let's move on.
+
+# UserListTitle()
+- SWITCH: ${dialog.Scenario}
+- CASE: ${"Collaborator"}
+    - Collaborators
+- CASE: ${"Peers"}
+    - Peers
+- CASE: ${"DirectReports"}
+    - Team
+- DEFAULT:
+    - Colleagues
+
+# UserListItemAction(item)
+- IF: ${ dialog.doSelection }    
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": 
+        {
+            "skillId": "${SkillId()}",
+            "value" : "${item.index}",
+            "msteams": {
+                "type": "messageBack",
+                "value" : "${item.index}",
+            }
+        }
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": {
+            "skillId": "${SkillId()}",
+            "intent": "GetProfile",
+            "user": "${item.id}",
+            "msteams": {
+                "type": "messageBack"
+            }
+        }
+    }
+    ```
+
+# UserListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": ${UserListItemAction(item)},
+    "items": [
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${ContactImageIconUrl(item.Photo)}",
+                            "style": "Person",
+                            "size": "${IconSizeSmall()}",
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 90,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.displayName}",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${coalesce(item.jobTitle, item.department, "")}",
+                            "wrap": true,
+                            "spacing": "None"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+# CancelMessage()
+- Okay, let's move on.

@@ -1,0 +1,11 @@
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Generated folder and contents produced by Bot Framework Composer.
+generated/
+
+!Properties/launchSettings.json
+!packages/packages.json

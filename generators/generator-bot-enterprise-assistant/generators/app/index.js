@@ -36,7 +36,7 @@ module.exports = class extends BaseGenerator {
           {
             isPlugin: true,
             name: 'Microsoft.Bot.Builder.AI.Orchestrator',
-            version: '4.13.0-rc4.preview',
+            version: '4.13.0',
           },
         ],
         modifyApplicationSettings: (appSettings) => {
@@ -51,7 +51,9 @@ module.exports = class extends BaseGenerator {
 
     // create skill, this derives from a separate template
     this.composeWith(
-      require.resolve('@microsoft/generator-bot-calendar/generators/app'),
+      require.resolve(
+        '@microsoft/generator-bot-enterprise-calendar/generators/app'
+      ),
       Object.assign({}, this.options, {
         arguments: ['Calendar'],
         dotnetSettings: {
@@ -62,7 +64,9 @@ module.exports = class extends BaseGenerator {
 
     // create skill, this derives from a separate template
     this.composeWith(
-      require.resolve('@microsoft/generator-bot-people/generators/app'),
+      require.resolve(
+        '@microsoft/generator-bot-enterprise-people/generators/app'
+      ),
       Object.assign({}, this.options, {
         arguments: ['People'],
         dotnetSettings: {

@@ -1,0 +1,633 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "$designer": {
+      "name": "<%= botName %>",
+      "description": "",
+      "id": "Kyymuy"
+    }
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5oW8CV"
+          },
+          "name": "<%= botName %>.Greeting",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "2Szxt3"
+          },
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "Uaq27I"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetProfile",
+              "$designer": {
+                "id": "vTjoP3"
+              },
+              "token": "=turn.token.token",
+              "resultProperty": "turn.signedInUser"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DP3pJu"
+              },
+              "activity": "${SendActivity_DP3pJu()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "K5P9dm"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "W4IWlO"
+              },
+              "activity": "${SendActivity_W4IWlO()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "52Yo92",
+        "name": "OnIntent (Logout)"
+      },
+      "intent": "Logout",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SjeplQ"
+          },
+          "name": "<%= botName %>.OnIntent_Logout",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SignOutUser",
+          "$designer": {
+            "id": "7Ibk0G"
+          },
+          "userId": "=user.id",
+          "connectionName": "=settings.oauthConnectionName"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "DWdyHg"
+          },
+          "activity": "${SendActivity_DWdyHg()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "blfdn9",
+        "name": "OnIntent (GetCollaborators)"
+      },
+      "intent": "GetCollaborators",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rIjVl9"
+          },
+          "name": "<%= botName %>.OnIntent_GetCollaborators",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "LvPia7"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "io3AVP"
+          },
+          "activityProcessed": true,
+          "dialog": "GetCollaboratorsDialog",
+          "options": {
+            "UserIdFound": "=$options.user",
+            "nameEntity": "=$options.nameEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "bK5x7C",
+        "name": "OnIntent (GetDepartment)"
+      },
+      "intent": "GetDepartment",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CtN0JN"
+          },
+          "name": "<%= botName %>.OnIntent_GetDepartment",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "JgLgyA"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "OlaCZn"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "cuN0XW",
+        "name": "OnIntent (GetDirectReports)"
+      },
+      "intent": "GetDirectReports",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "UIBrQZ"
+          },
+          "name": "<%= botName %>.OnIntent_GetDirectReports",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "5ppP1M"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Y2hy7l"
+          },
+          "activityProcessed": true,
+          "dialog": "GetDirectReportsDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity",
+            "UserIdFound": "=$options.user"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "22Refo",
+        "name": "OnIntent (GetEmailAddress)"
+      },
+      "intent": "GetEmailAddress",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "LLDQcc"
+          },
+          "name": "<%= botName %>.OnIntent_GetEmailAddress",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "caV2Vr"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Bhz0b5"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pjrr7d",
+        "name": "OnIntent (GetJobTitle)"
+      },
+      "intent": "GetJobTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "S2lRYi"
+          },
+          "name": "<%= botName %>.OnIntent_GetJobTitle",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "zmuz7l"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xiISoH"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "AUBLiD",
+        "name": "OnIntent (GetLocation)"
+      },
+      "intent": "GetLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "AF2A5j"
+          },
+          "name": "<%= botName %>.OnIntent_GetLocation",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "sIrh3H"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "pOJdPA"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "xAkucD",
+        "name": "OnIntent (GetManager)"
+      },
+      "intent": "GetManager",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "QPzd0I"
+          },
+          "name": "<%= botName %>.OnIntent_GetManager",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "2AokNp"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3vIVVS"
+          },
+          "activityProcessed": true,
+          "dialog": "GetManagerDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity",
+            "UserIdFound": "=$options.user"
+          }
+        }
+      ],
+      "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qzK1HD",
+        "name": "OnIntent (GetPeers)"
+      },
+      "intent": "GetPeers",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "v9syx2"
+          },
+          "name": "<%= botName %>.OnIntent_GetPeers",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "VWyqgw"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fJItRK"
+          },
+          "activityProcessed": true,
+          "dialog": "GetPeersDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity",
+            "UserIdFound": "=$options.user"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "8zzS4g",
+        "name": "OnIntent (GetPhoneNumber)"
+      },
+      "intent": "GetPhoneNumber",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "1ZZm4i"
+          },
+          "name": "<%= botName %>.OnIntent_GetPhoneNumber",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "bCD1pL"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "sr38K1"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "GRE2OG",
+        "name": "OnIntent (GetProfile)"
+      },
+      "intent": "GetProfile",
+      "entities": [],
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wiVPuM"
+          },
+          "name": "<%= botName %>.OnIntent_GetProfile",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "h88r5H"
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "U3dC5A"
+          },
+          "activityProcessed": true,
+          "dialog": "GetProfileDialog",
+          "options": {
+            "nameEntity": "=$options.contactEntity",
+            "userIdFound": "=$options.user"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JlhWE9",
+        "name": "OnEvent (SetOptions)"
+      },
+      "event": "SetOptions",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ruudtx"
+          },
+          "name": "<%= botName %>.OnEvent_SetOptions",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JGABEb"
+          },
+          "assignments": [
+            {
+              "property": "$options.contactEntity",
+              "value": "=coalesce(@contact, @email, @personName)"
+            },
+            {
+              "property": "$options.user",
+              "value": "=turn.activity.value.user"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "TDHKsS"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "0XJm0e",
+        "name": "OnError"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "BnGy6N"
+          },
+          "name": "<%= botName %>.OnError",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "FSXy40"
+          },
+          "condition": "=turn.activity.channelId",
+          "cases": [
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "Pszd6H"
+                  },
+                  "name": "Error",
+                  "label": "Error",
+                  "valueType": "string",
+                  "value": "=turn.dialogEvent.value"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ipHTXS"
+                  },
+                  "activity": "${SendActivity_ipHTXS()}"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "AV87xs"
+              },
+              "activity": "${SendActivity_AV87xs()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "y3gv3g"
+              },
+              "activity": "${SendActivity_y3gv3g()}"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Tcje3O"
+              },
+              "activity": "${SendActivity_Tcje3O()}"
+            },
+            {
+              "$kind": "Microsoft.TelemetryTrackEventAction",
+              "$designer": {
+                "id": "26G8Zg"
+              },
+              "properties": {
+                "TurnEvent": "=turn.dialogEvent.value"
+              },
+              "eventName": "BotError"
+            }
+          ]
+        }
+      ],
+      "runOnce": true
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "YhLqAm"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "njVcFH"
+          },
+          "name": "<%= botName %>.UnknownIntent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "HTkwlL"
+          },
+          "activity": "${SendActivity_HTkwlL()}"
+        }
+      ]
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
+  "generator": "<%= botName %>.lg",
+  "id": "<%= botName %>",
+  "recognizer": "<%= botName %>.lu.qna"
+}

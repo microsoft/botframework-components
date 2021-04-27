@@ -42,7 +42,7 @@ namespace <%= botName %>.Triggers
         /// </returns>
         [FunctionName("ReplyToActivity")]
         public async Task<IActionResult> RunAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v3/conversations/{conversationId}/activities/{activityId}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "api/v3/conversations/{conversationId}/activities/{activityId}")] HttpRequest req,
             string conversationId,
             string activityId)
         {

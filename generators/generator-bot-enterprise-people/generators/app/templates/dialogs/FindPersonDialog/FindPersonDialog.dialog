@@ -1,0 +1,128 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "d3kkFE",
+    "name": "FindPersonDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "PzW7Ou"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "lKyff0"
+          },
+          "name": "<%= botName %>.FindPersonDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "XVsKBS"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "q12nrf"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "getItemsEvent": "GetListItems",
+            "AutoChooseFirst": "true",
+            "Scenario": "PersonSearch",
+            "User": "=$nameEntity"
+          },
+          "resultProperty": "turn.SelectedUser"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "t5WNI5"
+          },
+          "value": "=turn.SelectedUser"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "a0xuhL",
+        "name": "OnEvent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "HM0ZDn"
+          },
+          "name": "<%= botName %>.FindPersonDialog.OnEvent_GetListItems",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "eyez8z"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetUsers",
+          "$designer": {
+            "id": "EvJ4g2"
+          },
+          "nameToSearchFor": "=$nameEntity",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "officeLocation",
+            "businessPhones",
+            "jobTitle",
+            "department"
+          ],
+          "maxCount": 16,
+          "token": "=turn.token.token",
+          "resultProperty": "turn.Items"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Ek6zBT"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "rDlhom"
+              },
+              "token": "=turn.token.token",
+              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "FindPersonDialog.lg",
+  "recognizer": "FindPersonDialog.lu.qna",
+  "id": "FindPersonDialog"
+}

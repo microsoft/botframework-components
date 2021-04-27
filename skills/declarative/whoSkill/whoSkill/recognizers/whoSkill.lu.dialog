@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "LUIS_whoSkill",
-  "recognizers": {
-    "en-us": "whoSkill.en-us.lu",
-    "": "whoSkill.en-us.lu"
-  }
-}

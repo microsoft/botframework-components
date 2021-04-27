@@ -16,12 +16,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEAuthResponse : BaseAuthResponseDialog
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEAuthResponse";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEAuthResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -31,6 +25,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
             : base(callerPath, callerLine)
         {
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEAuthResponse";
 
         /// <inheritdoc/>
         protected override string OnComputeId()

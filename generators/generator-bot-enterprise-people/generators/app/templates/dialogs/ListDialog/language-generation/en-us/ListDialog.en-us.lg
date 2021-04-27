@@ -1,0 +1,60 @@
+[Common](common.en-us.lg)
+[userList](userList.en-us.lg)
+[Cards](cards.en-us.lg)
+
+# ListCard(totalItemCount, pageSize, pageItems, headerIcon, headerTitle, itemTemplate, actionsTemplate, pageIndex, pageCount)
+- ${CardTemplate(ListCardHeader(headerIcon, headerTitle, totalItemCount), ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount))}
+
+# ListCardHeader(icon, title, totalItemCount)
+- ${CardHeader(template(icon), template(title), "", concat(totalItemCount, " results"))}
+
+# ListCardBody(totalItemCount, pageSize, pageItems, itemTemplate, pageIndex, pageCount)
+- ${PaginatedListCardBody(totalItemCount, pageSize, foreach(pageItems, item, template(itemTemplate, item)), pageIndex, pageCount)}
+
+# SelectedItemCard(item, headerIcon, headerTitle, itemTemplate, actionsTemplate)
+- ${CardTemplate(CardHeader(headerIcon, headerTitle, '', ''), template(itemTemplate, item))}
+
+# SendActivity_BDsmtE()
+- ${template($templates.skipResponse)}
+
+# SendActivity_2LMTaY()
+- That's the beginning of the list.
+
+# SendActivity_D6gEbV()
+- That's the end of the list.
+
+# InitialChoicePrompt()
+[Activity
+    text = ${if($activePrompt != null, template($activePrompt), null)}
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+]
+
+# RepromptChoicePrompt()
+[Activity
+    deliveryMode = update
+    id = ${turn.activity.replyToId}
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+]
+
+# Bot.SendActivityPlus_Activity_UcmH0c()
+[Activity
+    attachments = ${json(ListCard(count(turn.items), $pageSize, turn.pageItems, $templates.icon, $templates.title, $templates.item, $templates.actions, $pageIndex + 1, $pageCount))}
+]
+
+# ChoiceInput_Prompt_VygDK3()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# SendActivity_HOESBs()
+- IF: ${$isFirstTurn == true}
+    - ${InitialChoicePrompt()}
+- ELSE: 
+    - ${RepromptChoicePrompt()}
+
+# ChoiceInput_DefaultValueResponse_VygDK3()
+- OK, let's move on.
+
+# SendActivity_nRdr1W()
+- ${CancelMessage()}

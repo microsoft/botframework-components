@@ -20,12 +20,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class GetTeamMember : Dialog
     {
         /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.GetTeamMember";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetTeamMember"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -36,6 +30,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
+
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.GetTeamMember";
 
         /// <summary>
         /// Gets or sets an optional expression which if is true will disable this action.

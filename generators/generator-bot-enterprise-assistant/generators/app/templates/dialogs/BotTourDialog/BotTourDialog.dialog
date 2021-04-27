@@ -21,7 +21,7 @@
           "$designer": {
             "id": "YRvoei"
           },
-          "activity": "${SendActivity_YRvoei()}"
+          "activity": "${SendActivity_BotTourOverview()}"
         }
       ]
     },
@@ -38,7 +38,13 @@
           "$designer": {
             "id": "yDMllq"
           },
-          "activity": "${SendActivity_yDMllq()}"
+          "activity": "${SendActivity_CalendarTour()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "nyly8M"
+          }
         }
       ]
     },
@@ -55,7 +61,28 @@
           "$designer": {
             "id": "l6vgAo"
           },
-          "activity": "${SendActivity_l6vgAo()}"
+          "activity": "${SendActivity_PeopleTour()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "Sj4NAp"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "77kmIw"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "dAfOtV"
+          },
+          "value": false
         }
       ]
     }
