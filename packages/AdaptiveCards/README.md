@@ -3,7 +3,7 @@
 Actions and triggers for working with the Adaptive Cards from your Bot Framework bot. This package contains:
 
 - Actions for creating, storing, and sending Adaptive Cards
-- Triggers for responding to Adaptive Cards invokes & activities, like Action.Submit, Action.Execute
+- Triggers for responding to [Adaptive Cards invokes & activities](https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-actions#adaptive-cards-actions), like Action.Submit, Action.Execute
 
 ## Getting started
 
