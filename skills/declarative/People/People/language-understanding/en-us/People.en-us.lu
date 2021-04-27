@@ -1,0 +1,542 @@
+> # Intent definitions
+
+# Logout
+- Signout
+- Logout
+- Sign out
+- Log out
+- Forget me
+
+# GetDepartment
+- can you tell me the work area of {@contact=valderrama}?
+- do you know {@contact=robert}´s department?
+- does {@contact=wendy} work at the human resources department?
+- i would like to know which department {@contact=philip} is working?
+- in which department is {@contact=ronald} located?
+- in which department does {@contact=mike} live?
+- in which department is {@contact=bob} located?
+- in which department is {@contact=lisa}?
+- is {@contact=marcos} working in the legal departament
+- is {@contact=yunior} working in the legal departament
+- please tell me from which department {@contact=shawn} came from
+- please, tell me which department does {@contact=john} work in?
+- show me {@contact=carolina}'s work department
+- tell me about {@contact=richard}'s department
+- what area does {@contact=trang} work in?
+- what department does {@contact=belinda} work in?
+- what department does {@contact=cesar lopez} belong to.
+- what department does {@contact=david} belong to?
+- what department does {@contact=jon} belong to
+- what department does {@contact=lisa} work for in this company?
+- what department does {@contact=michael} belong to
+- what department does {@contact=sam} works in?
+- what department does {@contact=sheryl sandberg} belong to?
+- what department is {@contact=andy} working for
+- what floor is {@contact=alex}'s department on?
+- what is {@contact=fabio}'s department at the moment?
+- what is {@contact=lisa}'s organization
+- what is {@contact=luisa} work area?
+- what is the department of {@contact=abigail}
+- what is the new department of {@contact=crystal}?
+- what is {@contact=will} department?
+- what is {@contact=william chang} position in sales department?
+- what's {@contact=jennifer}'s department?
+- what's {@contact=josue}'s department?
+- what's {@contact=natya satea}'s department
+- what's the name of {@contact=pero}'s department?
+- where does {@contact=caroline matt} work in?
+- where is {@contact=antonie}'s department?
+- where's {@contact=nithesh}'s department?
+- which area does {@contact=adele} belong to?
+- which area does {@contact=linda} work in?
+- which department does {@contact=bella rickel} work for?
+- which department does {@contact=lily green} work for?
+- which department does {@contact=meanne} work with?
+- which department does {@contact=sarah} belong to?
+- which department does {@contact=sebastian smith} work in?
+- which department is {@contact=anjelica} in at the moment?
+- which department is {@contact=kim} in?
+
+
+@ intent GetDepartment usesFeature Department
+
+# GetDirectReports
+- {@contact=amanda}'s direct reports
+- can you find {@contact=octavio}'s direct reports?
+- can you give me the direct report of {@contact=marcos}
+- can you search {@contact=elio}'s direct reports?
+- direct reports {@contact=kimberlin}
+- do you know about who {@contact=alex} manages?
+- is direct report of {@contact=tom} available ?
+- {@contact=paco}, who are his direct reports?
+- please show me who {@contact=john} manages
+- show me {@contact=bart}'s reports
+- show me {@contact=lisa}'s direct report
+- show me {@contact=patrick} reports
+- tell me the reports of {@contact=marianne}?
+- what are direct reports for {@contact=bryant}
+- what are the direct reports for {@contact=anne}
+- what are the direct reports for {@contact=maria}?
+- where are {@contact=pam}'s direct reports?
+- where is {@contact=phil}'s direct report?
+- where is the direct reports of {@contact=katy}?
+- who are {@contact=alex} reports ?
+- who are the direct reports for {@contact=rick}
+- who directly reports to {@contact=kim}?
+- who directly reports to {@contact=mable lim}
+- who does {@contact=angelica} manage?
+- who does {@contact=brenda} manage
+- who does {@contact=nick} manage
+- who does {@contact=sarah} manage?
+- who is {@contact=edom}'s reports?
+- who is {@contact=john} the boss of?
+- who reports to {@contact=anna harvinger}?
+- who reports to {@contact=cabrera andres}?
+- who reports to {@contact=cesar felipe.}
+- who reports to {@contact=john}?
+- who reports to {@contact=julia stewart}?
+- who reports to {@contact=kevin} at this moment?
+- who reports to {@contact=kore walker}?
+- who reports to {@contact=liks}?
+- who reports to {@contact=linda}?
+- who reports to {@contact=maria brith}
+- who reports to {@contact=mike}?
+- who reports to {@contact=nora lee}
+- who reports to perica?
+- who reports to {@contact=trump}?
+- who works for {@contact=megan}
+
+
+@ intent GetDirectReports usesFeature DirectReport
+
+# GetEmailAddress
+- {@contact=antonio}'s email please
+- can you find {@contact=julian}'s emailaddress?
+- can you get me {@contact=benny}'s email?
+- can you give me the {@contact=alberto} email addreess
+- can you give me the {@contact=luis} emailaddress
+- can you tell me email {@contact=valderrama}?
+- could you give me {@contact=daniella}'s emailaddress?
+- could you tell me {@contact=paola}'s emailaddress?
+- find {@contact=donald}'s email
+- find {@contact=luong} email
+- find {@contact=nancy benavides} email.
+- find {@contact=ted} email.
+- hey, find me an email of that lady {@contact=paola}
+- i want {@contact=lisa} gmail emailaddress.
+- is the emailaddress of {@contact=charles} correct?
+- may i know {@contact=nancy}'s new emailaddress ?
+- please provide me with {@contact=jim}'s emailaddress
+- please provide the emailaddress of {@contact=brandon sim}.
+- please tell me the new emailaddress of {@contact=darrel}
+- please, find {@contact=phineas} personal email.
+- search the {@contact=roger} email
+- what is {@contact=angelica}'s secret emailaddress?
+- what is {@contact=clark}'s email?
+- what is {@contact=helen}'s emailaddress?
+- what is {@contact=johns} email?
+- what is {@contact=lebron james}' emailaddress?
+- what is {@contact=mario} email?
+- what is {@contact=neobux} email?
+- what is new emailaddress of my friend {@contact=sam}?
+- what is {@contact=pamela}'s emailaddress?
+- what is {@contact=stan}'s personal email?
+- what is the email for {@contact=neyer}
+- what is the email of {@contact=jimmy hong}?
+- what is the email of {@contact=melania}?
+- what is the emailaddress of {@contact=hang dam}?
+- what is the emailaddress of {@contact=john}?
+- what is the emailaddress of {@contact=molly}?
+- what is the {@contact=mary}'s email
+- what is {@contact=walter madden}'s email?
+- what is your email {@contact=anne}?
+- what is your email {@contact=tiana}?
+- what's {@contact=alex} emailaddress?
+- what's {@contact=chris} email
+- what's {@contact=jefferson}'s email?
+- what's {@contact=jon}'s emailaddress?
+- whats {@contact=mike}'s email?
+- who knows {@contact=john}'s emailaddress?
+
+
+# GetJobTitle
+- find me the role of {@contact=tom}
+- is {@contact=april} a chairman?
+- is {@contact=francisco} a civil engineer
+- is {@contact=kelly} a ceo?
+- is {@contact=tim}'s role?
+- {@contact=ricardo}, what is your job?
+- show me {@contact=hugo}'s job title
+- tell me {@contact=karen}'s title
+- tell me more about {@contact=oscar}'s job role.
+- what does {@contact=angel} do
+- what does {@contact=carol} do here?
+- what does {@contact=cesar lopez} do?
+- what does {@contact=lg} do?
+- what is {@contact=alex}'s role?
+- what is {@contact=bill gates} role.
+- what is {@contact=carlo}'s role at this moment?
+- what is {@contact=david}'s job title at the company?
+- what is {@contact=jerson miguel}'s job title
+- what is {@contact=jj abram}'s job title
+- what is {@contact=jose} role in the company
+- what is {@contact=karen}'s position?
+- what is {@contact=luis} job title?
+- what is {@contact=michael tan} responsibility and role in the company ?
+- what is {@contact=miki}'s position at work?
+- what is {@contact=pearl}'s role?
+- what is {@contact=peter}'s position?
+- what is {@contact=ruth walter}'s current job?
+- what is {@contact=sami}'s role in the company?
+- what is {@contact=shane}'s job in this company?
+- what is {@contact=tevin}'s job title?
+- what is the {@contact=andrew ng} title?
+- what is the current position of {@contact=mark}?
+- what is the designation of mr. {@contact=ram}.
+- what is the {@contact=dung}'s title
+- what is the function of {@contact=karen}?
+- what is the job title for {@contact=tan boon keong} in the company ?
+- what is the job title of {@contact=jackson}?
+- what is the job title of {@contact=john}
+- what is the job title of {@contact=peter johnson}
+- what is the role of {@contact=angelica}?
+- what is the role of {@contact=ellen} in the company?
+- what is the title of {@contact=wero} in this company
+- what is the tittle of {@contact=polo} in this company
+- what is your job {@contact=pauline}?
+- what job has {@contact=julia}?
+- what role does {@contact=jhon} have?
+- what's {@contact=deril}'s job?
+- what's {@contact=frank} do
+- what's {@contact=jimmy}'s role in the company?
+- what's {@contact=royston}'s title?
+- you know what was the previous title job for {@contact=chris}
+
+
+@ intent GetJobTitle usesFeature JobTitle
+
+# GetLocation
+- can you please show me {@contact=peter}'s office?
+- can you tell me where does {@contact=johnny} work?
+- could you find {@contact=ana}'s office?
+- find {@contact=alice}'s work
+- find {@contact=andrew}'s office
+- find {@contact=delilah walker}'s work place
+- find {@contact=jessie}'s office
+- find {@contact=samatha collins}
+- hey {@contact=ana}, i was in your city yesterday, nice town really
+- how far i am from {@contact=jack}'s house?
+- i wanna see {@contact=maria}'s office
+- is {@contact=moe} in the building?
+- is {@contact=robert} in birmingham?
+- show me {@contact=adam}'s office location
+- show me {@contact=fernando}'s space
+- show me {@contact=pablo's} office please
+- show me {@contact=peter stanford}'s office
+- what city is the office of {@contact=kate huntington}?
+- where can i find {@contact=ruben}
+- where does {@contact=darren} work?
+- where does {@contact=estela} work
+- where does {@contact=frank} work
+- where does {@contact=minh anh} work?
+- where does {@contact=nyla rodriguez} live.
+- where does {@contact=rosie sia} work?
+- where does {@contact=seinfeld} work?
+- where does {@contact=yumo} works
+- where is {@contact=alexander}'s home?
+- where is {@contact=andy} location
+- where is {@contact=angelica}'s house located?
+- where is {@contact=carlos} located?
+- where is {@contact=jack}'s office located?
+- where is {@contact=kat} in san diego?
+- where is {@contact=marcos} office located ?
+- where is {@contact=mark}'s office?
+- where is {@contact=mona saad}'s place of work now?
+- where is {@contact=monic}'s work space?
+- where is {@contact=peter} currently located?
+- where is {@contact=sam}'s new office located?
+- where is {@contact=sony adia}'s office located?
+- where is the departament of {@contact=william jones}?
+- where is {@contact=walmar}?
+- where is working {@contact=maria} at this moment?
+- where was {@contact=janice fox} located?
+- where's {@contact=joseph}'s office?
+- where's the {@contact=peter}'s jobs?
+- who knows where {@contact=pamela} is?
+- you know the specifications about {@contact=orlando}'s office
+
+
+# GetManager
+- find {@contact=celine}'s manager
+- find {@contact=godfrey}'s manager?
+- is {@contact=fredy} a manager
+- {@contact=michael}'s manager
+- show me {@contact=carlos} boss
+- show me {@contact=pablo}'s direct manager
+- tell me who {@contact=bill gates} reports to.
+- tell me who is {@contact=liv}'s manager
+- tell me who is {@contact=tatiana}'s boss .
+- tell me who {@contact=juan guaido} reports to.
+- tell me who {@contact=linh} reports to.
+- the manager of {@contact=carol hanna}
+- what is the name of {@contact=andrey}'s manager?
+- what is the name of {@contact=regina}'s manager?
+- what is the name of the manager of {@contact=pete}?
+- what is the name of the {@contact=sam}'s manager?
+- which manager does {@contact=andrew ng} report to?
+- who does {@contact=elaine} report to?
+- who does {@contact=oscar} report to
+- who does {@contact=theodore} work for?
+- who does {@contact=thomas} report to?
+- who is {@contact=alexander}'s manager?
+- who is {@contact=cindy}'s manager
+- who is {@contact=eilish} manager
+- who is {@contact=filip}'s manager
+- who is {@contact=john}'s manager
+- who is {@contact=mike love}'s manager?
+- who is my {@contact=angelica}'s manager?
+- who is {@contact=nafidov}'s manager?
+- who is {@contact=paul}'s manager at this moment?
+- who is {@contact=pedro}'s manager?
+- who is {@contact=phylipp} manager?
+- who is {@contact=rogers}'s manager?
+- who is {@contact=romeo}'s manager?
+- who is the boss of {@contact=jessie}
+- who is the boss of {@contact=mohamed} at work?
+- who is the current manager of {@contact=amy adams}?
+- who is the head of {@contact=fabio}?
+- who is the {@contact=jessika}'s manager?
+- who is the manager of {@contact=alex} ?
+- who is the manager of {@contact=jhon}?
+- who is the manager of {@contact=joey}?
+- who is the manager of {@contact=laura}
+- who is the manager of {@contact=lim bee bee} ?
+- who is the manager of {@contact=ortencia}?
+- who is the manager of {@contact=rachel} in this company
+- who is the manger of my friend {@contact=rita}?
+- who manages {@contact=judd}?
+- who manages {@contact=mark}
+- who's {@contact=clement}'s manager?
+- who's {@contact=peter}'s manager?
+- you know who was the manager for {@contact=john}
+
+
+@ intent GetManager usesFeature Manager
+
+# GetPeers
+- how many peers does {@contact=harry} have?
+- show me chris dalia's team
+- show me {@contact=ronald}'s colleagues
+- show me {@contact=wilson's} colleagues
+- what is the name of {@contact=rose}'s partner
+- where are some of the {@contact=sam}'s peers now?
+- which ones are {@contact=john}'s colleagues?
+- who are {@contact=alexander}'s peers?
+- who are {@contact=angelica}'s peers?
+- who are {@contact=chris}' peers at work
+- who are {@contact=elizabeth}'s peers?
+- who are in {@contact=jean}'s team?
+- who are {@contact=jane}'s peers at the moment?
+- who are {@contact=jane}'s peers in work
+- who are {@contact=jim shaw}'s peers?
+- who are {@contact=julia}'s peers?
+- who are {@contact=monica}'s peers?
+- who are {@contact=pedro sequera}'s work mates?
+- who are peers of {@contact=george stevens}?
+- who are peers of {@contact=narayan}?
+- who are {@contact=robert garcia}'s peers?
+- who are the peers of {@contact=abidal}
+- who are the peers of {@contact=bob}?
+- who are the peers of {@contact=erik}
+- who are the peers of {@contact=esteban lopez}
+- who are the peers of {@contact=geeta}?
+- who are the peers of {@contact=james colb}
+- who are the peers of {@contact=nancy benavides}.
+- who are the peers of {@contact=paul}?
+- who are the peers of {@contact=suhail} ?
+- who are {@contact=vladimir}'s colleagues on the advertisement project?
+- who does {@contact=andy} work with
+- who does {@contact=lisa} work with
+- who is in {@contact=piter} team?
+- who is the peer of {@contact=homero}
+- who is the peer of {@contact=sandra}
+- who partners {@contact=victor} in his project
+- who works in {@contact=george}'s team
+- who works in the team with {@contact=tom cruise}?
+- who works with {@contact=chris}
+- who works with {@contact=jason lim}
+- who works with {@contact=ratif}?
+- who works with {@contact=sasha}
+
+
+# GetPhoneNumber
+- can you find me {@contact=noe}'s phone number?
+- can you give me the {@contact=carla} phone number
+- can you give me the {@contact=jerry} phone number
+- can you give me {@contact=will}'s phone number?
+- could you tell me the phone number of {@contact=julian}?
+- find phone number for {@contact=cesar lopez}.
+- find phone number for {@contact=rafael}
+- find phone number of {@contact=tina}
+- find phonenumber for {@contact=lucci}
+- give me {@contact=seva}'s contact number
+- i asked for {@contact=lisa}'s office phone number.
+- i want {@contact=rick}'s current phone number
+- may i know {@contact=peter}'s phone number ?
+- please, find phone number for {@contact=michael}'s office.
+- should i ask {@contact=angelica} about her phone number?
+- tell me {@contact=monica}'s number
+- tell me the number of {@contact=james}
+- tell me the phone number of {@contact=ismael}?
+- tell me what is {@contact=lisbeth}'s telefo number
+- what is {@contact=bruce wayne}'s phone number?
+- what is {@contact=deborah}'s phone number?
+- what is {@contact=dejan}'s phone number?
+- what is {@contact=maria}'s phone number
+- what is {@contact=max}'s phone number?
+- what is {@contact=michael jordan}'s phone number?
+- what is {@contact=miki}'s phone number?
+- what is number phone of {@contact=maria}?
+- what is {@contact=ryans} phone number?
+- what is {@contact=sam}'s personal mobile number?
+- what is {@contact=terrence}'s phone number?
+- what is the contact number of {@contact=rachel lee} ?
+- what is the {@contact=jhon sigmund} contact number
+- what is the number for {@contact=jon}
+- what is the number for {@contact=mary}
+- what is the phone number from {@contact=stafke}?
+- what is the phone number of {@contact=daniel pence}?
+- what is the phone number of {@contact=iria gold}?
+- what is the phone number of {@contact=larry}?
+- what is the phone number of {@contact=meg}?
+- what is your telephone number for {@contact=cesar}?
+- what this telephone the {@contact=marta sanches}?
+- what's {@contact=alex} phone number?
+- what's number phone for {@contact=lea}
+- whats {@contact=pablo}'s phone number
+- which {@contact=john}´s new phone number?
+- who can tell me {@contact=alfonso}'s phone number?
+- who remembers {@contact=albert}´s phone number?
+
+
+# GetProfile
+- can you find {@contact=tom@microsoft.com} for me
+- can you the mell life about {@contact=maria}?
+- could you please tell me about who's emailaddress this {@contact=jim@gmail.com}?
+- do you know who is {@contact=paige}?
+- get me {@contact=lebron@test.com}
+- hey, can you tell me who this guy {@contact=john} is
+- hey, who's email {@contact=jenny20@gmail.com} belong to
+- i want to know who is {@contact=john paul} really?
+- is there a guy called {@contact=cliff}?
+- let me see {@contact=sam@college.com}
+- {@contact=paul.f@fmail.com} is your email?
+- please show me {@contact=hariry@happy.com}
+- please tell me about the lawyer {@contact=alexander}
+- please tell me about who {@contact=sam} is and what does he do for a living?
+- present {@contact=katherine} to me
+- show {@contact=ben}'s profile page
+- show {@contact=cesar felipe}.
+- show {@contact=eremias} profile
+- show {@contact=hdj.record@gmail.com}
+- show me {@contact=daniel@outlook.edu}
+- show me {@contact=john@apple.com}
+- show me {@contact=marcus@email.com}
+- show me {@contact=maria@company.co.uk}
+- show me {@contact=pedro navaja}
+- show me the {@contact=fox@gmail.com} profile
+- tell me about {@contact=henry_miller@contoso.co.uk}
+- tell me {@contact=alirio@domain.com}
+- tell me anything about {@contact=marcus@gmail.com}
+- tell me everything about {@contact=peter@microsoft.co.za}
+- tell me more about {@contact=paulina}
+- tell me more about {@contact=rathna}
+- what about {@contact=brad pitt}?
+- what do you know about {@contact=lisa}?
+- what do you know about {@contact=tom}?
+- what is the name of {@contact=pandare@oracle.com}?
+- when did you last seen {@contact=sam}?
+- who exactly is {@contact=ross geller}?
+- who has the email {@contact=qwe@yahioo.com}
+- who is {@contact=alexa.wood@contoso.net}?
+- who is {@contact=alexanderen@joy.com}?
+- who is {@contact=angel john} of the mirage company?
+- who is {@contact=angelica} in the company?
+- who is {@contact=antonio} lebroski
+- who is {@contact=atif.toma@hotmail.com}
+- who is {@contact=ben@gmail.com}
+- who is {@contact=bryan15@gmail.com}
+- who is {@contact=candice swanepoel}?
+- who is {@contact=cesar250360@hotmail.com}, please.
+- who is {@contact=donatella}
+- who is {@contact=erik cornel}
+- who is {@contact=e-steysi@microsoft.com}
+- who is {@contact=gisela sanchez}
+- who is {@contact=gorge} please?
+- who is {@contact=hari@gmail.com} ?
+- who is {@contact=iria madden}?
+- who is {@contact=jackson}?
+- who is {@contact=jenifer lopez}?
+- who is {@contact=jhon galt}
+- who is {@contact=john grisham}
+- who is {@contact=karl} at this company
+- who is {@contact=katehudson@gmail.com}
+- who is {@contact=kimthan@hgmail.com}?
+- who is {@contact=leo} from microsoft?
+- who is {@contact=luisadominguez@hotmail.com} ?
+- who is {@contact=marco-mircrosoft@gmail.com}
+- who is {@contact=maria gonzalez}?
+- who is {@contact=minhtu loren}
+- who is {@contact=morissette}?
+- who is mr. {@contact=andy}
+- who is {@contact=nikola gruevski}?
+- who is {@contact=paul pierce}?
+- who is {@contact=peter slack}?
+- who is {@contact=robert.stevensongmail.com}?
+- who is {@contact=sara lewis}?
+- who is {@contact=simon rodriguez}?
+
+
+# None
+- create a new meeting with rhonda and renee
+- how cold is it today
+- new meeting
+- next week
+- show sports news
+- tuesday
+- what is on my schedule for tomorrow
+- what's the latest news
+- what's the weather like outside
+- what's your favorite color
+- what's your name
+
+
+> # Entity definitions
+
+@ ml contact usesFeatures personName,email
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+@ phraselist Manager(interchangeable) disabledForAllModels = 
+	- manager,boss,report to,work for,manages
+
+@ phraselist DirectReport(interchangeable) disabledForAllModels = 
+	- direct report,direct reports,report,reports,manage,reports to
+
+@ phraselist JobTitle(interchangeable) disabledForAllModels = 
+	- job,job title,role,position,designation
+
+@ phraselist Department(interchangeable) disabledForAllModels = 
+	- department,organization,org,division,team,product
+
+
+# GetCollaborators
+- Who collaborate with me most?

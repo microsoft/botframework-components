@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "People",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi there 🖐, I'm ready to help answer questions about people in your organization.",
+        "Hi there 🖐, I can help you search for people in your organization.",
+        "Hi there 🖐, I'm here to help you find people in your organization."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "who collaborate with me most?"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I found 4 colleagues that collaborates with **Thomas Chung**.",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "message",
+        "value": {
+          "intent": "GetProfile",
+          "user": "CF56A5A3-8402-404D-9CE2-0A075581292B",
+          "msteams": {
+            "type": "messageBack"
+          }
+        }
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "assertions": [
+        "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'",
+        "attachments[0].content.body[0].items[0].columns[1].items[0].text == 'John Doe'"
+      ]
+    }
+  ]
+}
