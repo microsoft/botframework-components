@@ -27,7 +27,6 @@
     "normalize-path": "^3.0.0",
     "runtypes": "~5.1.0",
     "uuid": "^8.3.1",
-    "xml2js": "^0.4.23",
     "yeoman-generator": "^1.1.1"
   },
   "devDependencies": {
