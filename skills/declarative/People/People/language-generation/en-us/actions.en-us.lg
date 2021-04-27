@@ -1,0 +1,161 @@
+  # SkillId
+ - People
+ 
+ # GetManagerAction(user)
+ - ```
+ {
+    "type": "Action.Submit",
+    "title": "Manager",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetManager",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+ ```
+
+ # GetCollaboratorsAction(user)
+ - ```
+{
+    "type": "Action.Submit",
+    "title": "Collaborators",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetCollaborators",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+ ```
+
+# GetPeersAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Peers",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetPeers",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# GetTeamAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Team",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetDirectReports",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# GetProfileAction(user)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Profile",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetProfile",
+        "user": "${user}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# TryAgainAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Try again",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetProfile",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# NextPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Next",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Next",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# PreviousPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Previous",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Previous",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# BuildSubmitAction(text, value)
+- IF: ${ turn.activity.channelId == "msteams" }
+    - ${TeamsSubmitAction(text, value)}
+- ELSE: 
+    - ${SubmitAction(text, value)}
+
+
+# TeamsSubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}",
+        "msteams": {
+            "type": "messageBack",
+            "text": "${value}"
+        }
+    }
+}
+```
+
+# SubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}", 
+        "value": "${value}"
+    }
+}
+```
