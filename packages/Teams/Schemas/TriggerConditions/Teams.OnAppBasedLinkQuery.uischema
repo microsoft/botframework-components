@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams app based link query",
-        "subtitle": "Invoke activity.name='composeExtension/queryLink'"
+        "label": "Teams app based link query"
     },
     "trigger": {
       "submenu": {

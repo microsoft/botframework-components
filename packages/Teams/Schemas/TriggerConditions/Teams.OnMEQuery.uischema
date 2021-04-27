@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension query",
-        "subtitle": "Invoke activity.name='composeExtension/query'"
+        "label": "Teams messaging extension query"
     },
     "trigger": {
       "submenu": "Microsoft Teams",

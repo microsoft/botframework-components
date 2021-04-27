@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams card action invoke",
-        "subtitle": "Invoke activity with no activity.name"
+        "label": "Teams card action invoke"
     },
     "trigger": {
       "submenu": "Microsoft Teams",
