@@ -42,7 +42,7 @@
           "disabled": false,
           "maxTurnCount": 3,
           "alwaysPrompt": false,
-          "allowInterruptions": true,
+          "allowInterruptions": false,
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
           "prompt": "${ChoiceInput_Prompt_BotTourDetails()}",
