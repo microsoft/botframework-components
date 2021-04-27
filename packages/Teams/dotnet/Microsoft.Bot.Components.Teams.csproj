@@ -6,7 +6,7 @@
     <VersionPrefix>1.0.0</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Microsoft Teams</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
-    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Teams</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Teams/dotnet</PackageProjectUrl>
     <ContentTargetFolders>content</ContentTargetFolders>
     <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
     <SignAssembly>true</SignAssembly>
