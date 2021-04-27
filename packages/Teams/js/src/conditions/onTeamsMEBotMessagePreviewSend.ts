@@ -11,20 +11,32 @@ import { OnInvokeActivity } from 'botbuilder-dialogs-adaptive';
  * and activity.value.botMessagePreviewAction == 'send'.
  */
 export class OnTeamsMEBotMessagePreviewSend extends OnInvokeActivity {
-    static $kind = 'Teams.OnMEBotMessagePreviewEdit';
+  static $kind = 'Teams.OnMEBotMessagePreviewEdit';
 
-    /**
-     * Create expression for this condition.
-     *
-     * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
-     */
-    protected createExpression(): Expression {
-        return Expression.andExpression(
-            Expression.parse(
-                `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'composeExtension/submitAction' && ` +
-                    `${TurnPath.activity}.value.botMessagePreviewAction == 'send'`
-            ),
-            super.createExpression()
-        );
+  public commandId?: string;
+
+  /**
+   * Create expression for this condition.
+   *
+   * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
+   */
+  protected createExpression(): Expression {
+    const expressions = [
+      Expression.parse(
+        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'composeExtension/submitAction' && ` +
+          `${TurnPath.activity}.value.botMessagePreviewAction == 'send'`
+      ),
+      super.createExpression(),
+    ];
+
+    if (this.commandId) {
+      expressions.push(
+        Expression.parse(
+          `${TurnPath.activity}.value.commandId == '${this.commandId}'`
+        )
+      );
     }
+
+    return Expression.andExpression(...expressions);
+  }
 }
