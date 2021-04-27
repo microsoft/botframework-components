@@ -16,5 +16,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           require_issue: "true"
-          skip_authors: "dependabot"
           title_prefixes: "build:, bump:, ci:, chore:, docs:, feat:, fix:, port:, refactor:"
