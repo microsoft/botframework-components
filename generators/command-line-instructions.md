@@ -10,7 +10,7 @@ npm install -g @microsoft/generator-bot-empty
 Then generate your new project:
 
 ```bash
-yo @microsoft/generator-bot-empty -botname '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
+yo @microsoft/bot-empty '{BOT_NAME}' --platform '{dotnet|js}' --integration '{functions|webapp}'
 ```
 
 [yeoman]: https://yeoman.io

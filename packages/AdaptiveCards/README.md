@@ -1,4 +1,4 @@
-# Microsoft.Bot.Components.Teams
+# Microsoft.Bot.Components.AdaptiveCards
 
 Actions and triggers for working with the Adaptive Cards from your Bot Framework bot. This package contains:
 

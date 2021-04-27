@@ -11,7 +11,7 @@ Use this template if you want to...
 
 ## Supported Languages
 
-- English (en-us)
+- English (en-US)
 
 ## Azure Resource Deployment
 
@@ -30,3 +30,6 @@ This template can also be installed from the [command line](https://github.com/m
 ## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
+
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty

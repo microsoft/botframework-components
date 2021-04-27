@@ -16,7 +16,7 @@ This bot uses the [Azure Bot Framework component model](https://aka.ms/Component
 
 ## Supported Languages
 
-- English (en-us)
+- English (en-US)
 
 ## Azure Resource Deployment
 
@@ -28,7 +28,7 @@ This template requires the following Azure resources:
     - People.Read.All
     - User.ReadBasic.All
     - User.Read.All
-- Language Understanding (LUIS) authoring resource
+- [Language Understanding (LUIS)][luis] authoring resource
 
 ## Using this template
 
@@ -43,3 +43,7 @@ This template can also be installed from the [command line](https://github.com/m
 ## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
+
+[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people
