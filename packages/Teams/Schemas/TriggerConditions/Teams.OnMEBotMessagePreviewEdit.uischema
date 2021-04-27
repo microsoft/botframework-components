@@ -8,8 +8,7 @@
         "hidden": [
             "actions"
         ],
-        "label": "Teams messaging extension preview edit submit action",
-        "subtitle": "Invoke with activity.value.botMessagePreviewAction == 'edit'"
+        "label": "Teams messaging extension preview edit submit action"
     },
     "trigger": {
       "submenu": "Microsoft Teams",
