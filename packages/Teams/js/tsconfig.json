@@ -1,18 +1,11 @@
 {
+  "extends": "@tsconfig/recommended",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "lib": ["es2015"],
-    "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
     "sourceMap": true,
-    "strict": true,
-    "target": "es6"
-  },
-  "include": ["src/**/*"]
+    "strict": true
+  }
 }
-

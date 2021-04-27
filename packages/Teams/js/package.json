@@ -17,8 +17,19 @@
     "type": "git",
     "url": "https://github.com/microsoft/botframework-components.git"
   },
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf _ts3.4 lib tsconfig.tsbuildinfo",
+    "postbuild": "downlevel-dts lib _ts3.4/lib --checksum"
+  },
+  "files": [
+    "_ts3.4",
+    "lib",
+    "schemas",
+    "src"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "typesVersions": {
     "<3.9": {
       "*": [
@@ -40,6 +51,7 @@
   },
   "devDependencies": {
     "@standardlabs/downlevel-dts": "^0.7.5",
+    "@tsconfig/recommended": "^1.0.1",
     "@types/lodash": "^4.14.168",
     "@types/node-fetch": "^2.5.10",
     "adaptive-expressions": "4.13.0",
@@ -49,17 +61,7 @@
     "botbuilder-dialogs-adaptive-runtime-core": "4.13.0-preview",
     "botbuilder-dialogs-declarative": "4.13.0-preview",
     "botbuilder-stdlib": "4.13.0-internal",
+    "rimraf": "^3.0.2",
     "typescript": "^4.0.5"
-  },
-  "scripts": {
-    "build": "tsc -b",
-    "clean": "rimraf _ts3.4 lib tsconfig.tsbuildinfo",
-    "postbuild": "downlevel-dts lib _ts3.4/lib --checksum"
-  },
-  "files": [
-    "_ts3.4",
-    "lib",
-    "schemas",
-    "src"
-  ]
+  }
 }
