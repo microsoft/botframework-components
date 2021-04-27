@@ -11,19 +11,19 @@ import { OnConversationUpdateActivity } from 'botbuilder-dialogs-adaptive';
  * Note: turn.activity.channelData.Teams has team data.
  */
 export class OnTeamsTeamRenamed extends OnConversationUpdateActivity {
-    static $kind = 'Teams.OnTeamRenamed';
+  static $kind = 'Teams.OnTeamRenamed';
 
-    /**
-     * Create expression for this condition.
-     *
-     * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
-     */
-    protected createExpression(): Expression {
-        return Expression.andExpression(
-            Expression.parse(
-                `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.channelData.eventType == 'teamRenamed'`
-            ),
-            super.createExpression()
-        );
-    }
+  /**
+   * Create expression for this condition.
+   *
+   * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
+   */
+  protected createExpression(): Expression {
+    return Expression.andExpression(
+      Expression.parse(
+        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.channelData.eventType == 'teamRenamed'`
+      ),
+      super.createExpression()
+    );
+  }
 }

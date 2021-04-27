@@ -11,19 +11,19 @@ import { OnConversationUpdateActivity } from 'botbuilder-dialogs-adaptive';
  * Note: turn.activity.channelData.Teams has team data.
  */
 export class OnTeamsTeamDeleted extends OnConversationUpdateActivity {
-    static $kind = 'Teams.OnTeamDeleted';
+  static $kind = 'Teams.OnTeamDeleted';
 
-    /**
-     * Create expression for this condition.
-     *
-     * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
-     */
-    public createExpression(): Expression {
-        return Expression.andExpression(
-            Expression.parse(
-                `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.channelData.eventType == 'teamDeleted'`
-            ),
-            super.createExpression()
-        );
-    }
+  /**
+   * Create expression for this condition.
+   *
+   * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
+   */
+  public createExpression(): Expression {
+    return Expression.andExpression(
+      Expression.parse(
+        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.channelData.eventType == 'teamDeleted'`
+      ),
+      super.createExpression()
+    );
+  }
 }

@@ -10,19 +10,19 @@ import { OnInvokeActivity } from 'botbuilder-dialogs-adaptive';
  * Actions triggered when a Teams InvokeActivity is received with activity.name == 'fileConsent/invoke'.
  */
 export class OnTeamsFileConsent extends OnInvokeActivity {
-    static $kind = 'Teams.OnFileConsent';
+  static $kind = 'Teams.OnFileConsent';
 
-    /**
-     * Create expression for this condition.
-     *
-     * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
-     */
-    protected createExpression(): Expression {
-        return Expression.andExpression(
-            Expression.parse(
-                `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'fileConsent/invoke'`
-            ),
-            super.createExpression()
-        );
-    }
+  /**
+   * Create expression for this condition.
+   *
+   * @returns {Expression} An [Expression](xref:adaptive-expressions.Expression) used to evaluate this rule.
+   */
+  protected createExpression(): Expression {
+    return Expression.andExpression(
+      Expression.parse(
+        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'fileConsent/invoke'`
+      ),
+      super.createExpression()
+    );
+  }
 }
