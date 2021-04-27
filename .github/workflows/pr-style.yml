@@ -17,4 +17,4 @@ jobs:
         with:
           require_issue: "true"
           skip_authors: "dependabot"
-          title_prefixes: "fix:, port:, feat:, chore:, refactor:, bump:"
+          title_prefixes: "build:, bump:, ci:, chore:, docs:, feat:, fix:, port:, refactor:"
