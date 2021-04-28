@@ -10,6 +10,6 @@
         ]
     },
     "menu": {
-      "submenu": ["Microsoft Teams", "Response"]
+      "submenu": ["Microsoft Teams", "Task Modules and Tabs"]
     }
 }
