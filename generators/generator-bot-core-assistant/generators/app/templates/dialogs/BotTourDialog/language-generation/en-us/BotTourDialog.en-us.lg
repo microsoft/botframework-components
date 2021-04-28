@@ -9,29 +9,23 @@
 > OverviewCard
 - ${json(CardTemplate(BotTourHeader(), ExpandableListCardBody(createArray(BotTourOption(BotTourContentTextOne()),BotTourOption(BotTourContentTextTwo()),BotTourOption(BotTourContentTextThree())), 5), ''))}
 
-# ChoiceInput_Prompt_BotTourDetails()
+# SendActivity_BotTourDetails()
 [Activity
-    Attachments = ${ChoiceInput_Prompt_BotTourDetails_attachment_adaptiveCard()}
+    Attachments = ${SendActivity_BotTourDetails_attachment_adaptiveCard()}
 ]
 
-# ChoiceInput_Prompt_BotTourDetails_attachment_adaptiveCard()
+# SendActivity_BotTourDetails_attachment_adaptiveCard()
 > DetailsCard
 - ${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}
 
-# SendActivity_SuggestedActionAContent()
-[Activity
-    Text = You can link content for suggested action A here.
-]
+# SendActivity_SuggestedActionAContent
+- You can replace content for suggested action A here.
 
-# SendActivity_SuggestedActionBContent()
-[Activity
-    Text = You can link content for suggested action B here.
-]
+# SendActivity_SuggestedActionBContent
+- You can replace content for suggested action B here.
 
-# SendActivity_SuggestedActionCContent()
-[Activity
-    Text = You can link content for suggested action C here.
-]
+# SendActivity_SuggestedActionCContent
+- You can replace content for suggested action C here.
 
 # BotTourTitle()
 - You can ask me...
@@ -212,17 +206,23 @@
         {
             "type": "Action.Submit",
             "title": "\"Suggested action A\"",
-            "data": "A"
+                  "data":{
+         "intent":"ActionA"
+      }
         },
         {
             "type": "Action.Submit",
             "title": "\"Suggested action B\"",
-            "data": "B"
+                  "data":{
+         "intent":"ActionB"
+      }
         },
         {
             "type": "Action.Submit",
             "title": "\"Suggested action C\"",
-            "data": "C"
+                  "data":{
+         "intent":"ActionC"
+      }
         }
     ]
 }
