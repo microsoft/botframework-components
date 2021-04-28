@@ -11,6 +11,6 @@
         ]
     },
     "menu": {
-      "submenu": ["Microsoft Teams", "Messaging extension"]
+      "submenu": ["Microsoft Teams", "Messaging Extensions"]
     }
 }
