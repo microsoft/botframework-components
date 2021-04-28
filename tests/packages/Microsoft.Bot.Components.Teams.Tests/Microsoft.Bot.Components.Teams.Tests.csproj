@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\packages\Teams\Microsoft.Bot.Components.Teams.csproj" />
+    <ProjectReference Include="..\..\..\packages\Teams\dotnet\Microsoft.Bot.Components.Teams.csproj" />
   </ItemGroup>
 
   <ItemGroup>

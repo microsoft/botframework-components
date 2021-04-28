@@ -4,7 +4,7 @@ const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
 describe('generator-conversational-core:app', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     return helpers
       .run(path.join(__dirname, '../generators/app'))
       .withPrompts({ someAnswer: true });

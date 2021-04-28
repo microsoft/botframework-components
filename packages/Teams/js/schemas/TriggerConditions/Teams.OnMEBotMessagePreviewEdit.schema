@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": [ "implements(Microsoft.ITrigger)", "extends(Microsoft.OnCondition)" ],
+  "title": "On teams messaging extension preview edit submit action",
+  "description": "Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/submitAction' and activity.value.botMessagePreviewAction == 'edit'.",
+  "type": "object",
+  "properties": {
+    "commandId": {
+      "type": "string",
+      "title": "CommandId Value",
+      "description": "The activity.value.commandId to match"
+    }
+  },
+  "required": [
+  ],
+  "$policies": {
+    "requiresKind": [
+      "Teams.SendMEActionResponse"
+    ],
+    "nonInteractive": true
+  }
+}

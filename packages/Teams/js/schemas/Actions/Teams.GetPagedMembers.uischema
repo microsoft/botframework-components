@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+    "form": {
+        "label": "Get paged members",
+        "order": [
+            "property",
+            "pageSize",
+            "continuationToken",
+            "*"
+        ]
+    },
+    "menu": {
+      "submenu": ["Microsoft Teams", "Get Teams Info"]
+    }
+}

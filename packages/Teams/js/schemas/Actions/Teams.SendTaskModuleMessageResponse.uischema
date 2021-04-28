@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+    "form": {
+        "label": "Send task module message response",
+        "order": [
+            "message",
+            "cacheType",
+            "cacheDuration",
+            "*"
+        ]
+    },
+    "menu": {
+      "submenu": [ "Microsoft Teams", "Task Modules and Tabs" ]
+    }
+}
