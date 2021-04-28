@@ -12,6 +12,7 @@ variables:
   BuildConfiguration: Release
   BuildPlatform: anycpu
   ComponentType: codeExtension
+  Language: dotnet
   DeploymentRing: preview
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
