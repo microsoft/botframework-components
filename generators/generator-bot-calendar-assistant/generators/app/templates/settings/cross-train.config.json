@@ -1,8 +1,0 @@
-{
-  "<%= botName %>.en-us": {
-    "rootDialog": true,
-    "triggers": {
-      "Calendar": []
-    }
-  }
-}

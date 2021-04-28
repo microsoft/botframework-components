@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-core-qna [![NPM version][npm-image]][npm-url]
 
-This template creates an empty bot, and guides you through connecting that bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
+This template guides you through creating and connecting a bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
 
 ## What this template is for
 
@@ -14,7 +14,7 @@ Your bot can use the [Azure Bot Framework component model](https://aka.ms/Compon
 
 ## Languages
 
-- English (en-us)
+- English (en-US)
 
 ## Azure Resource Deployment
 
@@ -31,49 +31,12 @@ From Composer you'll use the **New** button on the **Home** screen to create a n
 
 ### From the command-line
 
-> You can instantiate this template from the command line, however this approach is NOT recommended, as Composer guides you through connecting to your QnA Maker knowledge base.
-
-First, install [Yeoman][yeoman] and @microsoft/generator-bot-core-qna using [npm][npm] (we assume you have pre-installed [node.js][nodejs]):
-
-```bash
-npm install -g yo
-npm install -g @microsoft/generator-bot-core-qna
-```
-
-Then generate your new project:
-
-```bash
-yo @microsoft/generator-bot-core-qna '{BOT_NAME}' -platform '{dotnet|js}' -integration '{functions|webapp}'
-```
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
 
 ## License
 
-MIT License
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
-Copyright (c) Microsoft Corporation.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE
-
+[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
 [npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-qna.svg
 [npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-qna
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis

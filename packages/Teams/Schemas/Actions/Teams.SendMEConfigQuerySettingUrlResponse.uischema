@@ -2,7 +2,6 @@
     "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
     "form": {
         "label": "Send a configuration query setting response",
-        "subtitle": "Send a response to a query setting config url request.",
         "order": [
             "configUrl",
             "cacheType",
@@ -11,6 +10,6 @@
         ]
     },
     "menu": {
-      "submenu": ["Microsoft Teams", "Messaging extension"]
+      "submenu": ["Microsoft Teams", "Messaging Extensions"]
     }
 }

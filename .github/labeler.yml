@@ -1,0 +1,41 @@
+"Area: DevOps":
+ - build/*
+
+"Area: Docs":
+ - docs/*
+
+"Area: Generators: Adaptive":
+ - generators/generator-bot-adaptive/*
+
+"Area: Generators: Core Assistant":
+ - generators/generator-bot-core-assistant/*
+
+"Area: Generators: Core Language":
+ - generators/generator-core-language/*
+
+"Area: Generators: Core QnA":
+ - generators/generator-bot-qna/*
+
+"Area: Generators: Empty":
+ - generators/generator-bot-empty/*
+
+"Area: Generators: Enterprise Assistant":
+ - generators/generator-bot-enterprise-assistant/*
+
+"Area: Generators: Enterprise Calendar":
+ - generators/generator-bot-enterprise-calendar/*
+
+"Area: Packages: Adaptive Cards":
+ - packages/AdaptiveCards/*
+
+"Area: Packages: Graph":
+ - packages/Graph/*
+
+"Area: Packages: Help & Cancel":
+ - packages/HelpAndCancel/*
+
+"Area: Packages: Teams":
+ - packages/Teams/*
+
+"Area: Packages: Welcome":
+ - packages/Welcome/*
