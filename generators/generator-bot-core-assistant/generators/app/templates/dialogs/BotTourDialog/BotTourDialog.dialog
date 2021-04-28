@@ -34,17 +34,79 @@
       "intent": "DetailsCard",
       "actions": [
         {
-          "$kind": "Microsoft.SendActivity",
+          "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "Z5JucQ"
+            "id": "8kK1VI"
           },
-          "activity": "${SendActivity_BotTourDetails()}"
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": true,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "prompt": "${ChoiceInput_Prompt_BotTourDetails()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": [
+            "A",
+            "B",
+            "C"
+          ],
+          "style": "none",
+          "recognizerOptions": {
+            "recognizeOrdinals": true
+          },
+          "property": "user.botTourDetailsChoice"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "xlyFV6"
-          }
+            "id": "Vjasiy"
+          },
+          "condition": "user.botTourDetailsChoice",
+          "cases": [
+            {
+              "value": "A",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "ic0cAT"
+                  },
+                  "activity": "${SendActivity_SuggestedActionAContent()}"
+                }
+              ]
+            },
+            {
+              "value": "B",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "lCESbU"
+                  },
+                  "activity": "${SendActivity_SuggestedActionBContent()}"
+                }
+              ]
+            },
+            {
+              "value": "C",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "3ixDCm"
+                  },
+                  "activity": "${SendActivity_SuggestedActionCContent()}"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
