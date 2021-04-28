@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-enterprise-people [![NPM version][npm-image]][npm-url]
 
-This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph.
+This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph. **[Learn more](https://aka.ms/EnterprisePeopleBot)**
 
 ## What this template is for
 

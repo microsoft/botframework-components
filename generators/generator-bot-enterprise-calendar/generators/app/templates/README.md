@@ -1,81 +1,30 @@
-This folder contains a Bot Project created with Bot Framework Composer.
+# Welcome to your new bot
 
-The full documentation for Composer lives here:
-https://github.com/microsoft/botframework-composer
+This Bot Project was created using the [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot) template. You **must complete the configuration steps outlined below for your bot to function.**
 
-To test this bot locally, you will need to complete the following steps:
-1. Provision your Azure resources for local development
-2. Configure your authentication settings
+## Configure your Enterprise Calendar Bot
+To test this bot locally, complete the steps in the **[Enterprise Calendar Bot Tutorial](https://aka.ms/CreateCalendarBot)**.
 
-## 1. Provision Azure Resources
-In order to test this bot locally, you will need the following services provisioned in Azure:
-- Azure Bot Registration
-- Language Understanding (LUIS)
+## Next steps
 
-#### Configure Microsoft App Password
-1. Open your Azure Bot Channels Regisration in the Azure Portal
-2. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
-3. In the Certificates & secrets tab, click **New client secret**
-4. Assign a name and an expiration period, then click **Add**
-5. Copy the secret value and save for later use along with your Microsoft App ID
+### Start building your bot
 
-## 2. Configure Authentication
-You must configure an authentication connection on your Azure Bot Registration in order to log in and access Microsoft Graph resources. You can configure these settings either through the Azure Portal or via the Azure CLI.
+Composer can help guide you through getting started building your bot. From your bot settings page (the wrench icon on the left navigation rail), click on the rocket-ship icon on the top right for some quick navigation links.
 
-### Option 1: Using the Azure Portal
-1. Open your **Bot Channels Registration** resource and go to the **Configuration** tab
-2. Click **Add OAuth Connection Settings**
-3. Assign your connection setting a name (save this value for later)
-4. Select **Azure Active Directory v2** from the Service Provider dropdown.
-5. Fill in the following fields and click **Save**:
-    * **Client id**: your Bot App Id
-    * **Client secret**: your Bot App Password
-    * **Tenant ID**: your Azure Active Directory tenant ID, or "common" to support any tenant
-    * **Scopes**: Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All
-6. In the **Configuration** tab, click **Manage** next to your Microsoft App ID
-7. In the API permissions tab, click **Add a permission**
-8. Click **Microsoft Graph > Delegated Permissions** and add the following scopes: 
-    * Calendars.ReadWrite
-    * Contacts.Read
-    * People.Read
-    * User.ReadBasic.All
+Another great resource if you're just getting started is the **[guided tutorial](https://docs.microsoft.com/en-us/composer/tutorial/tutorial-introduction)** in our documentation.
 
-9. In the Authentication tab, click **Add a platform**
-    1. Select **Web**
-    2. Set the URL to https://token.botframework.com/.auth/web/redirect
-10. In Bot Framework Composer, open your **Project Settings** and toggle the **Advanced Settings View**
-1. Set the following property to the value from Step 3:
-    ```
-    {
-      "oauthConnectionName": "Outlook",
-    }
-    ```
+### Connect with your users
 
-### Option 2: Using [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-1. Get your Microsoft App Object ID (used in later steps):
-    ```
-    az ad app show --id <bot-app-id> --query objectId
-    ```
+Your bot comes pre-configured to connect to our Web Chat and DirectLine channels, but there are many more places you can connect your bot to - including Microsoft Teams, Telephony, DirectLine Speech, Slack, Facebook, Outlook and more. Check out all of the places you can connect to on the bot settings page.
 
-2. Set the Redirect URL on your Microsoft App:
-    ```
-    az rest --method patch --url https://graph.microsoft.com/v1.0/applications/<objectId> --body "{'web': {'redirectUris': ['https://token.botframework.com/.auth/web/redirect']}}"
-    ```
+### Publish your bot to Azure from Composer
 
-3. Add the required Microsoft Graph scopes to your Microsoft App:
-    ```
-    az rest --method patch --url https://graph.microsoft.com/v1.0/applications/<objectId> --body "{ 'requiredResourceAccess': [{'resourceAppId': '00000003-0000-0000-c000-000000000000', 'resourceAccess': [ { 'type': 'Scope', 'id': 'ba47897c-39ec-4d83-8086-ee8256fa737d' }, { 'type': 'Scope', 'id': 'ff74d97f-43af-4b68-9f2a-b77ee6968c5d' },  { 'type': 'Scope', 'id': '1ec239c2-d7c9-4623-a91a-a9775856bb36' }, { 'type': 'Scope', 'id': 'b340eb25-3456-403f-be2f-af7a0d370277' } ]} ]}"
-    ```
+Composer can help you provision the Azure resources necessary for your bot, and publish your bot to them. To get started, create a publishing profile from your bot settings page in Composer (the wrench icon on the left navigation rail). Make sure you only provision the optional Azure resources you need!
 
+### Extend your bot with packages
 
-4. Add your OAuth setting to your Azure Bot Service:
-    ```
-    az bot authsetting create  --name <bot-name> --resource-group <bot-rg> --client-id <bot-app-id> --client-secret <bot-app-secret>  --service "Aadv2" --setting-name "Outlook" --provider-scope-string "Calendars.ReadWrite Contacts.Read People.Read User.ReadBasic.All" --parameters clientId="<bot-app-id>" clientSecret="<bot-app-secret>" tenantId=common
-    ```
+From Package Manager in Composer you can find useful packages to help add additional pre-built functionality you can add to your bot - everything from simple dialogs & custom actions for working with specific scenarios to custom adapters for connecting your bot to users on clients like Facebook or Slack.
 
-5. Update your Bot settings with your OAuth Connection name in the **Advanced Settings View**:
-    ```
-    {
-      "oauthConnectionName": "Outlook",
-    }
-    ```
+### Extend your bot with code
+
+You can also extend your bot with code - simply open up the folder that was generated for you in the location you chose during the creation process with your favorite IDE (like Visual Studio). You can do things like create custom actions that can be used during dialog flows, create custom middleware to pre-process (or post-process) messages, and more. See [our documentation](https://aka.ms/bf-extend-with-code) for more information.
