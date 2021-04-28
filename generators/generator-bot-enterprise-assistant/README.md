@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-This template creates an enterprise assistant, comprised of a root bot based on the Basic Assistant template, and pre-configured with the Calendar and People templates as skills.
+This template creates an Enterprise Assistant Bot, comprised of a root bot based on the Core Assistant Bot template, and pre-configured with the Enterprise Calendar Bot and Enterprise People Bot templates as skills. [Learn more](https://aka.ms/EnterpriseAssistant)
 
 Includes support for:
 
@@ -12,7 +12,10 @@ Includes support for:
 - Repeat the previous question
 - Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
 - Disambiguation of NLP results
-- Calendar and People skills configured out of the box
+
+Included skills:
+- [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot)
+- [Enterprise People Bot](https://aka.ms/EnterprisePeopleBot)
 
 ## What this template is for
 
