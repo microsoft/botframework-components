@@ -1,0 +1,16 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+    "form": {
+        "label": "Send messaging extensions attachment(s) response",
+        "order": [
+            "attachments",
+            "attachmentLayout",
+            "cacheType",
+            "cacheDuration",
+            "*"
+        ]
+    },
+    "menu": {
+      "submenu": ["Microsoft Teams", "Messaging Extensions"]
+    }
+}

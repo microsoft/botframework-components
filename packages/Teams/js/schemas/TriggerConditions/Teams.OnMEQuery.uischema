@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+    "form": {
+        "order": [
+            "condition",
+            "*"
+        ],
+        "hidden": [
+            "actions"
+        ],
+        "label": "Teams messaging extension query"
+    },
+    "trigger": {
+      "submenu": "Microsoft Teams",
+      "label": "Messaging extension - on query"
+    }
+}

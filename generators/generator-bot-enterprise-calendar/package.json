@@ -21,7 +21,7 @@
     "url": "https://github.com/Microsoft/botframework-components.git"
   },
   "scripts": {
-    "lint": "eslint -c ../../.eslintrc.json ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
