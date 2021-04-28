@@ -3,7 +3,6 @@
 
 const path = require('path');
 const rt = require('runtypes');
-const xml2js = require('xml2js');
 const { BaseGenerator, integrations, platforms } = require('../../index');
 const { v4: uuidv4 } = require('uuid');
 

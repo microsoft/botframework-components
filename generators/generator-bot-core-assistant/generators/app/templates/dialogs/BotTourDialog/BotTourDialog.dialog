@@ -34,79 +34,62 @@
       "intent": "DetailsCard",
       "actions": [
         {
-          "$kind": "Microsoft.ChoiceInput",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "8kK1VI"
+            "id": "ZMzFeP"
           },
-          "defaultLocale": "en-us",
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": true,
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "prompt": "${ChoiceInput_Prompt_BotTourDetails()}",
-          "choiceOptions": {
-            "includeNumbers": true,
-            "inlineOrMore": ", or ",
-            "inlineOr": " or ",
-            "inlineSeparator": ", "
-          },
-          "choices": [
-            "A",
-            "B",
-            "C"
-          ],
-          "style": "none",
-          "recognizerOptions": {
-            "recognizeOrdinals": true
-          },
-          "property": "user.botTourDetailsChoice"
-        },
+          "activity": "${SendActivity_BotTourDetails()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "vdn2Dw",
+        "name": "ActionA"
+      },
+      "intent": "ActionA",
+      "actions": [
         {
-          "$kind": "Microsoft.SwitchCondition",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "Vjasiy"
+            "id": "oeL3EC"
           },
-          "condition": "user.botTourDetailsChoice",
-          "cases": [
-            {
-              "value": "A",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "ic0cAT"
-                  },
-                  "activity": "${SendActivity_SuggestedActionAContent()}"
-                }
-              ]
-            },
-            {
-              "value": "B",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "lCESbU"
-                  },
-                  "activity": "${SendActivity_SuggestedActionBContent()}"
-                }
-              ]
-            },
-            {
-              "value": "C",
-              "actions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "3ixDCm"
-                  },
-                  "activity": "${SendActivity_SuggestedActionCContent()}"
-                }
-              ]
-            }
-          ]
+          "activity": "${SendActivity_SuggestedActionAContent()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ruLbcx",
+        "name": "ActionB"
+      },
+      "intent": "ActionB",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "PSsrvD"
+          },
+          "activity": "${SendActivity_SuggestedActionBContent()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Fris5p",
+        "name": "ActionC"
+      },
+      "intent": "ActionC",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "N0UxWx"
+          },
+          "activity": "${SendActivity_SuggestedActionCContent()}"
         }
       ]
     },

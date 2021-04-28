@@ -4,6 +4,7 @@
   "workspaces": [
     "generators/*",
     "packages/*",
+    "packages/*/js",
     "skills/declarative/*",
     "testing/*"
   ],
