@@ -5,10 +5,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "keywords": [
-    "botbuilder",
-    "botframework",
-    "bots",
-    "chatbots"
+    "msbot-component",
+    "msbot-action",
+    "msbot-trigger"
   ],
   "bugs": {
     "url": "https://github.com/microsoft/botframework-components/issues"
