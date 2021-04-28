@@ -10,6 +10,6 @@
         ]
     },
     "menu": {
-      "submenu": ["Microsoft Teams", "Get Microsoft Teams data"]
+      "submenu": ["Microsoft Teams", "Get Teams Info"]
     }
 }
