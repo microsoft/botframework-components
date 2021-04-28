@@ -213,21 +213,21 @@
             "type": "Action.Submit",
             "title": "\"Suggested action A\"",
             "data":{
-               "intent":"ActionA"
+               "intent": "ActionA"
             }
         },
         {
             "type": "Action.Submit",
             "title": "\"Suggested action B\"",
             "data":{
-               "intent":"ActionB"
+               "intent": "ActionB"
             }
         },
         {
             "type": "Action.Submit",
             "title": "\"Suggested action C\"",
             "data":{
-               "intent":"ActionC"
+               "intent": "ActionC"
             }
         }
     ]
