@@ -18,14 +18,20 @@
 > DetailsCard
 - ${json(CardTemplate(BotTourDetailsCardHeader(),BotTourDetailsCardBody(), BotTourDetailsCardActions()))}
 
-# SendActivity_SuggestedActionAContent
-- You can replace content for suggested action A here.
+# SendActivity_SuggestedActionAContent()
+[Activity
+    Text = You can link content for suggested action A here.
+]
 
-# SendActivity_SuggestedActionBContent
-- You can replace content for suggested action B here.
+# SendActivity_SuggestedActionBContent()
+[Activity
+    Text = You can link content for suggested action B here.
+]
 
-# SendActivity_SuggestedActionCContent
-- You can replace content for suggested action C here.
+# SendActivity_SuggestedActionCContent()
+[Activity
+    Text = You can link content for suggested action C here.
+]
 
 # BotTourTitle()
 - You can ask me...
