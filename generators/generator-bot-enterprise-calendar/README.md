@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-enterprise-calendar [![NPM version][npm-image]][npm-url]
 
-This template creates a bot configured to manage Office 365 calendars using the Microsoft Graph API.
+This template creates a bot configured to manage Office 365 calendars using the Microsoft Graph API. **[Learn more](https://aka.ms/EnterpriseCalendarBot)**
 
 ## What this template is for
 

@@ -1,9 +1,9 @@
 # Welcome to your new bot
 
-This Bot Project was created using the Enteprise Calendar template. You **must complete the configuration steps outlined below for your bot to function.**
+This Bot Project was created using the [Enteprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot) template. You **must complete the configuration steps outlined below for your bot to function.**
 
 ## Configure your Enterprise Calendar Bot
-To test this bot locally, complete the steps in the **[Enterprise Calendar Tutorial](https://aka.ms/CreateCalendarBot)**.
+To test this bot locally, complete the steps in the **[Enterprise Calendar Bot Tutorial](https://aka.ms/CreateCalendarBot)**.
 
 ## Next steps
 
