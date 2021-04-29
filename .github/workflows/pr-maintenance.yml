@@ -1,4 +1,4 @@
-name: PR Style
+name: Pull request maintenance
 
 on:
   pull_request:
@@ -19,6 +19,7 @@ jobs:
 
   labeler:
     runs-on: ubuntu-latest
+ 
     steps:
       - uses: actions/labeler@main
         with:
