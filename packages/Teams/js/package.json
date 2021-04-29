@@ -18,25 +18,16 @@
   },
   "scripts": {
     "build": "tsc -b",
-    "clean": "rimraf _ts3.4 lib tsconfig.tsbuildinfo",
-    "lint": "eslint . --ext .js,.ts",
-    "postbuild": "downlevel-dts lib _ts3.4/lib --checksum"
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "lint": "eslint . --ext .js,.ts"
   },
   "files": [
-    "_ts3.4",
     "lib",
     "schemas",
     "src"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "_ts3.4/*"
-      ]
-    }
-  },
   "peerDependencies": {
     "adaptive-expressions": "~4.13.0",
     "botbuilder": "~4.13.0",
@@ -48,7 +39,6 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@standardlabs/downlevel-dts": "^0.7.5",
     "@tsconfig/recommended": "^1.0.1",
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "latest",
