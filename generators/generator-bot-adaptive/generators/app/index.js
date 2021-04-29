@@ -59,7 +59,7 @@ module.exports = class extends BaseGenerator {
   }
 
   _copyProject() {
-    const includeAssets = ['schemas', '.gitignore'];
+    const includeAssets = ['schemas'];
 
     switch (this.options.platform) {
       case platforms.dotnet: {
