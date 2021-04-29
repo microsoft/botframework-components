@@ -1,4 +1,4 @@
-# The Component Model
+# Component Model
 
 The component model for building bots is our framework for sharing and reusing bot functionality - through new bots with templates, using portions of bots in the form of packages, or as complete bots with skills.
 
