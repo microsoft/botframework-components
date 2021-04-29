@@ -16,3 +16,10 @@ jobs:
         with:
           require_issue: "true"
           title_prefixes: "build:, bump:, ci:, chore:, docs:, feat:, fix:, port:, refactor:"
+
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@main
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
