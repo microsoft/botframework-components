@@ -1,4 +1,4 @@
-# YAML pipelines
+# Components YAML pipelines
 Each component in this repository requires a YAML pipeline to define the packaging process that enables publishing on both NuGet and NPM feeds.
 
 ## Getting started
