@@ -11,7 +11,8 @@
     "bf-template",
     "bf-dotnet-webapp",
     "bf-dotnet-functions",
-    "msbot-project-template"
+    "msbot-project-template",
+    "msbot-multibot-project"
   ],
   "license": "MIT",
   "author": "Bot Framework",
