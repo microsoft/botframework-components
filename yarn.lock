@@ -95,7 +95,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/bot-components-teams@workspace:packages/Teams/js"
   dependencies:
-    "@standardlabs/downlevel-dts": ^0.7.5
     "@tsconfig/recommended": ^1.0.1
     "@types/lodash": ^4.14.168
     "@typescript-eslint/eslint-plugin": latest
@@ -433,19 +432,6 @@ __metadata:
   version: 0.7.1
   resolution: "@sinonjs/text-encoding@npm:0.7.1"
   checksum: fbc2abff23dce7f8842a64c61a4183a9300b03b8b4f03dc2739c8172fd3e401ed8f28fb1c5aac85b3cc0935f69bdb9823dd864a2e22110626751ff855879a76a
-  languageName: node
-  linkType: hard
-
-"@standardlabs/downlevel-dts@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "@standardlabs/downlevel-dts@npm:0.7.5"
-  dependencies:
-    semver: ^7.3.2
-    shelljs: ^0.8.3
-    typescript: ^4.1.0-dev.20201026
-  bin:
-    downlevel-dts: index.js
-  checksum: 716672cd6610c55b443b0e61b90c01e940214fef6b5bfc8dc63e3151ef34a0ed3aa0cae6820a5dce4efc65d2f03734f26514d07b7d2f3b255905e4fffa5b934d
   languageName: node
   linkType: hard
 
@@ -8141,7 +8127,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"shelljs@npm:^0.8.0, shelljs@npm:^0.8.3, shelljs@npm:^0.8.4":
+"shelljs@npm:^0.8.0, shelljs@npm:^0.8.4":
   version: 0.8.4
   resolution: "shelljs@npm:0.8.4"
   dependencies:
@@ -8963,7 +8949,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"typescript@^4.0.5, typescript@^4.1.0-dev.20201026":
+typescript@^4.0.5:
   version: 4.2.4
   resolution: "typescript@npm:4.2.4"
   bin:
@@ -8973,7 +8959,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.5#builtin<compat/typescript>, typescript@patch:typescript@^4.1.0-dev.20201026#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.0.5#builtin<compat/typescript>":
   version: 4.2.4
   resolution: "typescript@patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"
   bin:
