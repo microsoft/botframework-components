@@ -1,21 +1,23 @@
 stages:
+  # Only runs for packages that won't be published, as the build step is also included in the stage_package_node stage below. This
+  # stage is skipped for packages to be published.
   - stage: stage_build_node
-    displayName: 'Node: Build'
-    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js')))
+    displayName: 'Node: Build Only'
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), not(eq(variables.PublishPackageArtifacts, true)))
     jobs:
       - job: job_build_npm
         displayName: Build Node project
         steps:
-        - template: npm-build-steps.yml 
+        - template: npm-build-steps.yml
 
   - stage: stage_package_node
-    displayName: 'Node: Version & Pack'
-    dependsOn: stage_build_node
+    displayName: 'Node: Build, Version & Pack'
     condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), eq(variables.PublishPackageArtifacts, true))
     jobs:
       - job: pack_npm
-        displayName: Pack Node project
+        displayName: 'Build & Pack Node project'
         steps:
+        - template: npm-build-steps.yml
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
 
