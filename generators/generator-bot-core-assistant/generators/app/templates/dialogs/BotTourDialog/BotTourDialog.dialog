@@ -109,7 +109,7 @@
       ]
     }
   ],
-  "generator": "BotTourDialog.lg",
+  "generator": ".lg",
   "recognizer": "BotTourDialog.lu.qna",
   "id": "BotTourDialog"
 }
