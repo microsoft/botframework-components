@@ -32,8 +32,7 @@
       "title": "Start",
       "description": "DateTime range start.",
       "examples": [
-        "=turn.dateRangeStart",
-        "2021-01-01T08:00:00"
+        "2020-01-01T00:00:00"
       ]
     },
     "end": {
@@ -41,8 +40,7 @@
       "title": "End",
       "description": "DateTime range end.",
       "examples": [
-        "=turn.dateRangeEnd",
-        "2021-01-01T08:30:00"
+        "2020-01-01T12:00:00"
       ]
     },
     "events": {

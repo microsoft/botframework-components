@@ -40,8 +40,7 @@
       "title": "Start",
       "description": "Start datetime of event search range.",
       "examples": [
-        "=turn.searchRangeStart",
-        "2021-01-01T08:00:00"
+        "2021-01-01T00:00:00"
       ]
     },
     "end": {
@@ -49,8 +48,7 @@
       "title": "End",
       "description": "End datetime of event search range.",
       "examples": [
-        "=turn.searchRangeEnd",
-        "=2021-01-01T11:00:00"
+        "2021-01-01T01:00:00"
       ]
     },
     "dateTimeType": {
@@ -58,7 +56,6 @@
       "title": "DateTimeType",
       "description": "DateTime type, e.g. date, datetime, datetimerange.",
       "examples": [
-        "=dialog.dateTime.type",
         "date",
         "datetime",
         "datetimerange"
@@ -69,7 +66,6 @@
       "title": "TimeZone",
       "description": "Target time zone to display events in.",
       "examples": [
-        "=user.timeZone",
         "Pacific Standard Time"
       ]
     },
@@ -78,7 +74,7 @@
       "title": "User Email",
       "description": "Current user's email address (to exclude from attendees list).",
       "examples": [
-        "=user.email"
+        "janedoe@contoso.com"
       ]
     },
     "futureEventsOnly": {
@@ -96,7 +92,6 @@
       "title": "Max Results",
       "description": "Max number of results to return.",
       "examples": [
-        "=turn.maxResults",
         "10"
       ]
     }

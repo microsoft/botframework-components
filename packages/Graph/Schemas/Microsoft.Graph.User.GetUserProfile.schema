@@ -56,9 +56,9 @@
     "userId": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "User ID",
-      "description": "The ID of the user to get the profile of",
+      "description": "The GUID ID of the user to get the profile of",
       "examples": [
-        "=turn.user.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     }
   }

@@ -55,8 +55,7 @@
       "title": "Duration",
       "description": "Duration of meeting in minutes",
       "examples": [
-        "=turn.meeting.duration",
-        "60"
+        "30"
       ]
     },
     "timeZone": {
@@ -64,7 +63,6 @@
       "title": "Time zone",
       "description": "Time zone for the meeting",
       "examples": [
-        "=turn.meeting.timezone",
         "Pacific Standard Time"
       ]
     }

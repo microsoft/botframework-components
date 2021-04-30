@@ -79,7 +79,7 @@
       "title": "Title",
       "description": "Title to filter by",
       "examples": [
-        "=turn.titleParameter"
+        "Example Meeting"
       ]
     },
     "location": {
@@ -87,7 +87,7 @@
       "title": "Location",
       "description": "Location to filter by",
       "examples": [
-        "=turn.locationParameter"
+        "34/1880"
       ]
     },
     "attendees": {

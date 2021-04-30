@@ -30,16 +30,14 @@
       "title": "Query",
       "description": "Query string to run recognition against.",
       "examples": [
-        "=turn.datetimequery",
-        "='2021-01-01T08:00:00'"
+        "2020-01-01T12:00:00"
       ]
     },
     "timeZone": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Time zone",
-      "description": "Time zone for resolutions.",
+      "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
       "examples": [
-        "=turn.timezone",
         "Pacific Standard Time"
       ]
     }

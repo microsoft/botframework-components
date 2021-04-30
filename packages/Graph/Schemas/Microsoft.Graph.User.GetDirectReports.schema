@@ -38,7 +38,7 @@
       "title": "Max Results",
       "description": "Max number of results to return",
       "examples": [
-        "=turn.maxResults"
+        "10"
       ]
     },
     "propertiesToSelect": {
@@ -64,9 +64,9 @@
     "userId": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "User ID",
-      "description": "The ID of the user to retrieve direct reports of",
+      "description": "The GUID ID of the user to retrieve direct reports of",
       "examples": [
-        "=turn.user.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     }
   }

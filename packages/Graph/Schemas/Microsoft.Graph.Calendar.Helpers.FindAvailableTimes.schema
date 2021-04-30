@@ -82,8 +82,7 @@
       "title": "Working Hours Start",
       "description": "Current user's configured work day start time.",
       "examples": [
-        "=user.workingHoursStart",
-        "2021-01-01T08:00:00"
+        "09:00:00"
       ]
     },
     "workingHourEnd": {
@@ -91,8 +90,7 @@
       "title": "Working Hours End",
       "description": "Current user's configured work day end time.",
       "examples": [
-        "=user.workingHoursEnd",
-        "2021-01-01T08:00:00"
+        "17:00:00"
       ]
     },
     "start": {
@@ -100,8 +98,7 @@
       "title": "Date",
       "description": "Date for finding available times",
       "examples": [
-        "=turn.searchDate",
-        "2021-01-01"
+        "2020-01-01"
       ]
     }
   }

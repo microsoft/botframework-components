@@ -3653,8 +3653,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to accept.",
+          "description": "The GUID ID of the event to accept.",
           "examples": [
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD",
             "=dialog.event.id"
           ]
         },
@@ -3719,15 +3720,36 @@
           "title": "New event",
           "description": "Event object to create.",
           "examples": [
-            "=turn.event"
-          ]
+            "=dialog.event"
+          ],
+          "default": {
+            "subject": "<subject>",
+            "attendees": [
+              {
+                "EmailAddress": {
+                  "Address": "<attendee email>",
+                  "Name": "<attendee name>"
+                }
+              }
+            ],
+            "start": {
+              "dateTime": "2021-01-01T08:00:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "end": {
+              "dateTime": "2021-01-01T08:30:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "location": "<location>",
+            "description": "<description>",
+            "isOnlineMeeting": false
+          }
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time Zone",
-          "description": "Target time zone to create the event in.",
+          "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=turn.timezone",
             "Pacific Standard Time"
           ]
         },
@@ -3790,9 +3812,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to decline.",
+          "description": "The GUID ID of the event to decline.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3854,9 +3876,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to delete.",
+          "description": "The GUID ID of the event to delete.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3917,19 +3939,27 @@
           ]
         },
         "attendees": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Event attendees",
           "examples": [
-            "=turn.meeting.attendees"
+            "=dialog.event.attendees"
+          ],
+          "default": [
+            {
+              "EmailAddress": {
+                "Address": "<attendee email>",
+                "Name": "<attendee name>"
+              }
+            }
           ]
         },
         "duration": {
           "$ref": "#/definitions/integerExpression",
           "title": "Duration",
-          "description": "Duration of meeting",
+          "description": "Duration of meeting in minutes",
           "examples": [
-            "=turn.meeting.duration"
+            "30"
           ]
         },
         "timeZone": {
@@ -3937,7 +3967,7 @@
           "title": "Time zone",
           "description": "Time zone for the meeting",
           "examples": [
-            "=turn.meeting.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4001,7 +4031,7 @@
           "title": "Name",
           "description": "Name to lookup",
           "examples": [
-            "=turn.nametolookup"
+            "John Doe"
           ]
         },
         "$kind": {
@@ -4064,17 +4094,16 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to lookup.",
+          "description": "The GUID ID of the event to lookup.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
-          "description": "Target time zone to display the event in",
+          "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=user.timezone",
             "Pacific Standard Time"
           ]
         },
@@ -4137,19 +4166,19 @@
           ]
         },
         "start": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "Start datetime of event search range.",
           "examples": [
-            "=turn.searchbegindatetime"
+            "2021-01-01T00:00:00"
           ]
         },
         "end": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "End datetime of event search range.",
           "examples": [
-            "=turn.searchenddatetime"
+            "2021-01-01T01:00:00"
           ]
         },
         "dateTimeType": {
@@ -4157,7 +4186,6 @@
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
-            "=dialog.dateTime.type",
             "date",
             "datetime",
             "datetimerange"
@@ -4168,7 +4196,7 @@
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
           "examples": [
-            "=user.timezone"
+            "Pacific Standard Time"
           ]
         },
         "userEmail": {
@@ -4176,7 +4204,7 @@
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "futureEventsOnly": {
@@ -4184,7 +4212,7 @@
           "title": "Future Events Only",
           "description": "If true, only return matching events in the future.",
           "examples": [
-            "=turn.futuresonly",
+            "=turn.futureEventsOnly",
             "true",
             "false"
           ]
@@ -4194,7 +4222,6 @@
           "title": "Max Results",
           "description": "Max number of results to return.",
           "examples": [
-            "=turn.maxresults",
             "10"
           ]
         },
@@ -4259,7 +4286,7 @@
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "$kind": {
@@ -4314,7 +4341,49 @@
           "title": "Events",
           "description": "Events to filter",
           "examples": [
-            "=turn.eventsfilter"
+            "=turn.eventsToFilter"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
         "title": {
@@ -4322,7 +4391,7 @@
           "title": "Title",
           "description": "Title to filter by",
           "examples": [
-            "=turn.titlefilter"
+            "Example Meeting"
           ]
         },
         "location": {
@@ -4330,7 +4399,7 @@
           "title": "Location",
           "description": "Location to filter by",
           "examples": [
-            "=turn.locationfilter"
+            "34/1880"
           ]
         },
         "attendees": {
@@ -4338,19 +4407,24 @@
           "title": "Attendees",
           "description": "Attendees to filter by",
           "examples": [
-            "=turn.attendeesfilter"
+            "=turn.attendeesParameter",
+            "[ 'Jane', 'John' ]"
+          ],
+          "default": [
+            "<name to filter by>"
           ]
         },
         "ordinal": {
           "$ref": "#/definitions/objectExpression",
           "title": "Ordinal",
-          "description": "Ordinal (e.g. next, first, last) to filter by",
+          "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
           "examples": [
-            "=turn.ordinalfilter",
-            "first",
-            "next",
-            "last"
-          ]
+            "=turn.ordinalParameter"
+          ],
+          "default": {
+            "relativeTo": "current",
+            "offset": "1"
+          }
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4403,35 +4477,77 @@
           ]
         },
         "events": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events for date.",
           "examples": [
             "=turn.events"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
         "workingHourStart": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
           "examples": [
-            "=user.workingHoursStart"
+            "09:00:00"
           ]
         },
         "workingHourEnd": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
           "examples": [
-            "=user.workingHoursEnd"
+            "17:00:00"
           ]
         },
         "start": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Date",
           "description": "Date for finding available times",
           "examples": [
-            "=turn.searchDate"
+            "2020-01-01"
           ]
         },
         "$kind": {
@@ -4485,19 +4601,19 @@
           ]
         },
         "start": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "DateTime range start.",
           "examples": [
-            "=turn.groupdatetimestart"
+            "2020-01-01T00:00:00"
           ]
         },
         "end": {
-          "$ref": "#/definitions/objectExpression",
+          "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "DateTime range end.",
           "examples": [
-            "=turn.groupdatetimeend"
+            "2020-01-01T12:00:00"
           ]
         },
         "events": {
@@ -4506,6 +4622,48 @@
           "description": "List of events to sort.",
           "examples": [
             "=turn.events"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2020-11-02T14:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2020-11-02T13:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
         "$kind": {
@@ -4561,15 +4719,15 @@
           "title": "Query",
           "description": "Query string to run recognition against.",
           "examples": [
-            "=turn.datetimequery"
+            "2020-01-01T12:00:00"
           ]
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
-          "description": "Time zone for resolutions.",
+          "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=turn.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4631,9 +4789,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to tentatively accept.",
+          "description": "The GUID ID of the event to tentatively accept.",
           "examples": [
-            "=turn.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4697,8 +4855,31 @@
           "title": "Updated event",
           "description": "Updated event object",
           "examples": [
-            "=turn.eventsToUpdate"
-          ]
+            "=dialog.eventToUpdate"
+          ],
+          "default": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "subject": "<subject>",
+            "attendees": [
+              {
+                "EmailAddress": {
+                  "Address": "<attendee email>",
+                  "Name": "<attendee name>"
+                }
+              }
+            ],
+            "start": {
+              "dateTime": "2021-01-01T08:00:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "end": {
+              "dateTime": "2021-01-01T08:30:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "location": "<location>",
+            "description": "<description>",
+            "isOnlineMeeting": false
+          }
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4759,9 +4940,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve the photo for",
+          "description": "The GUID ID of the user to retrieve the photo for",
           "examples": [
-            "=turn.userId"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4825,7 +5006,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -4851,9 +5032,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve direct reports of",
+          "description": "The GUID ID of the user to retrieve direct reports of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4935,9 +5116,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the manager of",
+          "description": "The GUID ID of the user to get the manager of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5001,7 +5182,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5027,9 +5208,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the peers of",
+          "description": "The GUID ID of the user to get the peers of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5166,9 +5347,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the profile of",
+          "description": "The GUID ID of the user to get the profile of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5232,7 +5413,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5258,9 +5439,9 @@
         "nameToSearchFor": {
           "$ref": "#/definitions/stringExpression",
           "title": "Search Name",
-          "description": "Name of the user",
+          "description": "Name of the user to search for",
           "examples": [
-            "=turn.nametosearch"
+            "Jane Doe"
           ]
         },
         "$kind": {
@@ -5324,15 +5505,15 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the collaborators of",
+          "description": "The GUID ID of the user to get the collaborators of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
