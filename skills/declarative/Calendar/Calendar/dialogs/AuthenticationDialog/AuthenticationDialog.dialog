@@ -83,7 +83,7 @@
                 "id": "4d4VCn"
               },
               "token": "=turn.token.token",
-              "addressProperty": "=turn.user.profile.userPrincipalName",
+              "address": "=turn.user.profile.userPrincipalName",
               "resultProperty": "user.workingHours"
             }
           ]

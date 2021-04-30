@@ -562,6 +562,167 @@
       "widget": "ActionCard"
     }
   },
+  "Microsoft.Graph.Calendar.AcceptEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.CreateEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.DeclineEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.DeleteEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.FindMeetingTimes": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.GetContacts": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.GetEventById": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.GetEvents": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.GetWorkingHours": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.Helpers.FilterEvents": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.TentativelyAcceptEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Calendar.UpdateEvent": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.Photo.GetPhoto": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetDirectReports": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetManager": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetPeers": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetProfile": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetUserProfile": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetUsers": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
+  "Microsoft.Graph.User.GetWorksWith": {
+    "menu": {
+      "submenu": [
+        "Microsoft Graph"
+      ]
+    }
+  },
   "Microsoft.HttpRequest": {
     "flow": {
       "body": {
