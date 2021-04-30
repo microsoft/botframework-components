@@ -40,7 +40,7 @@
       "title": "Working Hours Start",
       "description": "Current user's configured work day start time.",
       "examples": [
-        "=user.workingHoursStart"
+        "09:00:00"
       ]
     },
     "workingHourEndProperty": {
@@ -48,7 +48,7 @@
       "title": "Working Hours End",
       "description": "Current user's configured work day end time.",
       "examples": [
-        "=user.workingHoursEnd"
+        "17:00:00"
       ]
     },
     "startProperty": {
@@ -56,7 +56,7 @@
       "title": "Date",
       "description": "Date for finding available times",
       "examples": [
-        "=turn.searchDate"
+        "2020-01-01"
       ]
     }
   }

@@ -37,7 +37,7 @@
       "title": "Title",
       "description": "Title to filter by",
       "examples": [
-        "=turn.titlefilter"
+        "Example Meeting"
       ]
     },
     "locationProperty": {
@@ -45,7 +45,7 @@
       "title": "Location",
       "description": "Location to filter by",
       "examples": [
-        "=turn.locationfilter"
+        "34/1880"
       ]
     },
     "attendeesProperty": {
@@ -53,7 +53,7 @@
       "title": "Attendees",
       "description": "Attendees to filter by",
       "examples": [
-        "=turn.attendeesfilter"
+        "[\"janedoe@contoso.com\", \"johndoe@contoso.com\"]"
       ]
     },
     "ordinalProperty": {
@@ -61,7 +61,6 @@
       "title": "Ordinal",
       "description": "Ordinal (e.g. next, first, last) to filter by",
       "examples": [
-        "=turn.ordinalfilter",
         "first",
         "next",
         "last"
