@@ -44,9 +44,9 @@
     "timeZoneProperty": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Time Zone",
-      "description": "Target time zone to create the event in.",
+      "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
       "examples": [
-        "=turn.timezone"
+        "Pacific Standard Time"
       ]
     }
   }
