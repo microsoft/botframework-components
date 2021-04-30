@@ -15,9 +15,9 @@
             "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "attendeesProperty": "=[{\"EmailAddress\": {\"Address\": \"test\", \"Name\": \"test\"}}]",
-            "durationProperty": "=30",
-            "timeZoneProperty": "='Pacific Standard Time'"
+            "attendees": "=[{\"EmailAddress\": {\"Address\": \"test\", \"Name\": \"test\"}}]",
+            "duration": "=30",
+            "timeZone": "='Pacific Standard Time'"
           },
           {
             "$kind": "Microsoft.SendActivity",

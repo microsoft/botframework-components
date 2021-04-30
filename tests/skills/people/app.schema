@@ -1,15 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "type": "object",
   "title": "Component kinds",
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
-    {
-      "$ref": "#/definitions/GetManagerDialog.dialog"
-    },
-    {
-      "$ref": "#/definitions/GetProfileDialog.dialog"
-    },
     {
       "$ref": "#/definitions/Microsoft.ActivityTemplate"
     },
@@ -414,156 +408,9 @@
     },
     {
       "$ref": "#/definitions/Microsoft.UrlEntityRecognizer"
-    },
-    {
-      "$ref": "#/definitions/ResolveUserDialog.dialog"
     }
   ],
   "definitions": {
-    "GetManagerDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetManagerDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name of the entity to search",
-          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetManagerDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "GetProfileDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetProfileDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetProfileDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name entity to search",
-          "$ref": "#/definitions/GetProfileDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetProfileDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
     "Microsoft.ActivityTemplate": {
       "$role": "implements(Microsoft.IActivityTemplate)",
       "title": "Microsoft activity template",
@@ -643,11 +490,12 @@
         },
         "dialogs": {
           "type": "array",
-          "title": "Dialogs added to DialogSet",
+          "title": "Dialogs",
+          "description": "Dialogs added to DialogSet.",
           "items": {
             "$kind": "Microsoft.IDialog",
             "title": "Dialog",
-            "description": "Dialogs will be added to DialogSet.",
+            "description": "Dialog to add to DialogSet.",
             "$ref": "#/definitions/Microsoft.IDialog"
           }
         },
@@ -3770,10 +3618,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3799,7 +3643,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -3807,7 +3651,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The ID of the event to accept.",
           "examples": [
@@ -3835,13 +3679,9 @@
       "type": "object",
       "required": [
         "token",
-        "eventToCreateProperty",
+        "eventToCreate",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3867,27 +3707,28 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventToCreateProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventToCreate": {
+          "$ref": "#/definitions/objectExpression",
           "title": "New event",
           "description": "Event object to create.",
           "examples": [
             "=turn.event"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time Zone",
           "description": "Target time zone to create the event in.",
           "examples": [
-            "=turn.timezone"
+            "=turn.timezone",
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -3914,10 +3755,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3943,7 +3780,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -3951,7 +3788,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The ID of the event to decline.",
           "examples": [
@@ -3982,10 +3819,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4011,7 +3844,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -4019,7 +3852,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The ID of the event to delete.",
           "examples": [
@@ -4047,14 +3880,10 @@
       "type": "object",
       "required": [
         "token",
-        "attendeesProperty",
-        "durationProperty",
+        "attendees",
+        "duration",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4080,31 +3909,31 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "attendees": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Attendees",
           "description": "Event attendees",
           "examples": [
             "=turn.meeting.attendees"
           ]
         },
-        "durationProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "duration": {
+          "$ref": "#/definitions/integerExpression",
           "title": "Duration",
           "description": "Duration of meeting",
           "examples": [
             "=turn.meeting.duration"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Time zone for the meeting",
           "examples": [
@@ -4132,13 +3961,9 @@
       "type": "object",
       "required": [
         "token",
-        "nameProperty",
+        "name",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4164,15 +3989,15 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "nameProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "name": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Name",
           "description": "Name to lookup",
           "examples": [
@@ -4200,14 +4025,10 @@
       "description": "Lookup event the Microsoft Graph API by its Event Id.",
       "required": [
         "token",
-        "eventIdProperty",
-        "timeZoneProperty",
+        "eventId",
+        "timeZone",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4233,27 +4054,28 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventIdProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventId": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The ID of the event to lookup.",
           "examples": [
             "=dialog.event.id"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Target time zone to display the event in",
           "examples": [
-            "=user.timezone"
+            "=user.timezone",
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4277,15 +4099,11 @@
       "type": "object",
       "required": [
         "token",
-        "startProperty",
-        "endProperty",
-        "timeZoneProperty",
+        "start",
+        "end",
+        "timeZone",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4311,31 +4129,31 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "startProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "start": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Start",
           "description": "Start datetime of event search range.",
           "examples": [
             "=turn.searchbegindatetime"
           ]
         },
-        "endProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "end": {
+          "$ref": "#/definitions/objectExpression",
           "title": "End",
           "description": "End datetime of event search range.",
           "examples": [
             "=turn.searchenddatetime"
           ]
         },
-        "dateTimeTypeProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "dateTimeType": {
+          "$ref": "#/definitions/stringExpression",
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
@@ -4345,23 +4163,23 @@
             "datetimerange"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
           "examples": [
             "=user.timezone"
           ]
         },
-        "userEmailProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "userEmail": {
+          "$ref": "#/definitions/stringExpression",
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
           "examples": [
             "=user.email"
           ]
         },
-        "futureEventsOnlyProperty": {
+        "futureEventsOnly": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Future Events Only",
           "description": "If true, only return matching events in the future.",
@@ -4371,7 +4189,7 @@
             "false"
           ]
         },
-        "maxResultsProperty": {
+        "maxResults": {
           "$ref": "#/definitions/integerExpression",
           "title": "Max Results",
           "description": "Max number of results to return.",
@@ -4401,13 +4219,9 @@
       "type": "object",
       "required": [
         "token",
-        "addressProperty",
+        "address",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4433,15 +4247,15 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "addressProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "address": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": [
@@ -4468,13 +4282,9 @@
       "description": "Filter events from Microsoft Graph API.",
       "type": "object",
       "required": [
-        "eventsProperty",
+        "events",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4499,40 +4309,40 @@
             "turn.result"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "Events to filter",
           "examples": [
             "=turn.eventsfilter"
           ]
         },
-        "titleProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "title": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Title",
           "description": "Title to filter by",
           "examples": [
             "=turn.titlefilter"
           ]
         },
-        "locationProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "location": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Location",
           "description": "Location to filter by",
           "examples": [
             "=turn.locationfilter"
           ]
         },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "attendees": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Attendees to filter by",
           "examples": [
             "=turn.attendeesfilter"
           ]
         },
-        "ordinalProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "ordinal": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Ordinal",
           "description": "Ordinal (e.g. next, first, last) to filter by",
           "examples": [
@@ -4562,16 +4372,12 @@
       "description": "Finds available times for the current user for a given date.",
       "type": "object",
       "required": [
-        "eventsProperty",
-        "startProperty",
-        "workingHourStartProperty",
-        "workingHourEndProperty",
+        "events",
+        "start",
+        "workingHourStart",
+        "workingHourEnd",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4596,32 +4402,32 @@
             "turn.result"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Events",
           "description": "List of events for date.",
           "examples": [
             "=turn.events"
           ]
         },
-        "workingHourStartProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "workingHourStart": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
           "examples": [
             "=user.workingHoursStart"
           ]
         },
-        "workingHourEndProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "workingHourEnd": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
           "examples": [
             "=user.workingHoursEnd"
           ]
         },
-        "startProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "start": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Date",
           "description": "Date for finding available times",
           "examples": [
@@ -4649,15 +4455,11 @@
       "type": "object",
       "required": [
         "token",
-        "eventsProperty",
-        "startProperty",
-        "endProperty",
+        "events",
+        "start",
+        "end",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4682,24 +4484,24 @@
             "turn.result"
           ]
         },
-        "startProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "start": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Start",
           "description": "DateTime range start.",
           "examples": [
             "=turn.groupdatetimestart"
           ]
         },
-        "endProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "end": {
+          "$ref": "#/definitions/objectExpression",
           "title": "End",
           "description": "DateTime range end.",
           "examples": [
             "=turn.groupdatetimeend"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events to sort.",
           "examples": [
@@ -4726,14 +4528,10 @@
       "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
       "type": "object",
       "required": [
-        "timeZoneProperty",
-        "queryProperty",
+        "timeZone",
+        "query",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4758,16 +4556,16 @@
             "turn.result"
           ]
         },
-        "queryProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "query": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Query",
           "description": "Query string to run recognition against.",
           "examples": [
             "=turn.datetimequery"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Time zone for resolutions.",
           "examples": [
@@ -4798,10 +4596,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4827,7 +4621,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -4835,7 +4629,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The ID of the event to tentatively accept.",
           "examples": [
@@ -4863,13 +4657,9 @@
       "type": "object",
       "required": [
         "token",
-        "eventToUpdateProperty",
+        "eventToUpdate",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4895,15 +4685,15 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventToUpdateProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventToUpdate": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Updated event",
           "description": "Updated event object",
           "examples": [
@@ -4934,10 +4724,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4963,7 +4749,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5002,10 +4788,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5031,7 +4813,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5098,10 +4880,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5127,7 +4905,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5186,10 +4964,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5215,7 +4989,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5281,10 +5055,6 @@
         "token",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5310,7 +5080,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5341,10 +5111,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5370,7 +5136,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5429,10 +5195,6 @@
         "nameToSearchFor",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5458,7 +5220,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5525,10 +5287,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5554,7 +5312,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5847,12 +5605,6 @@
       "$role": "interface",
       "oneOf": [
         {
-          "$ref": "#/definitions/GetManagerDialog.dialog"
-        },
-        {
-          "$ref": "#/definitions/GetProfileDialog.dialog"
-        },
-        {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"
         },
         {
@@ -6064,9 +5816,6 @@
         },
         {
           "$ref": "#/definitions/Microsoft.UpdateActivity"
-        },
-        {
-          "$ref": "#/definitions/ResolveUserDialog.dialog"
         },
         {
           "type": "string",
@@ -11410,78 +11159,6 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.UrlEntityRecognizer"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "ResolveUserDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "ResolveUserDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "UserIdFound": {
-          "title": "User Id Found",
-          "description": "Id of the user to look for",
-          "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/stringExpression"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "ResolveUserDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",
