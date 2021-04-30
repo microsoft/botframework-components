@@ -643,11 +643,12 @@
         },
         "dialogs": {
           "type": "array",
-          "title": "Dialogs added to DialogSet",
+          "title": "Dialogs",
+          "description": "Dialogs added to DialogSet.",
           "items": {
             "$kind": "Microsoft.IDialog",
             "title": "Dialog",
-            "description": "Dialogs will be added to DialogSet.",
+            "description": "Dialog to add to DialogSet.",
             "$ref": "#/definitions/Microsoft.IDialog"
           }
         },
@@ -3770,10 +3771,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3809,8 +3806,9 @@
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to accept.",
+          "description": "The GUID ID of the event to accept.",
           "examples": [
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD",
             "=dialog.event.id"
           ]
         },
@@ -3838,10 +3836,6 @@
         "eventToCreateProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3885,9 +3879,9 @@
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time Zone",
-          "description": "Target time zone to create the event in.",
+          "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=turn.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -3914,10 +3908,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3953,9 +3943,9 @@
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to decline.",
+          "description": "The GUID ID of the event to decline.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3982,10 +3972,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4021,9 +4007,9 @@
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to delete.",
+          "description": "The GUID ID of the event to delete.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4051,10 +4037,6 @@
         "durationProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4098,9 +4080,9 @@
         "durationProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Duration",
-          "description": "Duration of meeting",
+          "description": "Duration of meeting in minutes",
           "examples": [
-            "=turn.meeting.duration"
+            "30"
           ]
         },
         "timeZoneProperty": {
@@ -4108,7 +4090,7 @@
           "title": "Time zone",
           "description": "Time zone for the meeting",
           "examples": [
-            "=turn.meeting.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4135,10 +4117,6 @@
         "nameProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4176,7 +4154,7 @@
           "title": "Name",
           "description": "Name to lookup",
           "examples": [
-            "=turn.nametolookup"
+            "John Doe"
           ]
         },
         "$kind": {
@@ -4204,10 +4182,6 @@
         "timeZoneProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4243,17 +4217,17 @@
         "eventIdProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to lookup.",
+          "description": "The GUID ID of the event to lookup.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time zone",
-          "description": "Target time zone to display the event in",
+          "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=user.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4282,10 +4256,6 @@
         "timeZoneProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4323,7 +4293,7 @@
           "title": "Start",
           "description": "Start datetime of event search range.",
           "examples": [
-            "=turn.searchbegindatetime"
+            "2021-01-01T00:00:00"
           ]
         },
         "endProperty": {
@@ -4331,7 +4301,7 @@
           "title": "End",
           "description": "End datetime of event search range.",
           "examples": [
-            "=turn.searchenddatetime"
+            "2021-01-01T01:00:00"
           ]
         },
         "dateTimeTypeProperty": {
@@ -4339,7 +4309,6 @@
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
-            "=dialog.dateTime.type",
             "date",
             "datetime",
             "datetimerange"
@@ -4350,7 +4319,7 @@
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
           "examples": [
-            "=user.timezone"
+            "Pacific Standard Time"
           ]
         },
         "userEmailProperty": {
@@ -4358,7 +4327,7 @@
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "futureEventsOnlyProperty": {
@@ -4376,7 +4345,6 @@
           "title": "Max Results",
           "description": "Max number of results to return.",
           "examples": [
-            "=turn.maxresults",
             "10"
           ]
         },
@@ -4404,10 +4372,6 @@
         "addressProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4445,7 +4409,7 @@
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "$kind": {
@@ -4471,10 +4435,6 @@
         "eventsProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4512,7 +4472,7 @@
           "title": "Title",
           "description": "Title to filter by",
           "examples": [
-            "=turn.titlefilter"
+            "Example Meeting"
           ]
         },
         "locationProperty": {
@@ -4520,7 +4480,7 @@
           "title": "Location",
           "description": "Location to filter by",
           "examples": [
-            "=turn.locationfilter"
+            "34/1880"
           ]
         },
         "attendeesProperty": {
@@ -4528,7 +4488,7 @@
           "title": "Attendees",
           "description": "Attendees to filter by",
           "examples": [
-            "=turn.attendeesfilter"
+            "[\"janedoe@contoso.com\", \"johndoe@contoso.com\"]"
           ]
         },
         "ordinalProperty": {
@@ -4536,7 +4496,6 @@
           "title": "Ordinal",
           "description": "Ordinal (e.g. next, first, last) to filter by",
           "examples": [
-            "=turn.ordinalfilter",
             "first",
             "next",
             "last"
@@ -4568,10 +4527,6 @@
         "workingHourEndProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4609,7 +4564,7 @@
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
           "examples": [
-            "=user.workingHoursStart"
+            "09:00:00"
           ]
         },
         "workingHourEndProperty": {
@@ -4617,7 +4572,7 @@
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
           "examples": [
-            "=user.workingHoursEnd"
+            "17:00:00"
           ]
         },
         "startProperty": {
@@ -4625,7 +4580,7 @@
           "title": "Date",
           "description": "Date for finding available times",
           "examples": [
-            "=turn.searchDate"
+            "2020-01-01"
           ]
         },
         "$kind": {
@@ -4654,10 +4609,6 @@
         "endProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4687,7 +4638,7 @@
           "title": "Start",
           "description": "DateTime range start.",
           "examples": [
-            "=turn.groupdatetimestart"
+            "2020-01-01T00:00:00"
           ]
         },
         "endProperty": {
@@ -4695,7 +4646,7 @@
           "title": "End",
           "description": "DateTime range end.",
           "examples": [
-            "=turn.groupdatetimeend"
+            "2020-01-01T12:00:00"
           ]
         },
         "eventsProperty": {
@@ -4730,10 +4681,6 @@
         "queryProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4763,15 +4710,15 @@
           "title": "Query",
           "description": "Query string to run recognition against.",
           "examples": [
-            "=turn.datetimequery"
+            "2020-01-01T12:00:00"
           ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time zone",
-          "description": "Time zone for resolutions.",
+          "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=turn.timezone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4798,10 +4745,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4837,9 +4780,9 @@
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to tentatively accept.",
+          "description": "The GUID ID of the event to tentatively accept.",
           "examples": [
-            "=turn.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4866,10 +4809,6 @@
         "eventToUpdateProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4934,10 +4873,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4973,9 +4908,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve the photo for",
+          "description": "The GUID ID of the user to retrieve the photo for",
           "examples": [
-            "=turn.userId"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5002,10 +4937,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5043,7 +4974,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5069,9 +5000,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve direct reports of",
+          "description": "The GUID ID of the user to retrieve direct reports of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5098,10 +5029,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5157,9 +5084,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the manager of",
+          "description": "The GUID ID of the user to get the manager of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5186,10 +5113,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5227,7 +5150,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5253,9 +5176,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the peers of",
+          "description": "The GUID ID of the user to get the peers of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5281,10 +5204,6 @@
         "token",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5341,10 +5260,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5400,9 +5315,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the profile of",
+          "description": "The GUID ID of the user to get the profile of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5429,10 +5344,6 @@
         "nameToSearchFor",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5470,7 +5381,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5496,9 +5407,9 @@
         "nameToSearchFor": {
           "$ref": "#/definitions/stringExpression",
           "title": "Search Name",
-          "description": "Name of the user",
+          "description": "Name of the user to search for",
           "examples": [
-            "=turn.nametosearch"
+            "Jane Doe"
           ]
         },
         "$kind": {
@@ -5525,10 +5436,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc6"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5566,15 +5473,15 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the collaborators of",
+          "description": "The GUID ID of the user to get the collaborators of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {

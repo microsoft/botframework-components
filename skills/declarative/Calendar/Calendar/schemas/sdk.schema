@@ -490,11 +490,12 @@
         },
         "dialogs": {
           "type": "array",
-          "title": "Dialogs added to DialogSet",
+          "title": "Dialogs",
+          "description": "Dialogs added to DialogSet.",
           "items": {
             "$kind": "Microsoft.IDialog",
             "title": "Dialog",
-            "description": "Dialogs will be added to DialogSet.",
+            "description": "Dialog to add to DialogSet.",
             "$ref": "#/definitions/Microsoft.IDialog"
           }
         },
@@ -3617,10 +3618,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3632,28 +3629,34 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "AcceptEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to accept.",
+          "description": "The GUID ID of the event to accept.",
           "examples": [
-            "dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD",
+            "=dialog.event.id"
           ]
         },
         "$kind": {
@@ -3680,10 +3683,6 @@
         "eventToCreateProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3695,33 +3694,42 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "CreateEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.Result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventToCreateProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "New event",
           "description": "Event object to create.",
-          "examples": []
+          "examples": [
+            "=turn.event"
+          ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time Zone",
-          "description": "Target time zone to create the event in.",
-          "examples": []
+          "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
+          "examples": [
+            "Pacific Standard Time"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -3747,10 +3755,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3762,28 +3766,33 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "DeclineEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to decline.",
+          "description": "The GUID ID of the event to decline.",
           "examples": [
-            "dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3810,10 +3819,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3825,28 +3830,33 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "DeleteEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to delete.",
+          "description": "The GUID ID of the event to delete.",
           "examples": [
-            "dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3874,10 +3884,6 @@
         "durationProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3889,39 +3895,50 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "FindMeetingTimesDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "attendeesProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Attendees",
           "description": "Event attendees",
-          "examples": []
+          "examples": [
+            "=turn.meeting.attendees"
+          ]
         },
         "durationProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Duration",
-          "description": "Duration of meeting",
-          "examples": []
+          "description": "Duration of meeting in minutes",
+          "examples": [
+            "30"
+          ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time zone",
           "description": "Time zone for the meeting",
-          "examples": []
+          "examples": [
+            "Pacific Standard Time"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -3947,10 +3964,6 @@
         "nameProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -3962,27 +3975,34 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetContactsDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "nameProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Name",
           "description": "Name to lookup",
-          "examples": []
+          "examples": [
+            "John Doe"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4009,10 +4029,6 @@
         "timeZoneProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4024,36 +4040,41 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetEventByIdDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventIdProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to lookup.",
+          "description": "The GUID ID of the event to lookup.",
           "examples": [
-            "dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time zone",
-          "description": "Target time zone to display the event in",
+          "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "user.timeZone"
+            "Pacific Standard Time"
           ]
         },
         "$kind": {
@@ -4082,10 +4103,6 @@
         "timeZoneProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4097,65 +4114,86 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetEventsDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "Start datetime of event search range.",
-          "examples": []
+          "examples": [
+            "2021-01-01T00:00:00"
+          ]
         },
         "endProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "End datetime of event search range.",
-          "examples": []
+          "examples": [
+            "2021-01-01T01:00:00"
+          ]
         },
         "dateTimeTypeProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
-            "dialog.dateTime.type"
+            "date",
+            "datetime",
+            "datetimerange"
           ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
-          "examples": []
+          "examples": [
+            "Pacific Standard Time"
+          ]
         },
         "userEmailProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
-          "examples": []
+          "examples": [
+            "janedoe@contoso.com"
+          ]
         },
         "futureEventsOnlyProperty": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Future Events Only",
           "description": "If true, only return matching events in the future.",
-          "examples": []
+          "examples": [
+            "=turn.futuresonly",
+            "true",
+            "false"
+          ]
         },
         "maxResultsProperty": {
           "$ref": "#/definitions/integerExpression",
           "title": "Max Results",
           "description": "Max number of results to return.",
-          "examples": []
+          "examples": [
+            "10"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4181,10 +4219,6 @@
         "addressProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4196,27 +4230,34 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetWorkingHoursDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "addressProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
-          "examples": []
+          "examples": [
+            "janedoe@contoso.com"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4241,10 +4282,6 @@
         "eventsProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4256,43 +4293,60 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "FilterEventsDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "eventsProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Events",
           "description": "Events to filter",
-          "examples": []
+          "examples": [
+            "=turn.eventsfilter"
+          ]
         },
         "titleProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Title",
           "description": "Title to filter by",
-          "examples": []
+          "examples": [
+            "Example Meeting"
+          ]
         },
         "locationProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Location",
           "description": "Location to filter by",
-          "examples": []
+          "examples": [
+            "34/1880"
+          ]
         },
         "attendeesProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Attendees",
           "description": "Attendees to filter by",
-          "examples": []
+          "examples": [
+            "[\"janedoe@contoso.com\", \"johndoe@contoso.com\"]"
+          ]
         },
         "ordinalProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Ordinal",
           "description": "Ordinal (e.g. next, first, last) to filter by",
-          "examples": []
+          "examples": [
+            "first",
+            "next",
+            "last"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4320,10 +4374,6 @@
         "workingHourEndProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4335,37 +4385,50 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "FindAvailableTimesDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "eventsProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Events",
           "description": "List of events for date.",
-          "examples": []
+          "examples": [
+            "=turn.events"
+          ]
         },
         "workingHourStartProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
-          "examples": []
+          "examples": [
+            "09:00:00"
+          ]
         },
         "workingHourEndProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
-          "examples": []
+          "examples": [
+            "17:00:00"
+          ]
         },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Date",
           "description": "Date for finding available times",
-          "examples": []
+          "examples": [
+            "2020-01-01"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4393,10 +4456,6 @@
         "endProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4408,32 +4467,41 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GroupEventsByDateDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "startProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "DateTime range start.",
-          "examples": []
+          "examples": [
+            "2020-01-01T00:00:00"
+          ]
         },
         "endProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "DateTime range end.",
-          "examples": []
+          "examples": [
+            "2020-01-01T12:00:00"
+          ]
         },
         "eventsProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Events",
           "description": "List of events to sort.",
           "examples": [
-            "dialog.events"
+            "=turn.events"
           ]
         },
         "$kind": {
@@ -4460,10 +4528,6 @@
         "queryProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4475,25 +4539,34 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "RecognizeDateTimeDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result Property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "queryProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Query",
           "description": "Query string to run recognition against.",
-          "examples": []
+          "examples": [
+            "2020-01-01T12:00:00"
+          ]
         },
         "timeZoneProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Time zone",
-          "description": "Time zone for resolutions.",
-          "examples": []
+          "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
+          "examples": [
+            "Pacific Standard Time"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4519,10 +4592,6 @@
         "eventId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4534,28 +4603,33 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "TentativelyAcceptEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventId": {
           "$ref": "#/definitions/valueExpression",
           "title": "Event ID",
-          "description": "The ID of the event to tentatively accept.",
+          "description": "The GUID ID of the event to tentatively accept.",
           "examples": [
-            "dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4582,10 +4656,6 @@
         "eventToUpdateProperty",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4597,27 +4667,34 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "UpdateEventDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "eventToUpdateProperty": {
           "$ref": "#/definitions/valueExpression",
           "title": "Updated event",
           "description": "Updated event object",
-          "examples": []
+          "examples": [
+            "=turn.eventsToUpdate"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4643,10 +4720,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4658,28 +4731,33 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetProfilePhotoDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve the photo for",
+          "description": "The GUID ID of the user to retrieve the photo for",
           "examples": [
-            "dialog.userId"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4706,10 +4784,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4721,20 +4795,25 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetDirectReportsDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "maxCount": {
@@ -4742,15 +4821,35 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxResults"
+            "10"
           ]
+        },
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+          "examples": [
+            "id, displayName, mail, officeLocation, jobTitle"
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API.",
+            "examples": [
+              "id",
+              "displayName",
+              "mail",
+              "offliceLocation",
+              "jobTitle"
+            ]
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve direct reports of",
+          "description": "The GUID ID of the user to retrieve direct reports of",
           "examples": [
-            "dialog.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4777,10 +4876,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4792,28 +4887,53 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetManagerDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
+        },
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+          "examples": [
+            "id, displayName, mail, officeLocation, jobTitle"
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API.",
+            "examples": [
+              "id",
+              "displayName",
+              "mail",
+              "offliceLocation",
+              "jobTitle"
+            ]
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the manager of",
+          "description": "The GUID ID of the user to get the manager of",
           "examples": [
-            "dialog.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4840,10 +4960,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4855,20 +4971,25 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetPeersDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "maxCount": {
@@ -4876,15 +4997,35 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.peers.maxResults"
+            "10"
           ]
+        },
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+          "examples": [
+            "id, displayName, mail, officeLocation, jobTitle"
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API.",
+            "examples": [
+              "id",
+              "displayName",
+              "mail",
+              "offliceLocation",
+              "jobTitle"
+            ]
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the peers of",
+          "description": "The GUID ID of the user to get the peers of",
           "examples": [
-            "dialog.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4910,10 +5051,6 @@
         "token",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4925,20 +5062,25 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetProfileDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "$kind": {
@@ -4965,10 +5107,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -4980,28 +5118,53 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetUserProfileDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
+        },
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+          "examples": [
+            "id, displayName, mail, officeLocation, jobTitle"
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API.",
+            "examples": [
+              "id",
+              "displayName",
+              "mail",
+              "offliceLocation",
+              "jobTitle"
+            ]
+          }
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the profile of",
+          "description": "The GUID ID of the user to get the profile of",
           "examples": [
-            "dialog.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5028,10 +5191,6 @@
         "nameToSearchFor",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5043,20 +5202,25 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetUsersDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "maxCount": {
@@ -5064,15 +5228,35 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxResults"
+            "10"
           ]
+        },
+        "propertiesToSelect": {
+          "$ref": "#/definitions/arrayExpression",
+          "title": "User Properties To Select",
+          "description": "The properties of from the graph API to select. By default, if not provided only the ID will be returned for the object. You can find more about the fields in https://docs.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties.",
+          "examples": [
+            "id, displayName, mail, officeLocation, jobTitle"
+          ],
+          "items": {
+            "type": "string",
+            "title": "Property",
+            "description": "Property name from the User object to select in Graph API.",
+            "examples": [
+              "id",
+              "displayName",
+              "mail",
+              "offliceLocation",
+              "jobTitle"
+            ]
+          }
         },
         "nameToSearchFor": {
           "$ref": "#/definitions/stringExpression",
           "title": "Search Name",
-          "description": "Name of the user",
+          "description": "Name of the user to search for",
           "examples": [
-            "dialog.user.name"
+            "Jane Doe"
           ]
         },
         "$kind": {
@@ -5099,10 +5283,6 @@
         "userId",
         "$kind"
       ],
-      "$package": {
-        "name": "Microsoft.Bot.Components.Graph",
-        "version": "1.0.0-rc2"
-      },
       "additionalProperties": false,
       "patternProperties": {
         "^\\$": {
@@ -5114,20 +5294,25 @@
         "id": {
           "type": "string",
           "title": "Id",
-          "description": "Optional id for the dialog"
+          "description": "Optional id for the dialog",
+          "examples": [
+            "GetWorksWithDialog"
+          ]
         },
         "resultProperty": {
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "Named state location to store result.",
-          "examples": []
+          "examples": [
+            "turn.result"
+          ]
         },
         "token": {
           "$ref": "#/definitions/valueExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
-            "user.token.token"
+            "=turn.token.token"
           ]
         },
         "maxCount": {
@@ -5135,15 +5320,15 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "dialog.worksWithMe.maxResults"
+            "10"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the collaborators of",
+          "description": "The GUID ID of the user to get the collaborators of",
           "examples": [
-            "dialog.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5303,6 +5488,7 @@
           "$ref": "#/definitions/stringExpression",
           "title": "Result property",
           "description": "A property to store the result of this action. The result can include any of the 4 properties from the HTTP response: statusCode, reasonPhrase, content, and headers. If the content is JSON it will be a deserialized object. The values can be accessed via .content for example.",
+          "default": "turn.results",
           "examples": [
             "dialog.contosodata"
           ]
@@ -6857,7 +7043,7 @@
     "Microsoft.OAuthInput": {
       "$role": "implements(Microsoft.IDialog)",
       "title": "OAuthInput Dialog",
-      "description": "Collect login information.",
+      "description": "Collect login information before each request.",
       "type": "object",
       "required": [
         "connectionName",
@@ -6921,7 +7107,8 @@
         "property": {
           "$ref": "#/definitions/stringExpression",
           "title": "Token property",
-          "description": "Property to store the OAuth token result.",
+          "description": "Property to store the OAuth token result. WARNING: Changing this location is not recommended as you should call OAuthInput immediately before each use of the token.",
+          "default": "turn.token",
           "examples": [
             "dialog.token"
           ]
