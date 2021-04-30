@@ -35,19 +35,28 @@
       ]
     },
     "attendees": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Attendees",
       "description": "Event attendees",
       "examples": [
-        "=turn.meeting.attendees"
+        "=dialog.event.attendees"
+      ],
+      "default": [
+        {
+          "EmailAddress": {
+            "Address": "<attendee email>",
+            "Name": "<attendee name>"
+          }
+        }
       ]
     },
     "duration": {
       "$ref": "schema:#/definitions/integerExpression",
       "title": "Duration",
-      "description": "Duration of meeting",
+      "description": "Duration of meeting in minutes",
       "examples": [
-        "=turn.meeting.duration"
+        "=turn.meeting.duration",
+        "60"
       ]
     },
     "timeZone": {
@@ -55,7 +64,8 @@
       "title": "Time zone",
       "description": "Time zone for the meeting",
       "examples": [
-        "=turn.meeting.timezone"
+        "=turn.meeting.timezone",
+        "Pacific Standard Time"
       ]
     }
   }

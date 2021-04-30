@@ -30,7 +30,8 @@
       "title": "Query",
       "description": "Query string to run recognition against.",
       "examples": [
-        "=turn.datetimequery"
+        "=turn.datetimequery",
+        "='2021-01-01T08:00:00'"
       ]
     },
     "timeZone": {
@@ -38,7 +39,8 @@
       "title": "Time zone",
       "description": "Time zone for resolutions.",
       "examples": [
-        "=turn.timezone"
+        "=turn.timezone",
+        "Pacific Standard Time"
       ]
     }
   }

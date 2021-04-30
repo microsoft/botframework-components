@@ -47,7 +47,7 @@
       "title": "Time zone",
       "description": "Target time zone to display the event in",
       "examples": [
-        "=user.timezone",
+        "=user.timeZone",
         "Pacific Standard Time"
       ]
     }

@@ -15,7 +15,14 @@
             "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "attendees": "=[{\"EmailAddress\": {\"Address\": \"test\", \"Name\": \"test\"}}]",
+            "attendees": [
+              {
+                "EmailAddress": {
+                  "Address": "test email",
+                  "Name": "test name"
+                }
+              }
+            ],
             "duration": "=30",
             "timeZone": "='Pacific Standard Time'"
           },

@@ -38,7 +38,8 @@
       "title": "Name",
       "description": "Name to lookup",
       "examples": [
-        "=turn.nametolookup"
+        "=turn.nameParameter",
+        "Jane Doe"
       ]
     }
   }

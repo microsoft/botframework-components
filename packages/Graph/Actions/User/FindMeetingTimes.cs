@@ -43,7 +43,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// </summary>
         /// <value>The list of attendees to the meeting.</value>
         [JsonProperty("attendees")]
-        public ObjectExpression<List<Attendee>> Attendees { get; set; }
+        public ArrayExpression<Attendee> Attendees { get; set; }
 
         /// <summary>
         /// Gets or sets the duration of the meeting.

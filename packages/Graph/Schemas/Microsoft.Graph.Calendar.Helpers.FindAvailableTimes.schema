@@ -28,35 +28,80 @@
       ]
     },
     "events": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "List of events for date.",
       "examples": [
         "=turn.events"
+      ],
+      "default": [
+        {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "attendees": [
+            {
+              "EmailAddress": {
+                "Address": "<attendee email>",
+                "Name": "<attendee name>"
+              }
+            }
+          ],
+          "description": "<description>",
+          "end": {
+            "@odata.type": "microsoft.graph.dateTimeTimeZone",
+            "dateTime": "2021-01-01T08:30:00Z",
+            "timeZone": "Pacific Standard Time"
+          },
+          "index": 0,
+          "isAllDay": false,
+          "isCurrentEvent": false,
+          "isOnlineMeeting": false,
+          "isOrganizer": true,
+          "isRecurring": true,
+          "location": "<location>",
+          "organizer": {
+            "@odata.type": "microsoft.graph.recipient",
+            "emailAddress": {
+              "@odata.type": "microsoft.graph.emailAddress",
+              "address": "<organizer email>",
+              "name": "<organizer name>"
+            }
+          },
+          "response": "organizer",
+          "start": {
+            "@odata.type": "microsoft.graph.dateTimeTimeZone",
+            "dateTime": "2021-01-01T08:00:00Z",
+            "timeZone": "Pacific Standard Time"
+          },
+          "subject": "<subject>",
+          "webLink": ""
+        }
       ]
     },
     "workingHourStart": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/valueExpression",
       "title": "Working Hours Start",
       "description": "Current user's configured work day start time.",
       "examples": [
-        "=user.workingHoursStart"
+        "=user.workingHoursStart",
+        "2021-01-01T08:00:00"
       ]
     },
     "workingHourEnd": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/valueExpression",
       "title": "Working Hours End",
       "description": "Current user's configured work day end time.",
       "examples": [
-        "=user.workingHoursEnd"
+        "=user.workingHoursEnd",
+        "2021-01-01T08:00:00"
       ]
     },
     "start": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/valueExpression",
       "title": "Date",
       "description": "Date for finding available times",
       "examples": [
-        "=turn.searchDate"
+        "=turn.searchDate",
+        "2021-01-01"
       ]
     }
   }

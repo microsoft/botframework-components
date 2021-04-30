@@ -50,7 +50,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// Gets or sets the events property.
         /// </summary>
         [JsonProperty("events")]
-        public ObjectExpression<List<CalendarSkillEventModel>> Events { get; set; }
+        public ArrayExpression<CalendarSkillEventModel> Events { get; set; }
 
         /// <summary>
         /// Gets or sets the property for the start of the working hours.

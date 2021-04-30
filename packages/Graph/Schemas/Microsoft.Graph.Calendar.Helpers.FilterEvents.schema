@@ -29,7 +29,49 @@
       "title": "Events",
       "description": "Events to filter",
       "examples": [
-        "=turn.eventsfilter"
+        "=turn.eventsToFilter"
+      ],
+      "default": [
+        {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "attendees": [
+            {
+              "EmailAddress": {
+                "Address": "<attendee email>",
+                "Name": "<attendee name>"
+              }
+            }
+          ],
+          "description": "<description>",
+          "end": {
+            "@odata.type": "microsoft.graph.dateTimeTimeZone",
+            "dateTime": "2021-01-01T08:30:00Z",
+            "timeZone": "Pacific Standard Time"
+          },
+          "index": 0,
+          "isAllDay": false,
+          "isCurrentEvent": false,
+          "isOnlineMeeting": false,
+          "isOrganizer": true,
+          "isRecurring": true,
+          "location": "<location>",
+          "organizer": {
+            "@odata.type": "microsoft.graph.recipient",
+            "emailAddress": {
+              "@odata.type": "microsoft.graph.emailAddress",
+              "address": "<organizer email>",
+              "name": "<organizer name>"
+            }
+          },
+          "response": "organizer",
+          "start": {
+            "@odata.type": "microsoft.graph.dateTimeTimeZone",
+            "dateTime": "2021-01-01T08:00:00Z",
+            "timeZone": "Pacific Standard Time"
+          },
+          "subject": "<subject>",
+          "webLink": ""
+        }
       ]
     },
     "title": {
@@ -37,7 +79,7 @@
       "title": "Title",
       "description": "Title to filter by",
       "examples": [
-        "=turn.titlefilter"
+        "=turn.titleParameter"
       ]
     },
     "location": {
@@ -45,7 +87,7 @@
       "title": "Location",
       "description": "Location to filter by",
       "examples": [
-        "=turn.locationfilter"
+        "=turn.locationParameter"
       ]
     },
     "attendees": {
@@ -53,19 +95,24 @@
       "title": "Attendees",
       "description": "Attendees to filter by",
       "examples": [
-        "=turn.attendeesfilter"
+        "=turn.attendeesParameter",
+        "[ 'Jane', 'John' ]"
+      ],
+      "default": [
+        "<name to filter by>"
       ]
     },
     "ordinal": {
       "$ref": "schema:#/definitions/objectExpression",
       "title": "Ordinal",
-      "description": "Ordinal (e.g. next, first, last) to filter by",
+      "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
       "examples": [
-        "=turn.ordinalfilter",
-        "first",
-        "next",
-        "last"
-      ]
+        "=turn.ordinalParameter"
+      ],
+      "default": {
+        "relativeTo": "current",
+        "offset": "1"
+      }
     }
   }
 }

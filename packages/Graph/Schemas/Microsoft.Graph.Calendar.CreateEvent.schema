@@ -38,8 +38,30 @@
       "title": "New event",
       "description": "Event object to create.",
       "examples": [
-        "=turn.event"
-      ]
+        "=dialog.event"
+      ],
+      "default": {
+        "subject": "<subject>",
+        "attendees": [
+          {
+            "EmailAddress": {
+              "Address": "<attendee email>",
+              "Name": "<attendee name>"
+            }
+          }
+        ],
+        "start": {
+          "dateTime": "2021-01-01T08:00:00Z",
+          "timeZone": "Pacific Standard Time"
+        },
+        "end": {
+          "dateTime": "2021-01-01T08:30:00Z",
+          "timeZone": "Pacific Standard Time"
+        },
+        "location": "<location>",
+        "description": "<description>",
+        "isOnlineMeeting": false
+      }
     },
     "timeZone": {
       "$ref": "schema:#/definitions/stringExpression",

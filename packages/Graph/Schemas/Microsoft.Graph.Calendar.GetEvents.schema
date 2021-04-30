@@ -36,19 +36,21 @@
       ]
     },
     "start": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/valueExpression",
       "title": "Start",
       "description": "Start datetime of event search range.",
       "examples": [
-        "=turn.searchbegindatetime"
+        "=turn.searchRangeStart",
+        "2021-01-01T08:00:00"
       ]
     },
     "end": {
-      "$ref": "schema:#/definitions/objectExpression",
+      "$ref": "schema:#/definitions/valueExpression",
       "title": "End",
       "description": "End datetime of event search range.",
       "examples": [
-        "=turn.searchenddatetime"
+        "=turn.searchRangeEnd",
+        "=2021-01-01T11:00:00"
       ]
     },
     "dateTimeType": {
@@ -67,7 +69,8 @@
       "title": "TimeZone",
       "description": "Target time zone to display events in.",
       "examples": [
-        "=user.timezone"
+        "=user.timeZone",
+        "Pacific Standard Time"
       ]
     },
     "userEmail": {
@@ -83,7 +86,7 @@
       "title": "Future Events Only",
       "description": "If true, only return matching events in the future.",
       "examples": [
-        "=turn.futuresonly",
+        "=turn.futureEventsOnly",
         "true",
         "false"
       ]
@@ -93,7 +96,7 @@
       "title": "Max Results",
       "description": "Max number of results to return.",
       "examples": [
-        "=turn.maxresults",
+        "=turn.maxResults",
         "10"
       ]
     }
