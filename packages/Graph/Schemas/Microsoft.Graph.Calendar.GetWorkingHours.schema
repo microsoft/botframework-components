@@ -38,7 +38,7 @@
       "title": "Email Address",
       "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
       "examples": [
-        "=user.email"
+        "janedoe@contoso.com"
       ]
     }
   }

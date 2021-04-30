@@ -36,9 +36,9 @@
     "eventId": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Event ID",
-      "description": "The ID of the event to tentatively accept.",
+      "description": "The GUID ID of the event to tentatively accept.",
       "examples": [
-        "=turn.event.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     }
   }

@@ -38,7 +38,7 @@
       "title": "Max Results",
       "description": "Max number of results to return",
       "examples": [
-        "=turn.maxResults"
+        "10"
       ]
     },
     "propertiesToSelect": {
@@ -64,9 +64,9 @@
       "nameToSearchFor": {
         "$ref": "schema:#/definitions/stringExpression",
         "title": "Search Name",
-        "description": "Name of the user",
+        "description": "Name of the user to search for",
         "examples": [
-          "=turn.nametosearch"
+          "Jane Doe"
         ]
       }
     }
