@@ -26,7 +26,7 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
@@ -34,7 +34,7 @@
       ]
     },
     "eventId": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Event ID",
       "description": "The ID of the event to decline.",
       "examples": [

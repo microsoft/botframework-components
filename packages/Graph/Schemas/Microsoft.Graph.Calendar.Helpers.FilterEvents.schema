@@ -5,7 +5,7 @@
   "description": "Filter events from Microsoft Graph API.",
   "type": "object",
   "required": [
-    "eventsProperty"
+    "events"
   ],
   "properties": {
     "id": {
@@ -24,40 +24,40 @@
         "turn.result"
       ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
+      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "Events to filter",
       "examples": [
         "=turn.eventsfilter"
       ]
     },
-    "titleProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "title": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Title",
       "description": "Title to filter by",
       "examples": [
         "=turn.titlefilter"
       ]
     },
-    "locationProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "location": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Location",
       "description": "Location to filter by",
       "examples": [
         "=turn.locationfilter"
       ]
     },
-    "attendeesProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "attendees": {
+      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Attendees",
       "description": "Attendees to filter by",
       "examples": [
         "=turn.attendeesfilter"
       ]
     },
-    "ordinalProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "ordinal": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Ordinal",
       "description": "Ordinal (e.g. next, first, last) to filter by",
       "examples": [

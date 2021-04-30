@@ -6,7 +6,7 @@
   "type": "object",
   "required": [
     "token",
-    "eventToCreateProperty"
+    "eventToCreate"
   ],
   "properties": {
     "id": {
@@ -26,27 +26,28 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
         "=turn.token.token"
       ]
     },
-    "eventToCreateProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "eventToCreate": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "New event",
       "description": "Event object to create.",
       "examples": [
         "=turn.event"
       ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Time Zone",
       "description": "Target time zone to create the event in.",
       "examples": [
-        "=turn.timezone"
+        "=turn.timezone",
+        "Pacific Standard Time"
       ]
     }
   }

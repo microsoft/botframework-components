@@ -6,9 +6,9 @@
   "type": "object",
   "required": [
     "token",
-    "startProperty",
-    "endProperty",
-    "timeZoneProperty"
+    "start",
+    "end",
+    "timeZone"
   ],
   "properties": {
     "id": {
@@ -28,31 +28,31 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
         "=turn.token.token"
       ]
     },
-    "startProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "start": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Start",
       "description": "Start datetime of event search range.",
       "examples": [
         "=turn.searchbegindatetime"
       ]
     },
-    "endProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "end": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "End",
       "description": "End datetime of event search range.",
       "examples": [
         "=turn.searchenddatetime"
       ]
     },
-    "dateTimeTypeProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "dateTimeType": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "DateTimeType",
       "description": "DateTime type, e.g. date, datetime, datetimerange.",
       "examples": [
@@ -62,23 +62,23 @@
         "datetimerange"
       ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "TimeZone",
       "description": "Target time zone to display events in.",
       "examples": [
         "=user.timezone"
       ]
     },
-    "userEmailProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "userEmail": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "User Email",
       "description": "Current user's email address (to exclude from attendees list).",
       "examples": [
         "=user.email"
       ]
     },
-    "futureEventsOnlyProperty": {
+    "futureEventsOnly": {
       "$ref": "schema:#/definitions/booleanExpression",
       "title": "Future Events Only",
       "description": "If true, only return matching events in the future.",
@@ -88,7 +88,7 @@
         "false"
       ]
     },
-    "maxResultsProperty": {
+    "maxResults": {
       "$ref": "schema:#/definitions/integerExpression",
       "title": "Max Results",
       "description": "Max number of results to return.",

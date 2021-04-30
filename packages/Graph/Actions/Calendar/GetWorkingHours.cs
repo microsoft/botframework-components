@@ -40,8 +40,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the address.
         /// </summary>
-        [JsonProperty("AddressProperty")]
-        public StringExpression AddressProperty { get; set; }
+        [JsonProperty("address")]
+        public StringExpression Address { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetWorkingHoursCustomActionDeclarativeType;
@@ -68,7 +68,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("Address", this.AddressProperty.GetValue(state));
+            parameters.Add("Address", this.Address.GetValue(state));
         }
     }
 }

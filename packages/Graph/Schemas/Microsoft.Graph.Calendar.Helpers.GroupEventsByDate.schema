@@ -6,9 +6,9 @@
   "type": "object",
   "required": [
     "token",
-    "eventsProperty",
-    "startProperty",
-    "endProperty"
+    "events",
+    "start",
+    "end"
   ],
   "properties": {
     "id": {
@@ -27,24 +27,24 @@
         "turn.result"
       ]
     },
-    "startProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "start": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Start",
       "description": "DateTime range start.",
       "examples": [
         "=turn.groupdatetimestart"
       ]
     },
-    "endProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "end": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "End",
       "description": "DateTime range end.",
       "examples": [
         "=turn.groupdatetimeend"
       ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
+      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "List of events to sort.",
       "examples": [

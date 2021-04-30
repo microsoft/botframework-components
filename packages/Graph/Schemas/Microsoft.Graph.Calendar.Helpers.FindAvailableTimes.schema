@@ -5,10 +5,10 @@
   "description": "Finds available times for the current user for a given date.",
   "type": "object",
   "required": [
-    "eventsProperty",
-    "startProperty",
-    "workingHourStartProperty",
-    "workingHourEndProperty"
+    "events",
+    "start",
+    "workingHourStart",
+    "workingHourEnd"
   ],
   "properties": {
     "id": {
@@ -27,32 +27,32 @@
         "turn.result"
       ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Events",
       "description": "List of events for date.",
       "examples": [
         "=turn.events"
       ]
     },
-    "workingHourStartProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "workingHourStart": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Working Hours Start",
       "description": "Current user's configured work day start time.",
       "examples": [
         "=user.workingHoursStart"
       ]
     },
-    "workingHourEndProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "workingHourEnd": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Working Hours End",
       "description": "Current user's configured work day end time.",
       "examples": [
         "=user.workingHoursEnd"
       ]
     },
-    "startProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "start": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Date",
       "description": "Date for finding available times",
       "examples": [

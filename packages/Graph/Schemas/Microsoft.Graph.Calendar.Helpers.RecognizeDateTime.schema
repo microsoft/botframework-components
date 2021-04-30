@@ -5,8 +5,8 @@
   "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
   "type": "object",
   "required": [
-    "timeZoneProperty",
-    "queryProperty"
+    "timeZone",
+    "query"
   ],
   "properties": {
     "id": {
@@ -25,16 +25,16 @@
         "turn.result"
       ]
     },
-    "queryProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "query": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Query",
       "description": "Query string to run recognition against.",
       "examples": [
         "=turn.datetimequery"
       ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Time zone",
       "description": "Time zone for resolutions.",
       "examples": [

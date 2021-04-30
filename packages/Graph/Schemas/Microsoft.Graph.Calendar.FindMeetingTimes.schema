@@ -6,8 +6,8 @@
   "type": "object",
   "required": [
     "token",
-    "attendeesProperty",
-    "durationProperty"
+    "attendees",
+    "duration"
   ],
   "properties": {
     "id": {
@@ -27,31 +27,31 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
         "=turn.token.token"
       ]
     },
-    "attendeesProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "attendees": {
+      "$ref": "schema:#/definitions/objectExpression",
       "title": "Attendees",
       "description": "Event attendees",
       "examples": [
         "=turn.meeting.attendees"
       ]
     },
-    "durationProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "duration": {
+      "$ref": "schema:#/definitions/integerExpression",
       "title": "Duration",
       "description": "Duration of meeting",
       "examples": [
         "=turn.meeting.duration"
       ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Time zone",
       "description": "Time zone for the meeting",
       "examples": [

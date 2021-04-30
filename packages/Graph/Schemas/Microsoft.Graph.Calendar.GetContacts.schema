@@ -6,7 +6,7 @@
   "type": "object",
   "required": [
     "token",
-    "nameProperty"
+    "name"
   ],
   "properties": {
     "id": {
@@ -26,15 +26,15 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
         "=turn.token.token"
       ]
     },
-    "nameProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "name": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Name",
       "description": "Name to lookup",
       "examples": [
