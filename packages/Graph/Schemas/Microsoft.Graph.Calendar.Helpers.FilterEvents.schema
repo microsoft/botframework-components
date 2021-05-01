@@ -28,58 +28,101 @@
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "Events to filter",
-      "examples": [
-        "=turn.eventsToFilter"
-      ],
-      "default": [
+      "oneOf": [
         {
-          "id": "00000000-0000-0000-0000-000000000000",
-          "attendees": [
-            {
-              "EmailAddress": {
-                "Address": "<attendee email>",
-                "Name": "<attendee name>"
+          "type": "array",
+          "title": "Events",
+          "description": "List of events for date.",
+          "items": {
+            "type": "object",
+            "title": "Event",
+            "description": "Microsoft Graph Calendar Event",
+            "properties": {
+              "attendees": {
+                "type": "array",
+                "title": "Attendees",
+                "description": "The attendees to invite to the event.",
+                "examples": [
+                  "=dialog.attendees"
+                ],
+                "default": [
+                  {
+                    "EmailAddress": {
+                      "Address": "<attendee address>",
+                      "Name": "<attendee name>"
+                    }
+                  }
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "title": "Subject",
+                "description": "The subject of the event.",
+                "example": [
+                  "My event"
+                ]
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Start",
+                "description": "The start date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "title": "End",
+                "description": "The end date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "location": {
+                "type": "string",
+                "title": "Location",
+                "description": "The location of the event.",
+                "examples": [
+                  "Building A",
+                  "Seattle, WA"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "The description of the event.",
+                "example": [
+                  "My event description"
+                ]
+              },
+              "isOnlineMeeting": {
+                "type": "boolean",
+                "title": "Include Online Meeting",
+                "description": "Flag indicating whether the event should contain an online meeting link.",
+                "example": [
+                  "true",
+                  "false"
+                ]
               }
             }
-          ],
-          "description": "<description>",
-          "end": {
-            "@odata.type": "microsoft.graph.dateTimeTimeZone",
-            "dateTime": "2021-01-01T08:30:00Z",
-            "timeZone": "Pacific Standard Time"
-          },
-          "index": 0,
-          "isAllDay": false,
-          "isCurrentEvent": false,
-          "isOnlineMeeting": false,
-          "isOrganizer": true,
-          "isRecurring": true,
-          "location": "<location>",
-          "organizer": {
-            "@odata.type": "microsoft.graph.recipient",
-            "emailAddress": {
-              "@odata.type": "microsoft.graph.emailAddress",
-              "address": "<organizer email>",
-              "name": "<organizer name>"
-            }
-          },
-          "response": "organizer",
-          "start": {
-            "@odata.type": "microsoft.graph.dateTimeTimeZone",
-            "dateTime": "2021-01-01T08:00:00Z",
-            "timeZone": "Pacific Standard Time"
-          },
-          "subject": "<subject>",
-          "webLink": ""
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
         }
+      ],
+      "examples": [
+        "=turn.eventsToFilter"
       ]
     },
     "title": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Title",
       "description": "Title to filter by",
-      "examples": [
-        "Example Meeting"
+      "example": [
+        "My event"
       ]
     },
     "location": {
@@ -87,32 +130,78 @@
       "title": "Location",
       "description": "Location to filter by",
       "examples": [
-        "34/1880"
+        "Building A",
+        "Seattle, WA"
       ]
+
     },
     "attendees": {
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Attendees",
       "description": "Attendees to filter by",
-      "examples": [
-        "=turn.attendeesParameter",
-        "[ 'Jane', 'John' ]"
+      "oneOf": [
+        {
+          "type": "array",
+          "title": "Attendees",
+          "description": "Attendees to filter by",
+          "items": {
+            "type": "string",
+            "title": "Attendee name",
+            "description": "Given name and/or surname of attendee",
+            "examples": [
+              "Jane Doe"
+            ]
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
       ],
-      "default": [
-        "<name to filter by>"
+      "examples": [
+        "=turn.attendee",
+        "@@personName",
+        "Jane Doe"
       ]
     },
     "ordinal": {
       "$ref": "schema:#/definitions/objectExpression",
       "title": "Ordinal",
       "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
-      "examples": [
-        "=turn.ordinalParameter"
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "OrdinalV2",
+          "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last)",
+          "properties": {
+            "relativeTo": {
+              "type": "string",
+              "title": "Relative To",
+              "description": "Describes what the ordinal offest value is relative to. Valid values are: current, start, end.",
+              "examples": [
+                "current",
+                "start",
+                "end"
+              ]
+            },
+            "offset": {
+              "type": "integer",
+              "title": "Offset",
+              "description": "Integer representing the index of an item relative to the 'Relative To' property.",
+              "examples": [
+                "1",
+                "-1"
+              ]
+            }
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
       ],
-      "default": {
-        "relativeTo": "current",
-        "offset": "1"
-      }
+      "examples": [
+        "=turn.ordinalParameter",
+        "@ordinal"
+      ]
     }
   }
 }

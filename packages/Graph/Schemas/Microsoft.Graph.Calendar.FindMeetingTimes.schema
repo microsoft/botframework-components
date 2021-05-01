@@ -38,16 +38,16 @@
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Attendees",
       "description": "Event attendees",
-      "examples": [
-        "=dialog.event.attendees"
-      ],
       "default": [
         {
           "EmailAddress": {
-            "Address": "<attendee email>",
-            "Name": "<attendee name>"
+            "Name": "<attendee name>",
+            "Address": "<attendee email>"
           }
         }
+      ],
+      "examples": [
+        "=dialog.event.attendees"
       ]
     },
     "duration": {

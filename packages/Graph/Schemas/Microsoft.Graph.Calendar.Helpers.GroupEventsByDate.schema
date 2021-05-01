@@ -28,7 +28,8 @@
       ]
     },
     "start": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Start",
       "description": "DateTime range start.",
       "examples": [
@@ -36,7 +37,8 @@
       ]
     },
     "end": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "End",
       "description": "DateTime range end.",
       "examples": [
@@ -47,50 +49,93 @@
       "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "List of events to sort.",
-      "examples": [
-        "=turn.events"
-      ],
-      "default": [
+      "oneOf": [
         {
-          "id": "00000000-0000-0000-0000-000000000000",
-          "attendees": [
-            {
-              "EmailAddress": {
-                "Address": "<attendee email>",
-                "Name": "<attendee name>"
+          "type": "array",
+          "title": "Events",
+          "description": "List of events to sort.",
+          "items": {
+            "type": "object",
+            "title": "Event",
+            "description": "Microsoft Graph Calendar Event",
+            "properties": {
+              "attendees": {
+                "type": "array",
+                "title": "Attendees",
+                "description": "The attendees of the event.",
+                "examples": [
+                  "=dialog.attendees"
+                ],
+                "default": [
+                  {
+                    "EmailAddress": {
+                      "Address": "<attendee address>",
+                      "Name": "<attendee name>"
+                    }
+                  }
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "title": "Subject",
+                "description": "The subject of the event.",
+                "example": [
+                  "My event"
+                ]
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Start",
+                "description": "The start date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "title": "End",
+                "description": "The end date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "location": {
+                "type": "string",
+                "title": "Location",
+                "description": "The location of the event.",
+                "examples": [
+                  "Building A",
+                  "Seattle, WA"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "The description of the event.",
+                "example": [
+                  "My event description"
+                ]
+              },
+              "isOnlineMeeting": {
+                "type": "boolean",
+                "title": "Includes Online Meeting",
+                "description": "Flag indicating whether the event contains an online meeting link.",
+                "example": [
+                  "true",
+                  "false"
+                ]
               }
             }
-          ],
-          "description": "<description>",
-          "end": {
-            "@odata.type": "microsoft.graph.dateTimeTimeZone",
-            "dateTime": "2020-11-02T14:30:00Z",
-            "timeZone": "Pacific Standard Time"
-          },
-          "index": 0,
-          "isAllDay": false,
-          "isCurrentEvent": false,
-          "isOnlineMeeting": false,
-          "isOrganizer": true,
-          "isRecurring": true,
-          "location": "<location>",
-          "organizer": {
-            "@odata.type": "microsoft.graph.recipient",
-            "emailAddress": {
-              "@odata.type": "microsoft.graph.emailAddress",
-              "address": "<organizer email>",
-              "name": "<organizer name>"
-            }
-          },
-          "response": "organizer",
-          "start": {
-            "@odata.type": "microsoft.graph.dateTimeTimeZone",
-            "dateTime": "2020-11-02T13:00:00Z",
-            "timeZone": "Pacific Standard Time"
-          },
-          "subject": "<subject>",
-          "webLink": ""
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
         }
+      ],
+      "examples": [
+        "=turn.events"
       ]
     }
   }

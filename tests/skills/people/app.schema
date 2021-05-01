@@ -3653,8 +3653,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to accept.",
+          "description": "The GUID ID of the event to accept.",
           "examples": [
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD",
             "=dialog.event.id"
           ]
         },
@@ -3718,38 +3719,95 @@
           "$ref": "#/definitions/objectExpression",
           "title": "New event",
           "description": "Event object to create.",
-          "examples": [
-            "=dialog.event"
-          ],
-          "default": {
-            "subject": "<subject>",
-            "attendees": [
-              {
-                "EmailAddress": {
-                  "Address": "<attendee email>",
-                  "Name": "<attendee name>"
+          "oneOf": [
+            {
+              "type": "object",
+              "title": "Event",
+              "description": "Microsoft Graph Calendar Event",
+              "properties": {
+                "attendees": {
+                  "type": "array",
+                  "title": "Attendees",
+                  "description": "The attendees to invite to the event.",
+                  "examples": [
+                    "=dialog.attendees"
+                  ],
+                  "default": [
+                    {
+                      "EmailAddress": {
+                        "Address": "<attendee address>",
+                        "Name": "<attendee name>"
+                      }
+                    }
+                  ]
+                },
+                "subject": {
+                  "type": "string",
+                  "title": "Subject",
+                  "description": "The subject of the event.",
+                  "examples": [
+                    "My event"
+                  ]
+                },
+                "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "Start",
+                  "description": "The start date and time of the event.",
+                  "examples": [
+                    "2021-01-01T00:00:00"
+                  ]
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "End",
+                  "description": "The end date and time of the event.",
+                  "examples": [
+                    "2021-01-01T00:00:00"
+                  ]
+                },
+                "location": {
+                  "type": "string",
+                  "title": "Location",
+                  "description": "The location of the event.",
+                  "examples": [
+                    "Building A",
+                    "Seattle, WA"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "The description of the event.",
+                  "examples": [
+                    "My event description"
+                  ]
+                },
+                "isOnlineMeeting": {
+                  "type": "boolean",
+                  "title": "Include Online Meeting",
+                  "description": "Flag indicating whether the event should contain an online meeting link.",
+                  "examples": [
+                    "true",
+                    "false"
+                  ]
                 }
               }
-            ],
-            "start": {
-              "dateTime": "2021-01-01T08:00:00Z",
-              "timeZone": "Pacific Standard Time"
             },
-            "end": {
-              "dateTime": "2021-01-01T08:30:00Z",
-              "timeZone": "Pacific Standard Time"
-            },
-            "location": "<location>",
-            "description": "<description>",
-            "isOnlineMeeting": false
-          }
+            {
+              "$ref": "#/definitions/equalsExpression"
+            }
+          ],
+          "examples": [
+            "=dialog.event"
+          ]
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time Zone",
-          "description": "Target time zone to create the event in.",
+          "description": "Target time zone to create the event in. [Learn more](https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0).",
           "examples": [
-            "=turn.timezone",
             "Pacific Standard Time"
           ]
         },
@@ -3812,9 +3870,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to decline.",
+          "description": "The GUID ID of the event to decline.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3876,9 +3934,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to delete.",
+          "description": "The GUID ID of the event to delete.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -3942,16 +4000,16 @@
           "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Event attendees",
-          "examples": [
-            "=dialog.event.attendees"
-          ],
           "default": [
             {
               "EmailAddress": {
-                "Address": "<attendee email>",
-                "Name": "<attendee name>"
+                "Name": "<attendee name>",
+                "Address": "<attendee email>"
               }
             }
+          ],
+          "examples": [
+            "=dialog.event.attendees"
           ]
         },
         "duration": {
@@ -3959,8 +4017,7 @@
           "title": "Duration",
           "description": "Duration of meeting in minutes",
           "examples": [
-            "=turn.meeting.duration",
-            "60"
+            "30"
           ]
         },
         "timeZone": {
@@ -3968,7 +4025,6 @@
           "title": "Time zone",
           "description": "Time zone for the meeting",
           "examples": [
-            "=turn.meeting.timezone",
             "Pacific Standard Time"
           ]
         },
@@ -4033,8 +4089,7 @@
           "title": "Name",
           "description": "Name to lookup",
           "examples": [
-            "=turn.nameParameter",
-            "Jane Doe"
+            "John Doe"
           ]
         },
         "$kind": {
@@ -4097,17 +4152,16 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to lookup.",
+          "description": "The GUID ID of the event to lookup.",
           "examples": [
-            "=dialog.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
-          "description": "Target time zone to display the event in",
+          "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=user.timeZone",
             "Pacific Standard Time"
           ]
         },
@@ -4170,21 +4224,21 @@
           ]
         },
         "start": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "Start",
           "description": "Start datetime of event search range.",
           "examples": [
-            "=turn.searchRangeStart",
-            "2021-01-01T08:00:00"
+            "2021-01-01T00:00:00"
           ]
         },
         "end": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "End",
           "description": "End datetime of event search range.",
           "examples": [
-            "=turn.searchRangeEnd",
-            "=2021-01-01T11:00:00"
+            "2021-01-01T01:00:00"
           ]
         },
         "dateTimeType": {
@@ -4192,7 +4246,6 @@
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
-            "=dialog.dateTime.type",
             "date",
             "datetime",
             "datetimerange"
@@ -4203,7 +4256,6 @@
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
           "examples": [
-            "=user.timeZone",
             "Pacific Standard Time"
           ]
         },
@@ -4212,7 +4264,7 @@
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "futureEventsOnly": {
@@ -4230,7 +4282,6 @@
           "title": "Max Results",
           "description": "Max number of results to return.",
           "examples": [
-            "=turn.maxResults",
             "10"
           ]
         },
@@ -4295,7 +4346,7 @@
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": [
-            "=user.email"
+            "janedoe@contoso.com"
           ]
         },
         "$kind": {
@@ -4349,58 +4400,101 @@
           "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "Events to filter",
-          "examples": [
-            "=turn.eventsToFilter"
-          ],
-          "default": [
+          "oneOf": [
             {
-              "id": "00000000-0000-0000-0000-000000000000",
-              "attendees": [
-                {
-                  "EmailAddress": {
-                    "Address": "<attendee email>",
-                    "Name": "<attendee name>"
+              "type": "array",
+              "title": "Events",
+              "description": "List of events for date.",
+              "items": {
+                "type": "object",
+                "title": "Event",
+                "description": "Microsoft Graph Calendar Event",
+                "properties": {
+                  "attendees": {
+                    "type": "array",
+                    "title": "Attendees",
+                    "description": "The attendees to invite to the event.",
+                    "examples": [
+                      "=dialog.attendees"
+                    ],
+                    "default": [
+                      {
+                        "EmailAddress": {
+                          "Address": "<attendee address>",
+                          "Name": "<attendee name>"
+                        }
+                      }
+                    ]
+                  },
+                  "subject": {
+                    "type": "string",
+                    "title": "Subject",
+                    "description": "The subject of the event.",
+                    "example": [
+                      "My event"
+                    ]
+                  },
+                  "start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "Start",
+                    "description": "The start date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "End",
+                    "description": "The end date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "description": "The location of the event.",
+                    "examples": [
+                      "Building A",
+                      "Seattle, WA"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "title": "Description",
+                    "description": "The description of the event.",
+                    "example": [
+                      "My event description"
+                    ]
+                  },
+                  "isOnlineMeeting": {
+                    "type": "boolean",
+                    "title": "Include Online Meeting",
+                    "description": "Flag indicating whether the event should contain an online meeting link.",
+                    "example": [
+                      "true",
+                      "false"
+                    ]
                   }
                 }
-              ],
-              "description": "<description>",
-              "end": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2021-01-01T08:30:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "index": 0,
-              "isAllDay": false,
-              "isCurrentEvent": false,
-              "isOnlineMeeting": false,
-              "isOrganizer": true,
-              "isRecurring": true,
-              "location": "<location>",
-              "organizer": {
-                "@odata.type": "microsoft.graph.recipient",
-                "emailAddress": {
-                  "@odata.type": "microsoft.graph.emailAddress",
-                  "address": "<organizer email>",
-                  "name": "<organizer name>"
-                }
-              },
-              "response": "organizer",
-              "start": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2021-01-01T08:00:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "subject": "<subject>",
-              "webLink": ""
+              }
+            },
+            {
+              "$ref": "#/definitions/equalsExpression"
             }
+          ],
+          "examples": [
+            "=turn.eventsToFilter"
           ]
         },
         "title": {
           "$ref": "#/definitions/stringExpression",
           "title": "Title",
           "description": "Title to filter by",
-          "examples": [
-            "=turn.titleParameter"
+          "example": [
+            "My event"
           ]
         },
         "location": {
@@ -4408,32 +4502,77 @@
           "title": "Location",
           "description": "Location to filter by",
           "examples": [
-            "=turn.locationParameter"
+            "Building A",
+            "Seattle, WA"
           ]
         },
         "attendees": {
           "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Attendees to filter by",
-          "examples": [
-            "=turn.attendeesParameter",
-            "[ 'Jane', 'John' ]"
+          "oneOf": [
+            {
+              "type": "array",
+              "title": "Attendees",
+              "description": "Attendees to filter by",
+              "items": {
+                "type": "string",
+                "title": "Attendee name",
+                "description": "Given name and/or surname of attendee",
+                "examples": [
+                  "Jane Doe"
+                ]
+              }
+            },
+            {
+              "$ref": "#/definitions/equalsExpression"
+            }
           ],
-          "default": [
-            "<name to filter by>"
+          "examples": [
+            "=turn.attendee",
+            "@@personName",
+            "Jane Doe"
           ]
         },
         "ordinal": {
           "$ref": "#/definitions/objectExpression",
           "title": "Ordinal",
           "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
-          "examples": [
-            "=turn.ordinalParameter"
+          "oneOf": [
+            {
+              "type": "object",
+              "title": "OrdinalV2",
+              "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last)",
+              "properties": {
+                "relativeTo": {
+                  "type": "string",
+                  "title": "Relative To",
+                  "description": "Describes what the ordinal offest value is relative to. Valid values are: current, start, end.",
+                  "examples": [
+                    "current",
+                    "start",
+                    "end"
+                  ]
+                },
+                "offset": {
+                  "type": "integer",
+                  "title": "Offset",
+                  "description": "Integer representing the index of an item relative to the 'Relative To' property.",
+                  "examples": [
+                    "1",
+                    "-1"
+                  ]
+                }
+              }
+            },
+            {
+              "$ref": "#/definitions/equalsExpression"
+            }
           ],
-          "default": {
-            "relativeTo": "current",
-            "offset": "1"
-          }
+          "examples": [
+            "=turn.ordinalParameter",
+            "@ordinal"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4489,77 +4628,120 @@
           "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events for date.",
-          "examples": [
-            "=turn.events"
-          ],
-          "default": [
+          "oneOf": [
             {
-              "id": "00000000-0000-0000-0000-000000000000",
-              "attendees": [
-                {
-                  "EmailAddress": {
-                    "Address": "<attendee email>",
-                    "Name": "<attendee name>"
+              "type": "array",
+              "title": "Events",
+              "description": "List of events for date.",
+              "items": {
+                "type": "object",
+                "title": "Event",
+                "description": "Microsoft Graph Calendar Event",
+                "properties": {
+                  "attendees": {
+                    "type": "array",
+                    "title": "Attendees",
+                    "description": "The attendees to invite to the event.",
+                    "examples": [
+                      "=dialog.attendees"
+                    ],
+                    "default": [
+                      {
+                        "EmailAddress": {
+                          "Address": "<attendee address>",
+                          "Name": "<attendee name>"
+                        }
+                      }
+                    ]
+                  },
+                  "subject": {
+                    "type": "string",
+                    "title": "Subject",
+                    "description": "The subject of the event.",
+                    "example": [
+                      "My event"
+                    ]
+                  },
+                  "start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "Start",
+                    "description": "The start date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "End",
+                    "description": "The end date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "description": "The location of the event.",
+                    "examples": [
+                      "Building A",
+                      "Seattle, WA"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "title": "Description",
+                    "description": "The description of the event.",
+                    "example": [
+                      "My event description"
+                    ]
+                  },
+                  "isOnlineMeeting": {
+                    "type": "boolean",
+                    "title": "Include Online Meeting",
+                    "description": "Flag indicating whether the event should contain an online meeting link.",
+                    "example": [
+                      "true",
+                      "false"
+                    ]
                   }
                 }
-              ],
-              "description": "<description>",
-              "end": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2021-01-01T08:30:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "index": 0,
-              "isAllDay": false,
-              "isCurrentEvent": false,
-              "isOnlineMeeting": false,
-              "isOrganizer": true,
-              "isRecurring": true,
-              "location": "<location>",
-              "organizer": {
-                "@odata.type": "microsoft.graph.recipient",
-                "emailAddress": {
-                  "@odata.type": "microsoft.graph.emailAddress",
-                  "address": "<organizer email>",
-                  "name": "<organizer name>"
-                }
-              },
-              "response": "organizer",
-              "start": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2021-01-01T08:00:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "subject": "<subject>",
-              "webLink": ""
+              }
+            },
+            {
+              "$ref": "#/definitions/equalsExpression"
             }
+          ],
+          "examples": [
+            "=turn.events"
           ]
         },
         "workingHourStart": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
           "examples": [
-            "=user.workingHoursStart",
-            "2021-01-01T08:00:00"
+            "09:00:00"
           ]
         },
         "workingHourEnd": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
           "examples": [
-            "=user.workingHoursEnd",
-            "2021-01-01T08:00:00"
+            "17:00:00"
           ]
         },
         "start": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "Date",
           "description": "Date for finding available times",
           "examples": [
-            "=turn.searchDate",
-            "2021-01-01"
+            "2020-01-01"
           ]
         },
         "$kind": {
@@ -4613,71 +4795,114 @@
           ]
         },
         "start": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "Start",
           "description": "DateTime range start.",
           "examples": [
-            "=turn.dateRangeStart",
-            "2021-01-01T08:00:00"
+            "2020-01-01T00:00:00"
           ]
         },
         "end": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
+          "format": "date-time",
           "title": "End",
           "description": "DateTime range end.",
           "examples": [
-            "=turn.dateRangeEnd",
-            "2021-01-01T08:30:00"
+            "2020-01-01T12:00:00"
           ]
         },
         "events": {
           "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events to sort.",
-          "examples": [
-            "=turn.events"
-          ],
-          "default": [
+          "oneOf": [
             {
-              "id": "00000000-0000-0000-0000-000000000000",
-              "attendees": [
-                {
-                  "EmailAddress": {
-                    "Address": "<attendee email>",
-                    "Name": "<attendee name>"
+              "type": "array",
+              "title": "Events",
+              "description": "List of events to sort.",
+              "items": {
+                "type": "object",
+                "title": "Event",
+                "description": "Microsoft Graph Calendar Event",
+                "properties": {
+                  "attendees": {
+                    "type": "array",
+                    "title": "Attendees",
+                    "description": "The attendees of the event.",
+                    "examples": [
+                      "=dialog.attendees"
+                    ],
+                    "default": [
+                      {
+                        "EmailAddress": {
+                          "Address": "<attendee address>",
+                          "Name": "<attendee name>"
+                        }
+                      }
+                    ]
+                  },
+                  "subject": {
+                    "type": "string",
+                    "title": "Subject",
+                    "description": "The subject of the event.",
+                    "example": [
+                      "My event"
+                    ]
+                  },
+                  "start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "Start",
+                    "description": "The start date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "title": "End",
+                    "description": "The end date and time of the event.",
+                    "examples": [
+                      "2021-01-01T00:00:00"
+                    ]
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "description": "The location of the event.",
+                    "examples": [
+                      "Building A",
+                      "Seattle, WA"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "title": "Description",
+                    "description": "The description of the event.",
+                    "example": [
+                      "My event description"
+                    ]
+                  },
+                  "isOnlineMeeting": {
+                    "type": "boolean",
+                    "title": "Includes Online Meeting",
+                    "description": "Flag indicating whether the event contains an online meeting link.",
+                    "example": [
+                      "true",
+                      "false"
+                    ]
                   }
                 }
-              ],
-              "description": "<description>",
-              "end": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2020-11-02T14:30:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "index": 0,
-              "isAllDay": false,
-              "isCurrentEvent": false,
-              "isOnlineMeeting": false,
-              "isOrganizer": true,
-              "isRecurring": true,
-              "location": "<location>",
-              "organizer": {
-                "@odata.type": "microsoft.graph.recipient",
-                "emailAddress": {
-                  "@odata.type": "microsoft.graph.emailAddress",
-                  "address": "<organizer email>",
-                  "name": "<organizer name>"
-                }
-              },
-              "response": "organizer",
-              "start": {
-                "@odata.type": "microsoft.graph.dateTimeTimeZone",
-                "dateTime": "2020-11-02T13:00:00Z",
-                "timeZone": "Pacific Standard Time"
-              },
-              "subject": "<subject>",
-              "webLink": ""
+              }
+            },
+            {
+              "$ref": "#/definitions/equalsExpression"
             }
+          ],
+          "examples": [
+            "=turn.events"
           ]
         },
         "$kind": {
@@ -4733,16 +4958,14 @@
           "title": "Query",
           "description": "Query string to run recognition against.",
           "examples": [
-            "=turn.datetimequery",
-            "='2021-01-01T08:00:00'"
+            "2020-01-01T12:00:00"
           ]
         },
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
-          "description": "Time zone for resolutions.",
+          "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
-            "=turn.timezone",
             "Pacific Standard Time"
           ]
         },
@@ -4805,9 +5028,9 @@
         "eventId": {
           "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
-          "description": "The ID of the event to tentatively accept.",
+          "description": "The GUID ID of the event to tentatively accept.",
           "examples": [
-            "=turn.event.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -4870,32 +5093,98 @@
           "$ref": "#/definitions/objectExpression",
           "title": "Updated event",
           "description": "Updated event object",
-          "examples": [
-            "=dialog.eventToUpdate"
-          ],
-          "default": {
-            "id": "00000000-0000-0000-0000-000000000000",
-            "subject": "<subject>",
-            "attendees": [
-              {
-                "EmailAddress": {
-                  "Address": "<attendee email>",
-                  "Name": "<attendee name>"
+          "oneOf": [
+            {
+              "type": "object",
+              "title": "Event",
+              "description": "Microsoft Graph Calendar Event",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "title": "Event ID",
+                  "description": "The ID of the Microsoft Graph event.",
+                  "examples": [
+                    "=dialog.event.id",
+                    "00000000-0000-0000-0000-000000000000"
+                  ]
+                },
+                "attendees": {
+                  "type": "array",
+                  "title": "Attendees",
+                  "description": "The attendees to invite to the event.",
+                  "examples": [
+                    "=dialog.attendees"
+                  ],
+                  "default": [
+                    {
+                      "EmailAddress": {
+                        "Address": "<attendee address>",
+                        "Name": "<attendee name>"
+                      }
+                    }
+                  ]
+                },
+                "subject": {
+                  "type": "string",
+                  "title": "Subject",
+                  "description": "The subject of the event.",
+                  "examples": [
+                    "My event"
+                  ]
+                },
+                "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "Start",
+                  "description": "The start date and time of the event.",
+                  "examples": [
+                    "2021-01-01T00:00:00"
+                  ]
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "title": "End",
+                  "description": "The end date and time of the event.",
+                  "examples": [
+                    "2021-01-01T00:00:00"
+                  ]
+                },
+                "location": {
+                  "type": "string",
+                  "title": "Location",
+                  "description": "The location of the event.",
+                  "examples": [
+                    "Building A",
+                    "Seattle, WA"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "The description of the event.",
+                  "examples": [
+                    "My event description"
+                  ]
+                },
+                "isOnlineMeeting": {
+                  "type": "boolean",
+                  "title": "Include Online Meeting",
+                  "description": "Flag indicating whether the event should contain an online meeting link.",
+                  "examples": [
+                    "true",
+                    "false"
+                  ]
                 }
               }
-            ],
-            "start": {
-              "dateTime": "2021-01-01T08:00:00Z",
-              "timeZone": "Pacific Standard Time"
             },
-            "end": {
-              "dateTime": "2021-01-01T08:30:00Z",
-              "timeZone": "Pacific Standard Time"
-            },
-            "location": "<location>",
-            "description": "<description>",
-            "isOnlineMeeting": false
-          }
+            {
+              "$ref": "#/definitions/equalsExpression"
+            }
+          ],
+          "examples": [
+            "=dialog.eventToUpdate"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4956,9 +5245,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve the photo for",
+          "description": "The GUID ID of the user to retrieve the photo for",
           "examples": [
-            "=turn.userId"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5022,7 +5311,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5048,9 +5337,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to retrieve direct reports of",
+          "description": "The GUID ID of the user to retrieve direct reports of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5132,9 +5421,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the manager of",
+          "description": "The GUID ID of the user to get the manager of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5198,7 +5487,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5224,9 +5513,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the peers of",
+          "description": "The GUID ID of the user to get the peers of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5363,9 +5652,9 @@
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the profile of",
+          "description": "The GUID ID of the user to get the profile of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {
@@ -5429,7 +5718,7 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "propertiesToSelect": {
@@ -5455,9 +5744,9 @@
         "nameToSearchFor": {
           "$ref": "#/definitions/stringExpression",
           "title": "Search Name",
-          "description": "Name of the user",
+          "description": "Name of the user to search for",
           "examples": [
-            "=turn.nametosearch"
+            "Jane Doe"
           ]
         },
         "$kind": {
@@ -5521,15 +5810,15 @@
           "title": "Max Results",
           "description": "Max number of results to return",
           "examples": [
-            "=turn.maxResults"
+            "10"
           ]
         },
         "userId": {
           "$ref": "#/definitions/stringExpression",
           "title": "User ID",
-          "description": "The ID of the user to get the collaborators of",
+          "description": "The GUID ID of the user to get the collaborators of",
           "examples": [
-            "=turn.user.id"
+            "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
         "$kind": {

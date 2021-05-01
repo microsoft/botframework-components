@@ -36,7 +36,8 @@
       ]
     },
     "start": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Start",
       "description": "Start datetime of event search range.",
       "examples": [
@@ -44,7 +45,8 @@
       ]
     },
     "end": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "End",
       "description": "End datetime of event search range.",
       "examples": [
