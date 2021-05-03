@@ -41,7 +41,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
 
-            this.Name = RecordingResume;
+            this.CommandName = RecordingResume;
         }
 
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)

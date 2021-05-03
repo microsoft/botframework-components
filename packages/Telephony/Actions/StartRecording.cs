@@ -41,7 +41,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
 
-            this.Name = RecordingStart;
+            this.CommandName = RecordingStart;
 
             this.Data = new RecordingStartSettings()
             {
