@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
+using Newtonsoft.Json;
+
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
-    using System.Runtime.CompilerServices;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using AdaptiveExpressions.Properties;
-    using Microsoft.Bot.Builder;
-    using Microsoft.Bot.Builder.Dialogs;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Transfers call to given phone number.
     /// </summary>
