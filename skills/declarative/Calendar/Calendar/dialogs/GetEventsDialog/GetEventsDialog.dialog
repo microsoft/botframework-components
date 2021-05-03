@@ -303,8 +303,8 @@
           },
           "resultProperty": "$event",
           "token": "=turn.token.token",
-          "eventIdProperty": "=$parameters.eventId",
-          "timeZoneProperty": "=user.workingHours.timeZone.name"
+          "eventId": "=$parameters.eventId",
+          "timeZone": "=user.workingHours.timeZone.name"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -347,13 +347,13 @@
           },
           "resultProperty": "$events",
           "token": "=turn.token.token",
-          "endProperty": "=$parameters.end",
-          "timeZoneProperty": "=user.workingHours.timeZone.name",
-          "dateTimeTypeProperty": "=coalesce($parameters.dateTimeType, \"date\")",
-          "startProperty": "=$parameters.start",
-          "futureEventsOnlyProperty": "=coalesce($futureOnly, true)",
-          "userEmailProperty": "=turn.user.profile.mail",
-          "maxResultsProperty": "=25"
+          "end": "=$parameters.end",
+          "timeZone": "=user.workingHours.timeZone.name",
+          "dateTimeType": "=coalesce($parameters.dateTimeType, \"date\")",
+          "start": "=$parameters.start",
+          "futureEventsOnly": "=coalesce($futureOnly, true)",
+          "userEmail": "=turn.user.profile.mail",
+          "maxResults": "=25"
         },
         {
           "$kind": "Microsoft.Graph.Calendar.Helpers.FilterEvents",
@@ -361,11 +361,11 @@
             "id": "uI3CaY"
           },
           "resultProperty": "$events",
-          "eventsProperty": "=$events",
-          "titleProperty": "=$parameters.subject",
-          "locationProperty": "=$parameters.location",
-          "attendeesProperty": "=$parameters.attendees",
-          "ordinalProperty": "=$parameters.ordinal"
+          "events": "=$events",
+          "title": "=$parameters.subject",
+          "location": "=$parameters.location",
+          "attendees": "=$parameters.attendees",
+          "ordinal": "=$parameters.ordinal"
         }
       ]
     },

@@ -16,7 +16,7 @@
             "$kind": "Microsoft.Graph.Calendar.GetContacts",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "nameProperty": "='test'"
+            "name": "='test'"
           },
           {
             "$kind": "Microsoft.SendActivity",

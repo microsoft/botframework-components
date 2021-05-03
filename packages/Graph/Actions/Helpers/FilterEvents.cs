@@ -50,46 +50,46 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// Gets or sets the title of event to query.
         /// </summary>
         /// <value>Title of the event to query.</value>
-        [JsonProperty("eventsProperty")]
-        public ArrayExpression<CalendarSkillEventModel> EventsProperty { get; set; }
+        [JsonProperty("events")]
+        public ArrayExpression<CalendarSkillEventModel> Events { get; set; }
 
         /// <summary>
         /// Gets or sets the title of event to query.
         /// </summary>
         /// <value>Title of the event to query.</value>
-        [JsonProperty("titleProperty")]
-        public StringExpression TitleProperty { get; set; }
+        [JsonProperty("title")]
+        public StringExpression Title { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the event to query.
         /// </summary>
         /// <value>The location of the event to query.</value>
-        [JsonProperty("locationProperty")]
-        public StringExpression LocationProperty { get; set; }
+        [JsonProperty("location")]
+        public StringExpression Location { get; set; }
 
         /// <summary>
         /// Gets or sets the attendees of the event to query.
         /// </summary>
         /// <value>The attendees of the event to query.</value>
-        [JsonProperty("attendeesProperty")]
-        public ArrayExpression<string> AttendeesProperty { get; set; }
+        [JsonProperty("attendees")]
+        public ArrayExpression<string> Attendees { get; set; }
 
         /// <summary>
         /// Gets or sets the ordinal of the event to query.
         /// </summary>
         /// <value>The ordinal of the event to query.</value>
-        [JsonProperty("ordinalProperty")]
-        public ObjectExpression<OrdinalV2> OrdinalProperty { get; set; }
+        [JsonProperty("ordinal")]
+        public ObjectExpression<OrdinalV2> Ordinal { get; set; }
 
         /// <inheritdoc/>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
-            var eventsProperty = this.EventsProperty.GetValue(dcState);
-            var titleProperty = this.TitleProperty.GetValue(dcState);
-            var locationProperty = this.LocationProperty.GetValue(dcState);
-            var attendeesProperty = this.AttendeesProperty.GetValue(dcState);
-            var ordinalProperty = this.OrdinalProperty.GetValue(dcState);
+            var eventsProperty = this.Events.GetValue(dcState);
+            var titleProperty = this.Title.GetValue(dcState);
+            var locationProperty = this.Location.GetValue(dcState);
+            var attendeesProperty = this.Attendees.GetValue(dcState);
+            var ordinalProperty = this.Ordinal.GetValue(dcState);
 
             var filteredEvents = eventsProperty;
 
