@@ -1,29 +1,68 @@
 # The Component Model
 
-The component model for building bots is our framework for sharing and reusing bot functionality - through new bots with templates, using portions of bots in the form of packages, or as complete bots with skills.
+The component model for building bots is our framework for creating coded extensions (components), sharing components and declarative assets as packages, and connecting bots together with skills. This model gives you a great deal of flexibility when building your bots - for example you can create a set of custom actions and triggers for working with some backend system, package those customizations and publish them to your organization's private NuGet feed so that other bot developers can re-use those components in their own bots. You can also include a `uischma` file defining how your components will be displayed in Composer, and an example dialog for using your custom actions.
 
-## Table of Contents
+## Adaptive runtime
 
-1. [Overview](/docs/overview.md)
-2. [Extending your bot using packages](/docs/extending-with-packages.md)
-3. [Extending your bot with code](/docs/extending-with-code.md)
-4. [Creating your own packages](/docs/creating-packages.md)
-5. [Creating your own templates](/docs/creating-templates.md)
+At the core of the component model is the adaptive runtime, which wraps the SDK and exposes extension points for dynamically registering your components. The runtime abstracts away the bot hosting and scaffolding code from your application code, so you can focus on your bot's functionality. It also enables easy sharing and re-use of your bot's logic and dialogs.
 
-## Adaptive Runtime
+When you create a new bot project from Composer, the template you choose will create your initial application code on disk, and take a dependency on the runtime.
 
-At the core of the component model is the adaptive runtime - an extensible, configurable runtime for your bot that is treated as a black box to bot developers and taken as a dependency. The runtime wraps the Bot Framework SDK, and provides extensibility points to add additional functionality by importing packages, connection to skills, or adding your own coded extensions.
+## Creating bot components
+
+A **component** is a coded extension for a bot that uses the `BotComponent` class to register itself with the runtime. Your component can include things like:
+
+- Actions
+- Triggers
+- Middleware
+- Adapters
+- Storage providers
+- Authentication providers
+- Controllers/routes
+
+Typically, your component will be made up of the following pieces:
+
+- Your component code
+- An implementation of the 'BotComponent' class to register your components with the runtime
+  - You'll also need to update the `components` array in the `appsettings.json` file with your component name
+- A schema file that declares the inputs and outputs your component requires
+- A `uischema` file to tell Composer where to display your components
 
 ## Packages
 
-Packages are bits of a bot you want to reuse. They can contain things like declarative dialogs, coded dialogs, custom adapters, or custom actions. They are just regular NuGet or npm packages (depending on the code language for your bot). You'll use the Bot Framework CLI tool to merge the package's declarative contents with your bot (package management in Composer will handle this for you, or you could do it yourself using the Bot Framework CLI tool). They can be made up of any combination of declarative dialogs, coded extensions (custom actions, adapters), or just plain old package libraries.
+Packages are bundles of functionality that can be shared between bots - they can include:
 
-## Templates
+- Declarative assets like dialogs, QnA files, language understand or language generation files
+- Bot components like custom actions, triggers, or middleware
+- Schema and uischema files
+- Traditional package contents (modules, DLLs, other supporting files)
 
-Getting started templates are created on top of the component model. They are built primarily by composing packages - ensuring that no matter which template you start from you'll have the flexibility to grow and develop your bot to meet your needs.
+The packages themselves are NuGet or npm packages, with your runtime language determining which type of package your bot will use. You'll use Package Manager from Composer to install, update and remove packages for your bot. Declarative assets in a package will be copied and merged into your your bot project so that you can customize them to meet your needs.
 
-For example, the Conversational Core template will take a dependency on two packages - welcome and  help & cancel. It will also include a root dialog that wires up the dialogs in those packages as well as a dialog for handling unknown intents. This represents the base set of functionality nearly all conversational bots include. If you were to start from the empty/echo bot template, you could choose to add these packages later - either way you'd get the same set of functionality (without the need to do something like compare code samples and try and stitch them together yourself).
+### Creating packages
+
+You can create and publish your own packages of components and declarative assets. When publishing your package to the public NuGet or npm feeds you'll need to make sure it is tagged with `msbot-component` in your package metadata if you'd like it to be listed in Composer by default.
+
+### Extending your bot with packages
+
+From Package Manager in Composer you can add new packages, update versions of existing packages, and remove packages from your bot project.
+
+When you install a package from Package Manager, the following happens:
+
+1. The package dependency is added to your bot project (`nuget install <packagename>` or `npm install <packagename>`)
+2. Any declarative assets in the `exported` folder in the package are copied into your bot project
+3. Any schema files in the package are merged with your existing schema files using the BF CLI `dialog:merge' command
+4. Any components in the package that need to be registered with the runtime are added to the `components` array in your `appsettings.json` file.
+
+Package Manager also allows you to connect to additional package feeds (like MyGet, or a local feed) using the **Edit Feeds** button.
 
 ## Skills
 
 Skills are separate bots you connect your bot to in order to process messages for you. The skill manifest establishes a contract other bots can follow - defining messages and events the skill can handle and any data that will be returned when the skill completes its interaction with your user.
+
+## Learn more
+
+1. [Overview](/docs/overview.md)
+1. [Creating bot components](/docs/extending-with-code.md)
+1. [Extending your bot using packages](/docs/extending-with-packages.md)
+1. [Creating packages](/docs/creating-packages.md)
