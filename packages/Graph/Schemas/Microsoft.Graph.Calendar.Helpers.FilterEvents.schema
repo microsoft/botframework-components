@@ -25,7 +25,6 @@
       ]
     },
     "events": {
-      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "Events to filter",
       "oneOf": [
@@ -136,7 +135,6 @@
 
     },
     "attendees": {
-      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Attendees",
       "description": "Attendees to filter by",
       "oneOf": [
@@ -158,13 +156,12 @@
         }
       ],
       "examples": [
-        "=turn.attendee",
+        "=turn.attendees",
         "@@personName",
-        "Jane Doe"
+        "[ 'Jane Doe' ]"
       ]
     },
     "ordinal": {
-      "$ref": "schema:#/definitions/objectExpression",
       "title": "Ordinal",
       "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
       "oneOf": [

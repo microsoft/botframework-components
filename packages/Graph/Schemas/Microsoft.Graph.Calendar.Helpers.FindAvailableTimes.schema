@@ -28,7 +28,6 @@
       ]
     },
     "events": {
-      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "List of events for date.",
       "oneOf": [

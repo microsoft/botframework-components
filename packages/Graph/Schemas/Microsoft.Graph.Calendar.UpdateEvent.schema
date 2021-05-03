@@ -34,7 +34,6 @@
       ]
     },
     "eventToUpdate": {
-      "$ref": "schema:#/definitions/objectExpression",
       "title": "Updated event",
       "description": "Updated event object",
       "oneOf": [

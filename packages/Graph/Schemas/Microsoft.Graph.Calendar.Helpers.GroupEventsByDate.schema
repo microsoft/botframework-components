@@ -46,7 +46,6 @@
       ]
     },
     "events": {
-      "$ref": "schema:#/definitions/arrayExpression",
       "title": "Events",
       "description": "List of events to sort.",
       "oneOf": [

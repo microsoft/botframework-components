@@ -3716,7 +3716,6 @@
           ]
         },
         "eventToCreate": {
-          "$ref": "#/definitions/objectExpression",
           "title": "New event",
           "description": "Event object to create.",
           "oneOf": [
@@ -3806,7 +3805,7 @@
         "timeZone": {
           "$ref": "#/definitions/stringExpression",
           "title": "Time Zone",
-          "description": "Target time zone to create the event in. [Learn more](https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0).",
+          "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for supported time zones.",
           "examples": [
             "Pacific Standard Time"
           ]
@@ -4397,7 +4396,6 @@
           ]
         },
         "events": {
-          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "Events to filter",
           "oneOf": [
@@ -4507,7 +4505,6 @@
           ]
         },
         "attendees": {
-          "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Attendees to filter by",
           "oneOf": [
@@ -4529,13 +4526,12 @@
             }
           ],
           "examples": [
-            "=turn.attendee",
+            "=turn.attendees",
             "@@personName",
-            "Jane Doe"
+            "[ 'Jane Doe' ]"
           ]
         },
         "ordinal": {
-          "$ref": "#/definitions/objectExpression",
           "title": "Ordinal",
           "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
           "oneOf": [
@@ -4625,7 +4621,6 @@
           ]
         },
         "events": {
-          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events for date.",
           "oneOf": [
@@ -4813,7 +4808,6 @@
           ]
         },
         "events": {
-          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events to sort.",
           "oneOf": [
@@ -5090,7 +5084,6 @@
           ]
         },
         "eventToUpdate": {
-          "$ref": "#/definitions/objectExpression",
           "title": "Updated event",
           "description": "Updated event object",
           "oneOf": [

@@ -34,7 +34,6 @@
       ]
     },
     "eventToCreate": {
-      "$ref": "schema:#/definitions/objectExpression",
       "title": "New event",
       "description": "Event object to create.",
       "oneOf": [
