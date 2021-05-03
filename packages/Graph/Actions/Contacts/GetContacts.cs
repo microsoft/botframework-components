@@ -39,8 +39,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the name of the contact to search.
         /// </summary>
-        [JsonProperty("nameProperty")]
-        public StringExpression NameProperty { get; set; }
+        [JsonProperty("name")]
+        public StringExpression Name { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetContactsDeclarativeType;
@@ -121,7 +121,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("Name", this.NameProperty.GetValue(state));
+            parameters.Add("Name", this.Name.GetValue(state));
         }
 
         private bool IsEmail(string emailString)

@@ -570,10 +570,10 @@
             "id": "Cb07qI"
           },
           "resultProperty": "$availabilityList",
-          "eventsProperty": "=$events",
-          "startProperty": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
-          "workingHourStartProperty": "=user.workingHours.startTime",
-          "workingHourEndProperty": "=user.workingHours.endTime"
+          "events": "=$events",
+          "start": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
+          "workingHourStart": "=user.workingHours.startTime",
+          "workingHourEnd": "=user.workingHours.endTime"
         },
         {
           "$kind": "Microsoft.IfCondition",

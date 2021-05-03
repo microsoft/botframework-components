@@ -230,9 +230,9 @@
                 "id": "CHMoK5"
               },
               "resultProperty": "$groupedEvents ",
-              "eventsProperty": "=$events",
-              "startProperty": "=$options.start",
-              "endProperty": "=$options.end"
+              "events": "=$events",
+              "start": "=$options.start",
+              "end": "=$options.end"
             },
             {
               "$kind": "Microsoft.SendActivity",

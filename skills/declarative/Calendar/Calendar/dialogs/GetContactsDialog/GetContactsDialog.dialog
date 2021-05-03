@@ -308,7 +308,7 @@
           "$designer": {
             "id": "Ha1csy"
           },
-          "nameProperty": "=$nameProperty",
+          "name": "=$nameProperty",
           "resultProperty": "$searchResults",
           "token": "=turn.token.token"
         },
