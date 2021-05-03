@@ -12,28 +12,33 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "DeleteEventDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
     "eventId": {
       "$ref": "schema:#/definitions/valueExpression",
       "title": "Event ID",
-      "description": "The ID of the event to delete.",
+      "description": "The GUID ID of the event to delete.",
       "examples": [
-        "dialog.event.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     }
   }

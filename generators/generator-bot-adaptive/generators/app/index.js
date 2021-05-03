@@ -3,7 +3,6 @@
 
 const path = require('path');
 const rt = require('runtypes');
-const xml2js = require('xml2js');
 const { BaseGenerator, integrations, platforms } = require('../../index');
 const { v4: uuidv4 } = require('uuid');
 
@@ -250,7 +249,7 @@ module.exports = class extends BaseGenerator {
   _writeJsPackageJson() {
     const { botName, integration } = this.options;
 
-    const sdkVersion = '~4.13.0-preview';
+    const sdkVersion = '~4.13.1-preview';
 
     const dependencies = {
       [integrations.functions]: {

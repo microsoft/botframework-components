@@ -1,0 +1,193 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "TRNmes",
+    "name": "GetDirectReportsDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "WRPVvN"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ARqQ7b"
+          },
+          "name": "People.GetDirectReportsDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6g7a8q"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound",
+            "NameEntity": "=$NameEntity"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2CmiAT"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0vENgn"
+          },
+          "condition": "=exists(turn.UserFound)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "P6fqO4"
+              },
+              "activity": "${SendActivity_P6fqO4()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "xcr8th"
+              }
+            }
+          ],
+          "actions": []
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PupWRK"
+          },
+          "activityProcessed": true,
+          "dialog": "UserListDialog",
+          "options": {
+            "User": "=turn.UserFound",
+            "Scenario": "DirectReports",
+            "AutoChooseFirst": false,
+            "GetListItemEvent": "GetListItems",
+            "doSelection": false
+          },
+          "resultProperty": "turn.DirectReportUser"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "WUuhtm"
+          },
+          "condition": "=exists(turn.DirectReportUser)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "ARtyS5"
+              },
+              "activityProcessed": true,
+              "dialog": "GetProfileDialog",
+              "options": {
+                "UserIdFound": "=turn.DirectReportUser"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UTkQ6k"
+              },
+              "activity": "${SendActivity_UTkQ6k()}"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "0nZUOA"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "l2fm3e",
+        "name": "OnEvent (GetListItems)"
+      },
+      "event": "GetListItems",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "fUH5tK"
+          },
+          "name": "People.GetDirectReportsDialog.OnEvent_GetListItems",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "QBzfKY"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetDirectReports",
+          "$designer": {
+            "id": "Q9M6AF"
+          },
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "officeLocation",
+            "jobTitle",
+            "department"
+          ],
+          "token": "=turn.token.token",
+          "maxCount": 15,
+          "resultProperty": "turn.Items",
+          "userId": "=turn.UserFound.Id"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "SAgsvz"
+          },
+          "index": "turn.foreach.index",
+          "value": "turn.foreach.value",
+          "itemsProperty": "turn.Items",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.Photo.GetPhoto",
+              "$designer": {
+                "id": "uCR1y8"
+              },
+              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "userId": "=turn.foreach.value.Id",
+              "token": "=turn.token.token"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "GetDirectReportsDialog.lg",
+  "recognizer": "GetDirectReportsDialog.lu.qna",
+  "id": "GetDirectReportsDialog"
+}

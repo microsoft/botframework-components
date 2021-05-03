@@ -1,0 +1,27 @@
+name: Pull request maintenance
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  prStyle:
+    name: pr-style
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: joshgummersall/pr-style@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          require_issue: "true"
+          title_prefixes: "build:, bump:, ci:, chore:, docs:, feat:, fix:, port:, refactor:"
+
+  labeler:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - uses: actions/labeler@main
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          sync-labels: "true"

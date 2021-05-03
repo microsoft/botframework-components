@@ -11,7 +11,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
     /// </summary>
     [Obsolete("AdaptiveBotComponent is the new component definition.")]
     public class AdaptiveCardComponentRegistration 
-        : DeclarativeComponentRegistrationBridge<AdaptiveBotComponent>
+        : DeclarativeComponentRegistrationBridge<AdaptiveCardsBotComponent>
     {
     }
 }

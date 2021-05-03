@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/botbuilder-samples/main/experimental/generation/TestBot/TestBot/TestBot.schema",
+  "$kind": "Microsoft.Test.Script",
+  "userTokenMocks": [
+    "nomagiccode.mock"
+  ],
+  "dialog": "People",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [
+        "Bot",
+        "User"
+      ],
+      "membersRemoved": []
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyOneOf",
+      "text": [
+        "Hi there 🖐, I'm ready to help answer questions about people in your organization.",
+        "Hi there 🖐, I can help you search for people in your organization.",
+        "Hi there 🖐, I'm here to help you find people in your organization."
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "tell me more about Thomas"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "I found multiple matches for **Thomas**. Please pick one:"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "the second one"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Here is what I found for **Thomas B Chung**:"
+    }
+  ]
+}

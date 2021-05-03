@@ -1,0 +1,36 @@
+{
+  "name": "@microsoft/generator-bot-core-qna",
+  "version": "1.0.0",
+  "description": "Yeoman generator for creating a bot and connecting to a QnA Maker knowledge base.",
+  "keywords": [
+    "microsoft",
+    "bot",
+    "framework",
+    "adaptive",
+    "yeoman-generator",
+    "bf-template",
+    "bf-dotnet-webapp",
+    "bf-dotnet-functions"
+  ],
+  "license": "MIT",
+  "author": "Bot Framework",
+  "main": "./generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "lint": "eslint -c ../../.eslintrc.json ."
+  },
+  "dependencies": {
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-preview",
+    "yeoman-generator": "^2.0.5",
+    "yeoman-test": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "prettier": "latest"
+  }
+}

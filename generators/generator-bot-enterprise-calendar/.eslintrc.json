@@ -1,0 +1,12 @@
+{
+  "extends": "../../.eslintrc.json",
+  "overrides": [
+    {
+      "files": ["__tests__/**/*"],
+      "env": {
+        "mocha": true,
+        "node": true
+      }
+    }
+  ]
+}

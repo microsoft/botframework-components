@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+    "$role": [ "implements(Microsoft.ITrigger)", "extends(Microsoft.OnCondition)" ],
+    "title": "On task module fetch",
+    "description": "Actions triggered when a Teams Invoke Activity is received with activity.name='task/fetch'.",
+    "type": "object",
+    "required": [
+    ],
+    "$policies": {
+        "requiresKind": [
+            "Teams.SendTaskModuleCardResponse",
+            "Teams.SendTaskModuleMessageResponse",
+            "Teams.SendTaskModuleUrlResponse"
+        ],
+        "nonInteractive": true
+    }
+}
