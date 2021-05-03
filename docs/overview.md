@@ -1,6 +1,6 @@
 # The Component Model
 
-The component model for building bots is our framework for creating coded extensions (components), sharing components and declarative assets as packages, and connecting bots together with skills. This model gives you a great deal of flexibility when building your bots - for example you can create a set of custom actions and triggers for working with some backend system, package those customizations and publish them to your organization's private NuGet feed so that other bot developers can re-use those components in their own bots. You can also include a `uischma` file defining how your components will be displayed in Composer, and an example dialog for using your custom actions.
+The component model for building bots is our model for creating coded extensions (components), sharing components and declarative assets, and connecting bots together with skills. This model allows you to create bots using a building-block approach, pulling in the functionality that you need when you need it, and allowing you to share functionality that you create with others.
 
 ## Adaptive runtime
 
@@ -43,7 +43,7 @@ The packages themselves are NuGet or npm packages, with your runtime language de
 
 You can create and publish your own packages of components and declarative assets. When publishing your package to the public NuGet or npm feeds you'll need to make sure it is tagged with `msbot-component` in your package metadata if you'd like it to be listed in Composer by default.
 
-### Extending your bot with packages
+### Using packages
 
 From Package Manager in Composer you can add new packages, update versions of existing packages, and remove packages from your bot project.
 
@@ -64,5 +64,5 @@ Skills are separate bots you connect your bot to in order to process messages fo
 
 1. [Overview](/docs/overview.md)
 1. [Creating bot components](/docs/extending-with-code.md)
-1. [Extending your bot using packages](/docs/extending-with-packages.md)
+1. [Using packages](/docs/extending-with-packages.md)
 1. [Creating packages](/docs/creating-packages.md)
