@@ -36,8 +36,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
         [JsonProperty("data")]
         public ObjectExpression<object> Data { get; set; } = new ObjectExpression<object>("={}");
 
-        protected abstract Task<object> OnProcessCardAsync(DialogContext dc, JObject card, CancellationToken cancellationToken = default(CancellationToken));
-
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (options is CancellationToken)
@@ -63,13 +61,15 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             // Render card and convert to JObject
             var template = new AdaptiveCardTemplate(jTemplate.ToString());
             var card = template.Expand(data);
-            var jCard = !String.IsNullOrEmpty(card) ? JObject.Parse(card) : null;
+            var jCard = !string.IsNullOrEmpty(card) ? JObject.Parse(card) : null;
 
             // Process card
             var result = await OnProcessCardAsync(dc, jCard, cancellationToken).ConfigureAwait(false);
 
             return await dc.EndDialogAsync(result, cancellationToken).ConfigureAwait(false);
         }
+
+        protected abstract Task<object> OnProcessCardAsync(DialogContext dc, JObject card, CancellationToken cancellationToken = default(CancellationToken));
 
         protected Activity CreateActivity(DialogContext dc, JObject card)
         {

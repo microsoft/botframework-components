@@ -2,18 +2,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Bot.Components.Teams.Actions;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Templates;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Schema.Teams;
 using Newtonsoft.Json;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder;
 
 namespace Microsoft.Bot.Components.Teams.Actions
 {
@@ -22,6 +20,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
     /// </summary>
     public class SendTaskModuleCardResponse : BaseSendTaskModuleContinueResponse
     {
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendTaskModuleCardResponse";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SendTaskModuleCardResponse"/> class.
         /// </summary>
@@ -32,12 +36,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
-
-        /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendTaskModuleCardResponse";
 
         /// <summary>
         /// Gets or sets template for the activity expression containing a Hero Card or Adaptive Card to send.

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Microsoft.Bot.Component.Graph.Actions
@@ -41,38 +41,20 @@ namespace Microsoft.Bot.Component.Graph.Actions
             DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             string token = this.Token.GetValue(dc.State);
-            HttpClient httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            IGraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
-
-            var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-
-            this.PopulateParameters(dc.State, parameters);
+            HttpClient httpClient = dc.Context.TurnState.Get<HttpClient>();
 
             T result = default(T);
 
-            Stopwatch sw = new Stopwatch();
-            Exception exCaught = null;
-
-            try
+            if (httpClient != null)
             {
-                sw.Start();
-                result = await this.CallGraphServiceWithResultAsync(graphClient, parameters, cancellationToken);
+                result = await CallGraphInternalAsync(dc, token, httpClient, cancellationToken).ConfigureAwait(false);
             }
-            catch (ServiceException ex)
+            else
             {
-                exCaught = ex;
-
-                this.HandleServiceException(ex);
-            }
-            catch (Exception ex)
-            {
-                exCaught = ex;
-            }
-            finally
-            {
-                sw.Stop();
-
-                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
+                using (httpClient = new HttpClient())
+                {
+                    result = await CallGraphInternalAsync(dc, token, httpClient, cancellationToken).ConfigureAwait(false);
+                }
             }
 
             // Write Trace Activity for the http request and response values
@@ -91,7 +73,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -112,5 +94,45 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <returns>Task for the async operation.</returns>
         internal abstract Task<T> CallGraphServiceWithResultAsync(
             IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken);
+
+        private async Task<T> CallGraphInternalAsync(DialogContext dc, string token, HttpClient httpClient, CancellationToken cancellationToken)
+        {
+            IGraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
+
+            var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+            this.PopulateParameters(dc.State, parameters);
+
+            T result = default(T);
+
+            Stopwatch sw = new Stopwatch();
+            Exception exCaught = null;
+
+            try
+            {
+                sw.Start();
+                result = await this.CallGraphServiceWithResultAsync(graphClient, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (ServiceException ex)
+            {
+                exCaught = ex;
+
+                this.HandleServiceException(ex);
+            }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                exCaught = ex;
+            }
+            finally
+            {
+                sw.Stop();
+
+                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
+            }
+
+            return result;
+        }
     }
 }

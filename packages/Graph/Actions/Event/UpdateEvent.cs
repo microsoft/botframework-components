@@ -70,7 +70,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 },
             };
 
-            return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
+            return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

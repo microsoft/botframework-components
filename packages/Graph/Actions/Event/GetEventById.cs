@@ -57,7 +57,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["Timezone"]);
 
-            Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken);
+            Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken).ConfigureAwait(false);
 
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
             var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);

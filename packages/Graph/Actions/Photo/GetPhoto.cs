@@ -38,7 +38,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         internal override async Task<string> CallGraphServiceWithResultAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
             string userId = (string)parameters["UserId"];
-            using (Stream result = await client.Users[userId].Photo.Content.Request().GetAsync(cancellationToken))
+            using (Stream result = await client.Users[userId].Photo.Content.Request().GetAsync(cancellationToken).ConfigureAwait(false))
             {
                 using (BinaryReader binaryReader = new BinaryReader(result))
                 {
@@ -61,7 +61,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             if (this.UserId == null)
             {
-                throw new ArgumentNullException(nameof(this.UserId));
+                throw new InvalidOperationException($"GetPhoto requires UserId property populated.");
             }
 
             string userId = this.UserId.GetValue(state);

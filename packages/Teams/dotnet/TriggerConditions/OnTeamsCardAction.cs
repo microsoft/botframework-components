@@ -16,14 +16,14 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsCardAction : OnInvokeActivity
     {
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnCardAction";
+
         [JsonConstructor]
         public OnTeamsCardAction(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
         }
-
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnCardAction";
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()

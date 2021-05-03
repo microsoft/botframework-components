@@ -99,7 +99,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: groupedEvents, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: groupedEvents, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

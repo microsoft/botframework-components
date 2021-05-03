@@ -19,14 +19,14 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </remarks>
     public class OnTeamsTeamRestored : OnConversationUpdateActivity
     {
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnTeamRestored";
+
         [JsonConstructor]
         public OnTeamsTeamRestored(List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
         }
-
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnTeamRestored";
 
         /// <inheritdoc/>
         protected override Expression CreateExpression()

@@ -6,13 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder;
 
 namespace Microsoft.Bot.Components.Teams.Actions
 {
@@ -21,6 +21,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
     /// </summary>
     public class SendMessageToTeamsChannel : Dialog
     {
+        /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMessageToTeamsChannel";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SendMessageToTeamsChannel"/> class.
         /// </summary>
@@ -32,12 +38,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
-
-        /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMessageToTeamsChannel";
 
         /// <summary>
         /// Gets or sets an optional expression which if is true will disable this action.
