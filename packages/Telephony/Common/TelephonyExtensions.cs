@@ -1,19 +1,23 @@
-﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Schema;
-using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Bot.Components.Telephony.Common
 {
     public static class TelephonyExtensions
     {
         /// <summary>
-        /// Gets the CommandValue from the activity.
+        /// Gets the <see cref="CommandValue"/>  from the activity.
         /// </summary>
-        /// <param name="cmdActivity">The command activity</param>
-        /// <returns>Gets the CommandValue from the activity</returns>
+        /// <param name="activity">The command activity.</param>
+        /// <typeparam name="T">The underlying value type for the <see cref="CommandValue"/>.</typeparam>
+        /// <returns>The <see cref="CommandValue"/> from the activity.</returns>
         public static CommandValue<T> GetCommandValue<T>(this ICommandActivity activity)
         {
             object value = activity?.Value;
@@ -40,8 +44,9 @@ namespace Microsoft.Bot.Components.Telephony.Common
         /// <summary>
         /// Gets the CommandResultValue from the commmand result activity.
         /// </summary>
-        /// <param name="cmdResultActivity">The command result activity</param>
-        /// <returns>Gets the CommandResultValue from the activity.</returns>
+        /// <param name="activity">The command result activity.</param>
+        /// <typeparam name="T">The underlying value type for the <see cref="CommandValue"/>.</typeparam>
+        /// <returns>Gets the <see cref="CommandResultValue"/> from the activity.</returns>
         public static CommandResultValue<T> GetCommandResultValue<T>(this ICommandResultActivity activity)
         {
             object value = activity?.Value;

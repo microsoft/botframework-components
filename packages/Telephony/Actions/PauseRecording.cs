@@ -21,13 +21,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// </summary>
     public class PauseRecording : CommandDialog
     {
-        private const string RecordingPause = "channel/vnd.microsoft.telephony.recording.pause";
-
         /// <summary>
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Telephony.PauseRecording";
+
+        private const string RecordingPause = "channel/vnd.microsoft.telephony.recording.pause";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseRecording"/> class.

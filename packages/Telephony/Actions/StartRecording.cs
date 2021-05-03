@@ -21,13 +21,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// </summary>
     public class StartRecording : CommandDialog<RecordingStartSettings>
     {
-        private const string RecordingStart = "channel/vnd.microsoft.telephony.recording.start";
-
         /// <summary>
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Telephony.StartRecording";
+
+        private const string RecordingStart = "channel/vnd.microsoft.telephony.recording.start";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StartRecording"/> class.
@@ -50,13 +50,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             };
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dc"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             if (dc.Context.Activity.ChannelId == Channels.Telephony)
@@ -67,6 +61,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        /// <inheritdoc/>
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
             // TODO: Carlos try to delete
