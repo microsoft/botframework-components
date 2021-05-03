@@ -1,15 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/botframework-sdk/master/schemas/component/component.schema",
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "type": "object",
   "title": "Component kinds",
   "description": "These are all of the kinds that can be created by the loader.",
   "oneOf": [
-    {
-      "$ref": "#/definitions/GetManagerDialog.dialog"
-    },
-    {
-      "$ref": "#/definitions/GetProfileDialog.dialog"
-    },
     {
       "$ref": "#/definitions/Microsoft.ActivityTemplate"
     },
@@ -414,156 +408,9 @@
     },
     {
       "$ref": "#/definitions/Microsoft.UrlEntityRecognizer"
-    },
-    {
-      "$ref": "#/definitions/ResolveUserDialog.dialog"
     }
   ],
   "definitions": {
-    "GetManagerDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetManagerDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetManagerDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name of the entity to search",
-          "$ref": "#/definitions/GetManagerDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetManagerDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "GetProfileDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "GetProfileDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/GetProfileDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "nameEntity": {
-          "description": "Name entity to search",
-          "$ref": "#/definitions/GetProfileDialog.dialog/definitions/stringExpression",
-          "title": "Name Entity"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "GetProfileDialog.dialog"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
     "Microsoft.ActivityTemplate": {
       "$role": "implements(Microsoft.IActivityTemplate)",
       "title": "Microsoft activity template",
@@ -3796,7 +3643,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -3804,7 +3651,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The GUID ID of the event to accept.",
           "examples": [
@@ -3833,7 +3680,7 @@
       "type": "object",
       "required": [
         "token",
-        "eventToCreateProperty",
+        "eventToCreate",
         "$kind"
       ],
       "additionalProperties": false,
@@ -3861,23 +3708,45 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventToCreateProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventToCreate": {
+          "$ref": "#/definitions/objectExpression",
           "title": "New event",
           "description": "Event object to create.",
           "examples": [
-            "=turn.event"
-          ]
+            "=dialog.event"
+          ],
+          "default": {
+            "subject": "<subject>",
+            "attendees": [
+              {
+                "EmailAddress": {
+                  "Address": "<attendee email>",
+                  "Name": "<attendee name>"
+                }
+              }
+            ],
+            "start": {
+              "dateTime": "2021-01-01T08:00:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "end": {
+              "dateTime": "2021-01-01T08:30:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "location": "<location>",
+            "description": "<description>",
+            "isOnlineMeeting": false
+          }
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time Zone",
           "description": "Target time zone to create the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
@@ -3933,7 +3802,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -3941,7 +3810,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The GUID ID of the event to decline.",
           "examples": [
@@ -3997,7 +3866,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -4005,7 +3874,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The GUID ID of the event to delete.",
           "examples": [
@@ -4033,8 +3902,8 @@
       "type": "object",
       "required": [
         "token",
-        "attendeesProperty",
-        "durationProperty",
+        "attendees",
+        "duration",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4062,31 +3931,39 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "attendees": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Event attendees",
           "examples": [
-            "=turn.meeting.attendees"
+            "=dialog.event.attendees"
+          ],
+          "default": [
+            {
+              "EmailAddress": {
+                "Address": "<attendee email>",
+                "Name": "<attendee name>"
+              }
+            }
           ]
         },
-        "durationProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "duration": {
+          "$ref": "#/definitions/integerExpression",
           "title": "Duration",
           "description": "Duration of meeting in minutes",
           "examples": [
             "30"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Time zone for the meeting",
           "examples": [
@@ -4114,7 +3991,7 @@
       "type": "object",
       "required": [
         "token",
-        "nameProperty",
+        "name",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4142,15 +4019,15 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "nameProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "name": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Name",
           "description": "Name to lookup",
           "examples": [
@@ -4178,8 +4055,8 @@
       "description": "Lookup event the Microsoft Graph API by its Event Id.",
       "required": [
         "token",
-        "eventIdProperty",
-        "timeZoneProperty",
+        "eventId",
+        "timeZone",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4207,23 +4084,23 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventIdProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventId": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The GUID ID of the event to lookup.",
           "examples": [
             "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
@@ -4251,9 +4128,9 @@
       "type": "object",
       "required": [
         "token",
-        "startProperty",
-        "endProperty",
-        "timeZoneProperty",
+        "start",
+        "end",
+        "timeZone",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4281,14 +4158,14 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "startProperty": {
+        "start": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "Start datetime of event search range.",
@@ -4296,7 +4173,7 @@
             "2021-01-01T00:00:00"
           ]
         },
-        "endProperty": {
+        "end": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "End datetime of event search range.",
@@ -4304,8 +4181,8 @@
             "2021-01-01T01:00:00"
           ]
         },
-        "dateTimeTypeProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "dateTimeType": {
+          "$ref": "#/definitions/stringExpression",
           "title": "DateTimeType",
           "description": "DateTime type, e.g. date, datetime, datetimerange.",
           "examples": [
@@ -4314,33 +4191,33 @@
             "datetimerange"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "TimeZone",
           "description": "Target time zone to display events in.",
           "examples": [
             "Pacific Standard Time"
           ]
         },
-        "userEmailProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "userEmail": {
+          "$ref": "#/definitions/stringExpression",
           "title": "User Email",
           "description": "Current user's email address (to exclude from attendees list).",
           "examples": [
             "janedoe@contoso.com"
           ]
         },
-        "futureEventsOnlyProperty": {
+        "futureEventsOnly": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Future Events Only",
           "description": "If true, only return matching events in the future.",
           "examples": [
-            "=turn.futuresonly",
+            "=turn.futureEventsOnly",
             "true",
             "false"
           ]
         },
-        "maxResultsProperty": {
+        "maxResults": {
           "$ref": "#/definitions/integerExpression",
           "title": "Max Results",
           "description": "Max number of results to return.",
@@ -4369,7 +4246,7 @@
       "type": "object",
       "required": [
         "token",
-        "addressProperty",
+        "address",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4397,15 +4274,15 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "addressProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "address": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Email Address",
           "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
           "examples": [
@@ -4432,7 +4309,7 @@
       "description": "Filter events from Microsoft Graph API.",
       "type": "object",
       "required": [
-        "eventsProperty",
+        "events",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4459,47 +4336,95 @@
             "turn.result"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "Events to filter",
           "examples": [
-            "=turn.eventsfilter"
+            "=turn.eventsToFilter"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
-        "titleProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "title": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Title",
           "description": "Title to filter by",
           "examples": [
             "Example Meeting"
           ]
         },
-        "locationProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "location": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Location",
           "description": "Location to filter by",
           "examples": [
             "34/1880"
           ]
         },
-        "attendeesProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "attendees": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Attendees",
           "description": "Attendees to filter by",
           "examples": [
-            "[\"janedoe@contoso.com\", \"johndoe@contoso.com\"]"
+            "=turn.attendeesParameter",
+            "[ 'Jane', 'John' ]"
+          ],
+          "default": [
+            "<name to filter by>"
           ]
         },
-        "ordinalProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "ordinal": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Ordinal",
-          "description": "Ordinal (e.g. next, first, last) to filter by",
+          "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
           "examples": [
-            "first",
-            "next",
-            "last"
-          ]
+            "=turn.ordinalParameter"
+          ],
+          "default": {
+            "relativeTo": "current",
+            "offset": "1"
+          }
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4521,10 +4446,10 @@
       "description": "Finds available times for the current user for a given date.",
       "type": "object",
       "required": [
-        "eventsProperty",
-        "startProperty",
-        "workingHourStartProperty",
-        "workingHourEndProperty",
+        "events",
+        "start",
+        "workingHourStart",
+        "workingHourEnd",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4551,15 +4476,57 @@
             "turn.result"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events for date.",
           "examples": [
             "=turn.events"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2021-01-01T08:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
-        "workingHourStartProperty": {
+        "workingHourStart": {
           "$ref": "#/definitions/valueExpression",
           "title": "Working Hours Start",
           "description": "Current user's configured work day start time.",
@@ -4567,7 +4534,7 @@
             "09:00:00"
           ]
         },
-        "workingHourEndProperty": {
+        "workingHourEnd": {
           "$ref": "#/definitions/valueExpression",
           "title": "Working Hours End",
           "description": "Current user's configured work day end time.",
@@ -4575,7 +4542,7 @@
             "17:00:00"
           ]
         },
-        "startProperty": {
+        "start": {
           "$ref": "#/definitions/valueExpression",
           "title": "Date",
           "description": "Date for finding available times",
@@ -4604,9 +4571,9 @@
       "type": "object",
       "required": [
         "token",
-        "eventsProperty",
-        "startProperty",
-        "endProperty",
+        "events",
+        "start",
+        "end",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4633,7 +4600,7 @@
             "turn.result"
           ]
         },
-        "startProperty": {
+        "start": {
           "$ref": "#/definitions/valueExpression",
           "title": "Start",
           "description": "DateTime range start.",
@@ -4641,7 +4608,7 @@
             "2020-01-01T00:00:00"
           ]
         },
-        "endProperty": {
+        "end": {
           "$ref": "#/definitions/valueExpression",
           "title": "End",
           "description": "DateTime range end.",
@@ -4649,12 +4616,54 @@
             "2020-01-01T12:00:00"
           ]
         },
-        "eventsProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "events": {
+          "$ref": "#/definitions/arrayExpression",
           "title": "Events",
           "description": "List of events to sort.",
           "examples": [
             "=turn.events"
+          ],
+          "default": [
+            {
+              "id": "00000000-0000-0000-0000-000000000000",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "description": "<description>",
+              "end": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2020-11-02T14:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "index": 0,
+              "isAllDay": false,
+              "isCurrentEvent": false,
+              "isOnlineMeeting": false,
+              "isOrganizer": true,
+              "isRecurring": true,
+              "location": "<location>",
+              "organizer": {
+                "@odata.type": "microsoft.graph.recipient",
+                "emailAddress": {
+                  "@odata.type": "microsoft.graph.emailAddress",
+                  "address": "<organizer email>",
+                  "name": "<organizer name>"
+                }
+              },
+              "response": "organizer",
+              "start": {
+                "@odata.type": "microsoft.graph.dateTimeTimeZone",
+                "dateTime": "2020-11-02T13:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "subject": "<subject>",
+              "webLink": ""
+            }
           ]
         },
         "$kind": {
@@ -4677,8 +4686,8 @@
       "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
       "type": "object",
       "required": [
-        "timeZoneProperty",
-        "queryProperty",
+        "timeZone",
+        "query",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4705,16 +4714,16 @@
             "turn.result"
           ]
         },
-        "queryProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "query": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Query",
           "description": "Query string to run recognition against.",
           "examples": [
             "2020-01-01T12:00:00"
           ]
         },
-        "timeZoneProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "timeZone": {
+          "$ref": "#/definitions/stringExpression",
           "title": "Time zone",
           "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
           "examples": [
@@ -4770,7 +4779,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -4778,7 +4787,7 @@
           ]
         },
         "eventId": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Event ID",
           "description": "The GUID ID of the event to tentatively accept.",
           "examples": [
@@ -4806,7 +4815,7 @@
       "type": "object",
       "required": [
         "token",
-        "eventToUpdateProperty",
+        "eventToUpdate",
         "$kind"
       ],
       "additionalProperties": false,
@@ -4834,20 +4843,43 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
             "=turn.token.token"
           ]
         },
-        "eventToUpdateProperty": {
-          "$ref": "#/definitions/valueExpression",
+        "eventToUpdate": {
+          "$ref": "#/definitions/objectExpression",
           "title": "Updated event",
           "description": "Updated event object",
           "examples": [
-            "=turn.eventsToUpdate"
-          ]
+            "=dialog.eventToUpdate"
+          ],
+          "default": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "subject": "<subject>",
+            "attendees": [
+              {
+                "EmailAddress": {
+                  "Address": "<attendee email>",
+                  "Name": "<attendee name>"
+                }
+              }
+            ],
+            "start": {
+              "dateTime": "2021-01-01T08:00:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "end": {
+              "dateTime": "2021-01-01T08:30:00Z",
+              "timeZone": "Pacific Standard Time"
+            },
+            "location": "<location>",
+            "description": "<description>",
+            "isOnlineMeeting": false
+          }
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -4898,7 +4930,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -4962,7 +4994,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5054,7 +5086,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5138,7 +5170,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5229,7 +5261,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5285,7 +5317,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5369,7 +5401,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5461,7 +5493,7 @@
           ]
         },
         "token": {
-          "$ref": "#/definitions/valueExpression",
+          "$ref": "#/definitions/stringExpression",
           "title": "Token",
           "description": "Microsoft Graph API authentication token.",
           "examples": [
@@ -5754,12 +5786,6 @@
       "$role": "interface",
       "oneOf": [
         {
-          "$ref": "#/definitions/GetManagerDialog.dialog"
-        },
-        {
-          "$ref": "#/definitions/GetProfileDialog.dialog"
-        },
-        {
           "$ref": "#/definitions/Microsoft.AdaptiveDialog"
         },
         {
@@ -5971,9 +5997,6 @@
         },
         {
           "$ref": "#/definitions/Microsoft.UpdateActivity"
-        },
-        {
-          "$ref": "#/definitions/ResolveUserDialog.dialog"
         },
         {
           "type": "string",
@@ -11317,78 +11340,6 @@
           "type": "string",
           "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
           "const": "Microsoft.UrlEntityRecognizer"
-        },
-        "$designer": {
-          "title": "Designer information",
-          "type": "object",
-          "description": "Extra information for the Bot Framework Composer."
-        }
-      }
-    },
-    "ResolveUserDialog.dialog": {
-      "$role": "implements(Microsoft.IDialog)",
-      "title": "ResolveUserDialog",
-      "type": "object",
-      "$result": {
-        "type": "object",
-        "properties": {}
-      },
-      "definitions": {
-        "equalsExpression": {
-          "$role": "expression",
-          "type": "string",
-          "title": "Equals Expression",
-          "description": "Expression starting with =.",
-          "pattern": "^=.*\\S.*",
-          "examples": [
-            "=user.name"
-          ]
-        },
-        "stringExpression": {
-          "$role": "expression",
-          "title": "String or expression",
-          "description": "Interpolated string or expression to evaluate.",
-          "oneOf": [
-            {
-              "type": "string",
-              "title": "String",
-              "description": "Interpolated string",
-              "pattern": "^(?!(=)).*",
-              "examples": [
-                "Hello ${user.name}"
-              ]
-            },
-            {
-              "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/equalsExpression",
-              "examples": [
-                "=concat('x','y','z')"
-              ]
-            }
-          ]
-        }
-      },
-      "required": [
-        "$kind"
-      ],
-      "additionalProperties": false,
-      "patternProperties": {
-        "^\\$": {
-          "title": "Tooling property",
-          "description": "Open ended property for tooling."
-        }
-      },
-      "properties": {
-        "UserIdFound": {
-          "title": "User Id Found",
-          "description": "Id of the user to look for",
-          "$ref": "#/definitions/ResolveUserDialog.dialog/definitions/stringExpression"
-        },
-        "$kind": {
-          "title": "Kind of dialog object",
-          "description": "Defines the valid properties for the component you are configuring (from a dialog .schema file)",
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9.]*$",
-          "const": "ResolveUserDialog.dialog"
         },
         "$designer": {
           "title": "Designer information",

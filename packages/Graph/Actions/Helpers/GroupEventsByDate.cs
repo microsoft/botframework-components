@@ -50,29 +50,29 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// Gets or sets the start time of the datetime range.
         /// </summary>
         /// <value>The start time of the datetime range. </value>
-        [JsonProperty("startProperty")]
-        public ObjectExpression<DateTime?> StartProperty { get; set; }
+        [JsonProperty("start")]
+        public ObjectExpression<DateTime?> Start { get; set; }
 
         /// <summary>
         /// Gets or sets the end of the datetime range.
         /// </summary>
         /// <value>The end of the datetime range.</value>
-        [JsonProperty("endProperty")]
-        public ObjectExpression<DateTime?> EndProperty { get; set; }
+        [JsonProperty("end")]
+        public ObjectExpression<DateTime?> End { get; set; }
 
         /// <summary>
         /// Gets or sets the array of events to be sorted.
         /// </summary>
-        [JsonProperty("eventsProperty")]
-        public ArrayExpression<CalendarSkillEventModel> EventsProperty { get; set; }
+        [JsonProperty("events")]
+        public ArrayExpression<CalendarSkillEventModel> Events { get; set; }
 
         /// <inheritdoc/>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
-            var eventsProperty = this.EventsProperty.GetValue(dcState);
-            var startProperty = this.StartProperty.GetValue(dcState);
-            var endProperty = this.EndProperty.GetValue(dcState);
+            var eventsProperty = this.Events.GetValue(dcState);
+            var startProperty = this.Start.GetValue(dcState);
+            var endProperty = this.End.GetValue(dcState);
 
             if (endProperty == null)
             {

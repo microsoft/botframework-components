@@ -353,9 +353,9 @@
           },
           "resultProperty": "$timeslots",
           "token": "=turn.token.token",
-          "attendeesProperty": "=$event.attendees",
-          "durationProperty": "=int(coalesce($options.duration, settings.defaultValue.duration))",
-          "timeZoneProperty": "=user.workingHours.timeZone.name"
+          "attendees": "=$event.attendees",
+          "duration": "=int(coalesce($options.duration, settings.defaultValue.duration))",
+          "timeZone": "=user.workingHours.timeZone.name"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -986,8 +986,8 @@
               },
               "resultProperty": "$createEventResult",
               "token": "=turn.token.token",
-              "eventToCreateProperty": "=$event",
-              "timeZoneProperty": "=user.workingHours.timeZone.name"
+              "eventToCreate": "=$event",
+              "timeZone": "=user.workingHours.timeZone.name"
             },
             {
               "$kind": "Microsoft.IfCondition",
