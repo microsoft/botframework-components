@@ -9,6 +9,7 @@ namespace Microsoft.Bot.Components.Graph.Models
     {
         public string Name { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Need public setter for this property.")]
         public List<string> EmailAddresses { get; set; }
 
         public string Id { get; set; }

@@ -46,7 +46,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             var eventId = (string)parameters["EventId"];
 
-            await client.Me.Events[eventId].TentativelyAccept("tentativelyAccept").Request().PostAsync();
+            await client.Me.Events[eventId].TentativelyAccept("tentativelyAccept").Request().PostAsync().ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

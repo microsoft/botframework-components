@@ -6,33 +6,40 @@
   "type": "object",
   "required": [
     "token",
-    "addressProperty"
+    "address"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GetWorkingHoursDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
-    "addressProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "address": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Email Address",
       "description": "Microsoft Graph SMTP address of user, distribution list, or resource to get availability information for.",
-      "examples": []
+      "examples": [
+        "janedoe@contoso.com"
+      ]
     }
   }
 }

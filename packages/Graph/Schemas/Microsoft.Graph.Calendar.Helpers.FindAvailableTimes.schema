@@ -5,46 +5,146 @@
   "description": "Finds available times for the current user for a given date.",
   "type": "object",
   "required": [
-    "eventsProperty",
-    "startProperty",
-    "workingHourStartProperty",
-    "workingHourEndProperty"
+    "events",
+    "start",
+    "workingHourStart",
+    "workingHourEnd"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "FindAvailableTimesDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
       "title": "Events",
       "description": "List of events for date.",
-      "examples": []
+      "oneOf": [
+        {
+          "type": "array",
+          "title": "Events",
+          "description": "List of events for date.",
+          "items": {
+            "type": "object",
+            "title": "Event",
+            "description": "Microsoft Graph Calendar Event",
+            "properties": {
+              "attendees": {
+                "type": "array",
+                "title": "Attendees",
+                "description": "The attendees to invite to the event.",
+                "examples": [
+                  "=dialog.attendees"
+                ],
+                "default": [
+                  {
+                    "EmailAddress": {
+                      "Address": "<attendee address>",
+                      "Name": "<attendee name>"
+                    }
+                  }
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "title": "Subject",
+                "description": "The subject of the event.",
+                "example": [
+                  "My event"
+                ]
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Start",
+                "description": "The start date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "title": "End",
+                "description": "The end date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "location": {
+                "type": "string",
+                "title": "Location",
+                "description": "The location of the event.",
+                "examples": [
+                  "Building A",
+                  "Seattle, WA"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "The description of the event.",
+                "example": [
+                  "My event description"
+                ]
+              },
+              "isOnlineMeeting": {
+                "type": "boolean",
+                "title": "Include Online Meeting",
+                "description": "Flag indicating whether the event should contain an online meeting link.",
+                "example": [
+                  "true",
+                  "false"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ],
+      "examples": [
+        "=turn.events"
+      ]
     },
-    "workingHourStartProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "workingHourStart": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Working Hours Start",
       "description": "Current user's configured work day start time.",
-      "examples": []
+      "examples": [
+        "09:00:00"
+      ]
     },
-    "workingHourEndProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "workingHourEnd": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Working Hours End",
       "description": "Current user's configured work day end time.",
-      "examples": []
+      "examples": [
+        "17:00:00"
+      ]
     },
-    "startProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "start": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Date",
       "description": "Date for finding available times",
-      "examples": []
+      "examples": [
+        "2020-01-01"
+      ]
     }
   }
 }

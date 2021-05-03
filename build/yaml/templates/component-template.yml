@@ -1,35 +1,40 @@
 stages:
+  # Only runs for packages that won't be published, as the build step is also included in the stage_package_node stage below. This
+  # stage is skipped for packages to be published.
   - stage: stage_build_node
-    displayName: 'Node: Build'
-    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'))
+    displayName: 'Node: Build Only'
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), not(eq(variables.PublishPackageArtifacts, true)))
     jobs:
       - job: job_build_npm
         displayName: Build Node project
         steps:
-        - template: npm-build-steps.yml 
+        - template: npm-build-steps.yml
+
   - stage: stage_package_node
-    displayName: 'Node: Version & Pack'
-    dependsOn: stage_build_node
-    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator')), eq(variables.PublishPackageArtifacts, true))
+    displayName: 'Node: Build, Version & Pack'
+    condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), eq(variables.PublishPackageArtifacts, true))
     jobs:
       - job: pack_npm
-        displayName: Pack Node project
+        displayName: 'Build & Pack Node project'
         steps:
+        - template: npm-build-steps.yml
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
+
   - stage: stage_build_nuget
     displayName: '.NET: Build & Test'
     dependsOn: [] # this removes the implicit dependency on previous stage and causes this to run in parallel
-    condition: eq(variables.ComponentType, 'codeExtension')
+    condition: and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'dotnet'))
     jobs:
       - job: build_test_dotnet
         displayName: Build and test .csproj with dotnet
         steps:
         - template: dotnet-build-test-steps.yml
+
   - stage: stage_package_nuget
     displayName: '.NET: Version, Sign & Pack'
     dependsOn: stage_build_nuget
-    condition: and(or(eq(variables.ComponentType, 'codeExtension'), eq(variables.ComponentType, 'declarativeAsset')), eq(variables.PublishPackageArtifacts, true))
+    condition: and(or(and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'dotnet')), eq(variables.ComponentType, 'declarativeAsset')), eq(variables.PublishPackageArtifacts, true))
     jobs:
       - job: job_pack_dotnet
         displayName: Pack .csproj with dotnet cli

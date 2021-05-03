@@ -12,20 +12,25 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GetUsersDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
     "maxCount": {
@@ -33,7 +38,7 @@
       "title": "Max Results",
       "description": "Max number of results to return",
       "examples": [
-        "dialog.worksWithMe.maxResults"
+        "10"
       ]
     },
     "propertiesToSelect": {
@@ -46,15 +51,22 @@
       "items": {
         "type": "string",
         "title": "Property",
-        "description": "Property name from the User object to select in Graph API."
-        }
+        "description": "Property name from the User object to select in Graph API.",
+        "examples": [
+          "id",
+          "displayName",
+          "mail",
+          "offliceLocation",
+          "jobTitle"
+        ]
+      }
       },
       "nameToSearchFor": {
         "$ref": "schema:#/definitions/stringExpression",
         "title": "Search Name",
-        "description": "Name of the user",
+        "description": "Name of the user to search for",
         "examples": [
-          "dialog.user.name"
+          "Jane Doe"
         ]
       }
     }

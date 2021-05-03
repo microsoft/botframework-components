@@ -1,0 +1,114 @@
+[Common](common.en-us.lg)
+[Event](event.en-us.lg)
+[TimeSuggestionList](timeSuggestionList.en-us.lg)
+
+# TextInput_Prompt_HmkRsB()
+- What should I set the title to?
+- What is the title of the meeting?
+- What is the title?
+- What is the meeting about?
+- What do you want to add as a title?
+- What do you want to call this meeting?
+
+# SendActivity_zz0Eaj()
+- I've removed ${coalesce($selectedContact.Name, $selectedContact.Address)}.
+- I won't include ${coalesce($selectedContact.Name, $selectedContact.Address)} in the invite.
+- I've removed ${coalesce($selectedContact.Name, $selectedContact.Address)} from the list.
+
+# TextInput_Prompt_68Dudo()
+- What should I set the description to?
+- What do you want the description to include?
+- OK, what description would you like to add?
+
+# TextInput_Prompt_NBZi0g()
+- How long should it last?
+- How long would you like this meeting to be?
+- OK, what should I set as the meeting duration?
+
+# SendActivity_PqPtGV()
+- I've made this a Microsoft Teams meeting.
+- I’ve added a Teams link for you as well.
+- I’ll also include a Teams link.
+- A Teams link will be added to your meeting.
+- I've gone ahead and added Teams to this meeting.
+
+# SendActivity_wYoWNO()
+- I won't make this a Microsoft Teams meeting.
+
+# SendActivity_VzJCSo()
+- ${CancelApproved()}
+
+# SendActivity_VLAwOi()
+- ${CancelRejected()}
+
+# CreateConfirmNotUnderstood()
+[Activity
+    text = Sorry, I didn't understand that. ${CreateConfirmPrompt()}
+    attachments = ${json(EventDetailEditCard($event))}
+]
+
+# CreateConfirmPrompt()
+[Activity
+    text=${CreateConfirmText()}
+    attachments=${json(EventDetailEditCard($event))}
+]
+
+# CreateConfirmText()
+- Does this look right?
+- Is this correct?
+- Are you ready to send it?
+
+# SendActivity_5Kxaup()
+- OK, I will not create the event.
+- OK, I won't send this event out.
+- No problem, the event has not been created.
+- I won't add this meeting to your calendar.
+
+# SendActivity_fbCLFM()
+- I've created the event.
+- Alright, your event has been created.
+- I've added the meeting on your calendar.
+- OK, the event has been created for you.
+- Done. The meeting has been added.
+- You've got it! Your meeting has been created and sent.
+
+# SendActivity_ANQjxk()
+- Something when wrong while creating adding the event to your calendar.
+- Sorry, I wasn't able to create the event.
+- There was an issue creating your event.
+
+# ConfirmInput_Prompt_tdkXGI()
+- ${CancelConfirmPrompt()}
+
+# DateTimeInput_Prompt_2NG4Aa()
+- What time?
+- At what time?
+- What time works best?
+- And at what time?
+- Got it, and what time do you want it to start?
+
+# ConfirmInput_Prompt_bnSGew()
+- Would you like to add a location?
+
+# TextInput_Prompt_1LdFal()
+- What should I set the location to?
+- What location should I include?
+- Where will the meeting be?
+- What location should I add?
+
+# DateTimeInput_Prompt_aB5ltS()
+- When should I schedule it?
+- When do you want to schedule it?
+- What day did you have in mind?
+- When were you thinking of meeting?
+- What date and time should I schedule this meeting for?
+
+# ConfirmInput_Prompt_ui2fg1()
+- IF: ${this.turnCount > 1 && not(exists(turn.interrupted))}
+    - ${CreateConfirmNotUnderstood()}
+- ELSE: 
+    - ${CreateConfirmPrompt()}
+# SendActivity_ydywki()
+- I can't suggest a time to meet because your working hours don't overlap.
+- You seem to have no overlap in working hours.
+- Looks like your working hours don't overlap.

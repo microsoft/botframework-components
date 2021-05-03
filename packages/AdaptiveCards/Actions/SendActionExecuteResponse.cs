@@ -16,6 +16,20 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Bot.Components.AdaptiveCards
 {
+    [JsonConverter(typeof(StringEnumConverter), /*camelCase*/ true)]
+    public enum ValueType
+    {
+        /// <summary>
+        /// The response includes an Adaptive Card
+        /// </summary>
+        AdaptiveCard,
+
+        /// <summary>
+        /// The response includes a message
+        /// </summary>
+        Message
+    }
+
     public class SendActionExecuteResponse : Dialog
     {
         [JsonProperty("$kind")]
@@ -34,20 +48,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
 
         [JsonProperty("statusCode")]
         public IntExpression StatusCode { get; set; } = new IntExpression(200);
-
-       [JsonConverter(typeof(StringEnumConverter), /*camelCase*/ true)]
-        public enum ValueType
-        {
-            /// <summary>
-            /// The response includes an Adaptive Card
-            /// </summary>
-            AdaptiveCard,
-
-            /// <summary>
-            /// The response includes a message
-            /// </summary>
-            Message
-        }
 
         [JsonProperty("type")]
         public EnumExpression<ValueType> Type { get; set; } = new EnumExpression<ValueType>(ValueType.Message);
@@ -76,7 +76,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             var statusCode = this.StatusCode?.GetValue(dc.State);
             var type = this.Type?.GetValue(dc.State);
             var value = this.Value?.GetValue(dc.State);
-            string mimeType = String.Empty;
+            string mimeType = string.Empty;
 
             // Validate params
             if (statusCode != null && statusCode >= 200 && statusCode < 300)
@@ -86,10 +86,11 @@ namespace Microsoft.Bot.Components.AdaptiveCards
                     case ValueType.Message:
                         // TODO: Migrate to use attachment constants once added.
                         mimeType = "application/vnd.microsoft.activity.message";
-                        if (!(value is String))
+                        if (!(value is string))
                         {
                             throw new ArgumentException($"{this.Id}: Message 'value' isn't of type String.");
                         }
+
                         break;
                     case ValueType.AdaptiveCard:
                         // TODO: Migrate to use attachment constants once added.
@@ -98,6 +99,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
                         {
                             throw new ArgumentException($"{this.Id}: Card 'value' isn't of type Object.");
                         }
+
                         break;
                     default:
                         throw new ArgumentException($"{this.Id}: A 'type' wasn't specified.");

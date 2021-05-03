@@ -1,0 +1,135 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "TiCQ7a",
+    "name": "GetManagerDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "75076Z"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IUYOm8"
+          },
+          "name": "<%= botName %>.GetManagerDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "joMxmD"
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveUserDialog",
+          "resultProperty": "turn.UserFound",
+          "options": {
+            "UserIdFound": "=$UserIdFound"
+          }
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "FaxQmA"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cxCimf"
+          },
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "PbEMRW"
+              },
+              "activity": "${SendActivity_PbEMRW()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "5XsnT5"
+              }
+            }
+          ],
+          "condition": "=exists(turn.UserFound)"
+        },
+        {
+          "$kind": "Microsoft.Graph.User.GetManager",
+          "$designer": {
+            "id": "wHoNHt"
+          },
+          "resultProperty": "turn.Result",
+          "token": "=turn.token.token",
+          "userId": "=turn.UserFound.id",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "businessPhones",
+            "department",
+            "jobTitle",
+            "officeLocation"
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "LnZlB6"
+          },
+          "condition": "=exists(turn.Result)",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lgZtQO"
+              },
+              "activity": "${SendActivity_lgZtQO()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "f1nPCd"
+              },
+              "activity": "${SendActivity_f1nPCd()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "K7Ibr0"
+              },
+              "activityProcessed": true,
+              "dialog": "GetProfileDialog",
+              "options": {
+                "UserIdFound": "=turn.Result.Id"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "zzebs7"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "GetManagerDialog.lg",
+  "recognizer": "GetManagerDialog.lu.qna",
+  "id": "GetManagerDialog"
+}

@@ -12,20 +12,25 @@
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GetDirectReportsDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
     "maxCount": {
@@ -33,7 +38,7 @@
       "title": "Max Results",
       "description": "Max number of results to return",
       "examples": [
-        "dialog.worksWithMe.maxResults"
+        "10"
       ]
     },
     "propertiesToSelect": {
@@ -46,15 +51,22 @@
       "items": {
         "type": "string",
         "title": "Property",
-        "description": "Property name from the User object to select in Graph API."
+        "description": "Property name from the User object to select in Graph API.",
+        "examples": [
+          "id",
+          "displayName",
+          "mail",
+          "offliceLocation",
+          "jobTitle"
+        ]
       }
     },
     "userId": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "User ID",
-      "description": "The ID of the user to retrieve direct reports of",
+      "description": "The GUID ID of the user to retrieve direct reports of",
       "examples": [
-        "dialog.user.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     }
   }

@@ -6,43 +6,48 @@
   "description": "Lookup event the Microsoft Graph API by its Event Id.",
   "required": [
     "token",
-    "eventIdProperty",
-    "timeZoneProperty"
+    "eventId",
+    "timeZone"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GetEventByIdDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [
-        "turn.token.token"
+        "=turn.token.token"
       ]
     },
-    "eventIdProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "eventId": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Event ID",
-      "description": "The ID of the event to lookup.",
+      "description": "The GUID ID of the event to lookup.",
       "examples": [
-        "dialog.event.id"
+        "BA4AA317-25AB-4D59-A2FF-4AC0C93D99FD"
       ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Time zone",
-      "description": "Target time zone to display the event in",
+      "description": "Target time zone to display the event in. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
       "examples": [
-        "user.timeZone"
+        "Pacific Standard Time"
       ]
     }
   }

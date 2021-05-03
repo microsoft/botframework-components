@@ -43,50 +43,50 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the start time of the event to query.
         /// </summary>
         /// <value>The start time of the event to query.</value>
-        [JsonProperty("startProperty")]
-        public ObjectExpression<DateTime?> StartProperty { get; set; }
+        [JsonProperty("start")]
+        public ObjectExpression<DateTime?> Start { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the event to query.
         /// </summary>
         /// <value>The end time of the event to query.</value>
-        [JsonProperty("endProperty")]
-        public ObjectExpression<DateTime?> EndProperty { get; set; }
+        [JsonProperty("end")]
+        public ObjectExpression<DateTime?> End { get; set; }
 
         /// <summary>
         /// Gets or sets date time type of the event to query.
         /// </summary>
         /// <value>The date time type of the event to query.</value>
-        [JsonProperty("dateTimeTypeProperty")]
-        public StringExpression DateTimeTypeProperty { get; set; }
+        [JsonProperty("dateTimeType")]
+        public StringExpression DateTimeType { get; set; }
 
         /// <summary>
         /// Gets or sets the timezone of the event to query.
         /// </summary>
         /// <value>The timezone of the event to query.</value>
-        [JsonProperty("timeZoneProperty")]
-        public StringExpression TimeZoneProperty { get; set; }
+        [JsonProperty("timeZone")]
+        public StringExpression TimeZone { get; set; }
 
         /// <summary>
         /// Gets or sets the user email address.
         /// </summary>
         /// <value>The email address of the user.</value>
-        [JsonProperty("userEmailProperty")]
-        public StringExpression UserEmailProperty { get; set; }
+        [JsonProperty("userEmail")]
+        public StringExpression UserEmail { get; set; }
 
         /// <summary>
         /// Gets or sets whether to show only future events in the result set.
         /// </summary>
         /// <value><c>True</c> if we want to show only future events. <c>False</c> if otherwise.</value>
-        [JsonProperty("futureEventsOnlyProperty")]
-        public BoolExpression FutureEventsOnlyProperty { get; set; }
+        [JsonProperty("futureEventsOnly")]
+        public BoolExpression FutureEventsOnly { get; set; }
 
         /// <summary>
         /// Gets or sets the max number of results to return from the query.
         /// </summary>
         /// <value>The max number of results.</value>
-        [JsonProperty("maxResultsProperty")]
-        public IntExpression MaxResultsProperty { get; set; }
+        [JsonProperty("maxResults")]
+        public IntExpression MaxResults { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetEventsDeclarativeType;
@@ -144,7 +144,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 new QueryOption("$orderBy", "start/dateTime"),
             };
 
-            IUserCalendarViewCollectionPage events = await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken);
+            IUserCalendarViewCollectionPage events = await client.Me.CalendarView.Request(queryOptions).GetAsync(cancellationToken).ConfigureAwait(false);
 
             int index = 0;
             if (events?.Count > 0)
@@ -157,7 +157,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             while (events.NextPageRequest != null)
             {
-                events = await events.NextPageRequest.GetAsync();
+                events = await events.NextPageRequest.GetAsync().ConfigureAwait(false);
                 if (events?.Count > 0)
                 {
                     foreach (var ev in events)
@@ -185,13 +185,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("StartProperty", this.StartProperty.GetValue(state));
-            parameters.Add("EndProperty", this.EndProperty.GetValue(state));
-            parameters.Add("TimezoneProperty", this.TimeZoneProperty.GetValue(state));
-            parameters.Add("DateTimeTypeProperty", this.DateTimeTypeProperty.GetValue(state));
-            parameters.Add("FutureEventsOnlyProperty", this.FutureEventsOnlyProperty.GetValue(state));
-            parameters.Add("MaxResultsProperty", this.MaxResultsProperty.GetValue(state));
-            parameters.Add("UserEmailProperty", this.UserEmailProperty.GetValue(state));
+            parameters.Add("StartProperty", this.Start.GetValue(state));
+            parameters.Add("EndProperty", this.End.GetValue(state));
+            parameters.Add("TimezoneProperty", this.TimeZone.GetValue(state));
+            parameters.Add("DateTimeTypeProperty", this.DateTimeType.GetValue(state));
+            parameters.Add("FutureEventsOnlyProperty", this.FutureEventsOnly.GetValue(state));
+            parameters.Add("MaxResultsProperty", this.MaxResults.GetValue(state));
+            parameters.Add("UserEmailProperty", this.UserEmail.GetValue(state));
         }
 
         /// <summary>

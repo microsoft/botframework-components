@@ -5,32 +5,41 @@
   "description": "Recognize date times from query string using Microsoft.Text.Recognizer library.",
   "type": "object",
   "required": [
-    "timeZoneProperty",
-    "queryProperty"
+    "timeZone",
+    "query"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "RecognizeDateTimeDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result Property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
-    "queryProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "query": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Query",
       "description": "Query string to run recognition against.",
-      "examples": []
+      "examples": [
+        "2020-01-01T12:00:00"
+      ]
     },
-    "timeZoneProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "timeZone": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Time zone",
-      "description": "Time zone for resolutions.",
-      "examples": []
+      "description": "Time zone for resolutions. Please see https://docs.microsoft.com/en-us/graph/api/resources/datetimetimezone?view=graph-rest-1.0 for more information about the timezones available.",
+      "examples": [
+        "Pacific Standard Time"
+      ]
     }
   }
 }

@@ -1,0 +1,53 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "VOwPpB",
+    "name": "AuthenticationDialog",
+    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "f5A0hE"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "V4SpTN"
+          },
+          "name": "<%= botName %>.AuthenticationDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "IQuSlw"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.oauthConnectionName",
+          "title": "Sign in",
+          "text": "Time to sign in with your Microsoft account to access your contacts and company directory, and try out our new 💃🕺 Skill!",
+          "property": "turn.Token"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "vEkDa9"
+          },
+          "value": "=turn.Token"
+        }
+      ]
+    }
+  ],
+  "generator": "AuthenticationDialog.lg",
+  "recognizer": "AuthenticationDialog.lu.qna",
+  "id": "AuthenticationDialog"
+}

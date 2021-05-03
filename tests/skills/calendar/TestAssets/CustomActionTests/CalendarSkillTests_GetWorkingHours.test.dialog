@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Get Working Hours",
+  "httpRequestMocks": [
+    "getWorkingHours.mock"
+  ],
+  "dialog": {
+    "$kind": "Microsoft.AdaptiveDialog",
+    "triggers": [
+      {
+        "$kind": "Microsoft.OnBeginDialog",
+        "actions": [
+          {
+            "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
+            "resultProperty": "dialog.result",
+            "token": "='token'",
+            "address": "='meganb@vacontoso.onmicrosoft.com'"
+          },
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "${dialog.result.timeZone.name}"
+          }
+        ]
+      }
+    ]
+  },
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "hello"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Pacific Standard Time"
+    }
+  ]
+}

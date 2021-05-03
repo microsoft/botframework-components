@@ -3,10 +3,10 @@
     "es6": true,
     "node": true
   },
-  "plugins": [
-    "prettier"
-  ],
+  "extends": ["eslint:recommended"],
+  "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error"
   }
 }
+

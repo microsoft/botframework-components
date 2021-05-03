@@ -21,7 +21,7 @@
           "$designer": {
             "id": "5JQ9rf"
           },
-          "activity": "${SendActivity_5JQ9rf()}"
+          "activity": "${SendActivity_HelpOverview()}"
         }
       ]
     }

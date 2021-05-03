@@ -36,11 +36,26 @@
                     "id": "859266",
                     "name": "Send a response"
                   },
-                  "activity": "${SendActivity_Welcome()}"
+                  "activity": "${SendActivity_Greeting()}"
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "kMjqz1"
+          },
+          "activity": "${SendActivity_DidNotUnderstand()}"
         }
       ]
     }

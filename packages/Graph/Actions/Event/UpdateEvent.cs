@@ -39,8 +39,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the event and its property to update in graph.
         /// </summary>
-        [JsonProperty("eventToUpdateProperty")]
-        public ObjectExpression<CalendarSkillEventModel> EventToUpdateProperty { get; set; }
+        [JsonProperty("eventToUpdate")]
+        public ObjectExpression<CalendarSkillEventModel> EventToUpdate { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => UpdateEventDeclarativeType;
@@ -70,13 +70,13 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 },
             };
 
-            return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken);
+            return await client.Me.Events[eventToUpdate.Id].Request().UpdateAsync(eventToUpdate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("CalendarSkillEvent", this.EventToUpdateProperty.GetValue(state));
+            parameters.Add("CalendarSkillEvent", this.EventToUpdate.GetValue(state));
         }
     }
 }

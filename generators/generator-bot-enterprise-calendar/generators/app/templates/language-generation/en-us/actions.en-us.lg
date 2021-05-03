@@ -1,0 +1,380 @@
+[Functions](functions.en-us.lg)
+
+# SkillId
+- <%= botName %>
+
+# CancelEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Cancel",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "CancelEvent",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# CreateEventAction(dateTime)
+-```
+{
+    "type": "Action.Submit",
+    "title": "New event",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "CreateEvent",
+        "dateTime": "${dateTime}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# CreateEventCardAction()
+[CardAction
+    title = New event
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ "skillId": "${SkillId()}", intent: "CreateEvent" }}
+]
+
+# GetEventsAction(dateTime)
+-```
+{
+    "type": "Action.Submit",
+    "title": "${GetEventsActionTitle(dateTime)}",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetEvents",
+        "dateTime": "${formatDateTime(dateTime, "yyyy-MM-dd")}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# GetEventByIdAction(id)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Get event",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetEvents",
+        "eventId": "${id}"
+    }
+}
+```
+
+# GetEventsActionTitle(dateTime)
+- IF: ${ dateTime == '' }
+    - Show today
+- ELSEIF: ${date(formatDateTime(dateTime)) == date(addDays(TimeZoneNow(), 1))}
+    - Show tomorrow
+- ELSE:
+    - Next day
+
+# GetEventsCardAction(dateTime)
+[CardAction
+    title = ${GetEventsActionTitle(dateTime)}
+    type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
+    value = ${{ "skillId": "${SkillId()}", intent: "GetEvents", dateTime: dateTime }}
+]
+
+# LaunchCardAction()
+[CardAction
+    title = Launch
+    type = ${if(turn.activity.channelId == 'msteams', 'messageBack', 'postBack')}
+    value = ${{ intent: "LaunchChat" }}
+]
+
+# SelectEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Select event",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "GetEvents",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetAttendeesAddAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add attendees",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetAttendeesAdd",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetAttendeesRemoveAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Remove attendees",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetAttendeesRemove",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetDateTimeAction(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update date and time",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetDateTime",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetDescriptionAction(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update description",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetDescription",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetDuration(event)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Update duration",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetDuration",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetLocationAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update location",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetLocation",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetOnlineMeetingAddAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Add Microsoft Teams",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetOnlineMeetingAdd",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# SetOnlineMeetingRemoveAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Remove Microsoft Teams",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "SetOnlineMeetingRemove",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# RespondAcceptAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Accept",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "RespondAccept",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# RespondDeclineAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Decline",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "RespondDecline",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# UpdateEventAction(event)
+-```
+{
+    "type": "Action.Submit",
+    "title": "Update",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "UpdateEvent",
+        "eventId": "${event.Id}",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# ChooseDateAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Choose your own date and time",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Skip",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# TryAgainAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Try Again",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Retry",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# NextPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Next",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Next",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# PreviousPageAction()
+- ```
+{
+    "type": "Action.Submit",
+    "title": "Previous",
+    "data": {
+        "skillId": "${SkillId()}",
+        "intent": "Previous",
+        "msteams": {
+            "type": "messageBack"
+        }
+    }
+}
+```
+
+# BuildSubmitAction(text, value)
+- IF: ${ turn.activity.channelId == "msteams" }
+    - ${TeamsSubmitAction(text, value)}
+- ELSE: 
+    - ${SubmitAction(text, value)}
+
+
+# TeamsSubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}",
+        "msteams": {
+            "type": "messageBack",
+            "text": "${value}"
+        }
+    }
+}
+```
+
+# SubmitAction(text, value)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "skillId": "${SkillId()}", 
+        "value": "${value}"
+    }
+}
+```

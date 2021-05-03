@@ -5,49 +5,200 @@
   "description": "Filter events from Microsoft Graph API.",
   "type": "object",
   "required": [
-    "eventsProperty"
+    "events"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "FilterEventsDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
       "title": "Events",
       "description": "Events to filter",
-      "examples": []
+      "oneOf": [
+        {
+          "type": "array",
+          "title": "Events",
+          "description": "List of events for date.",
+          "items": {
+            "type": "object",
+            "title": "Event",
+            "description": "Microsoft Graph Calendar Event",
+            "properties": {
+              "attendees": {
+                "type": "array",
+                "title": "Attendees",
+                "description": "The attendees to invite to the event.",
+                "examples": [
+                  "=dialog.attendees"
+                ],
+                "default": [
+                  {
+                    "EmailAddress": {
+                      "Address": "<attendee address>",
+                      "Name": "<attendee name>"
+                    }
+                  }
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "title": "Subject",
+                "description": "The subject of the event.",
+                "example": [
+                  "My event"
+                ]
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Start",
+                "description": "The start date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "title": "End",
+                "description": "The end date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "location": {
+                "type": "string",
+                "title": "Location",
+                "description": "The location of the event.",
+                "examples": [
+                  "Building A",
+                  "Seattle, WA"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "The description of the event.",
+                "example": [
+                  "My event description"
+                ]
+              },
+              "isOnlineMeeting": {
+                "type": "boolean",
+                "title": "Include Online Meeting",
+                "description": "Flag indicating whether the event should contain an online meeting link.",
+                "example": [
+                  "true",
+                  "false"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ],
+      "examples": [
+        "=turn.eventsToFilter"
+      ]
     },
-    "titleProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "title": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Title",
       "description": "Title to filter by",
-      "examples": []
+      "example": [
+        "My event"
+      ]
     },
-    "locationProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "location": {
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Location",
       "description": "Location to filter by",
-      "examples": []
+      "examples": [
+        "Building A",
+        "Seattle, WA"
+      ]
+
     },
-    "attendeesProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "attendees": {
       "title": "Attendees",
       "description": "Attendees to filter by",
-      "examples": []
+      "oneOf": [
+        {
+          "type": "array",
+          "title": "Attendees",
+          "description": "Attendees to filter by",
+          "items": {
+            "type": "string",
+            "title": "Attendee name",
+            "description": "Given name and/or surname of attendee",
+            "examples": [
+              "Jane Doe"
+            ]
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ],
+      "examples": [
+        "=turn.attendees",
+        "@@personName",
+        "[ 'Jane Doe' ]"
+      ]
     },
-    "ordinalProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "ordinal": {
       "title": "Ordinal",
-      "description": "Ordinal (e.g. next, first, last) to filter by",
-      "examples": []
+      "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last) to filter by",
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "OrdinalV2",
+          "description": "OrdinalV2 object representing the ordinal (e.g. next, first, last)",
+          "properties": {
+            "relativeTo": {
+              "type": "string",
+              "title": "Relative To",
+              "description": "Describes what the ordinal offest value is relative to. Valid values are: current, start, end.",
+              "examples": [
+                "current",
+                "start",
+                "end"
+              ]
+            },
+            "offset": {
+              "type": "integer",
+              "title": "Offset",
+              "description": "Integer representing the index of an item relative to the 'Relative To' property.",
+              "examples": [
+                "1",
+                "-1"
+              ]
+            }
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ],
+      "examples": [
+        "=turn.ordinalParameter",
+        "@ordinal"
+      ]
     }
   }
 }

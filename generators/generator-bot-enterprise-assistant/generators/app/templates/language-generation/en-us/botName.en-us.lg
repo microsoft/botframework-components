@@ -1,40 +1,52 @@
-[import](common.lg)
+﻿[import](common.lg)
 
-# SendActivity_yXbfKT()
+# SendActivity_GreetingNewUser()
 [Activity
-    Attachments = ${SendActivity_yXbfKT_attachment_9sGxgG()}
+    Attachments = ${SendActivity_GreetingNewUser_attachment_heroCard()}
 ]
 
-# SendActivity_XZRD8m()
+# SendActivity_GreetingNewUser_attachment_heroCard()
+[HeroCard
+  text = ${GreetingNewUser_text()}
+  buttons = ${GreetingBotTourIntent_action()}
+]
+
+# SendActivity_GreetingReturningUser()
 [Activity
-    Attachments = ${SendActivity_XZRD8m_attachment_SR7bxz()}
+    Attachments = ${SendActivity_GreetingReturningUser_attachment_heroCard()}
 ]
 
-# SendActivity_yXbfKT_attachment_9sGxgG()
+# SendActivity_GreetingReturningUser_attachment_heroCard()
 [HeroCard
-  text = ${WelcomeReturningUser()}
-  buttons = ${BotTourEventAction()}
+  text = ${GreetingReturningUser_text()}
+  buttons = ${GreetingBotTourIntent_action()}
 ]
 
-# SendActivity_XZRD8m_attachment_SR7bxz()
-[HeroCard
-  text = ${WelcomeNewUser()}
-  buttons = ${BotTourEventAction()}
-]
+# GreetingNewUser_text()
+- 🖐️ Hey, there! How can I help you today?
+- 🖐️ Hi! How can I help?
+- 🖐️ Hello! What do you want to do today?
 
-# BotTourEventAction()
+# GreetingReturningUser_text()
+- 🖐️ Welcome back! How can I help you today?
+- 🖐️ Hello again! What can I help with?
+- 🖐️ Good to see you again. What do you want to do today?
+- 🖐️ Hey, there! Let's get started.
+- 🖐️ Hello again! How can I help?
+
+# GreetingBotTourIntent_action()
 [CardAction
     title = You can ask me
     type = ${if(turn.activity.channelId == 'msteams', "messageBack", "postBack")}
     value = ${{ intent: "BotTour" }}
 ]
 
-# SendActivity_SYFXJJ()
+# SendActivity_ErrorOccured()
 [Activity
-    Text = ${SendActivity_SYFXJJ_text()}
+    Text = ${SendActivity_ErrorOccured_text()}
 ]
 
-# SendActivity_SYFXJJ_text()
+# SendActivity_ErrorOccured_text()
 - Oops, looks like I'm stuck. Can you try to ask me in a different way?
 - Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
 - Sorry, it looks like something went wrong. Can you please try again?
@@ -43,17 +55,13 @@
 [Activity
     Text = ${turn.dialogEvent.value}
 ]
-# TextInput_Prompt_YQSOpf()
+
+# SendActivity_ChooseIntentPrompt()
 [Activity
-    Attachments = ${json(ChooseIntentCard())}
+    Attachments = ${json(SendActivity_ChooseIntentPrompt_attachment_card(dialog.candidates))}
 ]
 
-# SendActivity_ufxNYo()
-[Activity
-    Text = Sure, no worries.
-]
-
-# ChooseIntentCard()
+# SendActivity_ChooseIntentPrompt_attachment_card(candidates)
 -```
 {
       "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
@@ -63,12 +71,12 @@
       "body": [
           {
               "type": "TextBlock",
-              "text": "${whichOneDidYouMean()}",
+              "text": "${SendActivity_ChooseIntentPrompt_attachment_whichOneDidYouMean()}",
               "weight": "Bolder"
           },
           {
               "type": "TextBlock",
-              "text": "${pickOne()}",
+              "text": "${SendActivity_ChooseIntentPrompt_attachment_pickOne()}",
               "separator": "true"
           },
           {
@@ -76,18 +84,11 @@
               "placeholder": "Placeholder text",
               "id": "userChosenIntent",
               "choices": [
-                {
-                    "title": "${getIntentReadBack()}",
-                    "value": "luisResult"
-                },
-                {
-                    "title": "${getAnswerReadBack()}",
-                    "value": "qnaResult"
-                },
-                {
-                    "title": "None of the above",
-                    "value": "none"
-                }
+                           ${SendActivity_ChooseIntentPrompt_attachment_generateChoices()},
+                           {
+                               "title": "None of the above",
+                               "value": "none"
+                           }
              ],
              "style": "expanded",
              "value": "luis"
@@ -99,32 +100,43 @@
                      "type": "Action.Submit",
                      "title": "Submit",
                      "data": {
-                       "intent": "chooseIntentCardResponse"
-                    }
+                   "intent": "chooseIntentCardResponse"
                 }
-            ]
-        }
+         }
+       ]
+     }
     ]
 }
 ```
 
-# whichOneDidYouMean()
+# SendActivity_ChooseIntentPrompt_attachment_whichOneDidYouMean()
 - I'm not sure which one you mean.
 - Hmmm, I find that to be ambiguous.
 
-# pickOne()
+# SendActivity_ChooseIntentPrompt_attachment_pickOne()
 - Can you pick one ?
 - Can you help clarify by choosing one ?
 
-# getAnswerReadBack()
+# SendActivity_ChooseIntentPrompt_attachment_getAnswerReadBack()
 - See an answer from the Knowledge Base
 
-# getIntentReadBack()
-- SWITCH : ${toLower(dialog.luisResult.intent)}
+# SendActivity_ChooseIntentPrompt_attachment_getIntentReadBack(intent)
+- SWITCH : ${intent}
+- CASE: ${'QnAMatch'}
+    - ${SendActivity_ChooseIntentPrompt_attachment_getAnswerReadBack()}
 - CASE : ${'GetUserProfile'}
   - Start filling in your profile(GetUserProfile intent)
 - DEFAULT :
-  - ${dialog.luisResult.intent}
+  - ${intent}
+
+# SendActivity_ChooseIntentPrompt_attachment_generateChoices(candidates)
+- ${join(foreach(indicesAndValues(candidates), c, SendActivity_ChooseIntentPrompt_attachment_choice(c.value.intent, c.index)), ',')}
+
+# SendActivity_ChooseIntentPrompt_attachment_choice(title, value)
+- { "title": "${SendActivity_ChooseIntentPrompt_attachment_getIntentReadBack(title)}", "value": "${value}" }
+
+# SendActivity_ChooseNoIntent()
+- Sure, no worries.
 
 # SendActivity_bGYBta()
 [Activity
@@ -162,3 +174,8 @@ Try saying:
 * "When do I have breaks today?" or "What is scheduled for tomorrow?"
 * "Who is the manager of" or "Who reports to", and much more!
 ```
+
+# SendActivity_UopnaT()
+[Activity
+    Text = **ERROR**: Your root bot does not have allowed callers configured. Open **Project Settings > Skills Configuration** to specifiy allowed callers.
+]

@@ -1,0 +1,304 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "WRF5mG",
+    "name": "RespondToEventDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "hFpXgd"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Y9c7T3"
+          },
+          "name": "RespondToEventDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "T4tAUA"
+          },
+          "condition": "$response",
+          "cases": [
+            {
+              "value": "accepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "ez9uAo"
+                  },
+                  "eventName": "AcceptEvent"
+                }
+              ]
+            },
+            {
+              "value": "declined",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "hdHXOC"
+                  },
+                  "eventName": "DeclineEvent"
+                }
+              ]
+            },
+            {
+              "value": "tentativelyAccepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "kvD2EI"
+                  },
+                  "eventName": "TentativelyAcceptEvent"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "kiO9rd",
+        "name": "OnEvent (AcceptEvent)"
+      },
+      "event": "AcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Jo6ZBU"
+          },
+          "name": "RespondToEventDialog.OnEvent_AcceptEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Jhz67U"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lP8j1y"
+              },
+              "activity": "${SendActivity_lP8j1y()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "OAx8M6"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "r6bf1q"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+          "$designer": {
+            "id": "2F9RxQ"
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Xs8DT3"
+          },
+          "property": "$event.Response",
+          "value": "='accepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "P5pp9f"
+          },
+          "activity": "${SendActivity_P5pp9f()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JA2lhL",
+        "name": "OnEvent (DeclineEvent)"
+      },
+      "event": "DeclineEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YIqJpN"
+          },
+          "name": "RespondToEventDialog.OnEvent_DeclineEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0I6DX5"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "uJzLWh"
+              },
+              "activity": "${SendActivity_uJzLWh()}"
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "4a6c2o"
+              },
+              "activityProcessed": true,
+              "dialog": "CancelEventDialog",
+              "options": {
+                "event": "=$event"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8wZGwZ"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+          "$designer": {
+            "id": "w2IgGa"
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "yzE1s5"
+          },
+          "property": "$event.Response",
+          "value": "='declined'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "3DZbbg"
+          },
+          "activity": "${SendActivity_3DZbbg()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "5YtnVP",
+        "name": "OnEvent (TentativelyAcceptEvent)"
+      },
+      "event": "TentativelyAcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "KDXKf8"
+          },
+          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1elpcm"
+          },
+          "condition": "$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yKi3OO"
+              },
+              "activity": "${SendActivity_yKi3OO()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "vnG3uj"
+              },
+              "activityProcessed": true,
+              "dialog": "UpdateEventDialog",
+              "options": {
+                "options.eventId": "=$event.Id"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MIElov"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+          "$designer": {
+            "id": "baSSxn"
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "C0GtDY"
+          },
+          "property": "$event.Response",
+          "value": "='tentativelyAccepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "S2mcC8"
+          },
+          "activity": "${SendActivity_S2mcC8()}"
+        }
+      ]
+    }
+  ],
+  "generator": "RespondToEventDialog.lg",
+  "recognizer": "RespondToEventDialog.lu.qna",
+  "id": "RespondToEventDialog"
+}

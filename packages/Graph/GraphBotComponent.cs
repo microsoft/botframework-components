@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Microsoft.Bot.Components.Graph
@@ -7,11 +7,16 @@ namespace Microsoft.Bot.Components.Graph
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using AdaptiveExpressions.Converters;
     using Microsoft.Bot.Builder;
+    using Microsoft.Bot.Builder.AI.Luis;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
+    using Microsoft.Bot.Builder.Dialogs.Declarative.Converters;
+    using Microsoft.Bot.Components.Graph.Models;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Graph;
 
     public class GraphBotComponent : BotComponent
     {
@@ -31,6 +36,12 @@ namespace Microsoft.Bot.Components.Graph
                     services.AddSingleton<DeclarativeType>(sp => new DeclarativeType(attribute.DeclarativeType, type));
                 }
             }
+
+            services.AddSingleton<JsonConverterFactory, JsonConverterFactory<ObjectExpressionConverter<CalendarSkillEventModel>>>();
+            services.AddSingleton<JsonConverterFactory, JsonConverterFactory<ObjectExpressionConverter<OrdinalV2>>>();
+            services.AddSingleton<JsonConverterFactory, JsonConverterFactory<ObjectExpressionConverter<DateTime?>>>();
+            services.AddSingleton<JsonConverterFactory, JsonConverterFactory<ArrayExpressionConverter<Attendee>>>();
+            services.AddSingleton<JsonConverterFactory, JsonConverterFactory<ArrayExpressionConverter<CalendarSkillEventModel>>>();
         }
     }
 }

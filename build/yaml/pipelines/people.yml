@@ -1,0 +1,20 @@
+name: $(Build.BuildId)
+trigger: none  # ci trigger is set in ADO
+pr: none # pr trigger is set in ADO
+
+pool: 
+  vmImage: $[ coalesce( variables['VMImage'], 'windows-2019' ) ] # or 'windows-latest' or 'vs2017-win2016'
+  
+extends:
+  template: ../templates/component-template.yml
+
+variables:
+  BuildConfiguration: Release
+  BuildPlatform: anycpu
+  ComponentType: codeExtension
+  Language: dotnet
+  DeploymentRing: preview
+  # DeploymentRingOverride: # set in ADO
+  # PublishPackageArtifacts: # set in ADO
+  # ReleaseCandidateNumber: # set in ADO
+  WorkingDirectory: skills/declarative/people/people

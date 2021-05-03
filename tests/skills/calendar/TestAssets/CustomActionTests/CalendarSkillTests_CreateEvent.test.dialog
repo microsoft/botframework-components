@@ -1,0 +1,60 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Create Event",
+  "httpRequestMocks": [
+    "createEvent.mock"
+  ],
+  "dialog": {
+    "$kind": "Microsoft.AdaptiveDialog",
+    "triggers": [
+      {
+        "$kind": "Microsoft.OnBeginDialog",
+        "actions": [
+          {
+            "$kind": "Microsoft.Graph.Calendar.CreateEvent",
+            "resultProperty": "dialog.result",
+            "token": "='token'",
+            "timeZone": "='Pacific Standard Time'",
+            "eventToCreate": {
+              "subject": "My event",
+              "attendees": [
+                {
+                  "EmailAddress": {
+                    "Address": "<attendee email>",
+                    "Name": "<attendee name>"
+                  }
+                }
+              ],
+              "start": {
+                "dateTime": "2021-01-01T08:00:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "end": {
+                "dateTime": "2021-01-01T08:30:00Z",
+                "timeZone": "Pacific Standard Time"
+              },
+              "location": "<location>",
+              "description": "<description>",
+              "isOnlineMeeting": false
+            }
+          },
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "${dialog.result.Subject}"
+          }
+        ]
+      }
+    ]
+  },
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "hello"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "My event"
+    }
+  ]
+}

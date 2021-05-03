@@ -1,0 +1,40 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "OW9gZK",
+    "name": "UnknownIntentDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "IPyIeJ"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "16MBLs"
+          },
+          "name": "People.UnknownIntentDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "wQNdyx"
+          },
+          "activity": "${SendActivity_wQNdyx()}"
+        }
+      ]
+    }
+  ],
+  "generator": "UnknownIntentDialog.lg",
+  "recognizer": "UnknownIntentDialog.lu.qna",
+  "id": "UnknownIntentDialog"
+}

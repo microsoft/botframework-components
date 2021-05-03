@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+    "form": {
+        "order": [
+            "condition",
+            "*"
+        ],
+        "hidden": [
+            "actions"
+        ],
+        "label": "Teams app based link query"
+    },
+    "trigger": {
+      "submenu": {
+        "label": "Microsoft Teams",
+        "prompt": "Which Teams event?",
+        "placeholder": "Select a Teams event type"
+      }
+    }
+}

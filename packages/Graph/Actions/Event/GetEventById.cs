@@ -40,14 +40,14 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the id of the event.
         /// </summary>
-        [JsonProperty("eventIdProperty")]
-        public StringExpression EventIdProperty { get; set; }
+        [JsonProperty("eventId")]
+        public StringExpression EventId { get; set; }
 
         /// <summary>
         /// Gets or sets the timezone of the event.
         /// </summary>
-        [JsonProperty("timeZoneProperty")]
-        public StringExpression TimeZoneProperty { get; set; }
+        [JsonProperty("timeZone")]
+        public StringExpression TimeZone { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetEventByIdDeclarativeType;
@@ -57,7 +57,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["Timezone"]);
 
-            Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken);
+            Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken).ConfigureAwait(false);
 
             var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
             var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
@@ -71,8 +71,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("EventId", this.EventIdProperty.GetValue(state));
-            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
+            parameters.Add("EventId", this.EventId.GetValue(state));
+            parameters.Add("Timezone", this.TimeZone.GetValue(state));
         }
     }
 }

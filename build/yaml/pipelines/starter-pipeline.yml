@@ -14,6 +14,7 @@ variables:
   BuildConfiguration: 'Release'
   BuildPlatform: anycpu
   ComponentType: YOUR_COMPONENT_TYPE # codeExtension, declarativeAsset, or generator
+  Language: YOUR_COMPONENT_LANGUAGE # js or dotnet
   DeploymentRing: YOUR_DEPLOYMENT_RING # alpha, preview, rc, or stable
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO

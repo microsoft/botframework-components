@@ -36,14 +36,14 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the timezone of the event.
         /// </summary>
-        [JsonProperty("timeZoneProperty")]
-        public StringExpression TimeZoneProperty { get; set; }
+        [JsonProperty("timeZone")]
+        public StringExpression TimeZone { get; set; }
 
         /// <summary>
         /// Gets or sets the event and its property to update in graph.
         /// </summary>
-        [JsonProperty("eventToCreateProperty")]
-        public ObjectExpression<CalendarSkillEventModel> EventToCreateProperty { get; set; }
+        [JsonProperty("eventToCreate")]
+        public ObjectExpression<CalendarSkillEventModel> EventToCreate { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => CreateEventDeclarativeType;
@@ -81,14 +81,14 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 OnlineMeetingProvider = OnlineMeetingProviderType.TeamsForBusiness,
             };
 
-            return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken);
+            return await client.Me.Events.Request().AddAsync(newEvent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
         protected override void PopulateParameters(Builder.Dialogs.Memory.DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("EventToCreate", this.EventToCreateProperty.GetValue(state));
-            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
+            parameters.Add("EventToCreate", this.EventToCreate.GetValue(state));
+            parameters.Add("Timezone", this.TimeZone.GetValue(state));
         }
     }
 }

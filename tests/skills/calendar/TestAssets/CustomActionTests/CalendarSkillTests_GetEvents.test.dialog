@@ -1,0 +1,46 @@
+﻿{
+  "$schema": "../app.schema",
+  "$kind": "Microsoft.Test.Script",
+  "description": "Test MS Graph - Get Events",
+  "httpRequestMocks": [
+    "getEvents.mock"
+  ],
+  "dialog": {
+    "$kind": "Microsoft.AdaptiveDialog",
+    "triggers": [
+      {
+        "$kind": "Microsoft.OnBeginDialog",
+        "actions": [
+          {
+            "$kind": "Microsoft.Graph.Calendar.GetEvents",
+            "resultProperty": "dialog.result",
+            "token": "='token'",
+            "futureEventsOnly": "=false",
+            "groupByDate": "=false",
+            "start": "='2020-09-11T09:00:00'",
+            "end": "='2020-09-11T17:00:00'",
+            "timezone": "='Pacific Standard Time'",
+            "dateTimeType": "='date'",
+            "ordinal": "=null",
+            "maxResults": "=15",
+            "userEmail" :  "=null"
+          },
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "${dialog.result[0].Subject}"
+          }
+        ]
+      }
+    ]
+  },
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "hello"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Project Review"
+    }
+  ]
+}

@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards.Templating" Version="1.2.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.13.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +30,7 @@
     <Content Include="**/*.schema" />
     <Content Include="**/*.uischema" />
     <Content Include="**/*.qna" />
+    <Content Include="README.md" />
   </ItemGroup>
 
   <ItemGroup>

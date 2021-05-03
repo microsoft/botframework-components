@@ -2,14 +2,12 @@
 addReviewers: false
 
 # Set to true to add assignees to pull requests
-addAssignees: false
+# Set to author to set pr creator as assignee
+addAssignees: author
 
 # A list of reviewers to be added to pull requests (GitHub user name)
 reviewers:
-  - lauren-mills
-  - bobokids
-  - kaymkm
-  - xhr0804
+  - microsoft/bot-framework-components-team
   
 # A number of reviewers added to the pull request
 # Set 0 to add all the reviewers (default: 0)

@@ -1,0 +1,110 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "uuf2U2",
+    "name": "UserListDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "XcOKoq"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "479ejy"
+          },
+          "name": "<%= botName %>.UserListDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "BsaK5q"
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "6oYIrU"
+          },
+          "assignments": [
+            {
+              "property": "$listOptions.templates",
+              "value": {
+                "icon": "ContactIconUrl",
+                "title": "UserListTitle",
+                "item": "UserListItem",
+                "initialPrompt": "UserListPrompt",
+                "showMorePrompt": "UserListShowMorePrompt",
+                "skipResponse": "UserListSkipResponse",
+                "defaultValueResponse": "UserListDefaultValueResponse"
+              }
+            },
+            {
+              "property": "$listOptions.actionTitleProperty",
+              "value": "index"
+            },
+            {
+              "property": "$listOptions.activePrompt",
+              "value": "UserListPrompt"
+            },
+            {
+              "property": "$listOptions.Scenario",
+              "value": "=$Scenario"
+            },
+            {
+              "property": "$listOptions.User",
+              "value": "=$User"
+            },
+            {
+              "property": "$listOptions.getItemsEvent",
+              "value": "GetListItems"
+            },
+            {
+              "property": "$listOptions.itemsProperty",
+              "value": "turn.Items"
+            },
+            {
+              "property": "$listOptions.autoChooseFirst",
+              "value": "=$AutoChooseFirst"
+            },
+            {
+              "property": "$listOptions.doSelection",
+              "value": "=$doSelection"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "n1BaIq"
+          },
+          "activityProcessed": true,
+          "dialog": "ListDialog",
+          "resultProperty": "turn.SelectedUser",
+          "options": "=$listOptions"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "8PYkyW"
+          },
+          "value": "=turn.SelectedUser"
+        }
+      ]
+    }
+  ],
+  "generator": "UserListDialog.lg",
+  "recognizer": "UserListDialog.lu.qna",
+  "id": "UserListDialog"
+}

@@ -6,40 +6,135 @@
   "type": "object",
   "required": [
     "token",
-    "eventsProperty",
-    "startProperty",
-    "endProperty"
+    "events",
+    "start",
+    "end"
   ],
   "properties": {
     "id": {
       "type": "string",
       "title": "Id",
-      "description": "Optional id for the dialog"
+      "description": "Optional id for the dialog",
+      "examples": [
+        "GroupEventsByDateDialog"
+      ]
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Result property",
       "description": "Named state location to store result.",
-      "examples": []
+      "examples": [
+        "turn.result"
+      ]
     },
-    "startProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "start": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "Start",
       "description": "DateTime range start.",
-      "examples": []
+      "examples": [
+        "2020-01-01T00:00:00"
+      ]
     },
-    "endProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "end": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "format": "date-time",
       "title": "End",
       "description": "DateTime range end.",
-      "examples": []
+      "examples": [
+        "2020-01-01T12:00:00"
+      ]
     },
-    "eventsProperty": {
-      "$ref": "schema:#/definitions/valueExpression",
+    "events": {
       "title": "Events",
       "description": "List of events to sort.",
+      "oneOf": [
+        {
+          "type": "array",
+          "title": "Events",
+          "description": "List of events to sort.",
+          "items": {
+            "type": "object",
+            "title": "Event",
+            "description": "Microsoft Graph Calendar Event",
+            "properties": {
+              "attendees": {
+                "type": "array",
+                "title": "Attendees",
+                "description": "The attendees of the event.",
+                "examples": [
+                  "=dialog.attendees"
+                ],
+                "default": [
+                  {
+                    "EmailAddress": {
+                      "Address": "<attendee address>",
+                      "Name": "<attendee name>"
+                    }
+                  }
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "title": "Subject",
+                "description": "The subject of the event.",
+                "example": [
+                  "My event"
+                ]
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Start",
+                "description": "The start date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "title": "End",
+                "description": "The end date and time of the event.",
+                "examples": [
+                  "2021-01-01T00:00:00"
+                ]
+              },
+              "location": {
+                "type": "string",
+                "title": "Location",
+                "description": "The location of the event.",
+                "examples": [
+                  "Building A",
+                  "Seattle, WA"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "description": "The description of the event.",
+                "example": [
+                  "My event description"
+                ]
+              },
+              "isOnlineMeeting": {
+                "type": "boolean",
+                "title": "Includes Online Meeting",
+                "description": "Flag indicating whether the event contains an online meeting link.",
+                "example": [
+                  "true",
+                  "false"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "$ref": "schema:#/definitions/equalsExpression"
+        }
+      ],
       "examples": [
-        "dialog.events"
+        "=turn.events"
       ]
     }
   }

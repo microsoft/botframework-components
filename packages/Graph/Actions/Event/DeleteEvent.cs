@@ -44,7 +44,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         internal override async Task CallGraphServiceAsync(IGraphServiceClient client, IReadOnlyDictionary<string, object> parameters, CancellationToken cancellationToken)
         {
-            await client.Me.Events[(string)parameters["EventId"]].Request().DeleteAsync(cancellationToken);
+            await client.Me.Events[(string)parameters["EventId"]].Request().DeleteAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>

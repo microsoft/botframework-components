@@ -1,0 +1,193 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "T6pvbO",
+    "name": "CancelEventDialog",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "coEW4g"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "j6CfN9"
+          },
+          "name": "CancelEventDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "itkIrW"
+          },
+          "condition": "$event.IsOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "ZsImtn"
+              },
+              "eventName": "CancelEvent"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "HwUbEa"
+              },
+              "eventName": "DeclineEvent"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "ez9la7",
+        "name": "OnEvent (CancelEvent)"
+      },
+      "event": "CancelEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "lfDkBw"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_lfDkBw()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "$confirmation"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "9dab8n"
+          },
+          "condition": "$confirmation",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bK9PqK"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.Calendar.DeleteEvent",
+              "$designer": {
+                "id": "gVTXgj"
+              },
+              "token": "=turn.token.token",
+              "eventId": "=$event.id",
+              "resultProperty": "$result"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "W6gQQo"
+              },
+              "activity": "${SendActivity_W6gQQo()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "uyZBZh"
+              },
+              "activity": "${SendActivity_uyZBZh()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "tvRSf0",
+        "name": "OnEvent (DeclineEvent)"
+      },
+      "event": "DeclineEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "Ef32OL"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_Ef32OL()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
+          },
+          "property": "$confirmation"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "wF3uxS"
+          },
+          "condition": "$confirmation",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "XCyZpH"
+              },
+              "activityProcessed": true,
+              "dialog": "RespondToEventDialog",
+              "options": {
+                "response": "='declined'",
+                "event": "=$event"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "x08upQ"
+              },
+              "activity": "${SendActivity_x08upQ()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "CancelEventDialog.lg",
+  "recognizer": "CancelEventDialog.lu.qna",
+  "id": "CancelEventDialog"
+}
