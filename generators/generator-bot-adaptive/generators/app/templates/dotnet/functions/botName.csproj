@@ -23,7 +23,7 @@
   <ItemGroup>
     <Content Update="local.settings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
+    </Content>
     <None Include="www/**/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
