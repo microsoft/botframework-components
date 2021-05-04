@@ -5,7 +5,8 @@
     <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="**/*.blu;**/*.dialog;**/*.json;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt" Exclude="$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;www/**">
+    <Content Include="**/*.blu;**/*.dialog;**/*.json;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt"
+             Exclude="$(AppDesignerFolder)/**;$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;www/**;**/function.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
