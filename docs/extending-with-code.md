@@ -18,7 +18,7 @@ This article shows you how to include a custom action named
 #### Note
 
 Composer currently supports the C\# runtime and JavaScript (preview)
-runtime.
+Adaptive Runtimes.
 
 ## Prerequisites
 
@@ -95,9 +95,10 @@ This C\# custom action consists of the following:
     ```
     "runtimeSettings": {
         "components": [
-        {
+          {
             "name": "CustomAction.MultiplyDialog"
-        }
+          }
+        ]
     }
     ```
 
@@ -150,8 +151,7 @@ added custom action.
 
 3.  On the **Properties** panel on the right side, enter two numbers in
     the argument fields: **Arg1** and **Arg2**. Enter **dialog.result**
-    in the **Result** property field. For example, you can enter the
-    following:
+    in the **Result** property field. For example, enter `99` for each field.
 
 4.  Add a **Send a response** action. Enter `99*99=${dialog.result}` in
     the Language Generation editor.
