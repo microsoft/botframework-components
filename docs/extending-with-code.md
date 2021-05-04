@@ -1,6 +1,6 @@
 # Extending your bot with code
 
-# Add custom actions as a BotComponent
+# Add custom actions in C#
 
 ## In this article
 
@@ -46,9 +46,9 @@ Framework tools:
 ## About this custom action
 ----------------------
 
-This C\# custom action component consists of the following:
+This C\# custom action consists of the following:
 
--   A Dotnet Composer project.  This can be any Composer project.  One that already exists, or a new one you create.  If you want to experiment risk free, create a new Blank Bot in Composer.
+-   A Composer project targeted for Dotnet.  This can be any Composer project.  One that already exists, or a new one you create.  If you want to experiment risk free, create a new Blank Bot in Composer.  This document assumes you create a Blank Bot named "MyBlankBot".
 
 -   The custom action code [MultiplyDialog.cs](assets/MultiplyDialog.cs) class,
     which defines the business logic of the custom action. In this
@@ -71,9 +71,9 @@ This C\# custom action component consists of the following:
 
 -   A BotComponent, [MultiplyDialogBotComponent.cs](assets/MultiplyDialogBotComponent.cs) code file for component registration.  BotComponents are loaded by your bot (specifically by Adaptive Runtime), and made available to Composer.
 
-    **Note** You can create a custom action without implementing BotComponent.  However, the Component Model in Bot Framework allows for easier reuse.
+    **Note** You can create a custom action without implementing BotComponent.  However, the Component Model in Bot Framework allows for easier reuse and is only slightly more work.
 
-## Adding the custom action to your Composer bot project
+## Adding the custom action to your bot project
 ------------------------------
 
 1.  Navigate to your Composer bot project folder (eg. C:\MyBlankBot) and create a new folder for the custom action project.  For example, C:\MyBlankBot\MultiplyDialog.
@@ -84,7 +84,7 @@ This C\# custom action component consists of the following:
 
 1.  Add Existing project to the solution.
 
-1.  For the MyBlankBot project, add a project reference to the MultiplyDialog project.  Alternatively, you can add `<ProjectReference Include="..\MultiplyDialog\MultiplyDialog.csproj" />` to the appropriate `ItemGroup` in your MyBlankBot.csproj.
+1.  In the MyBlankBot project, add a project reference to the MultiplyDialog project.  Alternatively, you can add `<ProjectReference Include="..\MultiplyDialog\MultiplyDialog.csproj" />` to the appropriate `ItemGroup` in MyBlankBot.csproj.
 
 1.  Run the command `dotnet build` on the project to
     verify if it passes build after adding custom actions to it. You
