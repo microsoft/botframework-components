@@ -24,36 +24,46 @@ namespace CustomAction.MultiplyDialog
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
         }
 
+        /// <summary>
+        ///  Gets the unique name of this Adaptive Dialog.
+        /// </summary>
         [JsonProperty("$kind")]
         public const string Kind = "MultiplyDialog";
 
         /// <summary>
-        /// Gets or sets memory path to bind to arg1 (ex: conversation.width).
+        /// Gets or sets memory path to bind to arg1 (ex: action.arg1).
         /// </summary>
         /// <value>
-        /// Memory path to bind to arg1 (ex: conversation.width).
+        /// Memory path to bind to arg1 (ex: action.arg1).
         /// </value>
         [JsonProperty("arg1")]
         public NumberExpression Arg1 { get; set; }
 
         /// <summary>
-        /// Gets or sets memory path to bind to arg2 (ex: conversation.height).
+        /// Gets or sets memory path to bind to arg2 (ex: action.arg2).
         /// </summary>
         /// <value>
-        /// Memory path to bind to arg2 (ex: conversation.height).
+        /// Memory path to bind to arg2 (ex: action.arg2).
         /// </value>
         [JsonProperty("arg2")]
         public NumberExpression Arg2 { get; set; }
 
         /// <summary>
-        /// Gets or sets caller's memory path to store the result of this step in (ex: conversation.area).
+        /// Gets or sets caller's memory path to store the result of this step in (ex: dialog.result).
         /// </summary>
         /// <value>
-        /// Caller's memory path to store the result of this step in (ex: conversation.area).
+        /// Caller's memory path to store the result of this step in (ex: dialog.result).
         /// </value>
+        /// <remarks>
+        /// This is where the result of the Dialog is stored and accessible in Composer.
+        /// </remarks>
         [JsonProperty("resultProperty")]
         public StringExpression ResultProperty { get; set; }
 
+        /// <summary>
+        /// Override BeginDialogAsync to provide the custom action functionality.  The inputs, in this case,
+        /// are define in Arg1 and Arg2.  The result of the the dialog is stored in ResultProperty.
+        /// </summary>
         public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var arg1 = Arg1.GetValue(dc.State);
