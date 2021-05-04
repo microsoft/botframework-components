@@ -1,10 +1,10 @@
 # The Component Model
 
-The component model for building bots is our model for creating coded extensions (components), sharing components and declarative assets, and connecting bots together with skills. This model allows you to create bots using a building-block approach, pulling in the functionality that you need when you need it, and allowing you to share functionality that you create with others.
+The component model for building bots is our model for creating coded extensions (components), sharing components and declarative assets (`.dialog`, `.lu`, `.lg`, and `.qna` files), and connecting bots together with skills. This model allows you to create bots using a building-block approach, pulling in the functionality that you need when you need it, and allowing you to share functionality that you create with others.
 
 ## Adaptive runtime
 
-At the core of the component model is the adaptive runtime, which wraps the SDK and exposes extension points for dynamically registering your components. The runtime abstracts away the bot hosting and scaffolding code from your application code, so you can focus on your bot's functionality. It also enables easy sharing and re-use of your bot's logic and dialogs.
+At the core of the component model is the adaptive runtime, which wraps the SDK and exposes extension points for dynamically registering your components. The runtime abstracts away the bot hosting and scaffolding code from your application code, so you can focus on your bot's functionality. It also enables easy sharing and re-use of your bot's components and dialogs.
 
 When you create a new bot project from Composer, the template you choose will create your initial application code on disk, and take a dependency on the runtime.
 
@@ -25,14 +25,14 @@ Typically, your component will be made up of the following pieces:
 - Your component code
 - An implementation of the 'BotComponent' class to register your components with the runtime
   - You'll also need to update the `components` array in the `appsettings.json` file with your component name
-- A schema file that declares the inputs and outputs your component requires
-- A `uischema` file to tell Composer where to display your components
+- One or more `.schema` files that declares the inputs and outputs your component requires
+- One or more `.uischema` files to tell Composer where to display your components
 
 ## Packages
 
 Packages are bundles of functionality that can be shared between bots - they can include:
 
-- Declarative assets like dialogs, QnA files, language understand or language generation files
+- Declarative assets like dialogs, QnA files, language understanding or language generation files
 - Bot components like custom actions, triggers, or middleware
 - Schema and uischema files
 - Traditional package contents (modules, DLLs, other supporting files)
