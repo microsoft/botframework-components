@@ -62,7 +62,7 @@ Skills are separate bots you connect your bot to in order to process messages fo
 
 ## Learn more
 
-1. [Overview](/docs/overview.md)
+1. Overview (this page)
 1. [Creating bot components](/docs/extending-with-code.md)
 1. [Using packages](/docs/extending-with-packages.md)
 1. [Creating packages](/docs/creating-packages.md)
