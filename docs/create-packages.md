@@ -31,7 +31,7 @@ When your package is added to a bot from Package Manager in Composer, the follow
 
 ## Declarative files in packages
 
-You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages. Your declarative files **must** be in a folder named `exported` at the root of your package
+You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages. Your declarative files **must** be in a folder named `exported` at the root of your package.
 
 See the [Help and Cancel](/packages/HelpAndCancel) package for an example of a package containing a dialog.
 
