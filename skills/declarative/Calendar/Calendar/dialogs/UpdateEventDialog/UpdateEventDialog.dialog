@@ -1188,7 +1188,7 @@
                 "id": "DeRuFs"
               },
               "token": "=turn.token.token",
-              "eventToUpdateProperty": "=$event",
+              "eventToUpdate": "=$event",
               "resultProperty": "$result"
             },
             {

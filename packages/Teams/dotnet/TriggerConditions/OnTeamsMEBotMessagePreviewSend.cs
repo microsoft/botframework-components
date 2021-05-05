@@ -17,15 +17,15 @@ namespace Microsoft.Bot.Components.Teams.Conditions
     /// </summary>
     public class OnTeamsMEBotMessagePreviewSend : OnInvokeActivity
     {
+        [JsonProperty("$kind")]
+        public new const string Kind = "Teams.OnMEBotMessagePreviewSend";
+
         [JsonConstructor]
         public OnTeamsMEBotMessagePreviewSend(string commandId = null, List<Dialog> actions = null, string condition = null, [CallerFilePath] string callerPath = "", [CallerLineNumber] int callerLine = 0)
             : base(actions: actions, condition: condition, callerPath: callerPath, callerLine: callerLine)
         {
             CommandId = commandId;
         }
-
-        [JsonProperty("$kind")]
-        public new const string Kind = "Teams.OnMEBotMessagePreviewSend";
 
         [JsonProperty("commandId")]
         public string CommandId { get; set; }

@@ -39,8 +39,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <summary>
         /// Gets or sets the name of the contact to search.
         /// </summary>
-        [JsonProperty("nameProperty")]
-        public StringExpression NameProperty { get; set; }
+        [JsonProperty("name")]
+        public StringExpression Name { get; set; }
 
         /// <inheritdoc/>
         public override string DeclarativeType => GetContactsDeclarativeType;
@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             optionList.Add(new QueryOption("$search", $"\"{name}\""));
 
             // Get the current user's profile.
-            IUserContactsCollectionPage contacts = await client.Me.Contacts.Request(optionList).Select("displayName,emailAddresses,imAddresses").GetAsync(cancellationToken);
+            IUserContactsCollectionPage contacts = await client.Me.Contacts.Request(optionList).Select("displayName,emailAddresses,imAddresses").GetAsync(cancellationToken).ConfigureAwait(false);
 
             var contactsResult = new List<CalendarSkillContactModel>();
             if (contacts?.Count > 0)
@@ -81,7 +81,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 }
             }
 
-            IUserPeopleCollectionPage people = await client.Me.People.Request(optionList).Select("displayName,emailAddresses").GetAsync(cancellationToken);
+            IUserPeopleCollectionPage people = await client.Me.People.Request(optionList).Select("displayName,emailAddresses").GetAsync(cancellationToken).ConfigureAwait(false);
 
             if (people?.Count > 0)
             {
@@ -121,7 +121,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc/>
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("Name", this.NameProperty.GetValue(state));
+            parameters.Add("Name", this.Name.GetValue(state));
         }
 
         private bool IsEmail(string emailString)

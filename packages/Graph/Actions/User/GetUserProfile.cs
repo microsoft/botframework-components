@@ -45,7 +45,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             string userId = (string)parameters["UserId"];
             string propertiesToSelect = (string)parameters["PropertiesToSelect"];
 
-            User result = await client.Users[userId].Request().Select(propertiesToSelect).GetAsync();
+            User result = await client.Users[userId].Request().Select(propertiesToSelect).GetAsync().ConfigureAwait(false);
 
             return result;
         }
@@ -55,7 +55,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             if (this.UserId == null)
             {
-                throw new ArgumentNullException(nameof(this.UserId));
+                throw new InvalidOperationException($"GetUserProfile requires UserId property.");
             }
 
             // Select minimum of the "id" field from the object

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Microsoft.Bot.Component.Graph.Actions
@@ -104,36 +104,18 @@ namespace Microsoft.Bot.Component.Graph.Actions
             DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             string token = this.Token.GetValue(dc.State);
-            HttpClient httpClient = dc.Context.TurnState.Get<HttpClient>() ?? new HttpClient();
-            IGraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
+            HttpClient httpClient = dc.Context.TurnState.Get<HttpClient>();
 
-            var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-
-            this.PopulateParameters(dc.State, parameters);
-
-            Stopwatch sw = new Stopwatch();
-            Exception exCaught = null;
-
-            try
+            if (httpClient != null)
             {
-                sw.Start();
-                await this.CallGraphServiceAsync(graphClient, parameters, cancellationToken);
+                await CallGraphInternalAsync(dc, token, httpClient, cancellationToken).ConfigureAwait(false);
             }
-            catch (ServiceException ex)
+            else
             {
-                exCaught = ex;
-
-                this.HandleServiceException(ex);
-            }
-            catch (Exception ex)
-            {
-                exCaught = ex;
-            }
-            finally
-            {
-                sw.Stop();
-
-                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
+                using (httpClient = new HttpClient())
+                {
+                    await CallGraphInternalAsync(dc, token, httpClient, cancellationToken).ConfigureAwait(false);
+                }
             }
 
             // Write Trace Activity for the http request and response values
@@ -147,7 +129,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,7 +156,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// </summary>
         /// <param name="latency">Latency of the call.</param>
         /// <param name="exCaught">The exception caught.</param>
+#pragma warning disable CA1030 // Use events where appropriate
         protected void FireTelemetryEvent(long latency, Exception exCaught)
+#pragma warning restore CA1030 // Use events where appropriate
         {
             try
             {
@@ -196,9 +180,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 // automatically show up on their Application Insight monitoring log events.
                 this.TelemetryClient.TrackEvent(this.TelemetryEventName, properties, metric);
             }
-            catch
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
                 // If exception is found, don't do anything to crash the bot. This isn't quite that important.
+                this.TelemetryClient.TrackException(ex);
             }
         }
 
@@ -209,6 +196,42 @@ namespace Microsoft.Bot.Component.Graph.Actions
         protected virtual void HandleServiceException(ServiceException ex)
         {
             throw MSGraphClient.HandleGraphAPIException(ex);
+        }
+
+        private async Task CallGraphInternalAsync(DialogContext dc, string token, HttpClient httpClient, CancellationToken cancellationToken)
+        {
+            IGraphServiceClient graphClient = MSGraphClient.GetAuthenticatedClient(token, httpClient);
+
+            var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+            this.PopulateParameters(dc.State, parameters);
+
+            Stopwatch sw = new Stopwatch();
+            Exception exCaught = null;
+
+            try
+            {
+                sw.Start();
+                await this.CallGraphServiceAsync(graphClient, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (ServiceException ex)
+            {
+                exCaught = ex;
+
+                this.HandleServiceException(ex);
+            }
+#pragma warning disable CA1031 // Do not catch general exception types. We're firing an event for this exception.
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+            {
+                exCaught = ex;
+            }
+            finally
+            {
+                sw.Stop();
+
+                this.FireTelemetryEvent(sw.ElapsedMilliseconds, exCaught);
+            }
         }
     }
 }

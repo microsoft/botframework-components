@@ -25,7 +25,7 @@
       ]
     },
     "token": {
-      "$ref": "schema:#/definitions/valueExpression",
+      "$ref": "schema:#/definitions/stringExpression",
       "title": "Token",
       "description": "Microsoft Graph API authentication token.",
       "examples": [

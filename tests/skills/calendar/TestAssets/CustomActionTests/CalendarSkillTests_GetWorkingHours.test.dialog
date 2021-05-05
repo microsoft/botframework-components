@@ -15,7 +15,7 @@
             "$kind": "Microsoft.Graph.Calendar.GetWorkingHours",
             "resultProperty": "dialog.result",
             "token": "='token'",
-            "addressProperty": "='meganb@vacontoso.onmicrosoft.com'"
+            "address": "='meganb@vacontoso.onmicrosoft.com'"
           },
           {
             "$kind": "Microsoft.SendActivity",

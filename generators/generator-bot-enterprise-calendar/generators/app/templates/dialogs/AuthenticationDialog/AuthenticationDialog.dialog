@@ -24,6 +24,23 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "teXtvE"
+          },
+          "condition": "=settings.oauthConnectionName == null || not(exists(settings.oauthConnectionName)) || empty(settings.oAuthConnectionName)",
+          "actions": [
+            {
+              "$kind": "Microsoft.TraceActivity",
+              "$designer": {
+                "id": "Svi926"
+              },
+              "name": "AuthenticationDialog.BeginDialog.Error",
+              "label": "OAuthConnectionNotConfigured"
+            }
+          ]
+        },
+        {
           "$kind": "Microsoft.OAuthInput",
           "$designer": {
             "id": "m7gWCJ"
@@ -66,7 +83,7 @@
                 "id": "4d4VCn"
               },
               "token": "=turn.token.token",
-              "addressProperty": "=turn.user.profile.userPrincipalName",
+              "address": "=turn.user.profile.userPrincipalName",
               "resultProperty": "user.workingHours"
             }
           ]

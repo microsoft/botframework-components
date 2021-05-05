@@ -26,11 +26,12 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             var response = await dc.Context.SendActivityAsync(activity, cancellationToken).ConfigureAwait(false);
 
             // Get activity ID (if there is one)
-            var activityId = response != null && !String.IsNullOrEmpty(response.Id) ? response.Id : String.Empty;
+            var activityId = response != null && !string.IsNullOrEmpty(response.Id) ? response.Id : string.Empty;
 
             // Save actvity ID to memory
             var idProperty = ActivityIdProperty?.GetValue(dc.State);
-            if (!String.IsNullOrEmpty(idProperty))
+
+            if (!string.IsNullOrEmpty(idProperty))
             {
                 dc.State.SetValue(idProperty, activityId);
             }

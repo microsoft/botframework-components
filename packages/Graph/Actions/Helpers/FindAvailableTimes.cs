@@ -49,35 +49,35 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// <summary>
         /// Gets or sets the events property.
         /// </summary>
-        [JsonProperty("eventsProperty")]
-        public ObjectExpression<List<CalendarSkillEventModel>> EventsProperty { get; set; }
+        [JsonProperty("events")]
+        public ArrayExpression<CalendarSkillEventModel> Events { get; set; }
 
         /// <summary>
         /// Gets or sets the property for the start of the working hours.
         /// </summary>
-        [JsonProperty("workingHourStartProperty")]
-        public ObjectExpression<DateTime?> WorkingHourStartProperty { get; set; }
+        [JsonProperty("workingHourStart")]
+        public ObjectExpression<DateTime?> WorkingHourStart { get; set; }
 
         /// <summary>
         /// Gets or sets the property for the end of the working hours.
         /// </summary>
-        [JsonProperty("workingHourEndProperty")]
-        public ObjectExpression<DateTime?> WorkingHourEndProperty { get; set; }
+        [JsonProperty("workingHourEnd")]
+        public ObjectExpression<DateTime?> WorkingHourEnd { get; set; }
 
         /// <summary>
         /// Gets or sets the property for the start date.
         /// </summary>
-        [JsonProperty("startProperty")]
-        public ObjectExpression<DateTime?> StartProperty { get; set; }
+        [JsonProperty("start")]
+        public ObjectExpression<DateTime?> Start { get; set; }
 
         /// <inheritdoc/>
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
-            var events = this.EventsProperty.GetValue(dcState);
-            var startProperty = this.StartProperty.GetValue(dcState);
-            var workingHourStartProperty = this.WorkingHourStartProperty.GetValue(dcState);
-            var workingHourEndProperty = this.WorkingHourEndProperty.GetValue(dcState);
+            var events = this.Events.GetValue(dcState);
+            var startProperty = this.Start.GetValue(dcState);
+            var workingHourStartProperty = this.WorkingHourStart.GetValue(dcState);
+            var workingHourEndProperty = this.WorkingHourEnd.GetValue(dcState);
             DateTime workingTimeStart = startProperty.Value.Date + workingHourStartProperty.Value.TimeOfDay;
             DateTime workingTimeEnd = startProperty.Value.Date + workingHourEndProperty.Value.TimeOfDay;
 
@@ -164,7 +164,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }

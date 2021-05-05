@@ -56,7 +56,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             // Get the user's manager
             GetManager managerAction = new GetManager();
-            DirectoryObject manager = await managerAction.CallGraphServiceWithResultAsync(client, parameters, cancellationToken);
+            DirectoryObject manager = await managerAction.CallGraphServiceWithResultAsync(client, parameters, cancellationToken).ConfigureAwait(false);
 
             // Now get the manager's direct report to get the user's peers
             var newParameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase)
@@ -67,7 +67,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
             };
 
             GetDirectReports directReportActions = new GetDirectReports();
-            IEnumerable<DirectoryObject> result = await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken);
+            IEnumerable<DirectoryObject> result = await directReportActions.CallGraphServiceWithResultAsync(client, newParameters, cancellationToken).ConfigureAwait(false);
 
             return result.Where(obj => obj.Id != (string)parameters["UserId"]);
         }
@@ -77,7 +77,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
         {
             if (this.UserId == null)
             {
-                throw new ArgumentNullException(nameof(this.UserId));
+                throw new InvalidOperationException($"GetPeers requires UserId property.");
             }
 
             int maxCount = DefaultMaxCount;

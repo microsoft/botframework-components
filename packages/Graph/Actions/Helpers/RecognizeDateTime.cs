@@ -48,21 +48,21 @@ namespace Microsoft.Bot.Components.Graph.Actions
         /// <summary>
         /// Gets or sets the query to perform recognition on.
         /// </summary>
-        [JsonProperty("queryProperty")]
-        public StringExpression QueryProperty { get; set; }
+        [JsonProperty("query")]
+        public StringExpression Query { get; set; }
 
         /// <summary>
         /// Gets or sets the time zone for converting recognized datetimes.
         /// </summary>
-        [JsonProperty("timeZoneProperty")]
-        public StringExpression TimeZoneProperty { get; set; }
+        [JsonProperty("timeZone")]
+        public StringExpression TimeZone { get; set; }
 
         /// <inheritdoc/>
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             var dcState = dc.State;
-            var queryProperty = this.QueryProperty.GetValue(dcState);
-            var timeZoneProperty = this.TimeZoneProperty.GetValue(dcState);
+            var queryProperty = this.Query.GetValue(dcState);
+            var timeZoneProperty = this.TimeZone.GetValue(dcState);
             var culture = this.GetCulture(dc);
             var timeZoneNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, GraphUtils.ConvertTimeZoneFormat(timeZoneProperty));
 
@@ -77,7 +77,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
             }
 
             // return the actionResult as the result of this operation
-            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken);
+            return await dc.EndDialogAsync(result: results, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private string GetCulture(DialogContext dc)

@@ -59,9 +59,9 @@
           "$designer": {
             "id": "SZKf8v"
           },
-          "queryProperty": "=$query",
+          "query": "=$query",
           "resultProperty": "$recognitionResults",
-          "timeZoneProperty": "=user.workingHours.timeZone.name"
+          "timeZone": "=user.workingHours.timeZone.name"
         },
         {
           "$kind": "Microsoft.Foreach",

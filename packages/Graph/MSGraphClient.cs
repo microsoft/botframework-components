@@ -12,7 +12,7 @@ namespace Microsoft.Bot.Components.Graph
     /// <summary>
     /// Client to call MS Graph service.
     /// </summary>
-    public class MSGraphClient
+    public static class MSGraphClient
     {
         private static IGraphServiceClient clientOverride;
 
@@ -47,7 +47,7 @@ namespace Microsoft.Bot.Components.Graph
 
                         // Get event times in the current time zone.
                         requestMessage.Headers.Add("Prefer", "outlook.timezone=\"" + TimeZoneInfo.Utc.Id + "\"");
-                        await Task.CompletedTask;
+                        await Task.CompletedTask.ConfigureAwait(false);
                     });
 
             return client;

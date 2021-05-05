@@ -21,6 +21,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class SendMEAttachmentsResponse : BaseTeamsCacheInfoResponseDialog
     {
         /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.SendMEAttachmentsResponse";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SendMEAttachmentsResponse"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -31,12 +37,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
-
-        /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.SendMEAttachmentsResponse";
 
         /// <summary>
         /// Gets or sets the Activity containing the Attachments to send.

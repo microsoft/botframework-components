@@ -6,10 +6,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
-using Microsoft.Bot.Builder.Dialogs;
 
 namespace Microsoft.Bot.Components.Teams.Actions
 {
@@ -21,6 +21,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
     public class GetTeamChannels : Dialog
     {
         /// <summary>
+        /// Class identifier.
+        /// </summary>
+        [JsonProperty("$kind")]
+        public const string Kind = "Teams.GetTeamChannels";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetTeamChannels"/> class.
         /// </summary>
         /// <param name="callerPath">Optional, source file full path.</param>
@@ -31,12 +37,6 @@ namespace Microsoft.Bot.Components.Teams.Actions
         {
             RegisterSourceLocation(callerPath, callerLine);
         }
-
-        /// <summary>
-        /// Class identifier.
-        /// </summary>
-        [JsonProperty("$kind")]
-        public const string Kind = "Teams.GetTeamChannels";
 
         /// <summary>
         /// Gets or sets an optional expression which if is true will disable this action.

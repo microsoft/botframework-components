@@ -28,7 +28,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             {
                 // Get activity ID
                 var activityId = ActivityId?.GetValue(dc.State);
-                if (String.IsNullOrEmpty(activityId))
+                if (string.IsNullOrEmpty(activityId))
                 {
                     throw new Exception($"{this.Id}: a valid '{nameof(ActivityId)}' wasn't provided.");
                 }

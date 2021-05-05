@@ -2,9 +2,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="**/*.blu;**/*.dialog;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt" Exclude="$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;wwwroot/**">
+    <Content Include="**/*.blu;**/*.dialog;**/*.json;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt"
+             Exclude="$(AppDesignerFolder)/**;$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;www/**;**/function.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -19,17 +21,10 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.7" /><%- packageReferences %>
   </ItemGroup>
   <ItemGroup>
-    <None Update="host.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="local.settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Update="local.settings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
-    <None Include="<%- settingsIncludePath %>appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="www\**\*.*">
+    </Content>
+    <None Include="www/**/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

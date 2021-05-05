@@ -42,22 +42,22 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// Gets or sets the list of attendees to the meeting.
         /// </summary>
         /// <value>The list of attendees to the meeting.</value>
-        [JsonProperty("attendeesProperty")]
-        public ObjectExpression<List<Attendee>> AttendeesProperty { get; set; }
+        [JsonProperty("attendees")]
+        public ArrayExpression<Attendee> Attendees { get; set; }
 
         /// <summary>
         /// Gets or sets the duration of the meeting.
         /// </summary>
         /// <value>The duration of th meeting.</value>
-        [JsonProperty("durationProperty")]
-        public IntExpression DurationProperty { get; set; }
+        [JsonProperty("duration")]
+        public IntExpression Duration { get; set; }
 
         /// <summary>
         /// Gets or sets the timezone in which to find meeting times for.
         /// </summary>
         /// <value>The timezone for the search query.</value>
-        [JsonProperty("timeZoneProperty")]
-        public StringExpression TimeZoneProperty { get; set; }
+        [JsonProperty("timeZone")]
+        public StringExpression TimeZone { get; set; }
 
         /// <inheritdoc />
         public override string DeclarativeType => FindMeetingTimesDeclarativeType;
@@ -69,8 +69,11 @@ namespace Microsoft.Bot.Component.Graph.Actions
             var duration = (int)parameters["Duration"];
             var timeZone = GraphUtils.ConvertTimeZoneFormat((string)parameters["Timezone"]);
 
-            MeetingTimeSuggestionsResult meetingTimesResult = await client.Me.FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
-                                                                             .Request().PostAsync(cancellationToken);
+            MeetingTimeSuggestionsResult meetingTimesResult = await client.Me
+                .FindMeetingTimes(attendees: attendees, minimumAttendeePercentage: 100, meetingDuration: new Duration(new TimeSpan(0, duration, 0)), maxCandidates: 10)
+                .Request()
+                .PostAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             var results = new List<CalendarSkillTimeSlotModel>();
             foreach (var timeSlot in meetingTimesResult.MeetingTimeSuggestions)
@@ -93,9 +96,9 @@ namespace Microsoft.Bot.Component.Graph.Actions
         /// <inheritdoc />
         protected override void PopulateParameters(DialogStateManager state, Dictionary<string, object> parameters)
         {
-            parameters.Add("Attendees", this.AttendeesProperty.GetValue(state));
-            parameters.Add("Duration", this.DurationProperty.GetValue(state));
-            parameters.Add("Timezone", this.TimeZoneProperty.GetValue(state));
+            parameters.Add("Attendees", this.Attendees.GetValue(state));
+            parameters.Add("Duration", this.Duration.GetValue(state));
+            parameters.Add("Timezone", this.TimeZone.GetValue(state));
         }
     }
 }
