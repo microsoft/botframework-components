@@ -1,4 +1,4 @@
-# Create custom actions (how-to, replaces existing)
+# Create custom actions (how to)
 
 In Bot Framework Composer, [actions](concept-dialog#action) are the main
 contents of a [trigger](concept-dialog#trigger). Actions help maintain

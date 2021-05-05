@@ -11,7 +11,7 @@ When you create a bot in Composer all of the necessary files to build and run yo
 
 ## Adaptive runtime
 
-The adaptive runtime is an extensible, configurable runtime for your bot that runtime wraps the Bot Framework SDK, and provides extension points to add additional functionality by importing packages, connection to skills, or adding your own coded extensions as components. It includes both the set of Bot Framework features (adapters, middleware, telemetry client, etc.) and the set of language or deployment-specific technologies (web servers, configuration, etc.) necessary to run your bot.
+The adaptive runtime is an extensible, configurable runtime for your bot that wraps the Bot Framework SDK, and provides extension points to add additional functionality by importing packages, connection to skills, or adding your own coded extensions as components. It includes both the set of Bot Framework features (adapters, middleware, telemetry client, etc.) and the set of language or deployment-specific technologies (web servers, configuration, etc.) necessary to run your bot.
 
 The `BotComponent` interface in the adaptive runtime describes a single method that accepts Service Collection and Configuration instances. The Service Collection provides components access to the common set of Bot Framework things that comprise the runtime. The Configuration instance provides access to a scoped set of user-provided configurations (like connection strings or secrets).
 
@@ -37,5 +37,5 @@ Typically, your component will be made up of the following pieces:
 
 ## Learn More
 
-- Create custom actions
+- [Create custom actions](create-custom-actions.md)
 - Create custom triggers

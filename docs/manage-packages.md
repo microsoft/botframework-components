@@ -16,7 +16,7 @@ You can install packages from Package Manager in Composer (preferred method) or 
 
 You can open Package Manager from the icon on the left navigation rail.
 
-![Package Manager](/assets/packageManager.png)
+![Package Manager](assets/packageManager.png)
 
 From the **Browse** tab, you can search for packages to add to your bot project. Package manager filters the list of packages to those tagged with `msbot-component` when connected to a public package feed, so you will not see all packages your bot project takes a dependency on (you can open your project with an IDE like Visual Studio to see all your package dependencies).
 
