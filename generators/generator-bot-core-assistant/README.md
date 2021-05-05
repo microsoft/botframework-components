@@ -22,7 +22,7 @@ A bot with Azure Language Understanding (LUIS) and common trigger phrases used t
 
 - [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
 - [Azure QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
-- A storage solution for persistent state storage like Azure CosmosDB
+- A storage solution for persistent state storage like Azure Cosmos DB
 
 ### Supported languages
 

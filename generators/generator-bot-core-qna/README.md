@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-core-qna [![NPM version][npm-image]][npm-url]
 
-A simple question-and-answer bot with Azure QnA Maker
+A simple question-and-answer bot with Azure QnA Maker.
 
 ### Recommended use
 
@@ -10,7 +10,7 @@ A simple question-and-answer bot with Azure QnA Maker
 
 ### Included capabilities
 
-- Answer questions from a QnA Maker knowledgebase
+- Answer questions from a QnA Maker knowled gebase
 
 ### Required Azure resources
 
@@ -26,5 +26,5 @@ A simple question-and-answer bot with Azure QnA Maker
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
 [luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-qna.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-qna

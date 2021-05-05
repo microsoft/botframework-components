@@ -1,6 +1,6 @@
 # @microsoft/generator-bot-empty [![NPM version][npm-image]][npm-url]
 
-A simple bot with an root dialog and greeting dialog.
+A simple bot with a root dialog and greeting dialog.
 
 ### Recommended use
 
@@ -24,5 +24,5 @@ A simple bot with an root dialog and greeting dialog.
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
 [luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty

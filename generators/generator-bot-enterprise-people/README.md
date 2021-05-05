@@ -37,5 +37,5 @@ The Enterprise People Bot uses packages to extend its capabilities. [Learn more]
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
 [luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people

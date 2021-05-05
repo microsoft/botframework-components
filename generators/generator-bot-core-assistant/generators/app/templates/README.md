@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This Bot Project was created using the Core Assistant template. Your bot is an assistant-style bot - it is designed as a base for a bot that will help your users accomplish multiple different tasks.
+This bot project was created using the Core Assistant template. Your bot is an assistant-style bot - it is designed as a base for a bot that will help your users accomplish multiple different tasks.
 
 ## Next steps
 

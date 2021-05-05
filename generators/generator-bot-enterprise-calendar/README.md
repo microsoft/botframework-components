@@ -1,10 +1,10 @@
 # @microsoft/generator-bot-enterprise-calendar [![NPM version][npm-image]][npm-url]
 
-A bot with the ability to interact with Office 365 Calendar using Microsoft Graph. [Learn more](https://aka.ms/EnterpriseCalendarBot)
+This bot project was created using the [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot) template. You **must complete the configuration steps outlined below for your bot to function.**
 
 ### Recommended use
 
-- Create a sophisticated bot that enables customers to interact with Office 365 calendar using Microsoft Graph
+- Create a sophisticated bot that enables customers to interact with Office 365 Calendar using Microsoft Graph
 - Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
 
 ### Included capabilities
@@ -35,5 +35,5 @@ The Enterprise Calendar Bot uses packages to extend its capabilities. [Learn mor
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
 [luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-calendar

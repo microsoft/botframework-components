@@ -1,11 +1,12 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-A bot with Azure Language Understanding (LUIS) and common trigger phrases used to direct the conversation flow to help customers accomplish common business tasks. [Learn more](https://aka.ms/EnterpriseAssistant)
+A bot with Azure Language Understanding (LUIS), Enterprise Calendar skill, Enterprise People skill and common trigger phrases used to direct the conversation flow to help customers accomplish common business tasks. [Learn more](https://aka.ms/EnterpriseAssistant)
 
 ### Recommended use
 
 - Create a sophisticated bot
 - Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
+- Enterprise assistant-style bots that use Office 365 features
 
 ### Included capabilities
 
@@ -15,13 +16,13 @@ A bot with Azure Language Understanding (LUIS) and common trigger phrases used t
 - Bot Framework Orchestrator to direct the conversation flow
 - Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
 - Asking for help
-- Disambiguation of user input (Intents)
+- Disambiguation of NLP results
 - Cancelling a dialog
 - Error handling
 - Repeat previous question
 - Getting customer feedback
 
-## Included packages
+### Included packages
 
 - [Help and Cancel Intent Handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
 - [Bot Framework Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Builder.AI.Orchestrator/)
@@ -42,14 +43,14 @@ The Enterprise Assistant Bot uses packages to extend its capabilities. [Learn mo
 - [Azure QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
 - A storage solution for persistent state storage like Azure Cosmos DB
 
-## Supported Languages
+### Supported Languages
 
 - English (en-US)
 
-## License
+### License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
 [luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-enterprise-assistant.svg
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg
 [npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-assistant

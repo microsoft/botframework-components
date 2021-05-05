@@ -24,7 +24,7 @@ Templates are pre-built bot projects designed for specific scenarios. We use [ye
 |[Enterprise Assistant Bot](/generators/generator-bot-enterprise-assistant) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-assistant) | A Core Assistant Bot with Calendar & People as skills. |
 |[Enterprise Calendar Bot](/generators/generator-bot-enterprise-calendar) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar) | A bot with the ability to interact with M365 Calendar using Microsoft Graph. |
 |[Enterprise People Bot](/generators/generator-bot-enterprise-people) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people) | A bot with the ability to search for people within Azure Active Directory using Microsoft Graph.|
-|[Adaptive Generator](/generators/generator-bot-adaptive) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
+|[Adaptive Bot Generator](/generators/generator-bot-adaptive) | [![npm version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive) | Used by other generators to scaffold web app or functions project. |
 
 ### Packages
 

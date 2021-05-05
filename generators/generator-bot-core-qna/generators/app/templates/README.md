@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This Bot Project was created using the Core bot with Azure QnA Maker template, and contains a minimal bot with a QnA Maker trigger.
+This bot project was created using the Core Bot with Azure QnA Maker template, and contains a minimal bot with a QnA Maker trigger.
 
 ## Next steps
 

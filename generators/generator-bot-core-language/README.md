@@ -19,7 +19,7 @@ A simple bot with Azure Language Understanding (LUIS) and common trigger phrases
 ### Required Azure resources
 
 - [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
-- A storage solution for persistent state storage like Azure CosmosDB
+- A storage solution for persistent state storage like Azure Cosmos DB
 
 ### Supported languages
 
