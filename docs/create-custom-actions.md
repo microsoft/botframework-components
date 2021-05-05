@@ -11,10 +11,6 @@ Composer.
 This article shows you how to include a custom action named
 `MultiplyDialog`.
 
-#### Note
-
-> Composer currently supports the C\# runtime and JavaScript (preview) Adaptive Runtimes.
-
 ## Prerequisites
 
 - A basic understanding of [actions](concept-dialog#action) in Composer.

@@ -2,17 +2,18 @@
 
 >Note: If you are not familiar with creating [NuGet](https://nuget.org) or [npm](https://npmjs.com) packages in general, you may want to consult their documentation to ensure you understand the basics.
 
-Packages are bits of bots that you want to reuse and/or share. They are simply standard NuGet or npm packages that contain any combination of the items listed below.
+Packages are bits of bots that you want to reuse and/or share. They are NuGet or npm packages that contain any combination of the items listed below.
 
 - Declarative files (.dialog, .lu, .lg, .qna)
 - Bot components like
   - Custom actions and triggers
   - Middleware
   - Adapters
+- Schema files
 
 At a high level, the steps for creating a package are:
 
-1. Create your dialog files (use Composer to create them).
+1. Create your declarative files (use Composer to create them).
 2. Create your components (use your favorite IDE to create them).
 3. Let Composer know about your package contents with schema files.
 4. Register your code extensions with the runtime through the `BotComponent` class.
@@ -22,20 +23,21 @@ At a high level, the steps for creating a package are:
 When your package is added to a bot from Package Manager in Composer, the following steps happen:
 
 1. The package is installed using `nuget|npm install`.
-2. Your declarative files are merged using the [Bot Frameowork CLI's](https://github.com/microsoft/botframework-cli) `dialog:merge` command.
-    1. `dialog:merge` adds a copy of any dialog assets (.lu/.lg/.qna/.dialog files) in your package to the corresponding folding in the bot project.
+2. Any declarative files in a folder named `exported` at the root of your package are merged using the [Bot Frameowork CLI's](https://github.com/microsoft/botframework-cli) `dialog:merge` command.
+    1. `dialog:merge` adds a copy of any dialog assets (.lu/.lg/.qna/.dialog files) in your package to the `imported` folder in the bot project.
+3. Any schema files in the package are merged with the other schema files in the bot project.
 
 > Note: While testing and debugging your package, you may find it useful to manually install and merge your package from the command line, rather than from Composer.
 
 ## Declarative files in packages
 
-You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages.
+You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages. Your declarative files **must** be in a folder named `exported` at the root of your package
 
 See the [Help and Cancel](/packages/HelpAndCancel) package for an example of a package containing a dialog.
 
 ## Components in packages
 
-The contents of your package are essentially the same as what you would create if you were [extending your bot with code](/docs/extending-with-code.md). Just make sure you're using the `BotComponent` class to register your components.
+The components in your package are essentially the same as what you would create if you were [extending your bot with code](/docs/extending-with-code.md). Just make sure you're using the `BotComponent` class to register your components.
 
 ### BotComponent
 
@@ -62,7 +64,7 @@ namespace MyBot
 
 ## Packaging your files
 
-You'll package your components using the normal `pack` command for your package type (NuGet or npm). Be sure to include any necessary declarative files, as they are typically not included by default (for NuGet, you'd add them in either the .proj or .nuspec file).
+You'll package your components using the normal `pack` command for your package type (NuGet or npm). Be sure to include any necessary declarative files, as they are typically not included by default (for NuGet, you'd add them in either the .proj or .nuspec file). See the example [.csproj file](/assets/MultiplyDialog.csproj) for how to include your declarative assets in an `exported` folder.
 
 ## Publishing your package
 
@@ -79,5 +81,6 @@ You should also use one or more of the following tags based on the contents of y
 To test the package, the easiest thing to do is to [publish to a local feed](https://docs.microsoft.com/nuget/hosting-packages/local-feeds). After setting up the local feed, add it to the Package Manager in Composer so that your local packages can be installed in a bot.
 
 ## Example project files
+
 - [DotNet](assets/MultiplyDialog.csproj)
 - JavaScript
