@@ -20,7 +20,8 @@
     "url": "https://github.com/Microsoft/botframework-components.git"
   },
   "scripts": {
-    "lint": "eslint -c .eslintrc.json ."
+    "lint": "eslint -c .eslintrc.json .",
+    "test": "mocha tests"
   },
   "dependencies": {
     "globby": "^11.0.2",
@@ -33,6 +34,9 @@
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
-    "prettier": "latest"
+    "mocha": "^8.3.2",
+    "prettier": "latest",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^6.0.0"
   }
 }
