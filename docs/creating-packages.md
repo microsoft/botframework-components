@@ -1,4 +1,4 @@
-# Creating packages
+# Creating packages (how to)
 
 >Note: If you are not familiar with creating [NuGet](https://nuget.org) or [npm](https://npmjs.com) packages in general, you may want to consult their documentation to ensure you understand the basics.
 
@@ -29,24 +29,7 @@ When your package is added to a bot from Package Manager in Composer, the follow
 
 ## Declarative files in packages
 
-Declarative files can be added to your package by placing them in a an `exported` folder in your package. You need to include a complete set of dialog files in order for Composer to recognize them. Use Composer to create your dialog, then add the complete dialog folder to your package. The folder structure should look similar to the below (depending on language encoding):
-
-- Exported
-    - YourDialogName
-        - knowledge-base/en-us
-            - en-us
-                - YourDialogName.en-us.qna
-        - language-generation
-            - en-us
-                - YourDialogName.en-us.lg
-        - language-understanding
-            - en-us
-                - YourDialogName.en-us.lu
-        - recognizers
-            - YourDialogName.en-us.dialog
-            - YourDialogName.lu.dialog
-            - YourDialogName.qna.dialog
-        - YourDialogName.dialog
+You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages. 
 
 See the [Help and Cancel](/packages/HelpAndCancel) package for an example of a package containing a dialog.
 
@@ -56,7 +39,7 @@ The contents of your package are essentially the same as what you would create i
 
 ### BotComponent
 
-To dynamically register your action with the Adaptive Runtime, you'll need to define a BotComponent by inheriting from the Microsoft.Bot.Builder.BotComponent class. For example, here is how you register a simple custom action called MyCustomAction:
+To dynamically register your action with the Adaptive Runtime, you'll need to define a `BotComponent` by inheriting from the Microsoft.Bot.Builder.BotComponent class. For example, here is how you register a simple custom action called MyCustomAction:
 
 ```c#
 using Microsoft.Bot.Builder;
@@ -101,4 +84,3 @@ The easiest thing to do is to publish to a local feed. Read about doing that her
 2. [Extending your bot using packages](/docs/extending-with-packages.md)
 3. [Extending your bot with code](/docs/extending-with-code.md)
 4. [Creating your own packages](/docs/creating-packages.md)
-5. [Creating your own templates](/docs/creating-templates.md)

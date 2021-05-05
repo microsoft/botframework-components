@@ -1,4 +1,4 @@
-# Extending your bot with packages
+# Extending your bot with packages (how to)
 
 Packages are bits of a bot you want to share/import like declarative dialog assets, custom adapters, middleware or custom actions. You can use packages published by Microsoft or other 3rd party developers, or you can create and publish your own packages.
 
