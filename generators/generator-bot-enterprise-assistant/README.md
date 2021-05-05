@@ -1,48 +1,36 @@
 # @microsoft/generator-bot-enterprise-assistant [![NPM version][npm-image]][npm-url]
 
-This template creates an Enterprise Assistant Bot, comprised of a root bot based on the Core Assistant Bot template, and pre-configured with the Enterprise Calendar Bot and Enterprise People Bot templates as skills. [Learn more](https://aka.ms/EnterpriseAssistant)
+A bot with Azure Language Understanding (LUIS) and common trigger phrases used to direct the conversation flow to help customers accomplish common business tasks. [Learn more](https://aka.ms/EnterpriseAssistant)
 
-Includes support for:
+### Recommended use
 
-- Greeting new and returning users
-- Asking for help
-- Cancelling a dialog
-- Submitting feedback about the bot
-- Error handling in conversations
-- Repeat the previous question
-- Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
-- Disambiguation of NLP results
+- Create a sophisticated bot
+- Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
 
-Included skills:
+### Included capabilities
+
 - [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot)
 - [Enterprise People Bot](https://aka.ms/EnterprisePeopleBot)
+- Greeting new and returning users
+- Bot Framework Orchestrator to direct the conversation flow
+- Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
+- Asking for help
+- Disambiguation of user input (Intents)
+- Cancelling a dialog
+- Error handling
+- Repeat previous question
+- Getting customer feedback
 
-## What this template is for
+## Included packages
 
-Use this template if you want to...
+- [Help and Cancel Intent Handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
+- [Bot Framework Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Builder.AI.Orchestrator/)
 
-- Create a conversational experience for common enterprise scenarios (i.e. calendar management and user directory lookup)
-- See examples of more complex conversational flows, and more advanced language understanding and generation
-- See an example of a root bot and skills handling complex user interactions including interruptions and Adaptive Cards
+The Enterprise Assistant Bot uses packages to extend its capabilities. [Learn more](https://aka.ms/ComponentTemplateDocumentation).
 
-## Packages
+### Required Azure resources
 
-Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
-
-This bot starts with the following packages:
-
-- [Help and Cancel intent handling](https://www.nuget.org/packages/Microsoft.Bot.Components.HelpAndCancel/)
-- [Orchestrator](https://www.nuget.org/packages/Microsoft.Bot.Builder.AI.Orchestrator/)
-
-## Supported Languages
-
-- English (en-US)
-
-## Azure Resource Deployment
-
-To run this bot you'll need the resources listed below. Create a publishing profile in Composer to provision and publish to your Azure resources for your bot.
-
-- Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+- Azure Bot Service Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
     - Calendars.ReadWrite
     - Contacts.Read
     - Directory.Read.All
@@ -50,19 +38,13 @@ To run this bot you'll need the resources listed below. Create a publishing prof
     - People.Read.All
     - User.ReadBasic.All
     - User.Read.All
-- [Language Understanding (LUIS)][luis], or another recognizer of your choice
-- [QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
+- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
+- [Azure QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
 - A storage solution for persistent state storage like Azure Cosmos DB
 
-## Using this template
+## Supported Languages
 
-### From Composer
-
-From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
-
-### From the command-line
-
-This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+- English (en-US)
 
 ## License
 

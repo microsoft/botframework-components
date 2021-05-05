@@ -1,35 +1,28 @@
 # @microsoft/generator-bot-empty [![NPM version][npm-image]][npm-url]
 
-This template creates a bot that sends a simple message when interacted with.
+A simple bot with an root dialog and greeting dialog.
 
-## What this template is for
+### Recommended use
 
-Use this template if you want to...
+- Start from scratch, with a basic bot without additions
+- Good for first time bot developers, or seasoned pros
 
-- Start from scratch, with minimal pre-built functionality.
-- Build your bot by composing an ad-hoc set of packages.
+### Included capabilities
 
-## Supported Languages
+- Greeting new and returning users
+
+### Required Azure resources
+
+- This template does not rely on any additional Azure resources
+
+### Supported languages
 
 - English (en-US)
 
-## Azure Resource Deployment
-
-This template does not rely on any additional Azure Resources.
-
-## Using this template
-
-### From Composer
-
-From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
-
-### From the command-line
-
-This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
-
-## License
+### License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-empty.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-empty
+[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
+[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg
+[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant

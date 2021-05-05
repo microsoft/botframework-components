@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This Bot Project was created using the **[Enterprise People Bot](https://aka.ms/EnterprisePeopleBot)** template. You **must complete the configuration steps outlined below for your bot to function.** 
+This Bot Project was created using the [Enterprise People Bot](https://aka.ms/EnterprisePeopleBot) template. You **must complete the configuration steps outlined below for your bot to function.**
 
 ## Configure your Enterprise Assistant
 To test this bot locally, complete the steps in the **[Enterprise People Bot Tutorial](https://aka.ms/CreatePeopleBot)**.
