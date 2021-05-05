@@ -4,8 +4,8 @@
 
 Packages are bits of bots that you want to reuse and/or share. They are simply standard NuGet or npm packages that contain any combination of the items listed below.
 
-- Complete sets of dialog files
-- Coded extensions like
+- Declarative files (.dialog, .lu, .lg, .qna)
+- Bot components like
   - Custom actions and triggers
   - Middleware
   - Adapters
@@ -13,7 +13,7 @@ Packages are bits of bots that you want to reuse and/or share. They are simply s
 At a high level, the steps for creating a package are:
 
 1. Create your dialog files (use Composer to create them).
-2. Create your code extensions (use your favorite IDE to create them).
+2. Create your components (use your favorite IDE to create them).
 3. Let Composer know about your package contents with schema files.
 4. Register your code extensions with the runtime through the `BotComponent` class.
 5. Package your files (use NuGet for C# runtime bots, and npm for bots using the JavaScript runtime).
@@ -33,7 +33,7 @@ You can include declarative files (.dialog, .lu, .lg, or .qna) in your packages.
 
 See the [Help and Cancel](/packages/HelpAndCancel) package for an example of a package containing a dialog.
 
-## Code extensions in packages
+## Components in packages
 
 The contents of your package are essentially the same as what you would create if you were [extending your bot with code](/docs/extending-with-code.md). Just make sure you're using the `BotComponent` class to register your components.
 
