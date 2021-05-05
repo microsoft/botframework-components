@@ -16,7 +16,7 @@ A bot with Azure Language Understanding (LUIS) and common trigger phrases used t
 - Cancelling a dialog
 - Get customer feedback
 - Repeat the previous question
-- Disambiguation of NLP results
+- Disambiguation when multiple intents are recognized
 
 ### Required Azure resources
 

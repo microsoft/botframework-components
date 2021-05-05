@@ -16,7 +16,7 @@ A bot with Azure Language Understanding (LUIS), Enterprise Calendar skill, Enter
 - Bot Framework Orchestrator to direct the conversation flow
 - Chit chat with QnA Maker ([professional personality](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base?tabs=v1))
 - Asking for help
-- Disambiguation of NLP results
+- Disambiguation when multiple intents are recognized
 - Cancelling a dialog
 - Error handling
 - Repeat previous question
