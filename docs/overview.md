@@ -1,11 +1,25 @@
 # Component model documentation overview
 
+## Table of Contents
+
+1. [Overview](/docs/overview.md)
+2. [Managing packages for your bot](/docs/managing-packages.md)
+3. [Extending your bot with code](/docs/extending-with-code.md)
+4. [Creating your own packages](/docs/creating-packages.md)
+5. [Creating custom actions](/docs/create-custom-actions.md)
+
+## Overview
+
+This folder contains documentation for creating components and working with packages. When these features are made generally available, this documentation will migrate to [https://docs.microsoft.com](https://docs.microsoft.com).
+
+## Notes
+
 In this folder there are both concept and how-to articles.
 
 Concept:
 
 - Extending with Code
-- Using packages (unsure if a concept article is needed here, not currently included)
+
 
 How-to
 
