@@ -64,7 +64,7 @@ This C\# custom action consists of the following:
 ## Adding the custom action to your bot project
 ------------------------------
 
-1. Navigate to your Composer bot project folder (eg. C:\MyBlankBot) and create a new folder for the custom action project.  For example, C:\MyBlankBot\MultiplyDialog.
+1. Navigate to your Composer bot project folder (eg. C:\MyEmptyBot) and create a new folder for the custom action project.  For example, C:\MyBlankBot\MultiplyDialog.
 
 1. Save [MultiplyDialog.cs](assets/MultiplyDialog.cs), [MultiplyDialog.schema](assets/MultiplyDialog.schema), [MultiplyDialog.csproj](assets/MultiplyDialog.csproj), and [MultiplyDialogBotComponent.cs](assets/MultiplyDialogBotComponent.cs) to this new folder.
 
