@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This Bot Project was created using the Conversational Core template, and contains support for a base set of conversational flows.
+This bot project was created using the Core Bot with Azure Language Understanding template, and contains support for a base set of conversational flows.
 
 ## Next steps
 
