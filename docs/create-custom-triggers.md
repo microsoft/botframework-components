@@ -1,19 +1,17 @@
-# Create custom actions (how to)
+# Create custom triggers (how to)
 
-In Bot Framework Composer, [actions](concept-dialog#action) are the main
-contents of a [trigger](concept-dialog#trigger). Actions help maintain
-conversation flow and instruct bots on how to fulfill user requests.
-Composer provides different types of actions, such as **Send a
-response**, **Ask a question**, and **Create a condition**. Besides
-these built-in actions, you can create and customize your own actions in
-Composer.
+In Bot Framework Composer, triggers are fired when events matching a condition occur.
 
-This article shows you how to include a custom action named
-`MultiplyDialog`.
+This article shows you how to include a custom trigger named
+`OnMembersAdded` that will fire when members are added to the conversation.
+
+#### Note
+
+> Composer currently supports the C\# runtime and JavaScript (preview) Adaptive Runtimes.
 
 ## Prerequisites
 
-- A basic understanding of [actions](concept-dialog#action) in Composer.
+- A basic understanding of [triggers](concept-dialog#trigger) in Composer.
 - [A basic bot built using Composer](quickstart-create-bot).
 - [Bot Framework CLI 4.10](https://botbuilder.myget.org/feed/botframework-cli/package/npm/@microsoft/botframework-cli) or later.
 
@@ -34,13 +32,13 @@ Framework tools:
 ## About this custom action
 ----------------------
 
-This C\# custom action consists of the following:
+This C\# custom trigger consists of the following:
 
 - A Composer project targeted for Dotnet.  This can be any Composer project.  One that already exists, or a new one you create.  If you want to experiment risk free, create a new Empty Bot in Composer.  This document assumes you create a Empty Bot named "MyEmptyBot".
 
-- The custom action code [MultiplyDialog.cs](assets/MultiplyDialog.cs) class, which defines the business logic of the custom action. In this example, two numbers passed as inputs are multiplied, and the result is the output.
+- The custom trigger code [OnMembersAdded.cs](assets/OnMembersAdded.cs) class, which defines the business logic of the custom action. In this example, when a ConversationUpdate Acitivity is recevied, and Activity.MembersAdded > 0.
 
-- The custom action schema [MultiplyDialog.schema](assets/MultiplyDialog.schema), which describes the operations available.
+- The custom trigger schema [Microsoft.OnMembersAdded.schema](assets/Microsoft.OnMembersAdded.schema) which describes the operations available, and [Microsoft.OnMembersAdded.uischema](assets/Microsoft.OnMembersAdded.uischema) which describes how it's displayed in Composer.
 
   [Bot Framework Schemas](https://github.com/microsoft/botframework-sdk/tree/master/schemas)
   are specifications for JSON data. They define the shape of the data
@@ -53,22 +51,22 @@ This C\# custom action consists of the following:
   dialogs](/en-us/azure/bot-service/bot-builder-dialogs-declarative)
   for more information.
 
-- A BotComponent, [MultiplyDialogBotComponent.cs](assets/MultiplyDialogBotComponent.cs) code file for component registration.  BotComponents are loaded by your bot (specifically by Adaptive Runtime), and made available to Composer.
+- A BotComponent, [OnMembersAddedBotComponent.cs](assets/OnMembersAddedBotComponent.cs) code file for component registration.  BotComponents are loaded by your bot (specifically by Adaptive Runtime), and made available to Composer.
 
     **Note** You can create a custom action without implementing BotComponent.  However, the Component Model in Bot Framework allows for easier reuse and is only slightly more work.  In a BotComponent, you add the needed services and objects via Dependency Injection, just as you would in Startup.cs.
 
 ## Adding the custom action to your bot project
 ------------------------------
 
-1. Navigate to your Composer bot project folder (eg. C:\MyEmptyBot) and create a new folder for the custom action project.  For example, C:\MyEmptyBot\MultiplyDialog.
+1. Navigate to your Composer bot project folder (eg. C:\MyEmptyBot) and create a new folder for the custom trigger project.  For example, C:\MyEmptyBot\CustomTrigger.
 
-1. Save [MultiplyDialog.cs](assets/MultiplyDialog.cs), [MultiplyDialog.schema](assets/MultiplyDialog.schema), [CustomAction.MultiplyDialog.csproj](assets/CustomAction.MultiplyDialog.csproj), and [MultiplyDialogBotComponent.cs](assets/MultiplyDialogBotComponent.cs) to this new folder.
+1. Save [OnMembersAdded.cs](assets/OnMembersAdded.cs), [Microsoft.OnMembersAdded.schema](assets/Microsoft.OnMembersAdded.schema), [Microsoft.OnMembersAdded.uischema](assets/Microsoft.OnMembersAdded.uischema), [CustomTrigger.OnMembersAdded.csproj](assets/CustomTrigger.OnMembersAdded.csproj), and [OnMembersAddedBotComponent.cs](assets/OnMembersAddedBotComponent.cs) to this new folder.
 
 1. Open your Empty Bot solution (C:\MyEmptyBot) in Visual Studio.
 
 1. Add Existing project to the solution.
 
-1. In the MyEmptyBot project, add a project reference to the MultiplyDialog project.  Alternatively, you can add `<ProjectReference Include="..\MultiplyDialog\CustomAction.MultiplyDialog.csproj" />` to the appropriate `ItemGroup` in MyEmptyBot.csproj.
+1. In the MyEmptyBot project, add a project reference to the CustomTrigger project.  Alternatively, you can add `<ProjectReference Include="..\CustomTrigger\CustomTrigger.OnMembersAdded.csproj" />` to the appropriate `ItemGroup` in MyEmptyBot.csproj.
 
 1. Run the command `dotnet build` on the project to
     verify if it passes build after adding custom actions to it. You
@@ -81,7 +79,7 @@ This C\# custom action consists of the following:
    "runtimeSettings": {
       "components": [
         {
-          "name": "CustomAction.MultiplyDialog"
+          "name": "CustomTrigger.OnMembersAdded"
         }
       ]
    }
@@ -91,7 +89,7 @@ This C\# custom action consists of the following:
 ----------------------
 
 Now you have customized your bot, the next step is to update the
-`sdk.schema` file to include the `MultiplyDialog.Schema` file.  This makes your custom action available for use in Composer.
+`sdk.schema` file to include the `Microsoft.OnMembersAdded.Schema` file.  This makes your custom trigger available for use in Composer.
 
 **You only need to perform these steps when adding new code extensions, or when the Schema for a component changes.**
 
@@ -106,8 +104,8 @@ the following commands:
     The above steps should generate a new `sdk.schema` file inside the
     `schemas` folder.
 
-1) Search for `MultiplyDialog` inside the `MyEmptyBot\schemas\sdk.schema` file and
-    validate that the partial schema for [MultiplyDialog.schema](assets/MultiplyDialog.schema) is included in `sdk.schema`.
+1) Search for `OnMembersAdded` inside the `MyEmptyBot\schemas\sdk.schema` file and
+    validate that the partial schema for [Microsoft.OnMembersAdded.schema](assets/Microsoft.OnMembersAdded.schema) is included in `sdk.schema`.
 
 ### Tip
 
@@ -119,21 +117,15 @@ Alternatively, you can select the `update-schema.sh` file inside the
 ----
 
 Open the bot project in Composer and you should be able to test your
-added custom action.  If the project is already loaded, return to `Home` in Composer, and reload the project.
+added custom trigger.  If the project is already loaded, return to `Home` in Composer, and reload the project.
 
-1. Open your bot in Composer. Select a trigger you want to associate this custom action with.
+1. Open your bot in Composer. Select a dialog you want to associate this custom trigger with and select **...**.
 
-2. Select **+** under the trigger node to see the actions menu. You
-   will see **Custom Actions** added to the menu. Select **Multiply**
-   from the menu.
+2. Select '**+ Add new trigger**' to see the triggers dialog. Select '**Activities**' for "What is the type of this trigger?". Select '**Members Added (ConversationUpdate activity)**' for "Which activity type?".
 
-3. On the **Properties** panel on the right side, enter two numbers in
-   the argument fields: **Arg1** and **Arg2**. Enter **dialog.result**
-   in the **Result** property field. For example, enter `99` for each field.
+3. Add a **Send a response** action and enter some text. For example "Members added".
 
-4. Add a **Send a response** action. Enter `99*99=${dialog.result}` in the Language Generation editor.
-
-5. Select **Restart Bot** to test the bot in the Emulator. Your bot
+4. Select **Restart Bot** to test the bot in the Emulator. Your bot
    will respond with the test result.
 
 ## Additional information
