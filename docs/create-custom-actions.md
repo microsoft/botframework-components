@@ -145,10 +145,3 @@ added custom action.  If the project is already loaded, return to `Home` in Comp
 
 - [Bot Framework SDK Schemas](https://github.com/microsoft/botframework-sdk/tree/master/schemas)
 - [Create schema files](/en-us/azure/bot-service/bot-builder-dialogs-declarative)
-
-## Docs table of contents
-
-1. [Overview](/docs/overview.md)
-2. [Extending your bot using packages](/docs/extending-with-packages.md)
-3. Extending your bot with code (this document)
-4. [Creating your own packages](/docs/creating-packages.md)

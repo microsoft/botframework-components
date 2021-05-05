@@ -77,10 +77,3 @@ Optionally, you can also use one or more of the following tags based on the cont
 - msbot-adapter
 
 The easiest thing to do is to publish to a local feed. Read about doing that here: [Setting up Local NuGet Feeds](https://docs.microsoft.com/nuget/hosting-packages/local-feeds).
-
-## Docs table of contents
-
-1. [Overview](/docs/overview.md)
-2. [Extending your bot using packages](/docs/extending-with-packages.md)
-3. [Extending your bot with code](/docs/extending-with-code.md)
-4. [Creating your own packages](/docs/creating-packages.md)

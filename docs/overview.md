@@ -20,7 +20,6 @@ Concept:
 
 - Extending with Code
 
-
 How-to
 
 - Creating packages
