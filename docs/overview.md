@@ -2,11 +2,11 @@
 
 ## Table of Contents
 
-1. [Overview](/docs/overview.md)
-2. [Managing packages for your bot](/docs/managing-packages.md)
-3. [Extending your bot with code](/docs/extending-with-code.md)
-4. [Creating your own packages](/docs/creating-packages.md)
-5. [Creating custom actions](/docs/create-custom-actions.md)
+1. **Overview**
+2. [Managing packages for your bot](manage-packages.md)
+3. [Extending your bot with code](extending-with-code.md)
+4. [Creating your own packages](create-packages.md)
+5. [Creating custom actions](create-custom-actions.md)
 
 ## Overview
 
@@ -23,9 +23,9 @@ Concept:
 How-to
 
 - Creating packages
-- create custom action
-- install packages
-- create packages
+- Create custom action
+- Install packages
+- Create packages
 
 There will eventually be additional how-to articles for creating additional component types - middleware, storage providers, adapters, etc.
 
