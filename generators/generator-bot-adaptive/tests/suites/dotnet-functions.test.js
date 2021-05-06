@@ -35,9 +35,9 @@ it(`should create file ${botName}.sln`, function () {
   const projectType = 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC';
 
   const botProjectGuidExpression = new RegExp(
-    `Project\\\(\\\"\\\{${projectType}\\\}\\\"\\\) = \\\"${botName}\\\", ` +
-    `\\\"${botName}\\\\${botName}.csproj\\\", ` +
-    `\\\"\\\{(.+)\\\}\\\"`,
+    `Project\\(\\"\\{${projectType}\\}\\"\\) = \\"${botName}\\", ` +
+      `\\"${botName}\\\\${botName}.csproj\\", ` +
+      `\\"\\{(.+)\\}\\"`,
     'gi'
   );
 
