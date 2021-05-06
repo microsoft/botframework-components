@@ -37,136 +37,211 @@ it(`should create file ${botName}.sln`, function () {
   const botProjectGuidExpression = new RegExp(
     `Project\\\(\\\"\\\{${projectType}\\\}\\\"\\\) = \\\"${botName}\\\", ` +
     `\\\"${botName}\\\\${botName}.csproj\\\", ` +
-    `\\\"\\\{(?<botProjectGuid>.+)\\\}\\\"`,
+    `\\\"\\\{(.+)\\\}\\\"`,
     'gi'
   );
 
-  const botProjectGuid = botProjectGuidExpression.exec(actualContent).groups.botProjectGuid;
+  const botProjectGuid = botProjectGuidExpression.exec(actualContent)[1];
 
-  const solutionGuidExpression = /SolutionGuid = \{(?<solutionGuid>.+)\}/gi;
-  const solutionGuid = solutionGuidExpression.exec(actualContent).groups.solutionGuid;
-  
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'botName.sln'), {
-    botName,
-    botProjectGuid,
-    projectType,
-    solutionGuid,
-  });
+  const solutionGuidExpression = /SolutionGuid = \{(.+)\}/gi;
+  const solutionGuid = solutionGuidExpression.exec(actualContent)[1];
+
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'botName.sln'),
+    {
+      botName,
+      botProjectGuid,
+      projectType,
+      solutionGuid,
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
 it(`should create file ${path.join(botName, 'appsettings.json')}`, function () {
   const filePath = path.join(botName, 'appsettings.json');
-  const content = reader.getJsonFileContent(path.join('assets', 'appsettings.json'), {
-    luis: {
-      name: botName,
-    },
-    runtime: {
-      command: `dotnet run --project ${botName}.csproj`,
-      key: `adaptive-runtime-${platform}-${integration}`,
-    },
-  });
+  const content = reader.getJsonFileContent(
+    path.join('assets', 'appsettings.json'),
+    {
+      luis: {
+        name: botName,
+      },
+      runtime: {
+        command: `dotnet run --project ${botName}.csproj`,
+        key: `adaptive-runtime-${platform}-${integration}`,
+      },
+    }
+  );
 
   runResult.assertJsonFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, `${botName}.botproj`)}`, function () {
+it(`should create file ${path.join(
+  botName,
+  `${botName}.botproj`
+)}`, function () {
   const filePath = path.join(botName, `${botName}.botproj`);
-  const content = reader.getJsonFileContent(path.join('assets', 'botName.botproj'), {
-    name: botName,
-  });
-  
+  const content = reader.getJsonFileContent(
+    path.join('assets', 'botName.botproj'),
+    {
+      name: botName,
+    }
+  );
+
   runResult.assertJsonFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, `${botName}.csproj`)}`, function () {
+it(`should create file ${path.join(
+  botName,
+  `${botName}.csproj`
+)}`, function () {
   const filePath = path.join(botName, `${botName}.csproj`);
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'botName.csproj'), {
-    botName,
-    packageReferences: '',
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'botName.csproj'),
+    {
+      botName,
+      packageReferences: '',
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
 it(`should create file ${path.join(botName, 'Program.cs')}`, function () {
   const filePath = path.join(botName, 'Program.cs');
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'Program.cs'), {
-    botName,
-    settingsDirectory: 'string.Empty',
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'Program.cs'),
+    {
+      botName,
+      settingsDirectory: 'string.Empty',
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
 it(`should create file ${path.join(botName, 'Startup.cs')}`, function () {
   const filePath = path.join(botName, 'Startup.cs');
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'Startup.cs'), {
-    botName,
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'Startup.cs'),
+    {
+      botName,
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'Controllers', 'BotController.cs')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'Controllers',
+  'BotController.cs'
+)}`, function () {
   const filePath = path.join(botName, 'Controllers', 'BotController.cs');
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'Controllers', 'BotController.cs'), {
-    botName,
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'Controllers', 'BotController.cs'),
+    {
+      botName,
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'Controllers', 'SkillController.cs')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'Controllers',
+  'SkillController.cs'
+)}`, function () {
   const filePath = path.join(botName, 'Controllers', 'SkillController.cs');
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'Controllers', 'SkillController.cs'), {
-    botName,
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'Controllers', 'SkillController.cs'),
+    {
+      botName,
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'Properties', 'launchSettings.json')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'Properties',
+  'launchSettings.json'
+)}`, function () {
   const filePath = path.join(botName, 'Properties', 'launchSettings.json');
-  const content = reader.getFileContent(path.join('dotnet', 'webapp', 'Properties', 'launchSettings.json'));
+  const content = reader.getFileContent(
+    path.join('dotnet', 'webapp', 'Properties', 'launchSettings.json')
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'schemas', 'sdk.schema')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'schemas',
+  'sdk.schema'
+)}`, function () {
   const filePath = path.join(botName, 'schemas', 'sdk.schema');
-  const content = reader.getFileContent(path.join('assets', 'schemas', 'sdk.schema'));
+  const content = reader.getFileContent(
+    path.join('assets', 'schemas', 'sdk.schema')
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'schemas', 'sdk.uischema')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'schemas',
+  'sdk.uischema'
+)}`, function () {
   const filePath = path.join(botName, 'schemas', 'sdk.uischema');
-  const content = reader.getFileContent(path.join('assets', 'schemas', 'sdk.uischema'));
+  const content = reader.getFileContent(
+    path.join('assets', 'schemas', 'sdk.uischema')
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'schemas', 'update-schema.ps1')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'schemas',
+  'update-schema.ps1'
+)}`, function () {
   const filePath = path.join(botName, 'schemas', 'update-schema.ps1');
-  const content = reader.getFileContent(path.join('assets', 'schemas', 'update-schema.ps1'));
+  const content = reader.getFileContent(
+    path.join('assets', 'schemas', 'update-schema.ps1')
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'schemas', 'update-schema.sh')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'schemas',
+  'update-schema.sh'
+)}`, function () {
   const filePath = path.join(botName, 'schemas', 'update-schema.sh');
-  const content = reader.getFileContent(path.join('assets', 'schemas', 'update-schema.sh'));
+  const content = reader.getFileContent(
+    path.join('assets', 'schemas', 'update-schema.sh')
+  );
 
   runResult.assertFileContent(filePath, content);
 });
 
-it(`should create file ${path.join(botName, 'wwwroot', 'default.htm')}`, function () {
+it(`should create file ${path.join(
+  botName,
+  'wwwroot',
+  'default.htm'
+)}`, function () {
   const filePath = path.join(botName, 'wwwroot', 'default.htm');
-  const content = reader.getTemplateFileContent(path.join('dotnet', 'webapp', 'wwwroot', 'default.htm'), {
-    botName,
-  });
+  const content = reader.getTemplateFileContent(
+    path.join('dotnet', 'webapp', 'wwwroot', 'default.htm'),
+    {
+      botName,
+    }
+  );
 
   runResult.assertFileContent(filePath, content);
 });
