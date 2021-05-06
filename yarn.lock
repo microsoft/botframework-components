@@ -138,6 +138,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
+    ejs: ^3.1.6
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -147,7 +148,6 @@ __metadata:
     prettier: latest
     runtypes: ~5.1.0
     uuid: ^8.3.1
-    yeoman-assert: ^3.1.1
     yeoman-generator: ^1.1.1
     yeoman-test: ^6.0.0
   languageName: unknown
@@ -10023,7 +10023,7 @@ typescript@^4.0.5:
   languageName: node
   linkType: hard
 
-"yeoman-assert@npm:^3.1.0, yeoman-assert@npm:^3.1.1":
+"yeoman-assert@npm:^3.1.0":
   version: 3.1.1
   resolution: "yeoman-assert@npm:3.1.1"
   checksum: 46b7a2b9459d55a0965c99ea01712254071885f5cf0c1975c442707edfe1070ecccd2ef1f471dcab3043699d0b1823c928743c4b6244c788706ac3e23f81df82
