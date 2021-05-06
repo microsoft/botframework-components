@@ -22,15 +22,19 @@ To install a package, select the package you want to install from the list, then
 
 When a new version of your package is available, you can update to the new version using Package Manager. From the **Browse** tab in Package Manager select one of your installed packages. If an updated version of the package is available, the new version will be shown on the button on the package details pane.
 
+If you are updating a package that contains declarative assets that you have altered, installing the new version of the package will replace your customizations with what is contained in the updated package. For example, if you install the Welcome package and change the message it sends, then in the future you update to a newer version of the Welcome package, those changes would be lost.
+
 ## Remove packages
 
-asdf
+You can also remove packages from Package Manager in Composer. When you remove a package, any declarative assets in the package that were copied into your `imported` folder will be deleted.
+
+From the **Installed** tab, select a package and then select the **Uninstall** button. 
 
 ## Using CLI Tooling
 
 > Managing packages using Package Manager in Composer is the preferred way to work with packages.
 
-You can also manage packages for you bot using command line tooling, which can be useful for debugging or other advanced scenarios.
+You can also manage packages for you bot using command line tooling, which can be useful for debugging or other advanced scenarios. Keep in mind that Composer is performing more actions that just add/update/remove of packages - if you choose to manage your packages outside of Composer you'll need to manually perform the steps outlined below.
 
 ### Add the package
 
