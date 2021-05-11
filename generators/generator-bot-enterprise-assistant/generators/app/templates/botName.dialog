@@ -496,7 +496,7 @@
           "eventValue": "Calendar"
         }
       ],
-      "condition": "=turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8 && conversation.activeSkill != 'Calendar'"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -522,7 +522,7 @@
           "eventValue": "People"
         }
       ],
-      "condition": "=turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8 && conversation.activeSkill != 'People'"
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
@@ -558,6 +558,14 @@
               "value": "Calendar",
               "actions": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Fvjb09"
+                  },
+                  "property": "conversation.activeSkill",
+                  "value": "Calendar"
+                },
+                {
                   "$kind": "Microsoft.BeginSkill",
                   "$designer": {
                     "id": "lnBCke"
@@ -576,6 +584,14 @@
             {
               "value": "People",
               "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cx0OI0"
+                  },
+                  "property": "conversation.activeSkill",
+                  "value": "People"
+                },
                 {
                   "$kind": "Microsoft.BeginSkill",
                   "$designer": {
@@ -601,6 +617,13 @@
           },
           "condition": "exists($skillHandled) && $skillHandled == false",
           "actions": [
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "mnt9MF"
+              },
+              "property": "conversation.activeSkill"
+            },
             {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
