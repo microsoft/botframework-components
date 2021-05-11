@@ -140,6 +140,13 @@
           "activity": "${SendActivity_bGYBta()}"
         },
         {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "JoL99F"
+          },
+          "property": "conversation.activeSkill"
+        },
+        {
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "5BAUTN"
@@ -611,19 +618,19 @@
           ]
         },
         {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "2rIt4u"
+          },
+          "property": "conversation.activeSkill"
+        },
+        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "RieQAx"
           },
           "condition": "exists($skillHandled) && $skillHandled == false",
           "actions": [
-            {
-              "$kind": "Microsoft.DeleteProperty",
-              "$designer": {
-                "id": "mnt9MF"
-              },
-              "property": "conversation.activeSkill"
-            },
             {
               "$kind": "Microsoft.TraceActivity",
               "$designer": {
