@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="**/*.blu;**/*.dialog;**/*.json;**/*.lg;**/*.lu;**/*.onnx;**/*.qna;**/*.txt"
-             Exclude="$(AppDesignerFolder)/**;$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;www/**;**/function.json">
+             Exclude="$(AppDesignerFolder)/**;$(BaseOutputPath)/**;$(BaseIntermediateOutputPath)/**;wwwroot/**;**/function.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -24,7 +24,7 @@
     <Content Update="local.settings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
-    <None Include="www/**/*.*">
+    <None Include="wwwroot/**/*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
