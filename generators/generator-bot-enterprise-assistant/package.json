@@ -25,9 +25,9 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0-rc",
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.0.0-rc",
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.0.0-rc",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0",
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.0.0",
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.0.0",
     "uuid": "^8.3.2",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
