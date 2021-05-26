@@ -1,11 +1,6 @@
 name: LU Testing
 
-on:
-  push:
-  pull_request:
-  schedule:
-    # Run once a day
-    - cron: '0 * */1 * *'
+on: [push]
 
 jobs:
   luValidation:
