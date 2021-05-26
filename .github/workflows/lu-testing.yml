@@ -1,0 +1,22 @@
+name: LU Testing
+
+on:
+  schedule:
+    # Run once a day
+    - cron: '0 * */1 * *'
+
+jobs:
+  luValidation:
+    name: LU Validation (Enterprise Assistant)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        env:
+          Authoring_Key: ${{ secret.LUISAUTHORINGKEY }}
+          Prediction_Key: ${{ secret.LUISPREDICTIONKEY }}
+        with:
+          python-version: '3.x'
+      - run: python ./main.py  build_test --name=EALuTest --output=./out --botname=EnterpriseAssistant --authoringkey=$Authoring_Key --region=westus --trainlu=../../../generators/generator-bot-enterprise-assistant/generators/app/templates/language-understanding\en-us\botName.en-us.lu --testlu=../tests/enterpriseassistant.tests.lu --dialog=multiLanguage --suffix=automation --authoringendpoint=https://eatest-authoring.cognitiveservices.azure.com/ --predictionkey=$Prediction_Key --predictionendpoint=https://eatest.cognitiveservices.azure.com/
+        working-directory: ./tests/lu/code
