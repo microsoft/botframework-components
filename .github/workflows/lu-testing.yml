@@ -1,7 +1,10 @@
 name: LU Testing
 
 on:
-  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
   schedule:
     # Run once a day
     - cron: '0 * */1 * *'
