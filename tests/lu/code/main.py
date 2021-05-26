@@ -46,7 +46,7 @@ def build(luis_config, output_folder):
     print('Building model...')
     model_folder = os.path.join(output_folder, "model")
     os.makedirs(model_folder)
-    run_cmd("bf luis:build --botName {} --authoringKey {} --region {} --in {} --out {} --dialog={} --suffix {} --log --endpoint {}".format(
+    run_cmd("npx bf luis:build --botName {} --authoringKey {} --region {} --in {} --out {} --dialog={} --suffix {} --log --endpoint {}".format(
         luis_config["BotName"],
         GetConfig(luis_config, "AuthoringKey"),
         luis_config["Region"],
@@ -57,7 +57,7 @@ def build(luis_config, output_folder):
         GetConfig(luis_config, "AuthoringEndpoint")))
 
     model_json_file = os.path.join(model_folder, "model.json")
-    run_cmd("bf luis:convert --in {} --out={}".format(
+    run_cmd("npx bf luis:convert --in {} --out={}".format(
         luis_config["TrainLu"],
         model_json_file
     ))
@@ -67,7 +67,7 @@ def build(luis_config, output_folder):
 def test(output_folder, pred_key, pred_endpoint, app_id, test_file, test_name):
     print("Testing model...")
     test_file_name = os.path.join(output_folder, test_name + ".out")
-    run_cmd("bf luis:test --in {} --subscriptionKey={} --appId={} -o {} --endpoint={} ".format(
+    run_cmd("npx bf luis:test --in {} --subscriptionKey={} --appId={} -o {} --endpoint={} ".format(
         test_file,
         pred_key,
         app_id,
@@ -76,7 +76,7 @@ def test(output_folder, pred_key, pred_endpoint, app_id, test_file, test_name):
     ))
 
     model_json_file = os.path.join(output_folder, "test.json")
-    run_cmd("bf luis:convert --in {} --out={}".format(
+    run_cmd("npx bf luis:convert --in {} --out={}".format(
         test_file,
         model_json_file
     ))
