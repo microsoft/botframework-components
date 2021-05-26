@@ -21,7 +21,7 @@ jobs:
         
       - uses: actions/setup-node@v2
 
-      - run: npm install -g @microsoft/botframework-cli
+      - run: npm install @microsoft/botframework-cli
 
       - run: python ./main.py  build_test --name=EALuTest --output=./out --botname=EnterpriseAssistant --authoringkey=$Authoring_Key --region=westus --trainlu=../../../generators/generator-bot-enterprise-assistant/generators/app/templates/language-understanding/en-us/botName.en-us.lu --testlu=../tests/enterpriseassistant.tests.lu --dialog=multiLanguage --suffix=automation --authoringendpoint=https://eatest-authoring.cognitiveservices.azure.com/ --predictionkey=$Prediction_Key --predictionendpoint=https://eatest.cognitiveservices.azure.com/
         env:
