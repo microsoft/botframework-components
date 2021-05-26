@@ -221,29 +221,29 @@ def read_params():
         prediction_endpoint = ''
 
         for opt, arg in opts:
-            if opt in ('-n', '--name'):
+            if opt in ('--name'):
                 name = arg
-            if opt in ('-o', '--output'):
+            if opt in ('--output'):
                 output = arg
-            if opt in ('-bn', '--botname'):
+            if opt in ('--botname'):
                 bot_name = arg
-            if opt in ('-r', '--region'):
+            if opt in ('--region'):
                 region = arg
-            if opt in ('-ak', '--authoringkey'):
+            if opt in ('--authoringkey'):
                 authoring_key = arg
-            if opt in ('-pk', '--predictionkey'):
+            if opt in ('--predictionkey'):
                 prediction_key = arg
-            if opt in ('-trlu', '--trainlu'):
+            if opt in ('--trainlu'):
                 train_lu = arg
-            if opt in ('-tslu', '--testlu'):
+            if opt in ('--testlu'):
                 test_lu = arg
-            if opt in ('-d', '--dialog'):
+            if opt in ('--dialog'):
                 dialog = arg
-            if opt in ('-s', '--suffix'):
+            if opt in ('--suffix'):
                 suffix = arg
-            if opt in ('-ae', '--authoringendpoint'):
+            if opt in ('--authoringendpoint'):
                 authoring_endpoint = arg
-            if opt in ('-pe', '--predictionendpoint'):
+            if opt in ('--predictionendpoint'):
                 prediction_endpoint = arg
     except Exception as e:
         print(e.Message)
