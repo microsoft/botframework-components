@@ -1,3 +1,4 @@
+import datetime
 import pdb 
 
 class StatData:
@@ -17,10 +18,6 @@ class StatData:
                         f1: = 2 prec * recall / (prec + recall)
                     }
                 },
-                "total": {
-                    micro_f1:
-                    macro_f1:
-                }
             }
         }
         '''
@@ -32,35 +29,24 @@ class StatData:
         get a str of table view
         """
 
-        try:
-            table_keys = sorted(list(self.data.keys()))
-        except:
-            print('except')
-            pdb.set_trace()
+        res_str = "Timestamp,LabelName,F1,Precision,Recall,NumLabels,Tp,Fp,Fn\n"
 
-        res_str = ""
-        for table_key in table_keys:
-            res_str += table_key + "\n"
-            res_str += "LabelName,F1,Precision,Recall,NumLabels\n"
+        for label in LabelList:
+            dic = self.data.get("breakdown", {}).get(label, {})
+            if dic=={}: continue 
 
-            for label in LabelList:
-                dic = self.data[table_key].get("breakdown", {}).get(label, {})
-                if dic=={}: continue 
-
-                res_str += label + "," +\
-                           str(dic["f1"]) + "," +\
-                           str(dic["precision"]) + "," +\
-                           str(dic["recall"]) + "," +\
-                           str(dic["n_examples"]) + "\n"
-            
-            dic = self.data[table_key].get("total", {})
-            if dic == {}: continue
-            res_str += "MicroF1," + str(dic["micro_f1"]) + "\n"
-            res_str += "MacroF1," + str(dic["macro_f1"]) + "\n"
+            res_str += datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "," +  label + "," +\
+                        str(dic["f1"]) + "," +\
+                        str(dic["precision"]) + "," +\
+                        str(dic["recall"]) + "," +\
+                        str(dic["n_examples"]) + "," +\
+                        str(dic["tp"]) + "," +\
+                        str(dic["fp"]) + "," +\
+                        str(dic["fn"]) + "\n"
 
         return res_str
 
-    def add_json_obj(self, json_obj, json_obj_label, LabelSet, LabelKey):
+    def add_json_obj(self, json_obj, LabelSet, LabelKey):
         '''
         Input:
           json_obj: an object obtained from ClassificationReport.json or EntitiesReport.json
@@ -95,8 +81,7 @@ class StatData:
         '''
         labels = sorted(list(LabelSet))
         res = {
-            "breakdown": {},
-            "total": {"micro_f1":0, "macro_f1":0}}
+            "breakdown": {}}
         for label in labels:
             res["breakdown"][label] = {"fp": 0, "fn": 0, "tp": 0, "n_examples": 0, "precision": 0, "recall": 0, "f1": 0}
 
@@ -146,19 +131,8 @@ class StatData:
             macro_prec += prec 
             macro_rec += rec 
             macro_cnt += 1
-        
-        micro_prec = float_div(micro_tp, micro_tp + micro_fp)
-        micro_rec = float_div(micro_tp, micro_tp + micro_fn)
-        micro_f1 = float_div(2 * micro_prec * micro_rec, micro_prec + micro_rec)
 
-        macro_prec = float_div(macro_prec, macro_cnt)
-        macro_rec = float_div(macro_rec, macro_cnt) 
-        macro_f1 = float_div(2 * macro_prec * macro_rec, macro_prec + macro_rec)
-
-        res["total"]["micro_f1"] = micro_f1
-        res["total"]["macro_f1"] = macro_f1 
-
-        self.data[json_obj_label] = res 
+        self.data = res 
 
         return
 

@@ -189,7 +189,7 @@ def save_metrics(output_folder, predictions):
 
 def create_out_folder(config):
     luis_config = config["LuisConfig"]
-    output_folder = os.path.join(config["OutputFolder"], config["Name"] + "_" + datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    output_folder = os.path.join(config["OutputFolder"], config["Name"] + "_" + datetime.datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S'))
     os.makedirs(output_folder)
 
     # Copy config files
@@ -205,7 +205,7 @@ def create_out_folder(config):
 
 def read_params():
     try:
-        opts, _ = getopt.getopt(argv[2:], '', ['name=', 'output=', 'botname=', 'region=', 'authoringkey=', 'predictionkey=', 'trainlu=', 'testlu=', 'dialog=','suffix=', 'authoringendpoint=', 'predictionendpoint='])
+        opts, _ = getopt.getopt(argv[2:], '', ['name=', 'output=', 'botname=', 'region=', 'authoringkey=', 'predictionkey=', 'trainlu=', 'testlu=', 'dialog=','suffix=', 'authoringendpoint=', 'predictionendpoint=', 'sqlserver=', 'sqluser=', 'sqlpassword=', 'sqldatabase='])
         
         name = ''
         output = ''
@@ -219,6 +219,10 @@ def read_params():
         suffix = ''
         authoring_endpoint = ''
         prediction_endpoint = ''
+        sql_server = ''
+        sql_database = ''
+        sql_user = ''
+        sql_password = ''
 
         for opt, arg in opts:
             if opt in ('--name'):
@@ -245,17 +249,25 @@ def read_params():
                 authoring_endpoint = arg
             if opt in ('--predictionendpoint'):
                 prediction_endpoint = arg
+            if opt in ('--sqlserver'):
+                sql_server = arg
+            if opt in ('--sqluser'):
+                sql_user = arg
+            if opt in ('--sqlpassword'):
+                sql_password = arg
+            if opt in ('--sqldatabase'):
+                sql_database = arg
     except Exception as e:
         print(e.Message)
         print('Exception parsing parameters. Usage:')
         print('main.py (build|test|build_test) --config=file.json')
         exit(2)
 
-    config = {'Name' : name, 'OutputFolder' : output, 'LuisConfig' : { 'BotName' : bot_name, 'AuthoringKey' : authoring_key, 'Region' : region, 'TrainLu' : train_lu, 'TestLu' : test_lu, 'Dialog' : dialog, 'Suffix' : suffix, 'AuthoringEndpoint' : authoring_endpoint, 'PredictionKey' : prediction_key, 'PredictionEndpoint' : prediction_endpoint }}
-    
-    return argv[1], config
+    config = {'Name' : name, 'OutputFolder' : output, 'LuisConfig' : { 'BotName' : bot_name, 'AuthoringKey' : authoring_key, 'Region' : region, 'TrainLu' : train_lu, 'TestLu' : test_lu, 'Dialog' : dialog, 'Suffix' : suffix, 'AuthoringEndpoint' : authoring_endpoint, 'PredictionKey' : prediction_key, 'PredictionEndpoint' : prediction_endpoint }, 'SqlConfig' : { 'SqlServer' : sql_server, 'SqlDatabase' : sql_database, 'SqlUser' : sql_user, 'SqlPassword' : sql_password }}
 
-def produce_metrics(predictions_path, metrics_output_dir, model_json_file):
+    return argv[1], config 
+
+def produce_metrics(predictions_path, metrics_output_dir, model_json_file, config):
     '''
     generate:
         <metrics_output_dir>\ClassificationErrorAnalysisReport.json
@@ -327,6 +339,11 @@ def produce_metrics(predictions_path, metrics_output_dir, model_json_file):
         res_dir_list,
         res_dir_description_list,
         metrics_output_dir,
+        config["LuisConfig"]["BotName"],
+        config["SqlConfig"]["SqlServer"],
+        config["SqlConfig"]["SqlDatabase"],
+        config["SqlConfig"]["SqlUser"],
+        config["SqlConfig"]["SqlPassword"],
         options
     )
 
@@ -351,7 +368,8 @@ def main():
         produce_metrics(
             predictions_path,
             os.path.join(output_folder, "metrics"),
-            test_gold_file)
+            test_gold_file,
+            config)
 
 if __name__ == '__main__':
     main()
