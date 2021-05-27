@@ -61,12 +61,6 @@ def send_intent_stats_to_sql(
     table_name : str,
     task_type : str) :
 
-    print('Server: ' + sql_server)
-    print('DB: ' + sql_database)
-    print('USR: ' + sql_user)
-    print('PW: ' + sql_password)
-    print('Table: ' + table_name)
-
     sql_string = "INSERT INTO [dbo].[{}] (Timestamp, Intent, F1, Precision, Recall, NumLabels, Tp, Fp, Fn) VALUES ('{}', '{}', {}, {}, {}, {}, {}, {}, {})"
     
     if task_type == 'entity':
