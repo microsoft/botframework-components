@@ -26,8 +26,9 @@ jobs:
           npm install @microsoft/botframework-cli
           
       - name: Run Test
-        run: python ./main.py  build_test --name=EALuTest --output=./out --botname=EnterpriseAssistant --authoringkey=$Authoring_Key --region=westus --trainlu=../../../generators/generator-bot-enterprise-assistant/generators/app/templates/language-understanding/en-us/botName.en-us.lu --testlu=../tests/enterpriseassistant.tests.lu --dialog=multiLanguage --suffix=automation --authoringendpoint=https://eatest-authoring.cognitiveservices.azure.com/ --predictionkey=$Prediction_Key --predictionendpoint=https://eatest.cognitiveservices.azure.com/
+        run: python ./main.py  build_test --name=EALuTest --output=./out --botname=EnterpriseAssistant --authoringkey=$Authoring_Key --region=westus --trainlu=../../../generators/generator-bot-enterprise-assistant/generators/app/templates/language-understanding/en-us/botName.en-us.lu --testlu=../tests/enterpriseassistant.tests.lu --dialog=multiLanguage --suffix=automation --authoringendpoint=https://eatest-authoring.cognitiveservices.azure.com/ --predictionkey=$Prediction_Key --predictionendpoint=https://eatest.cognitiveservices.azure.com/ --sqlserver=ealuistesting.database.windows.net --sqldatabase=LuisTestingResult --sqluser=LuisAdmin --sqlpassword=$Sql_Password
         env:
           Authoring_Key: ${{ secrets.LUISAUTHORINGKEY }}
           Prediction_Key: ${{ secrets.LUISPREDICTIONKEY }}
+          Sql_Password: ${{ secrets.LuisResultSqlPassword }}
         working-directory: ./tests/lu/code
