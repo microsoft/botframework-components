@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install seaborn matplotlib
+          python -m pip install seaborn matplotlib pyodbc
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         
       - uses: actions/setup-node@v2
