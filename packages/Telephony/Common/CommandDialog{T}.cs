@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Schema;
+using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Common
 {
@@ -24,12 +24,21 @@ namespace Microsoft.Bot.Components.Telephony.Common
     public class CommandDialog<T> : Dialog
     {
         /// <summary>
+        /// Gets or sets intteruption policy. 
+        /// </summary>
+        /// <value>
+        /// Bool or expression which evalutes to bool.
+        /// </value>
+        [JsonProperty("allowInterruptions")]
+        public BoolExpression AllowInterruptions { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the name of the command.
         /// </summary>
         /// <value>
         /// <see cref="StringExpression"/>.
         /// </value>
-        protected StringExpression Name { get; set; }
+        protected StringExpression CommandName { get; set; }
 
         /// <summary>
         /// Gets or sets the data payload of the command.
@@ -42,8 +51,7 @@ namespace Microsoft.Bot.Components.Telephony.Common
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             // TODO: check name not null / expression has value
-
-            var startRecordingActivity = CreateCommandActivity<T>(dc.Context, this.Data, this.Name.GetValue(dc.State));
+            var startRecordingActivity = CreateCommandActivity<T>(dc.Context, this.Data, this.CommandName.GetValue(dc.State));
 
             var response = await dc.Context.SendActivityAsync(startRecordingActivity, cancellationToken).ConfigureAwait(false);
 
@@ -54,18 +62,17 @@ namespace Microsoft.Bot.Components.Telephony.Common
 
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            // check activity
             var activity = dc.Context.Activity;
 
-            // If command result, handle it
+            // We are expecting a command result with the same name as our current CommandName.
             if (activity.Type == ActivityTypes.CommandResult
-                && activity.Name == this.Name.GetValue(dc.State))
+                && activity.Name == this.CommandName.GetValue(dc.State))
             {
                 // TODO: correlate command id before handling it.
 
                 var commandResult = TelephonyExtensions.GetCommandResultValue(activity);
 
-                if (commandResult.Error != null)
+                if (commandResult?.Error != null)
                 {
                     throw new ErrorResponseException($"{commandResult.Error.Code}: {commandResult.Error.Message}");
                 }
@@ -73,9 +80,31 @@ namespace Microsoft.Bot.Components.Telephony.Common
                 return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
-            // for now, end turn and keep waiting
-            // TODO: Carlos add interruption model
+            // This activity was not the command result we were expecting. Mark as waiting and end the turn.
             return new DialogTurnResult(DialogTurnStatus.Waiting);
+        }
+
+        /// <inheritdoc/>
+        protected override async Task<bool> OnPreBubbleEventAsync(DialogContext dc, DialogEvent e, CancellationToken cancellationToken)
+        {
+            if (e.Name == DialogEvents.ActivityReceived && dc.Context.Activity.Type == ActivityTypes.Message)
+            {
+                // Ask parent to perform recognition
+                await dc.Parent.EmitEventAsync(AdaptiveEvents.RecognizeUtterance, value: dc.Context.Activity, bubble: false, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                // Should we allow interruptions
+                var canInterrupt = true;
+                if (this.AllowInterruptions != null)
+                {
+                    var (allowInterruptions, error) = this.AllowInterruptions.TryGetValue(dc.State);
+                    canInterrupt = error == null && allowInterruptions;
+                }
+
+                // Stop bubbling if interruptions ar NOT allowed
+                return !canInterrupt;
+            }
+
+            return false;
         }
 
         private static Activity CreateCommandActivity<TValue>(ITurnContext turnContext, T data, string name)

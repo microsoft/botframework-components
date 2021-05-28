@@ -1,0 +1,39 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.AdaptiveDialog",
+    "id": "Recording_BaseScenario.test",
+    "triggers": [
+        {
+            "$kind": "Microsoft.OnBeginDialog",
+            "actions": [
+                {
+                    "$kind": "Microsoft.Telephony.StartRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, true)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Started recording!"
+                }
+            ]
+        },
+        {
+            "$kind": "Microsoft.OnIntent",
+            "intent": "HelpIntent",
+            "actions": [
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "On help intent handler"
+                }
+            ]
+        }
+    ],
+    "recognizer": {
+        "$kind": "Microsoft.RegexRecognizer",
+        "intents": [
+            {
+                "intent": "HelpIntent",
+                "pattern": "help"
+            }
+        ]
+    }
+}
