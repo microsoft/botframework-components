@@ -41,7 +41,7 @@ module.exports = class extends Generator {
       alias: 's',
     });
 
-    const { botName, platform, integration, sdkVersion } = this.options;
+    const { botName, platform, integration } = this.options;
     assert(botName, 'botName is required');
     assert(typeof botName === 'string', 'botName must be a string');
 

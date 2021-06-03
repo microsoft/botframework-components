@@ -72,7 +72,8 @@ module.exports = class extends BaseGenerator {
             packageReferences: this._formatDotnetPackageReferences(
               this.packageReferences
             ),
-            sdkVersion: this.options.sdkVersion || platforms.dotnet.defaultSdkVersion
+            sdkVersion:
+              this.options.sdkVersion || platforms.dotnet.defaultSdkVersion,
           },
         });
 
@@ -250,7 +251,11 @@ module.exports = class extends BaseGenerator {
   }
 
   _writeJsPackageJson() {
-    const { botName, integration, sdkVersion = platforms.js.defaultSdkVersion } = this.options;
+    const {
+      botName,
+      integration,
+      sdkVersion = platforms.js.defaultSdkVersion,
+    } = this.options;
 
     const dependencies = {
       [integrations.functions]: {
