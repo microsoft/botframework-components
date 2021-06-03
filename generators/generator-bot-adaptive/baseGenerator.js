@@ -22,7 +22,7 @@ module.exports = class extends Generator {
         platforms
       ).join(', ')}`,
       type: String,
-      default: platforms.dotnet,
+      default: platforms.dotnet.name,
       alias: 'p',
     });
 
@@ -38,7 +38,6 @@ module.exports = class extends Generator {
     this.option('sdkVersion', {
       desc: 'The Bot Framework SDK version to use',
       type: String,
-      default: platforms.dotnet_sdk,
       alias: 's',
     });
 
@@ -56,9 +55,6 @@ module.exports = class extends Generator {
       integrations[integration],
       `${integration} is not a registered integration`
     );
-
-    assert(sdkVersion, 'sdkVersion is required');
-    assert(typeof sdkVersion === 'string', 'sdkVersion must be a string');
   }
 
   _copyBotTemplateFiles({ path = ['**', '*.*'], templateContext = {} } = {}) {
