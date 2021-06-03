@@ -23,6 +23,7 @@ const options = rt.Record({
       version: rt.String,
     })
   ),
+  sdkVersion: rt.String,
 });
 
 const defaultOptions = {
@@ -33,6 +34,7 @@ const defaultOptions = {
   },
   modifyApplicationSettings: undefined,
   packageReferences: [],
+  sdkVersion: undefined,
 };
 
 module.exports = class extends BaseGenerator {
@@ -70,6 +72,7 @@ module.exports = class extends BaseGenerator {
             packageReferences: this._formatDotnetPackageReferences(
               this.packageReferences
             ),
+            sdkVersion: this.options.sdkVersion,
           },
         });
 
@@ -247,9 +250,7 @@ module.exports = class extends BaseGenerator {
   }
 
   _writeJsPackageJson() {
-    const { botName, integration } = this.options;
-
-    const sdkVersion = '4.13.4-preview';
+    const { botName, integration, sdkVersion } = this.options;
 
     const dependencies = {
       [integrations.functions]: {
