@@ -1,8 +1,8 @@
 ---
 name: "Feature spec"
-about: Detailed feature definition.
+about: Detailed feature definition for conversational experiences.
 title: ""
-labels: ""
+labels: "Owner: PBX"
 assignees: ""
 ---
 
@@ -14,22 +14,22 @@ assignees: ""
 ## Description
 
 ## Conversation Design
-Links to conversation design diagrams and documents
+<!-- Links to conversation design diagrams and documents. -->
 
 ## Language Understanding
 | Intent | Sample Utterances | Prebuilt Entities | Custom Entities | Patterns |
 | ------ | ----------------------| ----------------- | ----------------- | --------- |
 
 ## Dialogs
-Describe the different dialogs to be created as part of the feature and what each will do
+<!-- Describe the different dialogs to be created as part of the feature and what each will do. -->
 
 ## Custom Actions
-Describe any custom actions that will need to be created to support the feature
+<!-- Describe any custom actions that will need to be created to support the feature. -->
 | Name | Input | Output | Notes |
 | ------ | ------ | -------- | ------- |
 
 ## Channels
-Describe any channel specific functionality or limitations that will need to be taken into consideration
+<!-- Describe any channel specific functionality or limitations that will need to be taken into consideration. -->
 
 ## Acceptance Criteria
 - [ ] Flow should work in both Direct mode (connecting to the skill bot directly
