@@ -1,6 +1,6 @@
 ---
 name: "Bug"
-about: Create a report for a bug you found in the Bot Framework Components projects (including documentation)
+about: Create a report for a bug you found in the Bot Framework Components projects (including documentation).
 title: ""
 labels: "needs-triage, bug"
 assignees: ""
@@ -16,7 +16,6 @@ assignees: ""
 ## Version
 
 <!-- What version of the component? What version of the SDK? -->
-
 <!-- If applicable, what version of Composer are you using? In Composer, go to Help > About > Copy and paste the contents below.-->
 
 ## To Reproduce

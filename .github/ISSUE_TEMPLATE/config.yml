@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Stack Overflow
+  - name: Question
     url: https://stackoverflow.com/questions/tagged/botframework
-    about: Please ask general "how-to" questions here.
+    about: The issue tracker is not for questions, please ask general "how-to" questions on Stack Overflow.

@@ -1,6 +1,6 @@
 ---
-name: "Feature request"
-about: Suggest a feature for the Bot Framework Components projects
+name: "Feature Request"
+about: Suggest an idea a Bot Framework Components project.
 title: ""
 labels: "needs-triage, feature-request"
 assignees: ""

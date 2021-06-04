@@ -1,6 +1,6 @@
 ---
-name: "Feature spec"
-about: Detailed feature definition for conversational experiences.
+name: "Prebuilt Experiences User Story"
+about: Detailed user story spec for prebuilt experiences.
 title: ""
 labels: "Owner: PBX"
 assignees: ""
