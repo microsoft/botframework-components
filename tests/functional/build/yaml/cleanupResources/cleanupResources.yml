@@ -14,14 +14,14 @@ variables:
   # SharedResourceGroup: (optional) Name of the Resource Group containing the shared resources.
 
   ## Internal variables
-  InternalAppInsightsName: "bffnappinsights$($env:RESOURCESUFFIX)"
-  InternalAppServicePlanDotNetName: "bffnbotsappservicedotnet$($env:RESOURCESUFFIX)"
-  InternalAppServicePlanJSName: "bffnbotsappservicejs$($env:RESOURCESUFFIX)"
-  InternalAppServicePlanPythonName: "bffnbotsappservicepython$($env:RESOURCESUFFIX)"
-  InternalCosmosDBName: "bffnbotstatedb$($env:RESOURCESUFFIX)"
-  InternalKeyVaultName: "bffnbotkeyvault$($env:RESOURCESUFFIX)"
-  InternalBotResourceGroupName: $[coalesce(variables['DEPLOYRESOURCEGROUP'], 'bffnbots')]
-  InternalSharedResourceGroupName: $[coalesce(variables['SHAREDRESOURCEGROUP'], 'bffnshared')]
+  InternalAppInsightsName: "bfcfnappinsights$($env:RESOURCESUFFIX)"
+  InternalAppServicePlanDotNetName: "bfcfnbotsappservicedotnet$($env:RESOURCESUFFIX)"
+  InternalAppServicePlanJSName: "bfcfnbotsappservicejs$($env:RESOURCESUFFIX)"
+  InternalAppServicePlanPythonName: "bfcfnbotsappservicepython$($env:RESOURCESUFFIX)"
+  InternalCosmosDBName: "bfcfnbotstatedb$($env:RESOURCESUFFIX)"
+  InternalKeyVaultName: "bfcfnbotkeyvault$($env:RESOURCESUFFIX)"
+  InternalBotResourceGroupName: $[coalesce(variables['DEPLOYRESOURCEGROUP'], 'bfcfnbots')]
+  InternalSharedResourceGroupName: $[coalesce(variables['SHAREDRESOURCEGROUP'], 'bfcfnshared')]
 
 pool:
   vmImage: "windows-2019"
