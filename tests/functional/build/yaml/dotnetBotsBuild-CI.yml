@@ -1,0 +1,53 @@
+parameters:
+  - name: buildConfiguration
+    displayName: Build Configuration
+    type: string
+
+  - name: buildPlatform
+    displayName: Build Platfrom
+    type: string
+
+  - name: solutionDir
+    displayName: Solution Directory
+    type: string
+
+steps:
+- task: UseDotNet@2
+  displayName: "Use .Net Core sdk 2.1.x"
+  inputs:
+    version: 2.1.x
+
+- task: UseDotNet@2
+  displayName: "Use .Net Core sdk 3.1.x"
+  inputs:
+    version: 3.1.x
+
+- task: NuGetToolInstaller@1
+  displayName: "Use NuGet"
+
+- task: NuGetCommand@2
+  displayName: "NuGet restore"
+  inputs:
+    restoreSolution: "Bots/DotNet/FunctionalTestsBots.sln"
+    restoreDirectory: "${{ parameters.solutionDir }}packages"
+
+- task: MSBuild@1
+  displayName: "Build"
+  inputs:
+    solution: "Bots/DotNet/FunctionalTestsBots.sln"
+    vsVersion: 16.0
+    platform: "${{ parameters.buildPlatform }}"
+    configuration: "${{ parameters.buildConfiguration }}"
+
+- task: PublishBuildArtifacts@1
+  displayName: "Publish Artifact: build folder"
+  inputs:
+    PathtoPublish: build
+    ArtifactName: build
+
+- powershell: |
+   cd ..
+   ls -R
+  displayName: "Dir workspace"
+  continueOnError: true
+  condition: succeededOrFailed()

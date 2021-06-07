@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/main/Composer/packages/server/schemas/botproject.schema",
+  "name": "SimpleHostBotComposer",
+  "skills": {
+    "echoSkillBotComposerDotNet": {
+      "manifest": "http://localhost:35410/manifests/echoskillbotcomposer-manifest.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotDotNet": {
+      "manifest": "http://localhost:35400/manifests/echoskillbot-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotDotNet21": {
+      "manifest": "http://localhost:35405/manifests/echoskillbot-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotDotNetV3": {
+      "manifest": "http://localhost:35407/manifests/echoskillbotv3-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotJs": {
+      "manifest": "http://localhost:36400/manifests/echoskillbot-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotJsv3": {
+      "manifest": "http://localhost:36407/manifests/echoskillbotv3-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    },
+    "echoSkillBotPython": {
+      "manifest": "http://localhost:37400/manifests/echoskillbot-manifest-1.0.json",
+      "remote": true,
+      "endpointName": "default"
+    }
+  }
+}

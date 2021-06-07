@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "type": "message",
+      "role": "user",
+      "text": "Receipt"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "attachmentLayout == 'list'",
+        "inputHint == 'acceptingInput'",
+        "attachments[0].contentType == 'application/vnd.microsoft.card.receipt'",
+        "attachments[0].content.title == 'John Doe'",
+        "attachments[0].content.facts[0].key == 'Order Number'",
+        "attachments[0].content.facts[1].key == 'Payment Method'",
+        "attachments[0].content.facts[1].value == 'VISA 5555-****'",
+        "attachments[0].content.items[0].title == 'Data Transfer'",
+        "attachments[0].content.items[0].image.url == 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png'",
+        "attachments[0].content.items[0].price == '$ 38.45'",
+        "attachments[0].content.items[1].title == 'App Service'",
+        "attachments[0].content.items[1].image.url == 'https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png'",
+        "attachments[0].content.items[1].price == '$ 45.00'",
+        "attachments[0].content.total == '$ 90.95'",
+        "attachments[0].content.tax == '$ 7.50'",
+        "attachments[0].content.buttons[0].type == 'openUrl'",
+        "attachments[0].content.buttons[0].title == 'More information'",
+        "attachments[0].content.buttons[0].image == 'https://account.windowsazure.com/content/6.10.1.38-.8225.160809-1618/aux-pre/images/offer-icon-freetrial.png'",
+        "attachments[0].content.buttons[0].value == 'https://azure.microsoft.com/en-us/pricing/'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "speak == 'What card do you want?'",
+        "inputHint == 'expectingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "user",
+      "text": "end"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "speak == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'normal'",
+        "suggestedActions.actions[0].value == 'normal'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'expectReplies'",
+        "suggestedActions.actions[1].value == 'expectReplies'"
+      ]
+    }
+  ]
+}

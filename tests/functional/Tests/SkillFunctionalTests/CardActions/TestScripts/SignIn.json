@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "type": "message",
+      "role": "user",
+      "text": "Signin"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "attachmentLayout == 'list'",
+        "inputHint == 'acceptingInput'",
+        "attachments[0].contentType == 'application/vnd.microsoft.card.signin'",
+        "attachments[0].content.text == 'BotFramework Sign-in Card'",
+        "attachments[0].content.buttons[0].type == 'signin'",
+        "attachments[0].content.buttons[0].title == 'Sign-in'",
+        "attachments[0].content.buttons[0].value == 'https://login.microsoftonline.com/'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "speak == 'What card do you want?'",
+        "inputHint == 'expectingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "user",
+      "text": "end"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "speak == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'normal'",
+        "suggestedActions.actions[0].value == 'normal'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'expectReplies'",
+        "suggestedActions.actions[1].value == 'expectReplies'"
+      ]
+    }
+  ]
+}

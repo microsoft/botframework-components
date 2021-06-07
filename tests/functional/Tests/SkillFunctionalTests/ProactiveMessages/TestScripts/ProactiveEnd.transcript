@@ -1,0 +1,91 @@
+[
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "980966c0-616b-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "bc95d182-9d74-4d9d-82ec-d650cb5e83d8",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Got proactive message for user: ${UserId}",
+    "inputHint": "acceptingInput",
+    "replyToId": "5dfebb53-9851-449a-a86f-dff9a9155816",
+    "id": "f44c7b20-616b-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:23:05-03:00",
+    "timestamp": "2021-01-28T13:23:05.298Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "980966c0-616b-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "bc95d182-9d74-4d9d-82ec-d650cb5e83d8",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "We received a proactive message, ending the dialog",
+    "inputHint": "acceptingInput",
+    "replyToId": "5dfebb53-9851-449a-a86f-dff9a9155816",
+    "id": "f4789430-616b-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:23:05-03:00",
+    "timestamp": "2021-01-28T13:23:05.587Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "980966c0-616b-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "bc95d182-9d74-4d9d-82ec-d650cb5e83d8",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "speak": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "5dfebb53-9851-449a-a86f-dff9a9155816",
+    "id": "f4a4fb60-616b-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:23:05-03:00",
+    "timestamp": "2021-01-28T13:23:05.878Z"
+  }
+]
