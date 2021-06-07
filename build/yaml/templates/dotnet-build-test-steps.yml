@@ -18,5 +18,5 @@ steps:
   displayName: 'Run `dotnet test`'
   inputs:
     command: test
-    projects: 'tests\**\*.csproj'
+    projects: 'tests\unit\**\*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
