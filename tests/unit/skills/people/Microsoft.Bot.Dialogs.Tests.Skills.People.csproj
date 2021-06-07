@@ -33,7 +33,7 @@
     <None Include="TestAssets\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\..\..\skills\declarative\People\People\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
+    <None Include="..\..\..\..\skills\declarative\People\People\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
