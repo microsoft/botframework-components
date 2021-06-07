@@ -1,0 +1,59 @@
+{
+  "items": [
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Attachment \"${FileName}\" has been received.\r\nFile content: GUID:${TestGuid}\r\n\r\n",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "startsWith(text, 'Attachment \"${FileName}\" has been received.\r\nFile content: GUID:${TestGuid}')",
+        "inputHint == 'acceptingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Do you want to upload another file?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Do you want to upload another file?'",
+        "speak == 'Do you want to upload another file?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'Yes'",
+        "suggestedActions.actions[0].value == 'Yes'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'No'",
+        "suggestedActions.actions[1].value == 'No'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "user",
+      "text": "No"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "speak == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'normal'",
+        "suggestedActions.actions[0].value == 'normal'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'expectReplies'",
+        "suggestedActions.actions[1].value == 'expectReplies'"
+      ]
+    }
+  ]
+}

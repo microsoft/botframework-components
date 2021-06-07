@@ -1,0 +1,197 @@
+[
+  {
+    "channelData": {
+      "clientActivityID": "1611839371599wsbxze20iv",
+      "clientTimestamp": "2021-01-28T13:09:31.599Z"
+    },
+    "text": "Receipt",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "3eb35847-111c-4ec7-86de-a54438c4a976",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:09:31.650Z",
+    "conversation": {
+      "id": "06cce110-616a-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "0f53a620-616a-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:09:31-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "06cce110-616a-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "3eb35847-111c-4ec7-86de-a54438c4a976",
+      "role": "user"
+    },
+    "attachmentLayout": "list",
+    "locale": "",
+    "inputHint": "acceptingInput",
+    "attachments": [
+      {
+        "contentType": "application/vnd.microsoft.card.receipt",
+        "content": {
+          "title": "John Doe",
+          "facts": [
+            {
+              "key": "Order Number",
+              "value": "1234"
+            },
+            {
+              "key": "Payment Method",
+              "value": "VISA 5555-****"
+            }
+          ],
+          "items": [
+            {
+              "title": "Data Transfer",
+              "image": {
+                "url": "https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png"
+              },
+              "price": "$ 38.45",
+              "quantity": "368"
+            },
+            {
+              "title": "App Service",
+              "image": {
+                "url": "https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png"
+              },
+              "price": "$ 45.00",
+              "quantity": "720"
+            }
+          ],
+          "total": "$ 90.95",
+          "tax": "$ 7.50",
+          "buttons": [
+            {
+              "type": "openUrl",
+              "title": "More information",
+              "image": "https://account.windowsazure.com/content/6.10.1.38-.8225.160809-1618/aux-pre/images/offer-icon-freetrial.png",
+              "value": "https://azure.microsoft.com/en-us/pricing/"
+            }
+          ]
+        }
+      }
+    ],
+    "entities": [],
+    "replyToId": "0f53a620-616a-11eb-b46e-c3c3213a748e",
+    "id": "0ff42be0-616a-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:09:32-03:00",
+    "timestamp": "2021-01-28T13:09:32.702Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "06cce110-616a-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "3eb35847-111c-4ec7-86de-a54438c4a976",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What card do you want?\n\n   1. AdaptiveCardBotAction\n   2. AdaptiveCardTaskModule\n   3. AdaptiveCardSumbitAction\n   4. Hero\n   5. Thumbnail\n   6. Receipt\n   7. Signin\n   8. Carousel\n   9. List\n   10. O365\n   11. TeamsFileConsent\n   12. Animation\n   13. Audio\n   14. Video\n   15. End",
+    "speak": "What card do you want?",
+    "inputHint": "expectingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "0f53a620-616a-11eb-b46e-c3c3213a748e",
+    "id": "101fcfc0-616a-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:09:32-03:00",
+    "timestamp": "2021-01-28T13:09:32.988Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1611839374573ek608u3396m",
+      "clientTimestamp": "2021-01-28T13:09:34.573Z"
+    },
+    "text": "end",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "3eb35847-111c-4ec7-86de-a54438c4a976",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:09:34.793Z",
+    "conversation": {
+      "id": "06cce110-616a-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "11333b90-616a-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:09:34-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "06cce110-616a-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "3eb35847-111c-4ec7-86de-a54438c4a976",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "speak": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "11333b90-616a-11eb-b46e-c3c3213a748e",
+    "id": "11ca2460-616a-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:09:35-03:00",
+    "timestamp": "2021-01-28T13:09:35.782Z"
+  }
+]

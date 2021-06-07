@@ -1,0 +1,171 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "description": "Schema for TestScript items.",
+    "additionalProperties": false,
+    "definitions": {
+        "TestScriptItem": {
+            "type": "object",
+            "description": "TestScript item.",
+            "title": "TestScriptItem",
+            "additionalProperties": false,
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "The activity type.",
+                    "title": "type",
+                    "oneOf": [
+                        {
+                            "const": "message",
+                            "description": "The type value for message activities.",
+                            "title": "message"
+                        },
+                        {
+                            "const": "contactRelationUpdate",
+                            "description": "The type value for contact relation update activities.",
+                            "title": "contactRelationUpdate"
+                        },
+                        {
+                            "const": "conversationUpdate",
+                            "description": "The type value for conversation update activities.",
+                            "title": "conversationUpdate"
+                        },
+                        {
+                            "const": "typing",
+                            "description": "The type value for typing activities.",
+                            "title": "typing"
+                        },
+                        {
+                            "const": "endOfConversation",
+                            "description": "The type value for end of conversation activities.",
+                            "title": "endOfConversation"
+                        },
+                        {
+                            "const": "event",
+                            "description": "The type value for event activities.",
+                            "title": "event"
+                        },
+                        {
+                            "const": "invoke",
+                            "description": "The type value for invoke activities.",
+                            "title": "invoke"
+                        },
+                        {
+                            "const": "deleteUserData",
+                            "description": "The type value for delete user data activities.",
+                            "title": "deleteUserData"
+                        },
+                        {
+                            "const": "messageUpdate",
+                            "description": "The type value for message update activities.",
+                            "title": "messageUpdate"
+                        },
+                        {
+                            "const": "messageDelete",
+                            "description": "The type value for message delete activities.",
+                            "title": "messageDelete"
+                        },
+                        {
+                            "const": "installationUpdate",
+                            "description": "The type value for installation update activities.",
+                            "title": "installationUpdate"
+                        },
+                        {
+                            "const": "messageReaction",
+                            "description": "The type value for message reaction activities.",
+                            "title": "messageReaction"
+                        },
+                        {
+                            "const": "suggestion",
+                            "description": "The type value for suggestion activities.",
+                            "title": "suggestion"
+                        },
+                        {
+                            "const": "trace",
+                            "description": "The type value for trace activities.",
+                            "title": "trace"
+                        },
+                        {
+                            "const": "handoff",
+                            "description": "The type value for handoff activities.",
+                            "title": "handoff"
+                        }
+                    ]
+                },
+                "role": {
+                    "type": "string",
+                    "description": "Role of the entity behind the account.",
+                    "title": "role",
+                    "oneOf": [
+                        {
+                            "const": "user",
+                            "description": "User"
+                        },
+                        {
+                            "const": "bot",
+                            "description": "Bot"
+                        }
+                    ]
+                },
+                "text": {
+                    "type": "string",
+                    "description": "The text content of the message.",
+                    "title": "text"
+                },
+                "assertions": {
+                    "type": "array",
+                    "title": "Assertions to perform to validate Activity.",
+                    "description": "Sequence of expressions which must evaluate to true.",
+                    "items": {
+                        "$ref": "#/definitions/condition",
+                        "title": "Assertion",
+                        "description": "Assertion as an expression, which must evaluate to true or it will fail the test script."
+                    }
+                }
+            }
+        },
+        "condition": {
+            "$role": "expression",
+            "description": "Boolean constant or expression to evaluate.",
+            "title": "condition",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/expression"
+                }
+            ]
+        },
+        "expression": {
+            "$role": "expression",
+            "type": "string",
+            "description": "Expression to evaluate. More information at\n https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-adaptive-expressions?view=azure-bot-service-4.0&tabs=comparison#operators",
+            "title": "expression",
+            "examples": [
+                "type",
+                "recipient.role",
+                "from.name",
+                "from.role",
+                "text",
+                "inputHint"
+            ]
+        }
+    },
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "description": "Schema.",
+            "title": "$schema"
+        },
+        "items": {
+            "type": "array",
+            "description": "List of TestScript items.",
+            "title": "items",
+            "additionalItems": false,
+            "items": {
+                "$ref": "#/definitions/TestScriptItem"
+            }
+        }
+    }
+}

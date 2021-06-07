@@ -1,0 +1,3 @@
+
+# Ignore .deployment files generated to deploy Python to linux from VSCode
+**/.deployment

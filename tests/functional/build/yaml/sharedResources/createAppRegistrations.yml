@@ -1,0 +1,132 @@
+parameters:
+- name: azureSubscription
+  displayName: Azure Service Connection
+  type: string
+
+- name: keyVault
+  displayName: KeyVault name
+  type: string
+
+- name: resourceSuffix
+  displayName: Azure resources' name suffix 
+  type: string
+
+- name: servicePrincipalId
+  displayName: Service Principal Id
+  type: string
+
+- name: servicePrincipalKey
+  displayName: Service Principal Key
+  type: string
+
+- name: tenantId
+  displayName: Subscription Tenant Id
+  type: string
+
+steps:
+  - task: AzureCLI@2
+    displayName: "Create App Registrations & Store into KeyVault"
+    inputs:
+      azureSubscription: "${{ parameters.azureSubscription }}"
+      addSpnToEnvironment: true
+      failOnStandardError: true
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        # Using Microsoft Graph REST API to create App Registrations (https://docs.microsoft.com/en-us/graph/api/application-post-applications) instead of Azure CLI due to Azure Active Directory Graph API has been deprecated and still in a migration process to Microsoft Graph API, more information can be found in this link (https://github.com/Azure/azure-cli/issues/12946).
+
+        function GetToken() {
+          # Get Token
+
+          $body = @{
+            grant_type    = "client_credentials";
+            scope         = "https://graph.microsoft.com/.default";
+            client_id     = ${{ parameters.servicePrincipalId }};
+            client_secret = ${{ parameters.servicePrincipalKey }};
+          }
+
+          Invoke-WebRequest -Uri "https://login.microsoftonline.com/${{ parameters.tenantId }}/oauth2/v2.0/token" -Method "POST" -Body $body | ConvertFrom-Json
+        }
+
+        function CreateAppRegistration($token, $appName) {
+          # Create App Registration
+
+          $headers = @{
+            Authorization = "Bearer " + $token.access_token
+          }
+
+          $body = @{
+            displayName    = $appName;
+            signInAudience = "AzureADandPersonalMicrosoftAccount"
+          } | ConvertTo-Json
+
+          $app = Invoke-WebRequest -Uri "https://graph.microsoft.com/v1.0/applications" -Method "POST" -Headers $headers -Body $body -ContentType "application/json" | ConvertFrom-Json;
+          
+          # Assign a secret to the App Registration
+
+          $body = @{
+            displayName = $app.appId;
+          } | ConvertTo-Json
+
+          $secret = Invoke-WebRequest -Uri "https://graph.microsoft.com/v1.0/applications/$($app.id)/addPassword" -Method "POST" -Headers $headers -Body $body -ContentType "application/json" | ConvertFrom-Json
+
+          $app | Add-Member -MemberType NoteProperty -Name secret -Value $secret.secretText;
+
+          $app
+        }
+
+        function SaveAppRegistrationIntoKeyVault($vaultName, $bot, $app) {
+          # Store secrets into KeyVault
+
+          $secrets = @(
+            @{ name = $bot.objectId; value = $app.id },
+            @{ name = $bot.appId; value = $app.appId },
+            @{ name = $bot.appSecret; value = $app.secret }
+          )
+
+          foreach ($secret in $secrets) {
+            az keyvault secret set --vault-name $vaultName --name $secret.name --value="$($secret.value)" --output none
+          }
+        }
+
+        $bots = @(
+          @{ appName = "bffnsimplehostbotdotnet"; variables = @{ appId = "BffnSimpleHostBotDotNetAppId"; appSecret = "BffnSimpleHostBotDotNetAppSecret"; objectId = "BffnSimpleHostBotDotNetAppObjectId" }},
+          @{ appName = "bffnsimplehostbotdotnet21"; variables = @{ appId = "BffnSimpleHostBotDotNet21AppId"; appSecret = "BffnSimpleHostBotDotNet21AppSecret"; objectId = "BffnSimpleHostBotDotNet21AppObjectId" }},
+          @{ appName = "bffnechoskillbotdotnet"; variables = @{ appId = "BffnEchoSkillBotDotNetAppId"; appSecret = "BffnEchoSkillBotDotNetAppSecret"; objectId = "BffnEchoSkillBotDotNetAppObjectId" }},
+          @{ appName = "bffnechoskillbotdotnet21"; variables = @{ appId = "BffnEchoSkillBotDotNet21AppId"; appSecret = "BffnEchoSkillBotDotNet21AppSecret"; objectId = "BffnEchoSkillBotDotNet21AppObjectId" }},
+          @{ appName = "bffnechoskillbotdotnetv3"; variables = @{ appId = "BffnEchoSkillBotDotNetV3AppId"; appSecret = "BffnEchoSkillBotDotNetV3AppSecret"; objectId = "BffnEchoSkillBotDotNetV3AppObjectId" }},
+          @{ appName = "bffnsimplehostbotcomposerdotnet"; variables = @{ appId = "BffnSimpleHostBotComposerDotNetAppId"; appSecret = "BffnSimpleHostBotComposerDotNetAppSecret"; objectId = "BffnSimpleHostBotComposerDotNetAppObjectId" }},
+          @{ appName = "bffnechoskillbotcomposerdotnet"; variables = @{ appId = "BffnEchoSkillBotComposerDotNetAppId"; appSecret = "BffnEchoSkillBotComposerDotNetAppSecret"; objectId = "BffnEchoSkillBotComposerDotNetAppObjectId" }},
+          @{ appName = "bffnwaterfallhostbotdotnet"; variables = @{ appId = "BffnWaterfallHostBotDotNetAppId"; appSecret = "BffnWaterfallHostBotDotNetAppSecret"; objectId = "BffnWaterfallHostBotDotNetAppObjectId" }},
+          @{ appName = "bffnwaterfallskillbotdotnet"; variables = @{ appId = "BffnWaterfallSkillBotDotNetAppId"; appSecret = "BffnWaterfallSkillBotDotNetAppSecret"; objectId = "BffnWaterfallSkillBotDotNetAppObjectId" }},
+          @{ appName = "bffnsimplehostbotjs"; variables = @{ appId = "BffnSimpleHostBotJSAppId"; appSecret = "BffnSimpleHostBotJSAppSecret"; objectId = "BffnSimpleHostBotJSAppObjectId" }},
+          @{ appName = "bffnechoskillbotjs"; variables = @{ appId = "BffnEchoSkillBotJSAppId"; appSecret = "BffnEchoSkillBotJSAppSecret"; objectId = "BffnEchoSkillBotJSAppObjectId" }},
+          @{ appName = "bffnechoskillbotjsv3"; variables = @{ appId = "BffnEchoSkillBotJSV3AppId"; appSecret = "BffnEchoSkillBotJSV3AppSecret"; objectId = "BffnEchoSkillBotJSV3AppObjectId" }},
+          @{ appName = "bffnwaterfallhostbotjs"; variables = @{ appId = "BffnWaterfallHostBotJSAppId"; appSecret = "BffnWaterfallHostBotJSAppSecret"; objectId = "BffnWaterfallHostBotJSAppObjectId" }},
+          @{ appName = "bffnwaterfallskillbotjs"; variables = @{ appId = "BffnWaterfallSkillBotJSAppId"; appSecret = "BffnWaterfallSkillBotJSAppSecret"; objectId = "BffnWaterfallSkillBotJSAppObjectId" }},
+          @{ appName = "bffnsimplehostbotpython"; variables = @{ appId = "BffnSimpleHostBotPythonAppId"; appSecret = "BffnSimpleHostBotPythonAppSecret"; objectId = "BffnSimpleHostBotPythonAppObjectId" }},
+          @{ appName = "bffnechoskillbotpython"; variables = @{ appId = "BffnEchoSkillBotPythonAppId"; appSecret = "BffnEchoSkillBotPythonAppSecret"; objectId = "BffnEchoSkillBotPythonAppObjectId" }},
+          @{ appName = "bffnwaterfallhostbotpython"; variables = @{ appId = "BffnWaterfallHostBotPythonAppId"; appSecret = "BffnWaterfallHostBotPythonAppSecret"; objectId = "BffnWaterfallHostBotPythonAppObjectId" }},
+          @{ appName = "bffnwaterfallskillbotpython"; variables = @{ appId = "BffnWaterfallSkillBotPythonAppId"; appSecret = "BffnWaterfallSkillBotPythonAppSecret"; objectId = "BffnWaterfallSkillBotPythonAppObjectId" }}
+        )
+
+        $token = GetToken
+
+        foreach ($bot in $bots) {
+          $botName = "$($bot.appName)${{ parameters.resourceSuffix }}"
+          Write-Host "`n[$botName] Starting"
+          Write-Host "Creating App Registration ..."
+          
+          $app = CreateAppRegistration $token $botName
+          Write-Host "
+            App Registration:
+              Name: $botName
+              Variables:
+                $($bot.variables.objectId): $($app.id)
+                $($bot.variables.appId): $($app.appId)
+          "
+
+          Write-Host "Storing App Registration into the KeyVault (${{ parameters.keyVault }}) ..."
+          SaveAppRegistrationIntoKeyVault "${{ parameters.keyVault }}" $bot.variables $app
+          Write-Host "[$botName] Ending"
+        }
