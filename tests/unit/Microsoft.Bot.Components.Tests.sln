@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "..\packages\Teams\dotnet\Microsoft.Bot.Components.Teams.csproj", "{1C09226C-3DE0-48BF-BEB7-68F0691908EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "..\..\packages\Teams\dotnet\Microsoft.Bot.Components.Teams.csproj", "{1C09226C-3DE0-48BF-BEB7-68F0691908EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "skills", "skills", "{31CBAEDA-E319-49AE-A662-AA0739205C82}"
 EndProject
@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teams", "teams", "{61708441
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams.Tests", "packages\Microsoft.Bot.Components.Teams.Tests\Microsoft.Bot.Components.Teams.Tests.csproj", "{F6E872DE-52B7-4372-B546-B18B5A495C73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{9561BF32-D0EE-464F-981B-7E4298ACDDFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj", "{9561BF32-D0EE-464F-981B-7E4298ACDDFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

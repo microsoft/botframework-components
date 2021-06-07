@@ -16,26 +16,8 @@
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\common\Microsoft.Bot.Dialogs.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Graph.Beta" Version="0.39.0-preview" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="testsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <!-- Copy the test folders over -->
-    <None Include="TestAssets\**">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\..\skills\declarative\People\People\**" Link="BotProject/%(RecursiveDir)%(Filename)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
+	</ItemGroup>
 
 </Project>
