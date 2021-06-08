@@ -8,7 +8,7 @@
     <Summary>This library implements .NET support for adaptive dialogs with Microsoft Teams</Summary>
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Teams/dotnet</PackageProjectUrl>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <PackageTags>bots;botframework;botbuilder;msbot-component;msbot-action;msbot-trigger;msbot-middleware</PackageTags>
+    <PackageTags>msbot-component;msbot-action;msbot-trigger</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
