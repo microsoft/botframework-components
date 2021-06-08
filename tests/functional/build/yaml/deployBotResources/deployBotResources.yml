@@ -24,100 +24,6 @@ parameters:
     - MyGet
     - NuGet
 
-  - name: dependenciesVersionDotNetSkills
-    displayName: DotNet Skills Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONDOTNETSKILLS
-
-  - name: dependenciesRegistryDotNetSkills
-    displayName: DotNet Skills Registry
-    type: string
-    default: Artifacts
-    values:
-    - Artifacts
-    - MyGet
-    - NuGet
-
-  - name: dependenciesVersionDotNetSkillsV3
-    displayName: DotNet Skills V3 Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONDOTNETSKILLSV3
-
-  - name: dependenciesRegistryDotNetSkillsV3
-    displayName: DotNet Skills V3 Registry
-    type: string
-    default: MyGet
-    values:
-    - MyGet
-    - NuGet
-
-  - name: dependenciesVersionJSHosts
-    displayName: JS Hosts Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONJSHOSTS
-
-  - name: dependenciesRegistryJSHosts
-    displayName: JS Hosts Registry
-    type: string
-    default: MyGet
-    values:
-    - MyGet
-    - Npm
-
-  - name: dependenciesVersionJSSkills
-    displayName: JS Skills Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONJSSKILLS
-
-  - name: dependenciesRegistryJSSkills
-    displayName: JS Skills Registry
-    type: string
-    default: MyGet
-    values:
-    - MyGet
-    - Npm
-
-  - name: dependenciesVersionJSSkillsV3
-    displayName: JS Skills V3 Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONJSSKILLSV3
-
-  - name: dependenciesRegistryJSSkillsV3
-    displayName: JS Skills V3 Registry
-    type: string
-    default: MyGet
-    values:
-    - MyGet
-    - Npm
-
-  - name: dependenciesVersionPythonHosts
-    displayName: Python Hosts Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONPYTHONHOSTS
-
-  - name: dependenciesRegistryPythonHosts
-    displayName: Python Hosts Registry
-    type: string
-    default: Artifacts
-    values:
-    - Artifacts
-    - Pypi
-    - Test.Pypi
-
-  - name: dependenciesVersionPythonSkills
-    displayName: Python Skills Version
-    type: string
-    default: $env:DEPENDENCIESVERSIONPYTHONSKILLS
-
-  - name: dependenciesRegistryPythonSkills
-    displayName: Python Skills Registry
-    type: string
-    default: Artifacts
-    values:
-    - Artifacts
-    - Pypi
-    - Test.Pypi
-
 variables:
   BuildConfiguration: "Debug"
   BuildPlatform: "AnyCPU"
@@ -133,63 +39,20 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BffnEchoSkillBotComposerDotNetAppId: (optional) App Id for BffnEchoSkillBotComposerDotNet bot.
-  # BffnEchoSkillBotComposerDotNetAppSecret: (optional) App Secret for BffnEchoSkillBotComposerDotNet bot.
-  # BffnEchoSkillBotDotNet21AppId: (optional) App Id for BffnEchoSkillBotDotNet21 bot.
-  # BffnEchoSkillBotDotNet21AppSecret: (optional) App Secret for BffnEchoSkillBotDotNet21 bot.
-  # BffnEchoSkillBotDotNetAppId: (optional) App Id for BffnEchoSkillBotDotNet bot.
-  # BffnEchoSkillBotDotNetAppSecret: (optional) App Secret for BffnEchoSkillBotDotNet bot.
-  # BffnEchoSkillBotDotNetV3AppId: (optional) App Id for BffnEchoSkillBotDotNetV3 bot.
-  # BffnEchoSkillBotDotNetV3AppSecret: (optional) App Secret for BffnEchoSkillBotDotNetV3 bot.
-  # BffnEchoSkillBotJSAppId: (optional) App Id for BffnEchoSkillBotJS bot.
-  # BffnEchoSkillBotJSAppSecret: (optional) App Secret for BffnEchoSkillBotJS bot.
-  # BffnEchoSkillBotJSV3AppId: (optional) App Id for BffnEchoSkillBotJSV3 bot.
-  # BffnEchoSkillBotJSV3AppSecret: (optional) App Secret for BffnEchoSkillBotJSV3 bot.
-  # BffnEchoSkillBotPythonAppId: (optional) App Id for BffnEchoSkillBotPython bot.
-  # BffnEchoSkillBotPythonAppSecret: (optional) App Secret for BffnEchoSkillBotPython bot.
-  # BffnSimpleHostBotComposerDotNetAppId: (optional) App Id for BffnSimpleHostBotComposerDotNet bot.
-  # BffnSimpleHostBotComposerDotNetAppSecret: (optional) App Secret for BffnSimpleHostBotComposerDotNet bot.
-  # BffnSimpleHostBotDotNet21AppId: (optional) App Id for BffnSimpleHostBotDotNet21 bot.
-  # BffnSimpleHostBotDotNet21AppSecret: (optional) App Secret for BffnSimpleHostBotDotNet21 bot.
-  # BffnSimpleHostBotDotNetAppId: (optional) App Id for BffnSimpleHostBotDotNet bot.
-  # BffnSimpleHostBotDotNetAppSecret: (optional) App Secret for BffnSimpleHostBotDotNet bot.
-  # BffnSimpleHostBotJSAppId: (optional) App Id for BffnSimpleHostBotJS bot.
-  # BffnSimpleHostBotJSAppSecret: (optional) App Secret for BffnSimpleHostBotJS bot.
-  # BffnSimpleHostBotPythonAppId: (optional) App Id for BffnSimpleHostBotPython bot.
-  # BffnSimpleHostBotPythonAppSecret: (optional) App Secret for BffnSimpleHostBotPython bot.
-  # BffnWaterfallHostBotDotNetAppId: (optional) App Id for BffnWaterfallHostBotDotNet bot.
-  # BffnWaterfallHostBotDotNetAppSecret: (optional) App Secret for BffnWaterfallHostBotDotNet bot.
-  # BffnWaterfallSkillBotDotNetAppId: (optional) App Id for BffnWaterfallSkillBotDotNet bot.
-  # BffnWaterfallSkillBotDotNetAppSecret: (optional) App Secret for BffnWaterfallSkillBotDotNet bot.
-  # BffnWaterfallHostBotJSAppId: (optional) App Id for BffnWaterfallHostBotJS bot.
-  # BffnWaterfallHostBotJSAppSecret: (optional) App Secret for BffnWaterfallHostBotJS bot.
-  # BffnWaterfallSkillBotJSAppId: (optional) App Id for BffnWaterfallSkillBotJS bot.
-  # BffnWaterfallSkillBotJSAppSecret: (optional) App Secret for BffnWaterfallSkillBotJS bot.
-  # BffnWaterfallHostBotPythonAppId: (optional) App Id for BffnWaterfallHostBotPython bot.
-  # BffnWaterfallHostBotPythonAppSecret: (optional) App Secret for BffnWaterfallHostBotPython bot.
-  # BffnWaterfallSkillBotPythonAppId: (optional) App Id for BffnWaterfallSkillBotPython bot.
-  # BffnWaterfallSkillBotPythonAppSecret: (optional) App Secret for BffnWaterfallSkillBotPython bot.
+  # BfcfnSimpleHostBotDotNetAppId: (optional) App Id for BfcfnSimpleHostBotDotNet bot.
+  # BfcfnSimpleHostBotDotNetAppSecret: (optional) App Secret for BfcfnSimpleHostBotDotNet bot.
   # ConnectionName: (optional) Name for the OAuth connection to use in the skill bots.
 
   ## DependenciesVersion (Define these variables in Azure) Possible values are: Latest (default), Stable, or specific version numbers.
   # DependenciesVersionDotNetHosts: (optional) Bot Builder dependency version to use for DotNet host bots.
-  # DependenciesVersionDotNetSkills: (optional) Bot Builder dependency version to use for DotNet skill bots.
-  # DependenciesVersionDotNetSkillsV3: (optional) Bot Builder dependency version to use for DotNet skill V3 bots.
-  # DependenciesVersionJSHosts: (optional) Bot Builder dependency version to use for JS host bots.
-  # DependenciesVersionJSSkills: (optional) Bot Builder dependency version to use for JS skill bots.
-  # DependenciesVersionJSSkillsV3: (optional) Bot Builder dependency version to use for JS skill V3 bots.
-  # DependenciesVersionPythonHosts: (optional) Bot Builder dependency version to use for Python host bots.
-  # DependenciesVersionPythonSkills: (optional) Bot Builder dependency version to use for Python skill bots.
 
   ## Internal variables
-  InternalAppInsightsName: 'bffnappinsights$(INTERNALRESOURCESUFFIX)'
-  InternalAppServicePlanWindowsResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUP'], 'bffnshared')]
-  InternalAppServicePlanLinuxResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUPLINUX'], 'bffnshared-linux')]
-  InternalAppServicePlanDotNetName: $[coalesce(variables['APPSERVICEPLANDOTNETNAME'], 'bffnbotsappservicedotnet$(INTERNALRESOURCESUFFIX)')]
-  InternalAppServicePlanJSName: $[coalesce(variables['APPSERVICEPLANJSNAME'], 'bffnbotsappservicejs$(INTERNALRESOURCESUFFIX)')]
-  InternalAppServicePlanPythonName: $[coalesce(variables['APPSERVICEPLANPYTHONNAME'], 'bffnbotsappservicepython$(INTERNALRESOURCESUFFIX)')]
-  InternalKeyVaultName: 'bffnbotkeyvault$(INTERNALRESOURCESUFFIX)'
-  InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bffnbots')]
+  InternalAppInsightsName: 'bfcfnappinsights$(INTERNALRESOURCESUFFIX)'
+  InternalAppServicePlanWindowsResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUP'], 'bfcfnshared')]
+  InternalAppServicePlanLinuxResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUPLINUX'], 'bfcfnshared-linux')]
+  InternalAppServicePlanDotNetName: $[coalesce(variables['APPSERVICEPLANDOTNETNAME'], 'bfcfnbotsappservicedotnet$(INTERNALRESOURCESUFFIX)')]
+  InternalKeyVaultName: 'bfcfnbotkeyvault$(INTERNALRESOURCESUFFIX)'
+  InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bfcfnbots')]
   InternalResourceSuffix: $[coalesce(variables['RESOURCESUFFIX'], '')]
 
 stages:
@@ -201,14 +64,6 @@ stages:
         - id: "Prepare_DotNetGroup"
           name: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
           displayName: "Prepare DotNet's Resource Group"
-
-        - id: "Prepare_JSGroup"
-          name: "$(INTERNALRESOURCEGROUPNAME)-JS"
-          displayName: "Prepare JS's Resource Group"
-
-        - id: "Prepare_PythonGroup"
-          name: "$(INTERNALRESOURCEGROUPNAME)-Python"
-          displayName: "Prepare Python's Resource Group"
 
 # DotNet
   - template: dotnet/deploy.yml
@@ -223,7 +78,7 @@ stages:
       resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
       resourceSuffix: $(INTERNALRESOURCESUFFIX)
       bots:
-        - name: "bffnsimplehostbotdotnet"
+        - name: "bfcfnsimplehostbotdotnet"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
           displayName: "DotNet Simple Host Bot"
