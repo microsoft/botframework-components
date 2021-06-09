@@ -85,7 +85,7 @@ stages:
           appId: $(BFCFNSIMPLEHOSTBOTDOTNETAPPID)
           appSecret: $(BFCFNSIMPLEHOSTBOTDOTNETAPPSECRET)
           project:
-            directory: 'Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
+            directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
             name: "SimpleHostBot.csproj"
             netCoreVersion: "3.1.x"
           dependency:
