@@ -82,8 +82,8 @@ stages:
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
           displayName: "DotNet Simple Host Bot"
-          appId: $(BFFNSIMPLEHOSTBOTDOTNETAPPID)
-          appSecret: $(BFFNSIMPLEHOSTBOTDOTNETAPPSECRET)
+          appId: $(BFCFNSIMPLEHOSTBOTDOTNETAPPID)
+          appSecret: $(BFCFNSIMPLEHOSTBOTDOTNETAPPSECRET)
           project:
             directory: 'Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
             name: "SimpleHostBot.csproj"
