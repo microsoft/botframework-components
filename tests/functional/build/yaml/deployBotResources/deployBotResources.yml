@@ -39,8 +39,8 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BfcfnSimpleHostBotDotNetAppId: (optional) App Id for BfcfnSimpleHostBotDotNet bot.
-  # BfcfnSimpleHostBotDotNetAppSecret: (optional) App Secret for BfcfnSimpleHostBotDotNet bot.
+  # BfcfnEmptyBotDotNetWebAppAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
+  # BfcfnEmptyBotDotNetWebAppAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebAppApp bot.
   # ConnectionName: (optional) Name for the OAuth connection to use in the skill bots.
 
   ## DependenciesVersion (Define these variables in Azure) Possible values are: Latest (default), Stable, or specific version numbers.
@@ -78,12 +78,12 @@ stages:
       resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
       resourceSuffix: $(INTERNALRESOURCESUFFIX)
       bots:
-        - name: "bfcfnsimplehostbotdotnet"
+        - name: "bfcfnemptybotdotnetwebapp"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
-          displayName: "DotNet Simple Host Bot"
-          appId: $(BFCFNSIMPLEHOSTBOTDOTNETAPPID)
-          appSecret: $(BFCFNSIMPLEHOSTBOTDOTNETAPPSECRET)
+          displayName: "DotNet Web App Empty Bot"
+          appId: $(BFCFNEMPTYBOTDOTNETWEBAPPAPPID)
+          appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPAPPSECRET)
           project:
             directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
             name: "SimpleHostBot.csproj"
