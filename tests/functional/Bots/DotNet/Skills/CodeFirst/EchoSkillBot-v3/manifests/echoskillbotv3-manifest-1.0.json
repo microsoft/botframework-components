@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/skills/v2.1/skill-manifest.json",
+  "$id": "EchoSkillBotDotNetV3",
+  "name": "EchoSkillBotDotNetV3",
+  "version": "1.0",
+  "description": "This is a skill for echoing what the user sent to the bot (using BF V3).",
+  "publisherName": "Microsoft",
+  "privacyUrl": "https://microsoft.com/privacy",
+  "copyright": "Copyright (c) Microsoft Corporation. All rights reserved.",
+  "license": "https://github.com/microsoft/BotFramework-FunctionalTests/blob/main/LICENSE",
+  "tags": [
+    "echo"
+  ],
+  "endpoints": [
+    {
+      "name": "default",
+      "protocol": "BotFrameworkV3",
+      "description": "Localhost endpoint for the skill (on port 35407)",
+      "endpointUrl": "http://localhost:35407/api/messages",
+      "msAppId": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "activities": {
+    "EchoDotNetV3": {
+      "description": "Echo user responses",
+      "type": "message",
+      "name": "V3Echo"
+    }
+  }
+}

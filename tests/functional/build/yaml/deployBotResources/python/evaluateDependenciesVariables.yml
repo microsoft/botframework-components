@@ -1,0 +1,110 @@
+parameters:
+  - name: botType
+    displayName: Bot type
+    type: string
+
+  - name: source
+    displayName: Bot Source Location
+    type: string
+
+  - name: registry
+    displayName: Registry source
+    type: string
+
+  - name: version
+    displayName: Version number
+    type: string
+
+steps:
+  - task: PowerShell@2
+    displayName: "Evaluate source & version"
+    inputs:
+      targetType: inline
+      script: |
+          # Get Source
+          $sourcePypi = "https://pypi.org/simple/"
+          $sourceTestPypi = "https://test.pypi.org/simple/"
+          $sourceArtifacts = "https://pkgs.dev.azure.com/ConversationalAI/BotFramework/_packaging/SDK/pypi/simple/"
+
+          switch -regex ("${{ parameters.registry }}") {
+            "^($null||Artifacts)$" {
+              $source = $sourceArtifacts
+              $extraSource = $sourcePypi
+            }
+            "Pypi" { 
+              $source = $sourcePypi
+              $extraSource = $sourceArtifacts
+            }
+            "Test.Pypi" { 
+              $source = $sourceTestPypi
+              $extraSource = $sourcePypi
+            }
+            default { 
+              $source = "${{ parameters.registry }}"
+              $extraSource = $sourcePypi
+            }
+          }
+
+          # Get Version Number
+          switch -regex ("${{ parameters.version }}") {
+            "^($null||LATEST)$" {
+              if ("${{ parameters.registry }}".ToUpper() -in "PYPI") {
+                [Console]::ForegroundColor = "red"
+                [Console]::Error.WriteLine("Preview versions of BotBuilder are not available for this source.")
+                [Console]::ResetColor()
+                exit 1 # Force exit
+              }
+              $versionNumber = ""
+              $preFag = "--pre"
+            }
+            STABLE { 
+              $versionNumber = ""
+            }
+            default { 
+              $versionNumber = "${{ parameters.version }}"
+              $condition = "=="
+            }
+          }
+
+          #Add the $source source at the beginning of requirements
+          $file = "${{ parameters.source }}/requirements.txt"
+          $content = @(Get-Content $file)
+          $line = "$preFag --index-url $source --extra-index-url $extraSource".Trim()
+          Set-Content -Path $file -Value $line
+          Add-Content -Path $file -Value $content
+
+          function UpdatePackageVersion($package) {
+            #Set Package version to empty value
+            $content = @(Get-Content $file)
+            $matchinfo = Select-String -Path $file -Pattern $package
+
+            $script = "$package $condition $versionNumber"
+
+            if ($matchinfo.LineNumber -gt 0) {
+              $content[$matchinfo.LineNumber - 1] = $script
+              Set-Content -Path $file -Value $content
+            } else {
+              Add-Content -Path $file -Value $script
+            }
+          }
+
+          UpdatePackageVersion "botbuilder-dialogs" 
+          UpdatePackageVersion "botbuilder-integration-aiohttp"
+
+          if (-not $versionNumber) {
+            Invoke-Expression "pip install botbuilder-integration-aiohttp $line --quiet"
+            $packageVersion = pip show botbuilder-integration-aiohttp | Where-Object { $_ -match "^Version" }
+            $versionNumber = $packageVersion.Split(" ")[1]
+          }
+
+          Write-Host "`nSource: $source"
+          Write-Host "Extra Source: $extraSource"
+          Write-Host "Version Number: $versionNumber"
+      
+          $content = @(Get-Content $file)
+          Write-Host "`nrequirements.txt file:"
+          $content
+
+          # Set environment variables
+          Write-Host "##vso[task.setvariable variable=DependenciesSource]$source"
+          Write-Host "##vso[task.setvariable variable=DependenciesVersionNumber]$versionNumber"

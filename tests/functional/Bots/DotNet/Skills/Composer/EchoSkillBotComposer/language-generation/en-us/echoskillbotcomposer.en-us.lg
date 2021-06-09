@@ -1,0 +1,31 @@
+[import](common.lg)
+
+# SendActivity_Greeting()
+[Activity
+    Text = Welcome to EchoSkillBotComposerDotNet.
+]
+
+# SendActivity_DidNotUnderstand()
+[Activity
+    Text = ${SendActivity_DidNotUnderstand_text()}
+]
+
+# SendActivity_DidNotUnderstand_text()
+- Sorry, I didn't get that.
+# SendActivity_HHAFpn()
+[Activity
+    Text = Echo: ${turn.activity.text}
+    InputHint = acceptingInput
+]
+
+# SendActivity_dZ2zwR()
+[Activity
+    Text = Say "end" or "stop" and I'll end the conversation and back to the parent.
+    InputHint = acceptingInput
+]
+
+# SendActivity_xvwomh()
+[Activity
+    Text = Ending conversation from the skill...
+    InputHint = acceptingInput
+]

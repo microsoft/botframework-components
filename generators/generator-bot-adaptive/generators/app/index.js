@@ -23,6 +23,7 @@ const options = rt.Record({
       version: rt.String,
     })
   ),
+  sdkVersion: rt.String,
 });
 
 const defaultOptions = {
@@ -33,6 +34,7 @@ const defaultOptions = {
   },
   modifyApplicationSettings: undefined,
   packageReferences: [],
+  sdkVersion: undefined,
 };
 
 module.exports = class extends BaseGenerator {
@@ -62,7 +64,7 @@ module.exports = class extends BaseGenerator {
     const includeAssets = ['schemas'];
 
     switch (this.options.platform) {
-      case platforms.dotnet: {
+      case platforms.dotnet.name: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'string.Empty',
           includeAssets,
@@ -70,6 +72,8 @@ module.exports = class extends BaseGenerator {
             packageReferences: this._formatDotnetPackageReferences(
               this.packageReferences
             ),
+            sdkVersion:
+              this.options.sdkVersion || platforms.dotnet.defaultSdkVersion,
           },
         });
 
@@ -82,7 +86,7 @@ module.exports = class extends BaseGenerator {
         return;
       }
 
-      case platforms.js: {
+      case platforms.js.name: {
         this._copyPlatformTemplate({
           defaultSettingsDirectory: 'process.cwd()',
           includeAssets,
@@ -187,7 +191,7 @@ module.exports = class extends BaseGenerator {
     appSettings.runtime.key = `adaptive-runtime-${platform}-${integration}`;
 
     switch (platform) {
-      case platforms.dotnet:
+      case platforms.dotnet.name:
         switch (integration) {
           case integrations.functions:
             appSettings.runtime.command = `func start --script-root ${path.join(
@@ -200,7 +204,7 @@ module.exports = class extends BaseGenerator {
             appSettings.runtime.command = `dotnet run --project ${botName}.csproj`;
         }
         break;
-      case platforms.js:
+      case platforms.js.name:
         appSettings.runtime.command = 'npm run dev --';
         break;
       default:
@@ -247,9 +251,11 @@ module.exports = class extends BaseGenerator {
   }
 
   _writeJsPackageJson() {
-    const { botName, integration } = this.options;
-
-    const sdkVersion = '~4.13.1-preview';
+    const {
+      botName,
+      integration,
+      sdkVersion = platforms.js.defaultSdkVersion,
+    } = this.options;
 
     const dependencies = {
       [integrations.functions]: {

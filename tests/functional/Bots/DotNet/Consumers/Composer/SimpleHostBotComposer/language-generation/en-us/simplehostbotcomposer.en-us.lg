@@ -1,0 +1,26 @@
+[import](common.lg)
+
+# SendActivity_Greeting()
+[Activity
+    Text = Hello and welcome!
+    InputHint = acceptingInput
+]
+
+# SendActivity_DidNotUnderstand()
+[Activity
+    Text = ${SendActivity_DidNotUnderstand_text()}
+]
+
+# SendActivity_DidNotUnderstand_text()
+- Sorry, I didn't get that.
+# SendActivity_M2LqJr()
+[Activity
+    Text = Received endOfConversation.\n\nCode: ${turn.activity.code}.
+    InputHint = acceptingInput
+]
+
+# SendActivity_bgTcyn()
+[Activity
+    Text = Back in the host bot.
+    InputHint = acceptingInput
+]

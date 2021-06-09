@@ -1,0 +1,5 @@
+# files generated during the lubuild process
+# IMPORTANT: In regular composer bots the generated folder should be excluded and regenerated on the build server
+# or by the dev running composer locally. But in this case we include it so we don't have to run bf luis:cross-train
+# in the build server
+# generated/

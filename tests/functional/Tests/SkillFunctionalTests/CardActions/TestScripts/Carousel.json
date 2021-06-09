@@ -1,0 +1,76 @@
+{
+  "items": [
+    {
+      "type": "message",
+      "role": "user",
+      "text": "Carousel"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "attachmentLayout == 'carousel'",
+        "inputHint == 'acceptingInput'",
+        "attachments[0].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[0].content.title == 'BotFramework Hero Card'",
+        "attachments[0].content.subtitle == 'Microsoft Bot Framework'",
+        "attachments[0].content.text == 'Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.'",
+        "attachments[0].content.buttons[0].type == 'openUrl'",
+        "attachments[0].content.buttons[0].title == 'Get Started'",
+        "attachments[0].content.buttons[0].value == 'https://docs.microsoft.com/bot-framework'",
+        "attachments[1].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[1].content.title == 'BotFramework Hero Card'",
+        "attachments[1].content.subtitle == 'Microsoft Bot Framework'",
+        "attachments[1].content.text == 'Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.'",
+        "attachments[1].content.buttons[0].type == 'openUrl'",
+        "attachments[1].content.buttons[0].title == 'Get Started'",
+        "attachments[1].content.buttons[0].value == 'https://docs.microsoft.com/bot-framework'",
+        "attachments[2].contentType == 'application/vnd.microsoft.card.hero'",
+        "attachments[2].content.title == 'BotFramework Hero Card'",
+        "attachments[2].content.subtitle == 'Microsoft Bot Framework'",
+        "attachments[2].content.text == 'Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.'",
+        "attachments[2].content.buttons[0].type == 'openUrl'",
+        "attachments[2].content.buttons[0].title == 'Get Started'",
+        "attachments[2].content.buttons[0].value == 'https://docs.microsoft.com/bot-framework'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "speak == 'What card do you want?'",
+        "inputHint == 'expectingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "user",
+      "text": "end"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "speak == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'normal'",
+        "suggestedActions.actions[0].value == 'normal'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'expectReplies'",
+        "suggestedActions.actions[1].value == 'expectReplies'"
+      ]
+    }
+  ]
+}

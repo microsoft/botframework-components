@@ -11,10 +11,10 @@
  - generators/generator-bot-core-assistant/**/*
 
 "Area: Generators: Core Language":
- - generators/generator-core-language/**/*
+ - generators/generator-bot-core-language/**/*
 
 "Area: Generators: Core QnA":
- - generators/generator-bot-qna/**/*
+ - generators/generator-bot-core-qna/**/*
 
 "Area: Generators: Empty":
  - generators/generator-bot-empty/**/*
@@ -24,6 +24,9 @@
 
 "Area: Generators: Enterprise Calendar":
  - generators/generator-bot-enterprise-calendar/**/*
+
+"Area: Generators: Enterprise People":
+ - generators/generator-bot-enterprise-people/**/*
 
 "Area: Packages: Adaptive Cards":
  - packages/AdaptiveCards/**/*

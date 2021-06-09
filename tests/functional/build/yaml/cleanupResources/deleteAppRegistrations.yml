@@ -1,0 +1,62 @@
+parameters:
+  - name: azureSubscription
+    displayName: Azure Service Connection
+    type: string
+
+  - name: keyVault
+    displayName: Key Vault name
+    type: string
+
+  - name: resourceGroup
+    displayName: Resource Group
+    type: string
+
+steps:
+  - task: AzureCLI@2
+    displayName: "Delete Bots App Registrations"
+    inputs:
+      azureSubscription: "${{ parameters.azureSubscription }}"
+      addSpnToEnvironment: true
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        # Using Microsoft Graph REST API to create App Registrations (https://docs.microsoft.com/en-us/graph/api/application-post-applications) instead of Azure CLI due to Azure Active Directory Graph API has been deprecated and still in a migration process to Microsoft Graph API, more information can be found in this link (https://github.com/Azure/azure-cli/issues/12946).
+
+        function GetToken() {
+          # Get Token
+
+          $body = @{
+            grant_type    = "client_credentials";
+            scope         = "https://graph.microsoft.com/.default";
+            client_id     = $env:SERVICEPRINCIPALID;
+            client_secret = $env:SERVICEPRINCIPALKEY;
+          }
+
+          Invoke-WebRequest -Uri "https://login.microsoftonline.com/$($env:TENANTID)/oauth2/v2.0/token" -Method "POST" -Body $body | ConvertFrom-Json
+        }
+
+        function DeleteAppRegistration($token, $objectId) {
+          # Delete App Registration
+
+          $headers = @{
+            Authorization = "Bearer " + $token.access_token
+          }
+
+          Invoke-WebRequest -Uri "https://graph.microsoft.com/v1.0/applications/$objectId" -Method "DELETE" -Headers $headers | ConvertFrom-Json
+        }
+
+        Write-Host "Looking for ${{ parameters.keyVault }}..."
+        $exists = az keyvault list --resource-group "${{ parameters.resourceGroup }}" --query "[?name == '${{ parameters.keyVault }}']" | ConvertFrom-Json
+        if ($exists) {
+          $entries = az keyvault secret list --vault-name "${{ parameters.keyVault }}" --query "[?ends_with(name, 'AppObjectId')]" | ConvertFrom-Json
+          $token = GetToken
+
+          foreach ($entry in $entries) {
+            $name = $entry.name -replace "AppObjectId"
+            Write-Host "Deleting $name secrets..."
+            $secretVault = az keyvault secret show --id $entry.id | ConvertFrom-Json
+            DeleteAppRegistration $token $secretVault.value
+          }
+        } else {
+          Write-Host "No pre-existing ${{ parameters.keyVault }} resource found."
+        }
