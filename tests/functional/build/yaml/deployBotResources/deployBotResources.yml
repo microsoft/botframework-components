@@ -40,7 +40,7 @@ variables:
 
   ## Bots Configuration (Define these variables in Azure)
   # BfcfnEmptyBotDotNetWebAppAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
-  # BfcfnEmptyBotDotNetWebAppAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebAppApp bot.
+  # BfcfnEmptyBotDotNetWebAppAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebApp bot.
   # ConnectionName: (optional) Name for the OAuth connection to use in the skill bots.
 
   ## DependenciesVersion (Define these variables in Azure) Possible values are: Latest (default), Stable, or specific version numbers.
@@ -82,8 +82,8 @@ stages:
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
           displayName: "DotNet Web App Empty Bot"
-          appId: $(BFCFNEMPTYBOTDOTNETWEBAPPAPPID)
-          appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPAPPSECRET)
+          appId: $(BFCFNEMPTYBOTDOTNETWEBAPPID)
+          appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
           project:
             directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
             name: "SimpleHostBot.csproj"
