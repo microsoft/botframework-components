@@ -84,6 +84,10 @@ stages:
           name: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
           displayName: "Prepare DotNet's Resource Group"
 
+        - id: "Prepare_JSGroup"
+          name: "$(INTERNALRESOURCEGROUPNAME)-JS"
+          displayName: "Prepare JS's Resource Group"          
+
 # DotNet
   - template: dotnet/deploy.yml
     parameters:
