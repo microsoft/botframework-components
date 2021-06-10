@@ -149,7 +149,7 @@ stages:
           appId: $(BFCFNEMPTYBOTJSWEBAPPID)
           appSecret: $(BFCFNEMPTYBOTJSWEBAPPSECRET)
           project:
-            directory: 'Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+            directory: 'Tests/Functional/Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
           dependency:
             registry: ${{ parameters.dependenciesRegistryJSHosts }}
             version: ${{ parameters.dependenciesVersionJSHosts }}
@@ -160,7 +160,7 @@ stages:
           appId: $(BFCFNEMPTYBOTJSFUNCTIONSID)
           appSecret: $(BFCFNEMPTYBOTJSFUNCTIONSSECRET)
           project:
-            directory: 'Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+            directory: 'Tests/Functional/Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
           dependency:
             registry: ${{ parameters.dependenciesRegistryJSHosts }}
             version: ${{ parameters.dependenciesVersionJSHosts }}
