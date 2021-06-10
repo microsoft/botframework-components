@@ -39,8 +39,10 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BfcfnEmptyBotDotNetWebAppAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
-  # BfcfnEmptyBotDotNetWebAppAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebApp bot.
+  # BfcfnEmptyBotDotNetWebAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
+  # BfcfnEmptyBotDotNetWebAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebApp bot.
+  # BfcfnEmptyBotDotNetFunctionsId: (optional) App Id for BfcfnEmptyBotDotNetFunctions bot.
+  # BfcfnEmptyBotDotNetFunctionsSecret: (optional) App Secret for BfcfnEmptyBotDotNetFunctions bot.
   # ConnectionName: (optional) Name for the OAuth connection to use in the skill bots.
 
   ## DependenciesVersion (Define these variables in Azure) Possible values are: Latest (default), Stable, or specific version numbers.
@@ -84,6 +86,32 @@ stages:
           displayName: "DotNet Web App Empty Bot"
           appId: $(BFCFNEMPTYBOTDOTNETWEBAPPID)
           appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
+          project:
+            directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
+            name: "SimpleHostBot.csproj"
+            netCoreVersion: "3.1.x"
+          dependency:
+            registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
+            version: ${{ parameters.dependenciesVersionDotNetHosts }}
+
+  - template: dotnet/deploy.yml
+    parameters:
+      appInsight: "$(INTERNALAPPINSIGHTSNAME)"
+      appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
+      appServicePlanRG: "$(INTERNALAPPSERVICEPLANWINDOWSRESOURCEGROUP)"
+      azureSubscription: "$(AZURESUBSCRIPTION)"
+      botPricingTier: $env:BOTPRICINGTIER
+      connectionName: $env:CONNECTIONNAME
+      keyVault: "$(INTERNALKEYVAULTNAME)"
+      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
+      resourceSuffix: $(INTERNALRESOURCESUFFIX)
+      bots:
+        - name: "bfcfnemptybotdotnetfunctions"
+          dependsOn: "Prepare_DotNetGroup"
+          type: "Host"
+          displayName: "DotNet Functions Empty Bot"
+          appId: $(BFCFNEMPTYBOTDOTNETFUNCTIONSID)
+          appSecret: $(BFCFNEMPTYBOTDOTNETFUNCTIONSSECRET)
           project:
             directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
             name: "SimpleHostBot.csproj"
