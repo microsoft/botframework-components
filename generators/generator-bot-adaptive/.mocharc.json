@@ -1,0 +1,7 @@
+{
+  "checkLeaks": true,
+  "exit": true,
+  "forbidOnly": true,
+  "forbidPending": true,
+  "recursive": true
+}

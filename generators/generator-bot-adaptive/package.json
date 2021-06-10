@@ -21,14 +21,14 @@
   },
   "scripts": {
     "lint": "eslint -c .eslintrc.json .",
-    "test": "mocha tests"
+    "test": "mocha"
   },
   "dependencies": {
     "globby": "^11.0.2",
     "normalize-path": "^3.0.0",
     "runtypes": "~5.1.0",
     "uuid": "^8.3.1",
-    "yeoman-generator": "^1.1.1"
+    "yeoman-generator": "^2.0.5"
   },
   "devDependencies": {
     "ejs": "^3.1.6",
