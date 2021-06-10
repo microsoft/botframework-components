@@ -24,6 +24,19 @@ parameters:
     - MyGet
     - NuGet
 
+  - name: dependenciesVersionJSHosts
+    displayName: JS Hosts Version
+    type: string
+    default: $env:DEPENDENCIESVERSIONJSHOSTS
+
+  - name: dependenciesRegistryJSHosts
+    displayName: JS Hosts Registry
+    type: string
+    default: MyGet
+    values:
+    - MyGet
+    - Npm
+
 variables:
   BuildConfiguration: "Debug"
   BuildPlatform: "AnyCPU"
@@ -43,6 +56,10 @@ variables:
   # BfcfnEmptyBotDotNetWebAppSecret: (optional) App Secret for BfcfnEmptyBotDotNetWebApp bot.
   # BfcfnEmptyBotDotNetFunctionsId: (optional) App Id for BfcfnEmptyBotDotNetFunctions bot.
   # BfcfnEmptyBotDotNetFunctionsSecret: (optional) App Secret for BfcfnEmptyBotDotNetFunctions bot.
+  # BfcfnEmptyBotJSWebAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotJSWebAppSecret: (optional) App Secret for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotJSFunctionsId: (optional) App Id for BfcfnEmptyBotJSFunctions bot.
+  # BfcfnEmptyBotJSFunctionsSecret: (optional) App Secret for BfcfnEmptyBotJSFunctions bot.
   # ConnectionName: (optional) Name for the OAuth connection to use in the skill bots.
 
   ## DependenciesVersion (Define these variables in Azure) Possible values are: Latest (default), Stable, or specific version numbers.
@@ -94,18 +111,6 @@ stages:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
             version: ${{ parameters.dependenciesVersionDotNetHosts }}
 
-  - template: dotnet/deploy.yml
-    parameters:
-      appInsight: "$(INTERNALAPPINSIGHTSNAME)"
-      appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
-      appServicePlanRG: "$(INTERNALAPPSERVICEPLANWINDOWSRESOURCEGROUP)"
-      azureSubscription: "$(AZURESUBSCRIPTION)"
-      botPricingTier: $env:BOTPRICINGTIER
-      connectionName: $env:CONNECTIONNAME
-      keyVault: "$(INTERNALKEYVAULTNAME)"
-      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
-      resourceSuffix: $(INTERNALRESOURCESUFFIX)
-      bots:
         - name: "bfcfnemptybotdotnetfunctions"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
@@ -119,6 +124,42 @@ stages:
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
             version: ${{ parameters.dependenciesVersionDotNetHosts }}
+
+# JS
+  - template: js/deploy.yml
+    parameters:
+      appInsight: "$(INTERNALAPPINSIGHTSNAME)"
+      appServicePlan: "$(INTERNALAPPSERVICEPLANJSNAME)"
+      appServicePlanRG: "$(INTERNALAPPSERVICEPLANWINDOWSRESOURCEGROUP)"
+      azureSubscription: "$(AZURESUBSCRIPTION)"
+      botPricingTier: $env:BOTPRICINGTIER
+      connectionName: $env:CONNECTIONNAME
+      dependsOn: "Prepare_JSGroup"
+      keyVault: "$(INTERNALKEYVAULTNAME)"
+      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-JS"
+      resourceSuffix: $(INTERNALRESOURCESUFFIX)
+      bots:
+        - name: "bfcfnemptybotjswebapp"
+          type: "Host"
+          displayName: "JS Web App Empty Bot"
+          appId: $(BFCFNEMPTYBOTJSWEBAPPID)
+          appSecret: $(BFCFNEMPTYBOTJSWEBAPPSECRET)
+          project:
+            directory: 'Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+          dependency:
+            registry: ${{ parameters.dependenciesRegistryJSHosts }}
+            version: ${{ parameters.dependenciesVersionJSHosts }}
+
+        - name: "bfcfnemptybotjsfunctions"
+          type: "Host"
+          displayName: "JS Functions Empty Bot"
+          appId: $(BFCFNEMPTYBOTJSFUNCTIONSID)
+          appSecret: $(BFCFNEMPTYBOTJSFUNCTIONSSECRET)
+          project:
+            directory: 'Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+          dependency:
+            registry: ${{ parameters.dependenciesRegistryJSHosts }}
+            version: ${{ parameters.dependenciesVersionJSHosts }}
 
 # Publish variables
   - stage: "Publish_Variables"
