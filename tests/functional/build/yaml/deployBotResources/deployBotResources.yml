@@ -70,6 +70,7 @@ variables:
   InternalAppServicePlanWindowsResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUP'], 'bfcfnshared')]
   InternalAppServicePlanLinuxResourceGroup: $[coalesce(variables['APPSERVICEPLANGROUPLINUX'], 'bfcfnshared-linux')]
   InternalAppServicePlanDotNetName: $[coalesce(variables['APPSERVICEPLANDOTNETNAME'], 'bfcfnbotsappservicedotnet$(INTERNALRESOURCESUFFIX)')]
+  InternalAppServicePlanJSName: $[coalesce(variables['APPSERVICEPLANJSNAME'], 'bfcfnbotsappservicejs$(INTERNALRESOURCESUFFIX)')]
   InternalKeyVaultName: 'bfcfnbotkeyvault$(INTERNALRESOURCESUFFIX)'
   InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bfcfnbots')]
   InternalResourceSuffix: $[coalesce(variables['RESOURCESUFFIX'], '')]
