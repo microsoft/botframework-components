@@ -73,22 +73,6 @@ stages:
           scriptLocation: inlineScript
           inlineScript: "az deployment group create --name $(INTERNALCOSMOSDBNAME) --resource-group $(INTERNALRESOURCEGROUPNAME) --template-file build/templates/template-cosmosdb-resources.json --parameters accountName=$(INTERNALCOSMOSDBNAME) databaseName=$(INTERNALCOSMOSDBNAME)"
 
-- stage: Create_Blob_Storage
-  displayName: "Create Blob storage"
-  dependsOn: Create_Resource_Group_Windows
-  jobs:
-    - job: Deploy_Blob_Storage
-      displayName: "Deploy steps"
-      steps:
-      - task: AzureCLI@2
-        displayName: "Deploy Blob storage"
-        inputs:
-          azureSubscription: $(AZURESUBSCRIPTION)
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: "az deployment group create --name $(INTERNALSTORAGENAME) --resource-group $(INTERNALRESOURCEGROUPNAME) --template-file build/templates/template-storage-resources.json"
-
-
 - stage: Create_Key_Vault
   displayName: "Create Key Vault"
   dependsOn: Create_Resource_Group_Windows
@@ -169,3 +153,18 @@ stages:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: "az deployment group create --name $(INTERNALAPPINSIGHTSNAME) --resource-group $(INTERNALRESOURCEGROUPNAME) --template-file build/templates/template-app-insights-resources.json --parameters appInsightsName=$(INTERNALAPPINSIGHTSNAME)"
+          
+- stage: Create_Blob_Storage
+  displayName: "Create Blob storage"
+  dependsOn: Create_Resource_Group_Windows
+  jobs:
+    - job: Deploy_Blob_Storage
+      displayName: "Deploy steps"
+      steps:
+      - task: AzureCLI@2
+        displayName: "Deploy Blob storage"
+        inputs:
+          azureSubscription: $(AZURESUBSCRIPTION)
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: "az deployment group create --name $(INTERNALSTORAGENAME) --resource-group $(INTERNALRESOURCEGROUPNAME) --template-file build/templates/template-storage-resources.json --parameters storageAccountsName=$(INTERNALSTORAGENAME)"
