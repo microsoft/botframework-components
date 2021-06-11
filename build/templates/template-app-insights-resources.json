@@ -4,7 +4,7 @@
     "parameters": {
         "appInsightsName": {
             "type": "string",
-            "defaultValue": "bffnappinsights",
+            "defaultValue": "bfcfnappinsights",
             "metadata": {
                 "description": "The name of the Application Insights instance."
             }
