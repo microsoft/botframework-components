@@ -155,14 +155,14 @@ stages:
           inlineScript: "az deployment group create --name $(INTERNALAPPINSIGHTSNAME) --resource-group $(INTERNALRESOURCEGROUPNAME) --template-file build/templates/template-app-insights-resources.json --parameters appInsightsName=$(INTERNALAPPINSIGHTSNAME)"
           
 - stage: Create_Blob_Storage
-  displayName: "Create Blob storage"
+  displayName: "Create Blob Storage"
   dependsOn: Create_Resource_Group_Windows
   jobs:
     - job: Deploy_Blob_Storage
       displayName: "Deploy steps"
       steps:
       - task: AzureCLI@2
-        displayName: "Deploy Blob storage"
+        displayName: "Deploy Blob Storage"
         inputs:
           azureSubscription: $(AZURESUBSCRIPTION)
           scriptType: pscore
