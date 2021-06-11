@@ -21,7 +21,6 @@ variables:
   InternalAppInsightsName: "bfcfnappinsights$($env:RESOURCESUFFIX)"
   InternalAppServicePlanDotNetName: "bfcfnbotsappservicedotnet$($env:RESOURCESUFFIX)"
   InternalAppServicePlanJSName: "bfcfnbotsappservicejs$($env:RESOURCESUFFIX)"
-  InternalAppServicePlanPythonName: "bfcfnbotsappservicepython$($env:RESOURCESUFFIX)"
   InternalCosmosDBName: "bfcfnbotstatedb$($env:RESOURCESUFFIX)"
   InternalKeyVaultName: "bfcfnbotkeyvault$($env:RESOURCESUFFIX)"
   InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUPNAME'], 'bfcfnshared')]
@@ -138,23 +137,6 @@ stages:
           inlineScript: |
             $appServicePlanPricingTier = if ($env:APPSERVICEPLANPRICINGTIER) { "newAppServicePlanSku=$env:APPSERVICEPLANPRICINGTIER" }
             az deployment group create --name "$(INTERNALAPPSERVICEPLANJSNAME)" --resource-group "$(INTERNALRESOURCEGROUPNAME)" --template-file build/templates/template-service-plan-windows-resources.json --parameters $appServicePlanPricingTier newAppServicePlanName="$(INTERNALAPPSERVICEPLANJSNAME)"
-
-- stage: Create_App_Service_Plan_Python
-  displayName: "Create App Service Plan (Python)"
-  dependsOn: Create_Resource_Group_Linux
-  jobs:
-    - job: Deploy_App_Service_Plan_Python
-      displayName: "Deploy steps"
-      steps:
-      - task: AzureCLI@2
-        displayName: "Deploy App Service Plan (Python)"
-        inputs:
-          azureSubscription: $(AZURESUBSCRIPTION)
-          scriptType: pscore
-          scriptLocation: inlineScript
-          inlineScript: |
-            $appServicePlanPricingTier = if ($env:APPSERVICEPLANPRICINGTIER) { "newAppServicePlanSku=$env:APPSERVICEPLANPRICINGTIER" }
-            az deployment group create --name "$(INTERNALAPPSERVICEPLANPYTHONNAME)" --resource-group "$(INTERNALRESOURCEGROUPNAME)-linux" --template-file build/templates/template-service-plan-linux-resources.json --parameters $appServicePlanPricingTier newAppServicePlanName="$(INTERNALAPPSERVICEPLANPYTHONNAME)"
 
 - stage: Create_App_Insights
   displayName: "Create App Insights"

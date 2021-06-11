@@ -46,7 +46,6 @@ variables:
   # AppServicePlanGroupLinux: (optional) Name of the Resource Group where the Linux App Service Plan is located.
   # AppServicePlanDotNetName: (optional) Name of the DotNet App Service Plan.
   # AppServicePlanJSName: (optional) Name of the JavaScript App Service Plan.
-  # AppServicePlanPythonName: (optional) Name of the Python App Service Plan.
   # BotPricingTier: (optional) Pricing Tier for the bots, default F0.
   # ResourceGroup: (optional) Name of the Resource Group where the bots will be deployed.
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
