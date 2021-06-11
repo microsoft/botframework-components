@@ -16,21 +16,21 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BffnEchoSkillBotComposerDotNetAppId: (optional) App Id for BffnEchoSkillBotComposerDotNet bot.
-  # BffnEchoSkillBotDotNet21AppId: (optional) App Id for BffnEchoSkillBotDotNet21 bot.
-  # BffnEchoSkillBotDotNetAppId: (optional) App Id for BffnEchoSkillBotDotNet bot.
-  # BffnEchoSkillBotDotNetV3AppId: (optional) App Id for BffnEchoSkillBotDotNetV3 bot.
-  # BffnEchoSkillBotJSAppId: (optional) App Id for BffnEchoSkillBotJS bot.
-  # BffnEchoSkillBotJSV3AppId: (optional) App Id for BffnEchoSkillBotJSV3 bot.
-  # BffnEchoSkillBotPythonAppId: (optional) App Id for BffnEchoSkillBotPython bot.
-  # BffnWaterfallSkillBotDotNetAppId: (optional) App Id for BffnWaterfallSkillBotDotNet bot.
-  # BffnWaterfallSkillBotJSAppId: (optional) App Id for BffnWaterfallSkillBotJS bot.
-  # BffnWaterfallSkillBotPythonAppId: (optional) App Id for BffnWaterfallSkillBotPython bot.
+  # BfcfnEchoSkillBotComposerDotNetAppId: (optional) App Id for BfcfnEchoSkillBotComposerDotNet bot.
+  # BfcfnEchoSkillBotDotNet21AppId: (optional) App Id for BfcfnEchoSkillBotDotNet21 bot.
+  # BfcfnEchoSkillBotDotNetAppId: (optional) App Id for BfcfnEchoSkillBotDotNet bot.
+  # BfcfnEchoSkillBotDotNetV3AppId: (optional) App Id for BfcfnEchoSkillBotDotNetV3 bot.
+  # BfcfnEchoSkillBotJSAppId: (optional) App Id for BfcfnEchoSkillBotJS bot.
+  # BfcfnEchoSkillBotJSV3AppId: (optional) App Id for BfcfnEchoSkillBotJSV3 bot.
+  # BfcfnEchoSkillBotPythonAppId: (optional) App Id for BfcfnEchoSkillBotPython bot.
+  # BfcfnWaterfallSkillBotDotNetAppId: (optional) App Id for BfcfnWaterfallSkillBotDotNet bot.
+  # BfcfnWaterfallSkillBotJSAppId: (optional) App Id for BfcfnWaterfallSkillBotJS bot.
+  # BfcfnWaterfallSkillBotPythonAppId: (optional) App Id for BfcfnWaterfallSkillBotPython bot.
   # DeployBotResourcesGuid: (optional) Deploy Bot Resources pipeline GUID.
 
   ## Internal variables
-  InternalKeyVaultName: "bffnbotkeyvault$(INTERNALRESOURCESUFFIX)"
-  InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bffnbots')]
+  InternalKeyVaultName: "bfcfnbotkeyvault$(INTERNALRESOURCESUFFIX)"
+  InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bfcfnbots')]
   InternalResourceSuffix: $[coalesce(variables['RESOURCESUFFIX'], '')]
 
 pool:
