@@ -60,11 +60,11 @@ stages:
         displayName: "Deploy steps"
         steps:
           - script: |
-              npm install yo
+              npm install -g yo
             displayName: 'Install yeoman'
 
           - script: |
-              npm install @microsoft/generator-microsoft-bot-empty
+              npm install -g @microsoft/generator-microsoft-bot-empty
             displayName: 'Install template'
 
           - script: |
