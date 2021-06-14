@@ -1,0 +1,5 @@
+steps:
+- script: |
+    yarn exec npm run --if-present test
+  displayName: 'Run test if it exists'
+  workingDirectory: '$(WorkingDirectory)'
