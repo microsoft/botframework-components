@@ -61,6 +61,10 @@ stages:
         steps:
           - script: |
               npm install yo
+
+            displayName: 'Install prereq'
+
+          - script: |
               npm install @microsoft/generator-microsoft-bot-empty
 
               yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
