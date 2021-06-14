@@ -61,14 +61,15 @@ stages:
         steps:
           - script: |
               npm install yo
-
-            displayName: 'Install prereq'
+            displayName: 'Install yeoman'
 
           - script: |
               npm install @microsoft/generator-microsoft-bot-empty
+            displayName: 'Install template'
 
+          - script: |
               yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
-            displayName: 'Build template'
+            displayName: 'Generate template'  
 
           # Perhaps debugging output for the workspace?
           - script: |
