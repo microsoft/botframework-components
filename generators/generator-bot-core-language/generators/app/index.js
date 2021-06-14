@@ -9,7 +9,7 @@ const {
 } = require('@microsoft/generator-bot-adaptive');
 
 const packageReferences = {
-  [platforms.dotnet]: [
+  [platforms.dotnet.name]: [
     {
       name: 'Microsoft.Bot.Components.HelpAndCancel',
       version: '1.0.0',
@@ -19,7 +19,7 @@ const packageReferences = {
       version: '1.0.0',
     },
   ],
-  [platforms.js]: [
+  [platforms.js.name]: [
     { name: '@microsoft/bot-components-helpandcancel', version: 'latest' },
     { name: '@microsoft/bot-components-welcome', version: 'latest' },
   ],
