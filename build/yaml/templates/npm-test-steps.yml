@@ -1,5 +1,10 @@
 steps:
 - script: |
+    yarn --immutable
+  displayName: 'Install dependencies'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
     yarn exec npm run --if-present test
   displayName: 'Run test if it exists'
   workingDirectory: '$(WorkingDirectory)'
