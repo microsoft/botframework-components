@@ -59,20 +59,20 @@ stages:
             SolutionDir: "$(BUILD.SOURCESDIRECTORY)/Bots/DotNet/"
         displayName: "Deploy steps"
         steps:
-        - script: |
-            npm install yo
-            npm install @microsoft/generator-microsoft-bot-empty
+          - script: |
+              npm install yo
+              npm install @microsoft/generator-microsoft-bot-empty
 
-            yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
-          displayName: 'Build template'
+              yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
+            displayName: 'Build template'
 
-        # Perhaps debugging output for the workspace?
-        - script: |
-            cd ..
-            dir *.* /s
-          displayName: 'Dir workspace'
-          continueOnError: true
-          condition: succeededOrFailed()
+          # Perhaps debugging output for the workspace?
+          - script: |
+              cd ..
+              dir *.* /s
+            displayName: 'Dir workspace'
+            continueOnError: true
+            condition: succeededOrFailed()
 
           # Delete Bot Resources
           - template: ../common/deleteResources.yml
