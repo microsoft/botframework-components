@@ -150,52 +150,7 @@ stages:
                   $package = $data.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "Microsoft.Bot.Builder.Integration.AspNet.Core" }
                   Write-Host "##vso[task.setvariable variable=BotBuilderVersionNumber]$($package.version)"
 
-          # End of DotNet Install & Build
-
-          # Start DotNet v3 Install, Build
-          - ${{ if eq(bot.type, 'SkillV3') }}:
-            # Install dependencies
-            - template: installDependenciesV3.yml
-              parameters:
-                registry: "$(DEPENDENCIESSOURCE)"
-                version: "$(DEPENDENCIESVERSIONNUMBER)"
-                project: "${{ bot.project }}"
-                packages:
-                  Microsoft.Bot.Builder
-                  Microsoft.Bot.Builder.Azure
-                  Microsoft.Bot.Builder.History
-
-            # Build bot
-            - task: MSBuild@1
-              displayName: "Build"
-              inputs:
-                solution: "${{ bot.project.directory }}/${{ bot.project.name }}"
-                vsVersion: 16.0
-                platform: "$(BUILDPLATFORM)"
-                configuration: "$(BUILDCONFIGURATION)"
-
-            # Get BotBuilder version
-            - task: PowerShell@2
-              displayName: 'Get BotBuilder Version'
-              inputs:
-                targetType: inline
-                failOnStderr: true
-                script: |
-                  $result = @(Get-ChildItem "$(SOLUTIONDIR)packages\Microsoft.Bot.Builder.[0-9]*" -directory | Sort LastWriteTime -Descending)
-                  $version = $result[0].Name.Replace("Microsoft.Bot.Builder.", "")
-                  Write-Host "##vso[task.setvariable variable=BotBuilderVersionNumber]$($version)"
-
-            # Zip bot
-            - task: ArchiveFiles@2
-              displayName: 'Zip bot'
-              inputs:
-                rootFolderOrFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
-                includeRootFolder: false
-                archiveType: 'zip'
-                archiveFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}/${{ bot.name }}.zip'
-                replaceExistingArchive: true
-                verbose: true
-          # End of DotNet v3 Install, Build
+          # End of DotNet Install & Build          
 
           # Tag BotBuilder package version
           - template: ../common/tagBotBuilderVersion.yml
