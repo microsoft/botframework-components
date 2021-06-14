@@ -66,6 +66,14 @@ stages:
             yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
           displayName: 'Build template'
 
+        # Perhaps debugging output for the workspace?
+        - script: |
+            cd ..
+            dir *.* /s
+          displayName: 'Dir workspace'
+          continueOnError: true
+          condition: succeededOrFailed()
+
           # Delete Bot Resources
           - template: ../common/deleteResources.yml
             parameters:
