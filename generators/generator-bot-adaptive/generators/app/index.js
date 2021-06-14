@@ -6,8 +6,6 @@ const rt = require('runtypes');
 const { BaseGenerator, integrations, platforms } = require('../../index');
 const { v4: uuidv4 } = require('uuid');
 
-// Adding a comment to trigger CI/CD pipeline and exercise unit tests.
-
 const options = rt.Record({
   applicationSettingsDirectory: rt.String,
   botProjectSettings: rt

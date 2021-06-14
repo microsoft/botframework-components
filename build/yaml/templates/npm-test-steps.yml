@@ -14,7 +14,7 @@ steps:
       Write-Host "Missing package.json"
       exit 1
     }
-  displayName: 'Determine if npm test script is present'
+  displayName: 'Determine if test script is present'
   name: SetNpmRunTest
   workingDirectory: '$(WorkingDirectory)'
 
