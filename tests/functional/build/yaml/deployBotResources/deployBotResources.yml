@@ -89,7 +89,7 @@ stages:
           displayName: "Prepare JS's Resource Group"          
 
 # DotNet
-  - template: dotnet/deploy.yml
+  - template: generator/deploy.yml
     parameters:
       appInsight: "$(INTERNALAPPINSIGHTSNAME)"
       appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
@@ -115,6 +115,18 @@ stages:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
             version: ${{ parameters.dependenciesVersionDotNetHosts }}
 
+  - template: dotnet/deploy.yml
+    parameters:
+      appInsight: "$(INTERNALAPPINSIGHTSNAME)"
+      appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
+      appServicePlanRG: "$(INTERNALAPPSERVICEPLANWINDOWSRESOURCEGROUP)"
+      azureSubscription: "$(AZURESUBSCRIPTION)"
+      botPricingTier: $env:BOTPRICINGTIER
+      connectionName: $env:CONNECTIONNAME
+      keyVault: "$(INTERNALKEYVAULTNAME)"
+      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
+      resourceSuffix: $(INTERNALRESOURCESUFFIX)
+      bots:
         - name: "bfcfnemptybotdotnetfunctions"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
@@ -127,7 +139,7 @@ stages:
             netCoreVersion: "3.1.x"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
-            version: ${{ parameters.dependenciesVersionDotNetHosts }}
+            version: ${{ parameters.dependenciesVersionDotNetHosts }}            
 
 # JS
   - template: js/deploy.yml
