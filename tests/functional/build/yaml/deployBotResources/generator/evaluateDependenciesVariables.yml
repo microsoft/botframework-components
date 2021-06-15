@@ -1,4 +1,4 @@
-parameters:
+lparameters:
   - name: botType
     displayName: Bot type
     type: string
