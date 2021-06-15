@@ -54,8 +54,8 @@ stages:
     dependsOn: "${{ bot.dependsOn }}"
     jobs:
       - job: "Deploy"
-          variables:
-            SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
+        variables:
+          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
         displayName: "Deploy steps"
         steps:
           - script: |
@@ -75,7 +75,7 @@ stages:
             inputs:
               script: |
                 yo ../${{ bot.project.generator }} ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
-              workingDirectory: '$(SOLUTIONDIR)'
+              workingDirectory: '$(SolutionDir)'
 
           # Perhaps debugging output for the workspace?
           - script: |
