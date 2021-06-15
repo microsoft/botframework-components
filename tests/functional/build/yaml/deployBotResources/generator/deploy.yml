@@ -64,8 +64,8 @@ stages:
             displayName: 'Create bots directory'
 
           - script: |
-              npm install -g yo
-            displayName: 'Install yeoman'
+              yarn --immutable
+            displayName: 'Install dependencies'
 
           - task: CmdLine@2
             displayName: 'Install template'
