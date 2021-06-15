@@ -109,9 +109,9 @@ stages:
           appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
           project:
             generator: 'generators/generator-bot-empty'
+            integration: "webapp"
             netCoreVersion: "3.1.x"
             platform: "dotnet"
-            integration: "webapp"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
             version: ${{ parameters.dependenciesVersionDotNetHosts }}

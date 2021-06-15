@@ -58,32 +58,28 @@ stages:
           SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
         displayName: "Deploy steps"
         steps:
+          # Create /bots directory
           - script: |
               mkdir bots
             displayName: 'Create bots directory'
 
+          # Install yarn workspace
           - script: |
               yarn --immutable
-            displayName: 'Install dependencies'
+            displayName: 'Install yarn'
 
+          # Install yo
           - script: |
               npm install -g yo
             displayName: 'Install yo'
 
+          # Generate Bot template 
           - task: CmdLine@2
             displayName: 'Install template'
             inputs:
               script: |
                 yo ../${{ bot.project.generator }} ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
-              workingDirectory: '$(SolutionDir)'
-
-          # Perhaps debugging output for the workspace?
-          - script: |
-              cd ..
-              dir *.* /s
-            displayName: 'Dir workspace'
-            continueOnError: true
-            condition: succeededOrFailed()
+              workingDirectory: '$(SOLUTIONDIR)'
 
           # Delete Bot Resources
           - template: ../common/deleteResources.yml
@@ -125,7 +121,8 @@ stages:
             # Install dependencies
             - template: installDependencies.yml
               parameters:
-                project: "${{ bot.project }}"
+                bot: "${{ bot }}"
+                solutiondir: "$(SOLUTIONDIR)"
                 registry: "$(DEPENDENCIESSOURCE)"
                 version: "$(DEPENDENCIESVERSIONNUMBER)"
                 packages:
@@ -217,3 +214,11 @@ stages:
                 botGroup: "${{ parameters.resourceGroup }}"
                 botName: "${{ bot.name }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
+
+          # Perhaps debugging output for the workspace?
+          - script: |
+              cd ..
+              dir *.* /s
+            displayName: 'Dir workspace'
+            continueOnError: true
+            condition: succeededOrFailed()
