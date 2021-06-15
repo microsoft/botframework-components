@@ -67,10 +67,10 @@ stages:
               npm install -g @microsoft/generator-microsoft-bot-empty
             displayName: 'Install template'
 
-          - script: |
-              yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
-            displayName: 'Generate template'
+          - task: CmdLine@2
             inputs:
+              script: |
+                yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
               workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.name }}'
 
           # Perhaps debugging output for the workspace?
