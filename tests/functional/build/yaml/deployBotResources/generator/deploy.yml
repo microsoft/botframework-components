@@ -64,14 +64,17 @@ stages:
             displayName: 'Install yeoman'
 
           - script: |
-              npm install -g @microsoft/generator-microsoft-bot-empty
-            displayName: 'Install template'
+              mkdir ${{ bot.name }}
+            displayName: 'Create bot directory'
 
           - task: CmdLine@2
+            displayName: 'Install template'
             inputs:
               script: |
-                yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
-              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.name }}'
+                npm install -g @microsoft/generator-bot-empty
+
+                yo @microsoft/bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
+              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY'
 
           # Perhaps debugging output for the workspace?
           - script: |
