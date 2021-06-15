@@ -67,6 +67,10 @@ stages:
               yarn --immutable
             displayName: 'Install dependencies'
 
+          - script: |
+              npm install -g yo
+            displayName: 'Install yo'
+
           - task: CmdLine@2
             displayName: 'Install template'
             inputs:
