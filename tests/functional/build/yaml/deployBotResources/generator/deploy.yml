@@ -63,13 +63,18 @@ stages:
               mkdir bots
             displayName: 'Create bots directory'
 
+          - script: |
+              npm install -g yo
+            displayName: 'Install yeoman'
+
+          - script: |
+              npm install -g @microsoft/generator-bot-empty
+            displayName: 'Install generator'
+
           - task: CmdLine@2
             displayName: 'Install template'
             inputs:
               script: |
-                npm install -g yo
-                npm install -g @microsoft/generator-bot-empty
-
                 yo @microsoft/bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
               workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/bots'
 
