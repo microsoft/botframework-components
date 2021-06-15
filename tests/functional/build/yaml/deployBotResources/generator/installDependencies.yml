@@ -50,7 +50,7 @@ steps:
             }
           }
 
-          Invoke-Expression "dotnet add ""./${{ parameters.bot.name }}/${{ parameters.bot.name }}.csproj"" package $version $source $package"
+          Invoke-Expression "dotnet add ""./${{ parameters.bot.project.name }}/${{ parameters.bot.project.name }}.csproj"" package $version $source $package"
 
           if (-not ([string]::IsNullOrEmpty("$versionAux"))) {
             $version = $versionAux

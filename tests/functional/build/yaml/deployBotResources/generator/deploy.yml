@@ -78,7 +78,7 @@ stages:
             displayName: 'Install template'
             inputs:
               script: |
-                yo ../${{ bot.project.generator }} ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
+                yo ../${{ bot.project.generator }} ${{ bot.project.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
               workingDirectory: '$(SOLUTIONDIR)'
 
           # Delete Bot Resources

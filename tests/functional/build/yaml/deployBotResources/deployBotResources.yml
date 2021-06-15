@@ -111,6 +111,7 @@ stages:
             generator: 'generators/generator-bot-empty'
             integration: "webapp"
             netCoreVersion: "3.1.x"
+            name: "EmptyBotDotNetWebApp"
             platform: "dotnet"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
