@@ -56,7 +56,7 @@ stages:
       - job: "Deploy"
         ${{ if eq(bot.type, 'SkillV3') }}:
           variables:
-            SolutionDir: "$(BUILD.SOURCESDIRECTORY)/Bots/DotNet/"
+            SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
         displayName: "Deploy steps"
         steps:
           - script: |
@@ -75,8 +75,8 @@ stages:
             displayName: 'Install template'
             inputs:
               script: |
-                yo ../${{ bot.project.directory }} ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
-              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/bots'
+                yo ../${{ bot.project.generator }} ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}                
+              workingDirectory: '$(SOLUTIONDIR)'
 
           # Perhaps debugging output for the workspace?
           - script: |
@@ -114,26 +114,12 @@ stages:
           - task: NuGetToolInstaller@1
             displayName: "Use NuGet"
           
-          # Prepare appsettings.json file, deleting all the declared skills, so it uses only the settings define in Azure
-          - ${{ if eq(bot.type, 'Host') }}:
-            - task: PowerShell@2
-              displayName: 'Prepare App Settings'
-              inputs:
-                targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
-                failOnStderr: true
-                script: |
-                  $file = "./appsettings.json"
-                  $content = Get-Content -Raw $file | ConvertFrom-Json
-                  $content.BotFrameworkSkills = @()
-                  $content | ConvertTo-Json | Set-Content $file
-
           # Run NuGet restore SkillV3
           - ${{ if eq(bot.type, 'SkillV3') }}:
             - task: NuGetCommand@2
               displayName: "NuGet restore"
               inputs:
-                restoreSolution: "${{ bot.project.directory }}/${{ bot.project.name }}"
+                restoreSolution: "$(SOLUTIONDIR)/${{ bot.project.name }}"
                 restoreDirectory: "$(SOLUTIONDIR)packages"
 
           # Evaluate dependencies source and version
@@ -152,8 +138,7 @@ stages:
                 registry: "$(DEPENDENCIESSOURCE)"
                 version: "$(DEPENDENCIESVERSIONNUMBER)"
                 packages:
-                  Microsoft.Bot.Builder.Dialogs
-                  Microsoft.Bot.Builder.Integration.AspNet.Core
+                  Microsoft.Bot.Builder.Integration.Runtime
 
             # Build Bot
             - task: DotNetCoreCLI@2

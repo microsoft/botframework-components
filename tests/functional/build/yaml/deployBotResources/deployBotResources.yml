@@ -108,10 +108,8 @@ stages:
           appId: $(BFCFNEMPTYBOTDOTNETWEBAPPID)
           appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
           project:
-            directory: 'generators/generator-bot-empty'
-            name: "SimpleHostBot.csproj"
+            generator: 'generators/generator-bot-empty'
             netCoreVersion: "3.1.x"
-            generator: '@microsoft/generator-microsoft-bot-empty'
             platform: "dotnet"
             integration: "webapp"
           dependency:
