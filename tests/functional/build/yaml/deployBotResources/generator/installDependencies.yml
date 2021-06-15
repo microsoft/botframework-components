@@ -24,7 +24,7 @@ steps:
     displayName: 'Install dependencies for ${{ parameters.bot.name }}.csproj'
     inputs:
       targetType: inline
-      workingDirectory: '${{ parameters.solutiondir }}/${{ parameters.bot.name}} }}'
+      workingDirectory: '${{ parameters.solutiondir }}'
       failOnStderr: true
       script: |
         $version = ""
