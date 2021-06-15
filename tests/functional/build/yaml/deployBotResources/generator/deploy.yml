@@ -69,7 +69,9 @@ stages:
 
           - script: |
               yo @microsoft/microsoft-bot-empty ${{ bot.name }} --platform ${{ bot.project.platform }} --integration ${{ bot.project.integration }}
-            displayName: 'Generate template'  
+            displayName: 'Generate template'
+            inputs:
+              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.name }}'
 
           # Perhaps debugging output for the workspace?
           - script: |
