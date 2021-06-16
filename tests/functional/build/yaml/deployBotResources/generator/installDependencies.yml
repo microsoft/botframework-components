@@ -21,7 +21,7 @@ parameters:
 
 steps:
   - task: PowerShell@2
-    displayName: 'Install dependencies for ${{ parameters.bot.name }}.csproj'
+    displayName: 'Install dependencies for ${{ parameters.bot.project.name }}'
     inputs:
       targetType: inline
       workingDirectory: '${{ parameters.solutiondir }}'

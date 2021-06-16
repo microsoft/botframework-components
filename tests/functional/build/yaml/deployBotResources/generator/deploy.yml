@@ -136,7 +136,7 @@ stages:
               inputs:
                 command: publish
                 publishWebProjects: false
-                projects: "${{ bot.project.directory }}/${{ bot.project.name }}"
+                projects: "$(SOLUTIONDIR)/${{ bot.project.name }}/${{ bot.project.name }}.csproj"
                 arguments: "--output $(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}"
                 modifyOutputPath: false
 
@@ -145,11 +145,11 @@ stages:
               displayName: 'Get BotBuilder Version'
               inputs:
                 targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+                workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
                 failOnStderr: true
                 script: |
-                  [XML]$data = Get-Content "./${{ bot.project.name }}"
-                  $package = $data.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "Microsoft.Bot.Builder.Integration.AspNet.Core" }
+                  [XML]$data = Get-Content "./${{ bot.project.name }}.csproj"
+                  $package = $data.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" }
                   Write-Host "##vso[task.setvariable variable=BotBuilderVersionNumber]$($package.version)"
 
           # End of DotNet Install & Build
