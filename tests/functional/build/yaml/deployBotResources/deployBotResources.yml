@@ -116,32 +116,21 @@ stages:
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
             version: ${{ parameters.dependenciesVersionDotNetHosts }}
-
-  - template: dotnet/deploy.yml
-    parameters:
-      appInsight: "$(INTERNALAPPINSIGHTSNAME)"
-      appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
-      appServicePlanRG: "$(INTERNALAPPSERVICEPLANWINDOWSRESOURCEGROUP)"
-      azureSubscription: "$(AZURESUBSCRIPTION)"
-      botPricingTier: $env:BOTPRICINGTIER
-      connectionName: $env:CONNECTIONNAME
-      keyVault: "$(INTERNALKEYVAULTNAME)"
-      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)-DotNet"
-      resourceSuffix: $(INTERNALRESOURCESUFFIX)
-      bots:
         - name: "bfcfnemptybotdotnetfunctions"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
-          displayName: "DotNet Functions Empty Bot"
-          appId: $(BFCFNEMPTYBOTDOTNETFUNCTIONSID)
-          appSecret: $(BFCFNEMPTYBOTDOTNETFUNCTIONSSECRET)
+          displayName: "DotNet Web App Empty Bot"
+          appId: $(BFCFNEMPTYBOTDOTNETWEBAPPID)
+          appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
           project:
-            directory: 'Tests/Functional/Bots/DotNet/Consumers/CodeFirst/SimpleHostBot'
-            name: "SimpleHostBot.csproj"
+            generator: 'generators/generator-bot-empty'
+            integration: "functions"
             netCoreVersion: "3.1.x"
+            name: "EmptyBotDotNetFunctions"
+            platform: "dotnet"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
-            version: ${{ parameters.dependenciesVersionDotNetHosts }}            
+            version: ${{ parameters.dependenciesVersionDotNetHosts }}      
 
 # JS
   - template: js/deploy.yml
