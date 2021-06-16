@@ -11,6 +11,6 @@
   },
   "menu": {
     "label": "Resume Recording",
-    "submenu": [ "Channels", "Telephony" ]
+    "submenu": [ "Telephony" ]
   }
 }

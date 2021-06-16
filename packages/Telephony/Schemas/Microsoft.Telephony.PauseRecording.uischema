@@ -11,6 +11,6 @@
   },
   "menu": {
     "label": "Pause Recording",
-    "submenu": [ "Channels", "Telephony" ]
+    "submenu": [ "Telephony" ]
   }
 }
