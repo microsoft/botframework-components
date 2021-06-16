@@ -1,0 +1,16 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.AdaptiveDialog",
+    "id": "CallTransfer_BaseScenario.test",
+    "triggers": [
+        {
+            "$kind": "Microsoft.OnBeginDialog",
+            "actions": [
+                {
+                    "$kind": "Microsoft.Telephony.CallTransfer",
+                    "phoneNumber": "+1555443443"
+                }
+            ]
+        }
+    ]
+}

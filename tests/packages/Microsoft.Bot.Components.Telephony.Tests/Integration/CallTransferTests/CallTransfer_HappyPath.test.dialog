@@ -1,0 +1,18 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.Test.Script",
+    "dialog": "CallTransfer_BaseScenario.test",
+    "script": [
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "Hello I'm Calculon"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReplyActivity",
+            "assertions": [
+                "type == 'event'",
+                "value.TargetPhoneNumber == '+1555443443'"
+            ]
+        }
+    ]
+}

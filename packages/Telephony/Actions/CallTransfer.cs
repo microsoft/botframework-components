@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Actions;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
@@ -14,13 +15,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// <summary>
     /// Transfers call to given phone number.
     /// </summary>
-    public class CallTransfer : Dialog
+    public class CallTransfer : SendHandoffActivity
     {
         /// <summary>
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Telephony.CallTransfer";
+        public new const string Kind = "Microsoft.Telephony.CallTransfer";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CallTransfer"/> class.
@@ -57,10 +58,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             var phoneNumber = this.PhoneNumber?.GetValue(dc.State);
 
             // Create handoff event, passing the phone number to transfer to as context.
-            var context = new { TargetPhoneNumber = phoneNumber };
-            var handoffEvent = EventFactory.CreateHandoffInitiation(dc.Context, context);
-            await dc.Context.SendActivityAsync(handoffEvent, cancellationToken).ConfigureAwait(false);
-            return await dc.EndDialogAsync(result: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+            HandoffContext = new { TargetPhoneNumber = phoneNumber };
+            
+            return await base.BeginDialogAsync(dc, options, cancellationToken).ConfigureAwait(false);
         }
     }
 }

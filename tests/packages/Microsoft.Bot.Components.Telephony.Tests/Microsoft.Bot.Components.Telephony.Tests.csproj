@@ -30,10 +30,16 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\CallTransferTests\CallTransfer_BaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Integration\RecordingTests\Recording_BaseScenario.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\RecordingTests\StartRecording_CommandResultWrongName.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\CallTransferTests\CallTransfer_HappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\RecordingTests\StartRecording_WithTangent_InterruptionEnabled.test.dialog">
@@ -48,10 +54,6 @@
     <None Update="Integration\RecordingTests\StartRecording_HappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Integration\CallTransferTests\" />
   </ItemGroup>
 
 </Project>
