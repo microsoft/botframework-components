@@ -28,5 +28,5 @@ steps:
     displayName: 'Install template'
     inputs:
       script: |
-        yo ../$(project.generator) $(project.name) --platform $(project.platform) --integration $(project.integration)                
-      workingDirectory: '$(solutiondir)'
+        yo ../${{ parameters.project.generator }} ${{ parameters.project.name }} --platform ${{ parameters.project.platform }} --integration ${{ parameters.project.integration }}              
+      workingDirectory: '${{ parameters.solutiondir }}'
