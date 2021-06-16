@@ -89,7 +89,7 @@ stages:
           displayName: "Prepare JS's Resource Group"          
 
 # DotNet
-  - template: generator/deploy.yml
+  - template: dotnet/deploy.yml
     parameters:
       appInsight: "$(INTERNALAPPINSIGHTSNAME)"
       appServicePlan: "$(INTERNALAPPSERVICEPLANDOTNETNAME)"
@@ -110,8 +110,8 @@ stages:
           project:
             generator: 'generators/generator-bot-empty'
             integration: "webapp"
-            netCoreVersion: "3.1.x"
             name: "EmptyBotDotNetWebApp"
+            netCoreVersion: "3.1.x"
             platform: "dotnet"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}
@@ -125,8 +125,8 @@ stages:
           project:
             generator: 'generators/generator-bot-empty'
             integration: "functions"
-            netCoreVersion: "3.1.x"
             name: "EmptyBotDotNetFunctions"
+            netCoreVersion: "3.1.x"
             platform: "dotnet"
           dependency:
             registry: ${{ parameters.dependenciesRegistryDotNetHosts }}

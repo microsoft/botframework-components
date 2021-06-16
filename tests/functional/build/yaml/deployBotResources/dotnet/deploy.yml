@@ -54,9 +54,8 @@ stages:
     dependsOn: "${{ bot.dependsOn }}"
     jobs:
       - job: "Deploy"
-        ${{ if eq(bot.type, 'SkillV3') }}:
-          variables:
-            SolutionDir: "$(BUILD.SOURCESDIRECTORY)/Bots/DotNet/"
+        variables:
+          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
         displayName: "Deploy steps"
         steps:
           # Delete Bot Resources
@@ -87,34 +86,18 @@ stages:
           - task: NuGetToolInstaller@1
             displayName: "Use NuGet"
           
-          # Prepare appsettings.json file, deleting all the declared skills, so it uses only the settings define in Azure
-          - ${{ if eq(bot.type, 'Host') }}:
-            - task: PowerShell@2
-              displayName: 'Prepare App Settings'
-              inputs:
-                targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
-                failOnStderr: true
-                script: |
-                  $file = "./appsettings.json"
-                  $content = Get-Content -Raw $file | ConvertFrom-Json
-                  $content.BotFrameworkSkills = @()
-                  $content | ConvertTo-Json | Set-Content $file
-
-          # Run NuGet restore SkillV3
-          - ${{ if eq(bot.type, 'SkillV3') }}:
-            - task: NuGetCommand@2
-              displayName: "NuGet restore"
-              inputs:
-                restoreSolution: "${{ bot.project.directory }}/${{ bot.project.name }}"
-                restoreDirectory: "$(SOLUTIONDIR)packages"
-
           # Evaluate dependencies source and version
           - template: evaluateDependenciesVariables.yml
             parameters:
               botType: "${{ bot.type }}"
               registry: "${{ bot.dependency.registry }}"
               version: "${{ bot.dependency.version }}"
+
+          # Generate bot template
+          - template: ../generator/deploy.yml
+            paramaters:
+              project: "${{ bot.project }}"
+              solutiondir: "$(SOLUTIONDIR)"              
 
           # Start of DotNet Install & Build
           - ${{ if in(bot.type, 'Host', 'Skill') }}:
@@ -123,10 +106,12 @@ stages:
               parameters:
                 project: "${{ bot.project }}"
                 registry: "$(DEPENDENCIESSOURCE)"
+                solutiondir: "$(SOLUTIONDIR)/${{ bot.project.name }}"
                 version: "$(DEPENDENCIESVERSIONNUMBER)"
                 packages:
-                  Microsoft.Bot.Builder.Dialogs
-                  Microsoft.Bot.Builder.Integration.AspNet.Core
+                  Microsoft.Bot.Builder.AI.Luis
+                  Microsoft.Bot.Builder.AI.QnA
+                  Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime                  
 
             # Build Bot
             - task: DotNetCoreCLI@2
@@ -134,7 +119,7 @@ stages:
               inputs:
                 command: publish
                 publishWebProjects: false
-                projects: "${{ bot.project.directory }}/${{ bot.project.name }}"
+                projects: "$(SOLUTIONDIR)/${{ bot.project.name }}/${{ bot.project.name }}.csproj"
                 arguments: "--output $(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}"
                 modifyOutputPath: false
 
@@ -143,14 +128,15 @@ stages:
               displayName: 'Get BotBuilder Version'
               inputs:
                 targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+                workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
                 failOnStderr: true
                 script: |
-                  [XML]$data = Get-Content "./${{ bot.project.name }}"
-                  $package = $data.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "Microsoft.Bot.Builder.Integration.AspNet.Core" }
+                  [XML]$data = Get-Content "./${{ bot.project.name }}.csproj"
+                  $package = $data.Project.ItemGroup.PackageReference | Where-Object { $_.Include -eq "Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" }
                   Write-Host "##vso[task.setvariable variable=BotBuilderVersionNumber]$($package.version)"
 
-          # End of DotNet Install & Build          
+          # End of DotNet Install & Build
+
 
           # Tag BotBuilder package version
           - template: ../common/tagBotBuilderVersion.yml
@@ -213,3 +199,11 @@ stages:
                 botGroup: "${{ parameters.resourceGroup }}"
                 botName: "${{ bot.name }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
+
+          # Perhaps debugging output for the workspace?
+          - script: |
+              cd ..
+              dir *.* /s
+            displayName: 'Dir workspace'
+            continueOnError: true
+            condition: succeededOrFailed()
