@@ -95,7 +95,7 @@ stages:
 
           # Generate bot template
           - template: ../generator/deploy.yml
-            paramaters:
+            parameters:
               project: "${{ bot.project }}"
               solutiondir: "$(SOLUTIONDIR)"              
 
