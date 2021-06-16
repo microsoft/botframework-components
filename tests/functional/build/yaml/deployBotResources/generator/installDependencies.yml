@@ -39,7 +39,7 @@ steps:
         }
 
         foreach ($package in "${{ parameters.packages }}".Split()) {
-          if ($package -eq "Microsoft.Bot.Builder.Integration.Runtime") {
+          if ($package -eq "Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime") {
             $versionAux = $version
             if ($version -Match "rc") {
               $version = "$version.preview"

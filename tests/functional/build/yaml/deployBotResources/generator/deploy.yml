@@ -126,7 +126,7 @@ stages:
                 registry: "$(DEPENDENCIESSOURCE)"
                 version: "$(DEPENDENCIESVERSIONNUMBER)"
                 packages:
-                  Microsoft.Bot.Builder.Integration.Runtime
+                  Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime
 
             # Build Bot
             - task: DotNetCoreCLI@2
