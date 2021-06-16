@@ -1,10 +1,10 @@
-parameters:
-  - name: bot
-    displayName: Bot
-    type: object
-    
+parameters:  
   - name: packages
     displayName: Dependency Packages
+    type: object
+
+  - name: project
+    displayName: Project
     type: object
 
   - name: registry
@@ -21,7 +21,7 @@ parameters:
 
 steps:
   - task: PowerShell@2
-    displayName: 'Install dependencies for ${{ parameters.bot.project.name }}'
+    displayName: 'Install dependencies for ${{ parameters.project.name }}'
     inputs:
       targetType: inline
       workingDirectory: '${{ parameters.solutiondir }}'
@@ -50,7 +50,7 @@ steps:
             }
           }
 
-          Invoke-Expression "dotnet add ""./${{ parameters.bot.project.name }}/${{ parameters.bot.project.name }}.csproj"" package $version $source $package"
+          Invoke-Expression "dotnet add ""./${{ parameters.project.name }}/${{ parameters.project.name }}.csproj"" package $version $source $package"
 
           if (-not ([string]::IsNullOrEmpty("$versionAux"))) {
             $version = $versionAux

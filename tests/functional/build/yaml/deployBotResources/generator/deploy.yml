@@ -121,9 +121,9 @@ stages:
             # Install dependencies
             - template: installDependencies.yml
               parameters:
-                bot: "${{ bot }}"
-                solutiondir: "$(SOLUTIONDIR)"
+                project: "${{ bot.project }}"
                 registry: "$(DEPENDENCIESSOURCE)"
+                solutiondir: "$(SOLUTIONDIR)"
                 version: "$(DEPENDENCIESVERSIONNUMBER)"
                 packages:
                   Microsoft.Bot.Builder.AI.Luis
