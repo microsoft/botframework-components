@@ -200,7 +200,7 @@ stages:
                 botName: "${{ bot.name }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
 
-          # Perhaps debugging output for the workspace?
+          # Debugging output for the workspace
           - script: |
               cd ..
               dir *.* /s
