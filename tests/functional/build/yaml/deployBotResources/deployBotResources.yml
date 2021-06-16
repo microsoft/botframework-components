@@ -119,9 +119,9 @@ stages:
         - name: "bfcfnemptybotdotnetfunctions"
           dependsOn: "Prepare_DotNetGroup"
           type: "Host"
-          displayName: "DotNet Web App Empty Bot"
-          appId: $(BFCFNEMPTYBOTDOTNETWEBAPPID)
-          appSecret: $(BFCFNEMPTYBOTDOTNETWEBAPPSECRET)
+          displayName: "DotNet Functions Empty Bot"
+          appId: $(BFCFNEMPTYBOTDOTNETFUNCTIONSID)
+          appSecret: $(BFCFNEMPTYBOTDOTNETFUNCTIONSSECRET)
           project:
             generator: 'generators/generator-bot-empty'
             integration: "functions"
