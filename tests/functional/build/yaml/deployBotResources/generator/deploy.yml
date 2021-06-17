@@ -1,0 +1,32 @@
+parameters:
+  - name: project
+    displayName: Project
+    type: object
+
+  - name: solutiondir
+    displayName: Solution directory
+    type: string  
+
+steps:
+  # Create /bots directory
+  - script: |
+      mkdir bots
+    displayName: 'Create bots directory'
+
+  # Install yarn workspace
+  - script: |
+      yarn --immutable
+    displayName: 'Install yarn'
+
+  # Install yo
+  - script: |
+      npm install -g yo
+    displayName: 'Install yo'
+
+  # Generate Bot template 
+  - task: CmdLine@2
+    displayName: 'Install template'
+    inputs:
+      script: |
+        yo ../${{ parameters.project.generator }} ${{ parameters.project.name }} --platform ${{ parameters.project.platform }} --integration ${{ parameters.project.integration }}              
+      workingDirectory: '${{ parameters.solutiondir }}'

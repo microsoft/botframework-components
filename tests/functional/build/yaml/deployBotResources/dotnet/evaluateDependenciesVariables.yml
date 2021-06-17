@@ -51,7 +51,7 @@ steps:
               exit 1 # Force exit
             }
             if ("${{ parameters.botType }}" -in "Host", "Skill") {
-              $PackageList = nuget list Microsoft.Bot.Builder.Integration.AspNet.Core -Source "$source" -PreRelease
+              $PackageList = nuget list Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime -Source "$source" -PreRelease
               $versionNumber = $PackageList.Split(" ")[-1]
             } elseif ("${{ parameters.botType }}" -in "SkillV3") {
               $versionNumber = ""

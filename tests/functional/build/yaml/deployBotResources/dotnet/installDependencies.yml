@@ -1,4 +1,4 @@
-parameters:
+parameters:  
   - name: packages
     displayName: Dependency Packages
     type: object
@@ -11,6 +11,10 @@ parameters:
     displayName: Registry source
     type: string
 
+  - name: solutiondir
+    displayName: Solution directory
+    type: string  
+
   - name: version
     displayName: Version number
     type: string
@@ -20,7 +24,7 @@ steps:
     displayName: 'Install dependencies for ${{ parameters.project.name }}'
     inputs:
       targetType: inline
-      workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.project.directory }}'
+      workingDirectory: '${{ parameters.solutiondir }}'
       failOnStderr: true
       script: |
         $version = ""
@@ -46,7 +50,7 @@ steps:
             }
           }
 
-          Invoke-Expression "dotnet add ""./${{ parameters.project.name }}"" package $version $source $package"
+          Invoke-Expression "dotnet add ""./${{ parameters.project.name }}.csproj"" package $version $source $package"
 
           if (-not ([string]::IsNullOrEmpty("$versionAux"))) {
             $version = $versionAux
