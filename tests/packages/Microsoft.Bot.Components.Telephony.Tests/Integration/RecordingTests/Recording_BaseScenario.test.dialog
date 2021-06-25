@@ -13,6 +13,21 @@
                 {
                     "$kind": "Microsoft.SendActivity",
                     "activity": "Started recording!"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Enter your account number."
+                },
+                {
+                    "$kind": "Microsoft.Telephony.PauseRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, false)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Paused recording!"
+                },
+                {
+                    "$kind": "Microsoft.EndTurn"                
                 }
             ]
         },
@@ -25,14 +40,36 @@
                     "activity": "On help intent handler"
                 }
             ]
+        },
+        {
+            "$kind": "Microsoft.OnIntent",
+            "intent": "AccountIntent",
+            "actions": [
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Your account is active."
+                },
+                {
+                    "$kind": "Microsoft.Telephony.ResumeRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, false)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Resumed recording!"
+                }
+            ]
         }
     ],
     "recognizer": {
         "$kind": "Microsoft.RegexRecognizer",
         "intents": [
             {
-                "intent": "HelpIntent",
-                "pattern": "help"
+              "intent": "HelpIntent",
+              "pattern": "help"
+            },
+            {
+              "intent": "AccountIntent",
+              "pattern": "account"
             }
         ]
     }

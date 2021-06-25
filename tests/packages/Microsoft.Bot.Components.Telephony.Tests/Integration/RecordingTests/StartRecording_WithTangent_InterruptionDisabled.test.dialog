@@ -10,8 +10,9 @@
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
             "assertions": [
-                "type == 'command'",
-            ]
+              "type == 'command'",
+              "name == 'channel/vnd.microsoft.telephony.recording.start'"
+          ]
         },
         {
             "$kind": "Microsoft.Test.UserSays",
