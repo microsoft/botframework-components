@@ -10,19 +10,68 @@
         {
             "$kind": "Microsoft.Test.AssertReplyActivity",
             "assertions": [
+              "type == 'command'",
+              "name == 'channel/vnd.microsoft.telephony.recording.start'"
+            ]
+        },
+        {
+            "$kind": "Microsoft.Test.UserActivity",
+            "activity": {
+              "type": "commandResult",
+              "name": "channel/vnd.microsoft.telephony.recording.start"
+            }
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Started recording!"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Enter your account number."
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReplyActivity",
+            "assertions": [
                 "type == 'command'",
+                "name == 'channel/vnd.microsoft.telephony.recording.pause'"
             ]
         },
         {
             "$kind": "Microsoft.Test.UserActivity",
             "activity": {
                 "type": "commandResult",
-                "name": "channel/vnd.microsoft.telephony.recording.start"
+                "name": "channel/vnd.microsoft.telephony.recording.pause"
             }
         },
         {
             "$kind": "Microsoft.Test.AssertReply",
-            "text": "Started recording!"
+            "text": "Paused recording!"
+        },
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "account"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Your account is active."
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReplyActivity",
+            "assertions": [
+                "type == 'command'",
+                "name == 'channel/vnd.microsoft.telephony.recording.resume'"
+            ]
+        },
+        {
+            "$kind": "Microsoft.Test.UserActivity",
+            "activity": {
+                "type": "commandResult",
+                "name": "channel/vnd.microsoft.telephony.recording.resume"
+            }
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReply",
+            "text": "Resumed recording!"
         }
     ]
 }

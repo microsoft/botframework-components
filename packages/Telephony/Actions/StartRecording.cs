@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Components.Telephony.Common;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Schema.Telephony;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
@@ -15,7 +14,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// <summary>
     /// Starts recording the current conversation.
     /// </summary>
-    public class StartRecording : CommandDialog<RecordingStartSettings>
+    public class StartRecording : CommandDialog
     {
         /// <summary>
         /// Class identifier.
@@ -38,12 +37,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
 
             this.CommandName = RecordingStart;
-
-            this.Data = new RecordingStartSettings()
-            {
-                RecordingChannelType = RecordingChannelType.Mixed,
-                RecordingContentType = RecordingContentType.AudioVideo,
-            };
         }
 
         /// <inheritdoc/>
