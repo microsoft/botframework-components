@@ -1,8 +1,8 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
-    "label": "Start Recording",
-    "subtitle": "Start Recording",
+    "label": "Recording Start",
+    "subtitle": "Recording Start",
     "order": [
       "*"
     ],
@@ -10,7 +10,7 @@
     }
   },
   "menu": {
-    "label": "Start Recording",
+    "label": "Recording Start",
     "submenu": [ "Telephony" ]
   }
 }

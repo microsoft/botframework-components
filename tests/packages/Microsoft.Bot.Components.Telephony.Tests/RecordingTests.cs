@@ -17,7 +17,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         }
 
         [Fact]
-        public async Task StartRecording_HappyPath()
+        public async Task Recording_HappyPath()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
@@ -46,7 +46,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         }
 
         [Fact]
-        public async Task StartRecording_IgnoredInNonTelephonyChannel()
+        public async Task Recording_IgnoredInNonTelephonyChannel()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Msteams);
         }

@@ -1,10 +1,15 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
-  "title": "Pause Recording",
+  "title": "Recording Pause",
   "description": "Pauses recording the current conversation.",
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "allowInterruptions": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Allow Interruptions",
+      "description": "Allow the dialog to continue when recording pause operation is in progress"
+    }
   }
 }
