@@ -1,8 +1,8 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
-    "label": "Resume Recording",
-    "subtitle": "Resume Recording",
+    "label": "Recording Resume",
+    "subtitle": "Recording Resume",
     "order": [
       "*"
     ],
@@ -10,7 +10,7 @@
     }
   },
   "menu": {
-    "label": "Resume Recording",
+    "label": "Recording Resume",
     "submenu": [ "Telephony" ]
   }
 }
