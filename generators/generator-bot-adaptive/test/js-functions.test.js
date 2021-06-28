@@ -107,10 +107,10 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
       },
       dependencies: {
         'cross-env': 'latest',
-        'botbuilder-ai-luis': '4.13.4-preview',
-        'botbuilder-ai-qna': '4.13.4-preview',
+        'botbuilder-ai-luis': '4.14.0-rc0',
+        'botbuilder-ai-qna': '4.14.0-rc0',
         'botbuilder-dialogs-adaptive-runtime-integration-azure-functions':
-          '4.13.4-preview',
+          '4.14.0-rc0',
       },
     };
 
