@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/generator-bot-enterprise-assistant",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yeoman generator for creating an enterprise assistant, with a root bot and two skills built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
@@ -25,9 +25,9 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.0.0",
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.0.0",
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.0.0",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.0.1",
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.0.1",
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.0.1",
     "uuid": "^8.3.2",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
