@@ -53,6 +53,8 @@ stages:
     dependsOn: "${{ parameters.dependsOn }}"
     jobs:
       - job: "Deploy"
+        variables:
+          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
         displayName: "Deploy steps"
         steps:
           # Delete Bot Resources
@@ -72,30 +74,18 @@ stages:
               botName: "${{ bot.name }}"
               keyVault: "${{ parameters.keyVault }}"
 
-          # Prepare .env file, deleting all the declared skills, so it uses only the settings define in Azure
-          - ${{ if eq(bot.type, 'Host') }}:
-            - task: PowerShell@2
-              displayName: 'Prepare .env file'
-              inputs:
-                targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
-                failOnStderr: true
-                script: |
-                  $file = "./.env"
-                  $content = Get-Content $file
-                  $content | ForEach-Object {
-                    $line = $_
-                    if ($line.Trim().Length -gt 0 -and -not $line.Trim().ToLower().StartsWith('skill_')) {
-                      $line
-                    }
-                  } | Set-Content $file;
-
           # Evaluate dependencies source and version
           - template: evaluateDependenciesVariables.yml
             parameters:
               botType: "${{ bot.type }}"
               registry: "${{ bot.dependency.registry }}"
               version: "${{ bot.dependency.version }}"
+
+          # Generate bot template
+          - template: ../generator/deploy.yml
+            parameters:
+              project: "${{ bot.project }}"
+              solutiondir: "$(SOLUTIONDIR)"     
 
           # Tag BotBuilder version
           - template: ../common/tagBotBuilderVersion.yml
