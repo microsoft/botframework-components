@@ -3,6 +3,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -118,22 +119,19 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 teamsChannelId = dc.Context.Activity.TeamsGetChannelId();
             }
 
-            if (!(dc.Context.Adapter is BotFrameworkAdapter))
+            // Retrieve the bot appid from TurnState's ClaimsIdentity
+            string appId; 
+            if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
             {
-                throw new InvalidOperationException($"{Kind} is not supported by the current adapter.");
+                appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
             }
-
-            // TODO: this will NOT work with certificate app credentials
-
-            // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
-            var credentials = dc.Context.TurnState.Get<IConnectorClient>()?.Credentials as MicrosoftAppCredentials;
-            if (credentials == null)
+            else
             {
-                throw new InvalidOperationException($"Missing credentials as {nameof(MicrosoftAppCredentials)} in {nameof(IConnectorClient)} from TurnState");
+                throw new InvalidOperationException($"Missing {BotAdapter.BotIdentityKey} in {nameof(ITurnContext)} TurnState");
             }
 
             // The result comes back as a tuple, which is used to set the two properties (if present).
-            var result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, appId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
             if (ConversationReferenceProperty != null)
             {
