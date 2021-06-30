@@ -123,7 +123,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
             Tuple<ConversationReference, string> result;
 
             // Check for legacy adapter
-            if (dc.Context.Adapter is BotFrameworkAdapter botFrameworkAdapter)
+            if (dc.Context.Adapter is BotFrameworkAdapter)
             {
                 // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
                 var credentials = dc.Context.TurnState.Get<IConnectorClient>()?.Credentials as MicrosoftAppCredentials;
@@ -134,8 +134,8 @@ namespace Microsoft.Bot.Components.Teams.Actions
 
                 // The result comes back as a tuple, which is used to set the two properties (if present).
                 result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else
+            } 
+            else if (dc.Context.Adapter is CloudAdapterBase)
             {
                 // Retrieve the bot appid from TurnState's ClaimsIdentity
                 string appId;
@@ -160,6 +160,10 @@ namespace Microsoft.Bot.Components.Teams.Actions
 
                 // The result comes back as a tuple, which is used to set the two properties (if present).
                 result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, appId, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new InvalidOperationException($"The adapter does not support {nameof(SendMessageToTeamsChannel)}.");
             }
 
             if (ConversationReferenceProperty != null)
