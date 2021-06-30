@@ -1,3 +1,4 @@
+TEST PR VALIDATION
 # Manually provision resources and publish a bot to Azure (_Preview_)
 
 This article covers script-based instructions to manually provision resources and publish a bot built using Composer to _Azure Web App (Preview)_ and _Azure Functions (Preview)_.
