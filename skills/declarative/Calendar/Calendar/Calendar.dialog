@@ -1820,7 +1820,6 @@
       "runOnce": true
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "Calendar.lg",
   "recognizer": "Calendar.lu.qna",
   "id": "Calendar"
