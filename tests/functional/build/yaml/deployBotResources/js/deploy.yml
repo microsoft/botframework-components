@@ -206,3 +206,11 @@ stages:
                 botGroup: "${{ parameters.resourceGroup }}"
                 botName: "${{ bot.name }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
+
+          # Debugging output for the workspace
+          - script: |
+              cd ..
+              dir *.* /s
+            displayName: 'Dir workspace'
+            continueOnError: true
+            condition: succeededOrFailed()
