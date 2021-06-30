@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/bot-components-welcome",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Adaptive Dialog for greeting new and returning users on first interaction with your bot built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
