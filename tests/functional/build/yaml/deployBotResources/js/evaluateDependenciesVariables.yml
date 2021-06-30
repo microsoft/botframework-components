@@ -20,12 +20,10 @@ steps:
       script: |
         # Get Source
         $sourceJSMyGet = "https://botbuilder.myget.org/F/botbuilder-v4-js-daily/npm/"
-        $sourceJSv3MyGet = "https://botbuilder.myget.org/F/botbuilder-v3-js-daily/npm/"
         $sourceJSNpm = "https://registry.npmjs.com/" 
         switch -regex ("${{ parameters.registry }}") {
           "^($null|MyGet)$" {
             switch ("${{ parameters.botType }}") {
-              "SkillV3" { $source = $sourceJSv3MyGet } 
               default { $source = $sourceJSMyGet }
             }
           }
@@ -54,9 +52,6 @@ steps:
           STABLE { 
             if ("${{ parameters.botType }}" -in "Host", "Skill") {
               $PackageList = npm show botbuilder@* version | Out-String;
-            }
-            elseif ("${{ parameters.botType }}" -in "SkillV3") {
-              $PackageList = npm show botbuilder@3.* version | Out-String;
             }
             $versionNumber = ($PackageList.Split(" ")[-1]).Trim().TrimStart("'").TrimEnd("'");
           }
