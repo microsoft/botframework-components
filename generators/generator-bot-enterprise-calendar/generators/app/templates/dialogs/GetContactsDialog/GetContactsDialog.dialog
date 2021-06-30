@@ -110,7 +110,7 @@
                   "allowLoop": false
                 }
               ],
-              "condition": "not(exists(#Skip))"
+              "condition": "=not(exists(#Skip))"
             }
           ]
         },
@@ -144,7 +144,7 @@
           "$designer": {
             "id": "pNZ1RI"
           },
-          "condition": "not(exists($emailArray)) && not(exists($contactArray))",
+          "condition": "=not(exists($emailArray)) && not(exists($contactArray))",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",

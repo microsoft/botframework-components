@@ -298,7 +298,7 @@
           "$designer": {
             "id": "M19ih4"
           },
-          "condition": "turn.repeat",
+          "condition": "=turn.repeat",
           "actions": [
             {
               "$kind": "Microsoft.DeleteProperties",
@@ -518,7 +518,7 @@
               "$designer": {
                 "id": "h0lIzs"
               },
-              "condition": "count(turn.removeAttendees) == 1",
+              "condition": "=count(turn.removeAttendees) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SetProperties",
@@ -1172,7 +1172,7 @@
           "$designer": {
             "id": "7VJVuF"
           },
-          "condition": "$confirmUpdate",
+          "condition": "=$confirmUpdate",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -1196,7 +1196,7 @@
               "$designer": {
                 "id": "fhRoY7"
               },
-              "condition": "$result.statusCode == \"OK\"",
+              "condition": "=$result.statusCode == \"OK\"",
               "actions": [
                 {
                   "$kind": "Microsoft.SendActivity",
