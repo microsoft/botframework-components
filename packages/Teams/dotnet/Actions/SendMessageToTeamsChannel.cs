@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading;
@@ -140,11 +141,21 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 string appId;
                 if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
                 {
+                    // Apparently 'version' is sometimes empty, which will result in no id returned from GetAppIdFromClaims
                     appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
+                    if (string.IsNullOrEmpty(appId))
+                    {
+                        appId = botIdentity.Claims.FirstOrDefault(claim => claim.Type == AuthenticationConstants.AudienceClaim)?.Value;
+                    }
+
+                    if (string.IsNullOrEmpty(appId))
+                    {
+                        throw new InvalidOperationException($"Missing AppIdClaim in ClaimsIdentity.");
+                    }
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Missing {BotAdapter.BotIdentityKey} in {nameof(ITurnContext)} TurnState");
+                    throw new InvalidOperationException($"Missing {BotAdapter.BotIdentityKey} in {nameof(ITurnContext)} TurnState.");
                 }
 
                 // The result comes back as a tuple, which is used to set the two properties (if present).
