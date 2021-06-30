@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "CallTransfer_BaseScenario.test",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "Hello I'm Calculon"
+    }
+  ]
+}

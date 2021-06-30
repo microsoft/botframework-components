@@ -5,12 +5,16 @@
     "triggers": [
         {
             "$kind": "Microsoft.OnBeginDialog",
-            "actions": [
-                {
-                    "$kind": "Microsoft.Telephony.CallTransfer",
-                    "phoneNumber": "+1555443443"
-                }
-            ]
+          "actions": [
+            {
+              "$kind": "Microsoft.Telephony.CallTransfer",
+              "phoneNumber": "+1555443443"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "activity": "Transfer Initiated!"
+            }
+          ]
         }
     ]
 }
