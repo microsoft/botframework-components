@@ -134,7 +134,17 @@ stages:
               customRegistries: 'useNpmrc'
               verbose: true
 
-          # Prepate bot
+          # Remove web.config generated from template to be able to run "az bot prepare-deploy"
+          - task: PowerShell@2
+            displayName: 'Remove web.config'
+            inputs:
+              targetType: inline
+              workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
+              failOnStderr: true
+              script: |
+                Remove-Item .\web.config
+
+          # Prepare bot
           - task: AzureCLI@2
             displayName: 'Prepare Bot'
             inputs:
