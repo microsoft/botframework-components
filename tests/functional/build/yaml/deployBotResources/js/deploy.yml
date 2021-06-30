@@ -101,7 +101,7 @@ stages:
             displayName: 'Set BotBuilder source and version'
             inputs:
               targetType: inline
-              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               failOnStderr: true
               script: |
                 $registry = "$(DEPENDENCIESSOURCE)";
@@ -130,7 +130,7 @@ stages:
             displayName: 'Install dependencies'
             inputs:
               command: 'install'
-              workingDir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              workingDir: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               customRegistries: 'useNpmrc'
               verbose: true
 
@@ -141,13 +141,13 @@ stages:
               azureSubscription: "${{ parameters.azureSubscription }}"
               scriptType: pscore
               scriptLocation: inlineScript
-              inlineScript: 'az bot prepare-deploy --code-dir "${{ bot.project.directory }}" --lang Javascript'
+              inlineScript: 'az bot prepare-deploy --code-dir "$(SOLUTIONDIR)/${{ bot.project.name }}" --lang Javascript'
 
           # Zip bot
           - task: ArchiveFiles@2
             displayName: 'Zip bot'
             inputs:
-              rootFolderOrFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              rootFolderOrFile: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}.zip'
