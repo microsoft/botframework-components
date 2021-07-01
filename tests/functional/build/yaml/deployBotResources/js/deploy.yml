@@ -53,6 +53,8 @@ stages:
     dependsOn: "${{ parameters.dependsOn }}"
     jobs:
       - job: "Deploy"
+        variables:
+          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/workspace/"
         displayName: "Deploy steps"
         steps:
           # Delete Bot Resources
@@ -72,30 +74,18 @@ stages:
               botName: "${{ bot.name }}"
               keyVault: "${{ parameters.keyVault }}"
 
-          # Prepare .env file, deleting all the declared skills, so it uses only the settings define in Azure
-          - ${{ if eq(bot.type, 'Host') }}:
-            - task: PowerShell@2
-              displayName: 'Prepare .env file'
-              inputs:
-                targetType: inline
-                workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
-                failOnStderr: true
-                script: |
-                  $file = "./.env"
-                  $content = Get-Content $file
-                  $content | ForEach-Object {
-                    $line = $_
-                    if ($line.Trim().Length -gt 0 -and -not $line.Trim().ToLower().StartsWith('skill_')) {
-                      $line
-                    }
-                  } | Set-Content $file;
-
           # Evaluate dependencies source and version
           - template: evaluateDependenciesVariables.yml
             parameters:
               botType: "${{ bot.type }}"
               registry: "${{ bot.dependency.registry }}"
               version: "${{ bot.dependency.version }}"
+
+          # Generate bot template
+          - template: ../generator/deploy.yml
+            parameters:
+              project: "${{ bot.project }}"
+              solutiondir: "$(SOLUTIONDIR)"     
 
           # Tag BotBuilder version
           - template: ../common/tagBotBuilderVersion.yml
@@ -111,7 +101,7 @@ stages:
             displayName: 'Set BotBuilder source and version'
             inputs:
               targetType: inline
-              workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               failOnStderr: true
               script: |
                 $registry = "$(DEPENDENCIESSOURCE)";
@@ -140,24 +130,35 @@ stages:
             displayName: 'Install dependencies'
             inputs:
               command: 'install'
-              workingDir: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              workingDir: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               customRegistries: 'useNpmrc'
               verbose: true
 
-          # Prepate bot
+          # Remove web.config generated from webapp template to be able to run "az bot prepare-deploy"
+          - ${{ if eq(bot.project.integration, 'webapp') }}:
+            - task: PowerShell@2
+              displayName: 'Remove web.config'
+              inputs:
+                targetType: inline
+                workingDirectory: '$(SOLUTIONDIR)/${{ bot.project.name }}'
+                failOnStderr: true
+                script: |
+                  Remove-Item .\web.config
+
+          # Prepare bot
           - task: AzureCLI@2
             displayName: 'Prepare Bot'
             inputs:
               azureSubscription: "${{ parameters.azureSubscription }}"
               scriptType: pscore
               scriptLocation: inlineScript
-              inlineScript: 'az bot prepare-deploy --code-dir "${{ bot.project.directory }}" --lang Javascript'
+              inlineScript: 'az bot prepare-deploy --code-dir "$(SOLUTIONDIR)/${{ bot.project.name }}" --lang Javascript'
 
           # Zip bot
           - task: ArchiveFiles@2
             displayName: 'Zip bot'
             inputs:
-              rootFolderOrFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+              rootFolderOrFile: '$(SOLUTIONDIR)/${{ bot.project.name }}'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}.zip'
@@ -216,3 +217,11 @@ stages:
                 botGroup: "${{ parameters.resourceGroup }}"
                 botName: "${{ bot.name }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
+
+          # Debugging output for the workspace
+          - script: |
+              cd ..
+              dir *.* /s
+            displayName: 'Dir workspace'
+            continueOnError: true
+            condition: succeededOrFailed()

@@ -19,20 +19,17 @@ steps:
       failOnStderr: true
       script: |
         # Get Source
-        $sourceDotNetv3MyGet = "https://botbuilder.myget.org/F/botbuilder-v3-dotnet-daily/api/v3/index.json" 
         $sourceDotNetArtifacts = "https://pkgs.dev.azure.com/ConversationalAI/BotFramework/_packaging/SDK/nuget/v3/index.json" 
         $sourceDotNetMyGet = "https://botbuilder.myget.org/F/botbuilder-v4-dotnet-daily/api/v3/index.json"
         switch -regex ("${{ parameters.registry }}") {
           "^($null|)$" {
             switch ("${{ parameters.botType }}") {
-              "SkillV3" { $source = $sourceDotNetv3MyGet } 
               default { $source = $sourceDotNetArtifacts }
             }
           }
           "Artifacts" { $source = $sourceDotNetArtifacts }
           "MyGet" { 
             switch ("${{ parameters.botType }}") {
-              "SkillV3" { $source = $sourceDotNetv3MyGet } 
               default { $source = $sourceDotNetMyGet }
             }
           }
@@ -53,8 +50,6 @@ steps:
             if ("${{ parameters.botType }}" -in "Host", "Skill") {
               $PackageList = nuget list Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime -Source "$source" -PreRelease
               $versionNumber = $PackageList.Split(" ")[-1]
-            } elseif ("${{ parameters.botType }}" -in "SkillV3") {
-              $versionNumber = ""
             }
           }
           STABLE { $versionNumber = "" }

@@ -8,10 +8,10 @@ parameters:
     type: string  
 
 steps:
-  # Create /bots directory
+  # Create /workspace
   - script: |
-      mkdir bots
-    displayName: 'Create bots directory'
+      mkdir workspace
+    displayName: 'Create workspace directory'
 
   # Install yarn workspace
   - script: |

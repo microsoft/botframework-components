@@ -153,7 +153,10 @@ stages:
           appId: $(BFCFNEMPTYBOTJSWEBAPPID)
           appSecret: $(BFCFNEMPTYBOTJSWEBAPPSECRET)
           project:
-            directory: 'Tests/Functional/Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+            generator: "generators/generator-bot-empty"
+            integration: "webapp"
+            name: "EmptyBotJSWebApp"
+            platform: "js"
           dependency:
             registry: ${{ parameters.dependenciesRegistryJSHosts }}
             version: ${{ parameters.dependenciesVersionJSHosts }}
@@ -164,7 +167,10 @@ stages:
           appId: $(BFCFNEMPTYBOTJSFUNCTIONSID)
           appSecret: $(BFCFNEMPTYBOTJSFUNCTIONSSECRET)
           project:
-            directory: 'Tests/Functional/Bots/JavaScript/Consumers/CodeFirst/SimpleHostBot'
+            generator: "generators/generator-bot-empty"
+            integration: "functions"
+            name: "EmptyBotJSFunctions"
+            platform: "js"
           dependency:
             registry: ${{ parameters.dependenciesRegistryJSHosts }}
             version: ${{ parameters.dependenciesVersionJSHosts }}
