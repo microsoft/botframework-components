@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "CallTransfer_BaseScenario_EmptyPhoneNumber.test",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "Hello I'm Calculon"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertNoActivity"
+    }
+  ]
+}

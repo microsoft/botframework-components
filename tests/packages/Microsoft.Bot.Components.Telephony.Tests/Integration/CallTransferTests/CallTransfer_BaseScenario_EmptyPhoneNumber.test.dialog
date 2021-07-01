@@ -1,0 +1,16 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.AdaptiveDialog",
+    "id": "CallTransfer_BaseScenario_EmptyPhoneNumber.test",
+    "triggers": [
+        {
+            "$kind": "Microsoft.OnBeginDialog",
+          "actions": [
+            {
+              "$kind": "Microsoft.Telephony.CallTransfer",
+              "phoneNumber": ""
+            }
+          ]
+        }
+    ]
+}
