@@ -57,9 +57,11 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var error = "Phone number is empty, please provide number in E.164 format";
-            var phoneNumber = this.PhoneNumber?.GetValue(dc.State);
+            var regexFormat = "^\\+\\d{1,3}\\s\\d{1,14}(\\s\\d{1,13})?";
 
-            if (string.IsNullOrEmpty(phoneNumber))
+            var phoneNumber = this.PhoneNumber?.GetValue(dc.State);
+            
+            if (string.IsNullOrEmpty(phoneNumber) || Regex.IsMatch(phoneNumber, regexFormat))
             {
                 return await dc.EndDialogAsync(result: error, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
