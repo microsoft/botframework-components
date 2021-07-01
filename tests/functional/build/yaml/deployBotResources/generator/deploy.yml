@@ -8,7 +8,7 @@ parameters:
     type: string  
 
 steps:
-  # Create /workspace directory
+  # Create /workspace
   - script: |
       mkdir workspace
     displayName: 'Create workspace directory'
