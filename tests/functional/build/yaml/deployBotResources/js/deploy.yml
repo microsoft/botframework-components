@@ -54,7 +54,7 @@ stages:
     jobs:
       - job: "Deploy"
         variables:
-          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/bots/"
+          SolutionDir: "$(BUILD.SOURCESDIRECTORY)/workspace/"
         displayName: "Deploy steps"
         steps:
           # Delete Bot Resources
