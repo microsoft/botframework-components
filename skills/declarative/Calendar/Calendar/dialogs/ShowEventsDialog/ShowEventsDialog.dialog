@@ -57,7 +57,7 @@
               "eventName": "ShowResults"
             }
           ],
-          "condition": "exists($options.eventId)",
+          "condition": "=exists($options.eventId)",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -98,7 +98,7 @@
               ]
             }
           ],
-          "condition": "count(where(flatten($options), o, exists(o))) == 0"
+          "condition": "=count(where(flatten($options), o, exists(o))) == 0"
         },
         {
           "$kind": "Microsoft.IfCondition",
@@ -112,7 +112,7 @@
               "$designer": {
                 "id": "ZDxmgI"
               },
-              "condition": "not(exists($options.subject)) && not(exists($options.contactArray)) && not(exists($options.emailArray)) && not(exists($options.ordinal))",
+              "condition": "=not(exists($options.subject)) && not(exists($options.contactArray)) && not(exists($options.emailArray)) && not(exists($options.ordinal))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -156,14 +156,14 @@
           "$designer": {
             "id": "Xad3Vv"
           },
-          "condition": "exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
+          "condition": "=exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "JGLah7"
               },
-              "condition": "count($events) > 1",
+              "condition": "=count($events) > 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.EmitEvent",
@@ -266,7 +266,7 @@
           "$designer": {
             "id": "cLApQW"
           },
-          "condition": "count($events) > 0",
+          "condition": "=count($events) > 0",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",

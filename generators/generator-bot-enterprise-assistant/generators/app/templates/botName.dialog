@@ -30,14 +30,14 @@
                 "id": "641773",
                 "name": "Branch: if/else"
               },
-              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "condition": "=string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
                   "$kind": "Microsoft.IfCondition",
                   "$designer": {
                     "id": "Y1t1k4"
                   },
-                  "condition": "exists(user.greeted)",
+                  "condition": "=exists(user.greeted)",
                   "actions": [
                     {
                       "$kind": "Microsoft.SendActivity",
@@ -258,7 +258,7 @@
           "$designer": {
             "id": "tjutdL"
           },
-          "condition": "turn.intentChoice != 'none'",
+          "condition": "=turn.intentChoice != 'none'",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -446,7 +446,7 @@
           "$designer": {
             "id": "zG90cd"
           },
-          "condition": "turn.activity.value.skillId != null",
+          "condition": "=turn.activity.value.skillId != null",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -463,7 +463,7 @@
               "$designer": {
                 "id": "VogQ3v"
               },
-              "condition": "exists(turn.activity.text)",
+              "condition": "=exists(turn.activity.text)",
               "actions": [
                 {
                   "$kind": "Microsoft.BeginDialog",
@@ -629,7 +629,7 @@
           "$designer": {
             "id": "RieQAx"
           },
-          "condition": "exists($skillHandled) && $skillHandled == false",
+          "condition": "=exists($skillHandled) && $skillHandled == false",
           "actions": [
             {
               "$kind": "Microsoft.TraceActivity",
@@ -651,7 +651,6 @@
       ]
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "<%= botName %>.lg",
   "id": "<%= botName %>",
   "recognizer": "<%= botName %>.lu.qna"

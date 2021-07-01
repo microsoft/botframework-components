@@ -42,7 +42,7 @@
           "$designer": {
             "id": "80CHa6"
           },
-          "condition": "$parameters.eventId != null",
+          "condition": "=$parameters.eventId != null",
           "elseActions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -73,7 +73,7 @@
               "$designer": {
                 "id": "1Zhz3U"
               },
-              "condition": "count($events) > 0",
+              "condition": "=count($events) > 0",
               "elseActions": [
                 {
                   "$kind": "Microsoft.EmitEvent",
@@ -167,7 +167,7 @@
           "$designer": {
             "id": "1cNXeh"
           },
-          "condition": "count(where(flatten($parameters), p, exists(p))) == 0",
+          "condition": "=count(where(flatten($parameters), p, exists(p))) == 0",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
@@ -219,7 +219,7 @@
               "$designer": {
                 "id": "nfaMkj"
               },
-              "condition": "not(exists(@@contact)) && not(exists(@@email)) && not(exists(@subject)) && not(exists($options.start)) && not(exists($options.end))",
+              "condition": "=not(exists(@@contact)) && not(exists(@@email)) && not(exists(@subject)) && not(exists($options.start)) && not(exists($options.end))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -250,7 +250,7 @@
           "$designer": {
             "id": "YB34jG"
           },
-          "condition": "not(exists($parameters.start))",
+          "condition": "=not(exists($parameters.start))",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -390,7 +390,7 @@
           "$designer": {
             "id": "KmSBRT"
           },
-          "condition": "count($events) == 1",
+          "condition": "=count($events) == 1",
           "elseActions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -494,7 +494,7 @@
           "$designer": {
             "id": "DM5U3G"
           },
-          "condition": "$turnCount < 2",
+          "condition": "=$turnCount < 2",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -572,7 +572,7 @@
           "$designer": {
             "id": "DG1RAS"
           },
-          "condition": "turn.getSchedule",
+          "condition": "=turn.getSchedule",
           "actions": [
             {
               "$kind": "Microsoft.DeleteProperty",

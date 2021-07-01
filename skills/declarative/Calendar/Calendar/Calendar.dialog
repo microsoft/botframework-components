@@ -27,7 +27,7 @@
           "$designer": {
             "id": "25rJrE"
           },
-          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "condition": "=turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -484,7 +484,7 @@
               ]
             }
           ],
-          "condition": "not(exists($options.start))"
+          "condition": "=not(exists($options.start))"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -550,7 +550,7 @@
               ]
             }
           ],
-          "condition": "not(exists($options.start))"
+          "condition": "=not(exists($options.start))"
         },
         {
           "$kind": "Microsoft.BeginDialog",
@@ -580,7 +580,7 @@
           "$designer": {
             "id": "ijHFYq"
           },
-          "condition": "count($availabilityList) > 0",
+          "condition": "=count($availabilityList) > 0",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -1732,7 +1732,7 @@
           "$designer": {
             "id": "7mDmi7"
           },
-          "condition": "exists(@duration)",
+          "condition": "=exists(@duration)",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -1820,7 +1820,6 @@
       "runOnce": true
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "Calendar.lg",
   "recognizer": "Calendar.lu.qna",
   "id": "Calendar"
