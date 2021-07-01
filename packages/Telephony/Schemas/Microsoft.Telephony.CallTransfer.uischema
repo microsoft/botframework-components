@@ -2,7 +2,7 @@
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
     "label": "Call Transfer",
-    "subtitle": "Call Transfer",
+    "subtitle": "Transfers a call to the provided phone number when using your bot in Telephony.",
     "order": [
       "phoneNumber",
       "*"
