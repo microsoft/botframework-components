@@ -6,6 +6,9 @@
     {
       "$kind": "Microsoft.Test.UserSays",
       "text": "Hello I'm Calculon"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertNoActivity"
     }
   ]
 }
