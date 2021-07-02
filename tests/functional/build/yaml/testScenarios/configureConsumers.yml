@@ -439,43 +439,29 @@ steps:
         # Pre-configure and filter bots.
         Write-Host $(AddTimeStamp -text "Filtering bots by '$scenario' scenario ...");
         $consumersToConfigure = FilterBotsByScenario -bots $consumers -scenarios $scenarios -scenario $scenario;
-        $skillsToConfigure = FilterBotsByScenario -bots $skills -scenarios $scenarios -scenario $scenario;
-
-        Write-Host $(AddTimeStamp -text "Loading the Skills AppIds from the KeyVault '$keyVault' when no Pipeline Variable is provided.");
-        $skillsToConfigure = AddBotsAppIdFromKeyVault -bots $skillsToConfigure -keyVault $keyVault
-
-        Write-Host $(AddTimeStamp -text "Filtering bots that have an AppId assigned ...");
-        $skillsToConfigure = FilterBotsWithAppId -bots $skillsToConfigure
 
         Write-Host $(AddTimeStamp -text "Adding the suffix '$suffix' to the bot resources ...");
         $consumersToConfigure = AddBotsSuffix -bots $consumersToConfigure -suffix $suffix
-        $skillsToConfigure = AddBotsSuffix -bots $skillsToConfigure -suffix $suffix
 
         Write-Host $(AddTimeStamp -text "Filtering existing Resource Groups ...");
         $resourceGroups = FilterResourceGroupsByExistence -groups $groups
 
         Write-Host $(AddTimeStamp -text "Filtering deployed bots in Azure ...");
         $consumersToConfigure = FilterBotsByResourceExistence -groups $resourceGroups -bots $consumersToConfigure
-        $skillsToConfigure = FilterBotsByResourceExistence -groups $resourceGroups -bots $skillsToConfigure
 
         Write-Host $(AddTimeStamp -text "Adding Azure AppSettings to Consumers' configuration.");
-        $consumersToConfigure = AddAzureAppSettings -consumers $consumersToConfigure -skills $skillsToConfigure
+        $consumersToConfigure = AddAzureAppSettings -consumers $consumersToConfigure
 
         if (-not $consumersToConfigure) {
           Write-Error $(AddTimeStamp -text "No Consumers were found to configure. Cancelling the configuration ...");
           return;
         }
 
-        if (-not $skillsToConfigure) {
-          Write-Error $(AddTimeStamp -text "No Skills were found to configure each Consumer. Cancelling the configuration ...");
-          return;
-        }
-
         # Configure steps.
         Write-Host $(AddTimeStamp -text "Configuring the Test Project.");
-        ConfigureTestProjectAppSettings -bots $consumersToConfigure -appSettingsPath "tests/SkillFunctionalTests/appsettings.json";
+        ConfigureTestProjectAppSettings -bots $consumersToConfigure -appSettingsPath "tests/functional/Tests/SkillFunctionalTests/appsettings.json";
 
         Write-Host $(AddTimeStamp -text "Configuring the Consumer bots App Settings in Azure.");
-        ConfigureConsumers -consumers $consumersToConfigure -skills $skillsToConfigure
+        ConfigureConsumers -consumers $consumersToConfigure
 
         Write-Host $(AddTimeStamp -text "Process Finished!");
