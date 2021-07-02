@@ -393,141 +393,33 @@ steps:
         $groups = @{
           DotNet = "$resourceGroup-DotNet"
           JS     = "$resourceGroup-JS"
-          Python = "$resourceGroup-Python"
         }
 
         # Bots Settings
         $consumers = @(
           @{
-            key           = "SimpleHostBotDotNet"
-            botName       = "bffnsimplehostbotdotnet"
+            key           = "EmptyBotDotNetWebApp"
+            botName       = "bfcfnemptybotdotnetwebapp"
             resourceGroup = $groups.DotNet
             configType    = $types.Appsettings
           }
           @{
-            key           = "SimpleHostBotDotNet21"
-            botName       = "bffnsimplehostbotdotnet21"
+            key           = "EmptyBotDotNetFunctions"
+            botName       = "bfcfnemptybotdotnetfunctions"
             resourceGroup = $groups.DotNet
             configType    = $types.Appsettings
           }
           @{
-            key           = "SimpleHostBotComposerDotNet"
-            botName       = "bffnsimplehostbotcomposerdotnet"
-            resourceGroup = $groups.DotNet
-            configType    = $types.Composer
-          }
-          @{
-            key           = "WaterfallHostBotDotNet"
-            botName       = "bffnwaterfallhostbotdotnet"
-            resourceGroup = $groups.DotNet
+            key           = "EmptyBotJSWebApp"
+            botName       = "bfcfnemptybotjswebapp"
+            resourceGroup = $groups.JS
             configType    = $types.Appsettings
           }
           @{
-            key           = "SimpleHostBotJS"
-            botName       = "bffnsimplehostbotjs"
+            key           = "EmptyBotJSFunctions"
+            botName       = "bfcfnemptybotjsfunctions"
             resourceGroup = $groups.JS
-            configType    = $types.Env
-          }
-          @{
-            key           = "WaterfallHostBotJS"
-            botName       = "bffnwaterfallhostbotjs"
-            resourceGroup = $groups.JS
-            configType    = $types.Env
-          }
-          @{
-            key           = "SimpleHostBotPython"
-            botName       = "bffnsimplehostbotpython"
-            resourceGroup = $groups.Python
-            configType    = $types.Env
-          }
-          @{
-            key           = "WaterfallHostBotPython"
-            botName       = "bffnwaterfallhostbotpython"
-            resourceGroup = $groups.Python
-            configType    = $types.Env
-          }
-        )
-
-        $skills = @(
-          @{
-            key           = "EchoSkillBotDotNet"
-            keyComposer   = "echoSkillBotDotNet" 
-            botName       = "bffnechoskillbotdotnet"
-            appId         = "${{ parameters.appIds.EchoSkillBotDotNet }}"
-            resourceGroup = $groups.DotNet
-            group         = "Echo"
-          }
-          @{
-            key           = "EchoSkillBotDotNet21"
-            keyComposer   = "echoSkillBotDotNet21" 
-            botName       = "bffnechoskillbotdotnet21"
-            appId         = "${{ parameters.appIds.EchoSkillBotDotNet21 }}"
-            resourceGroup = $groups.DotNet
-            group         = "Echo"
-          }
-          @{
-            key           = "EchoSkillBotDotNetV3"
-            keyComposer   = "echoSkillBotDotNetV3" 
-            botName       = "bffnechoskillbotdotnetv3"
-            appId         = "${{ parameters.appIds.EchoSkillBotDotNetV3 }}"
-            resourceGroup = $groups.DotNet
-            group         = "Echo"
-          }
-          @{
-            key           = "EchoSkillBotComposerDotNet"
-            keyComposer   = "echoSkillBotComposerDotNet" 
-            botName       = "bffnechoskillbotcomposerdotnet"
-            appId         = "${{ parameters.appIds.EchoSkillBotComposerDotNet }}"
-            resourceGroup = $groups.DotNet
-            group         = "Echo"
-          }
-          @{
-            key           = "WaterfallSkillBotDotNet"
-            keyComposer   = "waterfallSkillBotDotNet" 
-            botName       = "bffnwaterfallskillbotdotnet"
-            appId         = "${{ parameters.appIds.WaterfallSkillBotDotNet }}"
-            resourceGroup = $groups.DotNet
-            group         = "Waterfall"
-          }
-          @{
-            key           = "EchoSkillBotJS"
-            keyComposer   = "echoSkillBotJs" 
-            botName       = "bffnechoskillbotjs"
-            appId         = "${{ parameters.appIds.EchoSkillBotJS }}"
-            resourceGroup = $groups.JS
-            group         = "Echo"
-          }
-          @{
-            key           = "EchoSkillBotJSV3"
-            keyComposer   = "echoSkillBotJsV3" 
-            botName       = "bffnechoskillbotjsv3"
-            appId         = "${{ parameters.appIds.EchoSkillBotJSV3 }}"
-            resourceGroup = $groups.JS
-            group         = "Echo"
-          }
-          @{
-            key           = "WaterfallSkillBotJS"
-            keyComposer   = "waterfallSkillBotJS" 
-            botName       = "bffnwaterfallskillbotjs"
-            appId         = "${{ parameters.appIds.WaterfallSkillBotJS }}"
-            resourceGroup = $groups.JS
-            group         = "Waterfall"
-          }
-          @{
-            key           = "EchoSkillBotPython"
-            keyComposer   = "echoSkillBotPython" 
-            botName       = "bffnechoskillbotpython"
-            appId         = "${{ parameters.appIds.EchoSkillBotPython }}"
-            resourceGroup = $groups.Python
-            group         = "Echo"
-          }
-          @{
-            key           = "WaterfallSkillBotPython"
-            keyComposer   = "waterfallSkillBotPython" 
-            botName       = "bffnwaterfallskillbotpython"
-            appId         = "${{ parameters.appIds.WaterfallSkillBotPython }}"
-            resourceGroup = $groups.Python
-            group         = "Waterfall"
+            configType    = $types.Appsettings
           }
         )
 
@@ -536,33 +428,10 @@ steps:
           @{ 
             name      = "SingleTurn"; 
             consumers = @(
-              "SimpleHostBotComposerDotNet",
-              "SimpleHostBotDotNet",
-              "SimpleHostBotDotNet21",
-              "SimpleHostBotJS",
-              "SimpleHostBotPython"
-            );
-            skills    = @(
-              "EchoSkillBotComposerDotNet",
-              "EchoSkillBotDotNet",
-              "EchoSkillBotDotNet21",
-              "EchoSkillBotDotNetV3",
-              "EchoSkillBotJS",
-              "EchoSkillBotJSV3",
-              "EchoSkillBotPython"
-            );
-          }
-          @{ 
-            name      = "Waterfall"; 
-            consumers = @(
-              "WaterfallHostBotDotNet",
-              "WaterfallHostBotJS",
-              "WaterfallHostBotPython"
-            );
-            skills    = @(
-              "WaterfallSkillBotDotNet",
-              "WaterfallSkillBotJS",
-              "WaterfallSkillBotPython"
+              "EmptyBotDotNetWebApp",
+              "EmptyBotDotNetFunctions",
+              "EmptyBotJSWebApp",
+              "EmptyBotJSFunctions"
             );
           }
         )
