@@ -16,16 +16,11 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BfcfnEchoSkillBotComposerDotNetAppId: (optional) App Id for BfcfnEchoSkillBotComposerDotNet bot.
-  # BfcfnEchoSkillBotDotNet21AppId: (optional) App Id for BfcfnEchoSkillBotDotNet21 bot.
-  # BfcfnEchoSkillBotDotNetAppId: (optional) App Id for BfcfnEchoSkillBotDotNet bot.
-  # BfcfnEchoSkillBotDotNetV3AppId: (optional) App Id for BfcfnEchoSkillBotDotNetV3 bot.
-  # BfcfnEchoSkillBotJSAppId: (optional) App Id for BfcfnEchoSkillBotJS bot.
-  # BfcfnEchoSkillBotJSV3AppId: (optional) App Id for BfcfnEchoSkillBotJSV3 bot.
-  # BfcfnEchoSkillBotPythonAppId: (optional) App Id for BfcfnEchoSkillBotPython bot.
-  # BfcfnWaterfallSkillBotDotNetAppId: (optional) App Id for BfcfnWaterfallSkillBotDotNet bot.
-  # BfcfnWaterfallSkillBotJSAppId: (optional) App Id for BfcfnWaterfallSkillBotJS bot.
-  # BfcfnWaterfallSkillBotPythonAppId: (optional) App Id for BfcfnWaterfallSkillBotPython bot.
+  # BfcfnEmptyBotJSWebAppAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotJSFunctionsId: (optional) App Id for BfcfnEmptyBotJSFunctions bot.
+  # BfcfnEmptyBotDotNetWebAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
+  # BfcfnEmptyBotDotNetFunctionsId: (optional) App Id for BfcfnEmptyBotDotNetFunctions bot.
+
   # DeployBotResourcesGuid: (optional) Deploy Bot Resources pipeline GUID.
 
   ## Internal variables
@@ -70,16 +65,10 @@ stages:
   - template: runScenario.yml
     parameters:
       appIds:
-        EchoSkillBotComposerDotNet: "$(BFFNECHOSKILLBOTCOMPOSERDOTNETAPPID)"
-        EchoSkillBotDotNet: "$(BFFNECHOSKILLBOTDOTNETAPPID)"
-        EchoSkillBotDotNet21: "$(BFFNECHOSKILLBOTDOTNET21APPID)"
-        EchoSkillBotDotNetV3: "$(BFFNECHOSKILLBOTDOTNETV3APPID)"
-        EchoSkillBotJS: "$(BFFNECHOSKILLBOTJSAPPID)"
-        EchoSkillBotJSV3: "$(BFFNECHOSKILLBOTJSV3APPID)"
-        EchoSkillBotPython: "$(BFFNECHOSKILLBOTPYTHONAPPID)"
-        WaterfallSkillBotDotNet: "$(BFFNWATERFALLSKILLBOTDOTNETAPPID)"
-        WaterfallSkillBotJS: "$(BFFNWATERFALLSKILLBOTJSAPPID)"
-        WaterfallSkillBotPython: "$(BFFNWATERFALLSKILLBOTPYTHONAPPID)"
+        EmptyBotDotNetWebApp: "$(BFCFNEMPTYBOTDOTNETWEBAPPID)"
+        EmptyBotDotNetFunctions: "$(BFCFNEMPTYBOTDOTNETFUNCTIONSID)"
+        EmptyBotJSWebApp: "$(BFCFNEMPTYBOTJSWEBAPPID)"
+        EmptyBotJSFunctions: "$(BFCFNEMPTYBOTJSFUNCTIONSID)"
       azureSubscription: "$(AZURESUBSCRIPTION)"
       buildConfiguration: "$(BUILDCONFIGURATION)"
       buildIdSuffix: $[stageDependencies.Download_Variables.Download_Variables.outputs['Set_Variables.DeploymentBuildSuffix']]
@@ -87,15 +76,6 @@ stages:
       resourceGroup: "$(INTERNALRESOURCEGROUPNAME)"
       resourceSuffix: "$(INTERNALRESOURCESUFFIX)"
       scenarios:
-        - name: Waterfall
-          dependsOn: [Download_Variables]
-          testCategories:
-            - Attachments
-            - CardActions
-            - ProactiveMessages
-            - FileUpload
-            - SignIn
-
         - name: SingleTurn
           dependsOn: [Download_Variables]
           testCategories:
