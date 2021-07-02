@@ -3,16 +3,10 @@ parameters:
   displayName: Bot's App Registration Ids
   type: object
   default:
-    EchoSkillBotComposerDotNet: ""
-    EchoSkillBotDotNet: ""
-    EchoSkillBotDotNet21: ""
-    EchoSkillBotDotNetV3: ""
-    EchoSkillBotJS: ""
-    EchoSkillBotJSV3: ""
-    EchoSkillBotPython: ""
-    WaterfallSkillBotDotNet: ""
-    WaterfallSkillBotJS: ""
-    WaterfallSkillBotPython: ""
+    EmptyBotDotNetWebApp: ""
+    EmptyBotDotNetFunctions: ""
+    EmptyBotJSWebApp: ""
+    EmptyBotJSFunctions: ""
 
 - name: azureSubscription
   displayName: Azure Service Connection

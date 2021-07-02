@@ -16,15 +16,15 @@ variables:
   # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
 
   ## Bots Configuration (Define these variables in Azure)
-  # BfcfnEmptyBotJSWebAppAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
-  # BfcfnEmptyBotJSFunctionsId: (optional) App Id for BfcfnEmptyBotJSFunctions bot.
   # BfcfnEmptyBotDotNetWebAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
   # BfcfnEmptyBotDotNetFunctionsId: (optional) App Id for BfcfnEmptyBotDotNetFunctions bot.
+  # BfcfnEmptyBotJSWebAppAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotJSFunctionsId: (optional) App Id for BfcfnEmptyBotJSFunctions bot.
 
   # DeployBotResourcesGuid: (optional) Deploy Bot Resources pipeline GUID.
 
   ## Internal variables
-  InternalKeyVaultName: "bfcfnbotkeyvault$(INTERNALRESOURCESUFFIX)"
+  InternalKeyVaultName: "ComponentsBotsKeyVault$(INTERNALRESOURCESUFFIX)"
   InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bfcfnbots')]
   InternalResourceSuffix: $[coalesce(variables['RESOURCESUFFIX'], '')]
 
