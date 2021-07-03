@@ -6,48 +6,23 @@ namespace SkillFunctionalTests.Common
     public enum HostBot
     {
         /// <summary>
-        /// Simple host implemented using Composer and the dotnet runtime.
+        /// Empty bot implemented using DotNet and Web App.
         /// </summary>
-        SimpleHostBotComposerDotNet,
+        EmptyBotDotNetWebApp,
 
         /// <summary>
-        /// Simple host implemented using dotnet 3.1.
+        /// Empty bot implemented using DotNet and Functions.
         /// </summary>
-        SimpleHostBotDotNet,
+        EmptyBotDotNetFunctions,
 
         /// <summary>
-        /// Simple host implemented using dotnet 2.1.
+        /// Empty bot implemented using JS and Web App.
         /// </summary>
-        SimpleHostBotDotNet21,
+        EmptyBotJSWebApp,
 
         /// <summary>
-        /// Simple host implemented using JS.
+        /// Empty bot implemented using JS and Functions.
         /// </summary>
-        SimpleHostBotJS,
-
-        /// <summary>
-        /// Simple host implemented using Python.
-        /// </summary>
-        SimpleHostBotPython,
-
-        /// <summary>
-        /// Host implemented using dotnet and waterfall dialogs.
-        /// </summary>
-        WaterfallHostBotDotNet,
-
-        /// <summary>
-        /// Host implemented using JS and waterfall dialogs.
-        /// </summary>
-        WaterfallHostBotJS,
-
-        /// <summary>
-        /// Host implemented using Python and waterfall dialogs.
-        /// </summary>
-        WaterfallHostBotPython,
-
-        /// <summary>
-        /// Host implemented for LegacyTests.
-        /// </summary>
-        EchoHostBot
+        EmptyBotJSFunctions
     }
 }

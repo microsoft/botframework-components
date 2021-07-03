@@ -37,44 +37,21 @@ namespace SkillFunctionalTests.SingleTurn
 
             var hostBots = new List<HostBot>
             {
-                HostBot.SimpleHostBotComposerDotNet,
-                HostBot.SimpleHostBotDotNet,
-                HostBot.SimpleHostBotDotNet21,
-                HostBot.SimpleHostBotJS,
-                HostBot.SimpleHostBotPython,
+                HostBot.EmptyBotDotNetWebApp,
+                HostBot.EmptyBotDotNetFunctions,
+                HostBot.EmptyBotJSWebApp,
+                HostBot.EmptyBotJSFunctions
             };
 
             var targetSkills = new List<string>
             {
-                SkillBotNames.EchoSkillBotComposerDotNet,
-                SkillBotNames.EchoSkillBotDotNet,
-                SkillBotNames.EchoSkillBotDotNet21,
-                SkillBotNames.EchoSkillBotDotNetV3,
-                SkillBotNames.EchoSkillBotJS,
-                SkillBotNames.EchoSkillBotJSV3,
-                SkillBotNames.EchoSkillBotPython
             };
 
             var scripts = new List<string> { "EchoMultiSkill.json" };
 
             var testCaseBuilder = new TestCaseBuilder();
 
-            // This local function is used to exclude ExpectReplies test cases for v3 bots
-            static bool ShouldExclude(TestCase testCase)
-            {
-                if (testCase.DeliveryMode == DeliveryModes.ExpectReplies)
-                {
-                    // Note: ExpectReplies is not supported by DotNetV3 and JSV3 skills.
-                    if (testCase.TargetSkill == SkillBotNames.EchoSkillBotDotNetV3 || testCase.TargetSkill == SkillBotNames.EchoSkillBotJSV3)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            var testCases = testCaseBuilder.BuildTestCases(channelIds, deliverModes, hostBots, targetSkills, scripts, ShouldExclude);
+            var testCases = testCaseBuilder.BuildTestCases(channelIds, deliverModes, hostBots, targetSkills, scripts);
             foreach (var testCase in testCases)
             {
                 yield return testCase;
