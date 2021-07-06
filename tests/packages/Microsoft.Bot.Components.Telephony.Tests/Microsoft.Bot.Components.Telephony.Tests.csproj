@@ -30,6 +30,18 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\BatchDTMFTests\BatchDTMF_FixedLengthBaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchDTMFTests\BatchDTMF_FixedLengthHappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchDTMFTests\BatchDTMF_TerminationHappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchDTMFTests\BatchDTMF_TerminationBaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Integration\CallTransferTests\CallTransfer_BaseScenario.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

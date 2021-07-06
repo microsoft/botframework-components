@@ -22,6 +22,7 @@ namespace Microsoft.Bot.Components.Telephony
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<PauseRecording>(PauseRecording.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<ResumeRecording>(ResumeRecording.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<StartRecording>(StartRecording.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchDTMF>(BatchDTMF.Kind));
         }
     }
 }

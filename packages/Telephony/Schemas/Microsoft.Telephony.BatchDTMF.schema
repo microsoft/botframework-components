@@ -1,0 +1,32 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Batch DTMF",
+  "description": "Aggregates multiple DTMF inputs until a termination string is received.",
+  "type": "object",
+  "required": [
+    "terminationConditionRegexPattern",
+    "property",
+    "*"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "terminationConditionRegexPattern": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Termination Condition Regex Pattern",
+      "description": "Checks the aggregation against the pattern and returns the completed batch if a match is found.",
+      "examples": [
+        "(.){5}",
+        "#$"
+      ]
+    },
+    "property": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Property",
+      "description": "Property to assign the batch DTMF result to",
+      "examples": [
+        "conversation.BatchDTMFResult"
+      ]
+    }
+  }
+}

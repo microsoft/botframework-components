@@ -1,0 +1,40 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.AdaptiveDialog",
+    "id": "BatchDTMF_BaseScenario.test",
+    "triggers": [
+        {
+            "$kind": "Microsoft.OnBeginDialog",
+            "actions": [
+                {
+                    "$kind": "Microsoft.Telephony.BatchDTMF",
+                    "property": "conversation.DTMFResult",
+                    "terminationConditionRegexPattern": "9$"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "${conversation.DTMFResult}"
+                }
+            ]
+        },
+        {
+            "$kind": "Microsoft.OnIntent",
+            "intent": "HelpIntent",
+            "actions": [
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "On help intent handler"
+                }
+            ]
+        }
+    ],
+    "recognizer": {
+        "$kind": "Microsoft.RegexRecognizer",
+        "intents": [
+            {
+                "intent": "HelpIntent",
+                "pattern": "help"
+            }
+        ]
+    }
+}

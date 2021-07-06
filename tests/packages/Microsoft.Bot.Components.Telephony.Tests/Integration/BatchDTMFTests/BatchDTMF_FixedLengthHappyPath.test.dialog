@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "BatchDTMF_FixedLengthBaseScenario.test",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "3"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "4"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "5"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "9"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == '123459'"
+      ]
+    }
+  ]
+}
