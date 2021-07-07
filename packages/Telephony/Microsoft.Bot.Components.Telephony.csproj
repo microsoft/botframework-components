@@ -36,6 +36,14 @@
     <Content Include="**/*.qna" />
   </ItemGroup>
 
+  <ItemGroup>    
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>    
+    <None Include="icon.png" Pack="true" PackagePath="" />  
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="Schemas\Microsoft.Telephony.StartRecording.schema" />
     <None Remove="Schemas\Microsoft.Telephony.StartRecording.uischema" />
@@ -48,7 +56,9 @@
   <PropertyGroup>
     <!-- Disable warning for SA0001 "XML comment analysis is disabled due to project configuration" which is not true -->
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
-    <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>    
+    <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>    
   </PropertyGroup>
 
 </Project>

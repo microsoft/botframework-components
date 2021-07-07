@@ -12,10 +12,8 @@
 
   <PropertyGroup>
     <!-- Rules found at: https://aka.ms/Microsoft-NuGet-Compliance -->
-    <PackageIconUrl>https://raw.githubusercontent.com/microsoft/botframework-sdk/master/icon.png</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIcon>icon.png</PackageIcon>    
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <LicenseUrl>https://github.com/Microsoft/BotBuilder-dotnet/blob/master/LICENSE</LicenseUrl>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/Microsoft/botframework-components</RepositoryUrl>
