@@ -2,7 +2,8 @@
   "name": "@microsoft/bot-components-teams-tests",
   "private": true,
   "scripts": {
-    "test": "mocha --require ts-node/register tests/*.test.ts"
+    "test": "mocha --require ts-node/register tests/*.test.ts",
+    "lint": "eslint . --ext .js,.ts --config ../../../../../packages/Teams/js/.eslintrc.json"
   },
   "dependencies": {
     "@microsoft/bot-components-teams": "workspace:packages/Teams/js",
