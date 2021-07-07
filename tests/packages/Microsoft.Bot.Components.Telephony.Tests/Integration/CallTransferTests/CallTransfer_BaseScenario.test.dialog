@@ -8,7 +8,11 @@
           "actions": [
             {
               "$kind": "Microsoft.Telephony.CallTransfer",
-              "phoneNumber": "+1555443443"
+              "phoneNumber": "+15554434432"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "activity": "Transfer Initiated!"
             }
           ]
         }
