@@ -12,6 +12,8 @@ import {
   ConversationAccount,
   BotAdapter,
   TestAdapter,
+  TurnContext,
+  Middleware,
 } from 'botbuilder';
 import { AdaptiveTeamsBotComponent } from '@microsoft/bot-components-teams';
 import { TestUtils } from 'botbuilder-dialogs-adaptive-testing';
@@ -116,6 +118,18 @@ const generateTeamMembers = (amount: number): Record<string, unknown>[] => {
 
   return members;
 };
+
+// This is only used for SendMessageToTeamsChannel test since it has a check in turnState for
+// credentials and they never get saved is the adapter is TestAdapter.
+class AddConnectorClientMiddleware implements Middleware {
+  async onTurn(context: TurnContext, next: () => Promise<void>): Promise<void> {
+    context.turnState.set(
+      context.adapter.ConnectorClientKey,
+      new ConnectorClient(new MicrosoftAppCredentials('', ''))
+    );
+    await next();
+  }
+}
 
 describe('Actions', function () {
   before(() => nock.disableNetConnect());
@@ -387,6 +401,7 @@ describe('Actions', function () {
   it('Action_SendMessageToTeamsChannel', async function () {
     const conversationReference = getGroupConversationReference();
     const adapter = getTeamsTestAdapter(conversationReference);
+    adapter.use(new AddConnectorClientMiddleware());
 
     const fetchExpectation = nock('https://api.botframework.com')
       .post('/v3/conversations')
