@@ -31,7 +31,6 @@ stages:
       - job: build_test_dotnet
         displayName: Build and test .csproj with dotnet
         steps:
-        - template: dotnet-install-sdk-steps.yml
         - template: dotnet-build-test-steps.yml
 
   - stage: stage_package_nuget
@@ -44,7 +43,6 @@ stages:
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: nuget-versioning-steps.yml
-        - template: dotnet-install-sdk-steps.yml
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: job_pack_nuspec
