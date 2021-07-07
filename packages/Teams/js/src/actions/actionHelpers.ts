@@ -55,3 +55,26 @@ export const testAdapterHasAuthMethods: Test<HasAuthMethods> = (
       tests.isFunc((val as BotFrameworkAdapter).getSignInLink))
   );
 };
+
+/**
+ * This is similar to HasAuthMethods, but purely for testing since TestAdapter does not have
+ * createConnectorClient, but BotFrameworkAdapter does.
+ */
+export interface HasCreateConnectorClientMethod {
+  createConnectorClient: typeof BotFrameworkAdapter.prototype.createConnectorClient;
+}
+
+/**
+ * Test to assert val has required createConnectorClient method.
+ *
+ * @param {any} val Usually context.adapter.
+ * @returns {Assertion} Asserts that val has required createConnectorClient method.
+ */
+export const testAdapterHasCreateConnectorClientMethod: Test<HasCreateConnectorClientMethod> = (
+  val: unknown
+): val is HasCreateConnectorClientMethod => {
+  return (
+    val instanceof BotFrameworkAdapter ||
+    tests.isFunc((val as BotFrameworkAdapter).createConnectorClient)
+  );
+};

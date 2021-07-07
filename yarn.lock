@@ -159,25 +159,27 @@ __metadata:
     "@types/lodash": ^4.14.168
     "@typescript-eslint/eslint-plugin": latest
     "@typescript-eslint/parser": latest
-    adaptive-expressions: ^4.14.0-rc2
-    botbuilder: ^4.14.0-rc2
-    botbuilder-dialogs: ^4.14.0-rc2
-    botbuilder-dialogs-adaptive: ^4.14.0-preview.rc2
-    botbuilder-dialogs-adaptive-runtime-core: ^4.14.0-preview.rc2
-    botbuilder-dialogs-declarative: ^4.14.0-preview.rc2
-    botbuilder-stdlib: ^4.14.0-internal.rc2
+    adaptive-expressions: 4.14.0-rc2
+    botbuilder: 4.14.0-rc2
+    botbuilder-dialogs: 4.14.0-rc2
+    botbuilder-dialogs-adaptive: 4.14.0-preview.rc2
+    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview.rc2
+    botbuilder-dialogs-declarative: 4.14.0-preview.rc2
+    botbuilder-stdlib: 4.14.0-internal.rc2
+    botframework-connector: 4.14.0-rc2
     eslint: latest
     lodash: ^4.17.21
     rimraf: ^3.0.2
     typescript: ^4.0.5
   peerDependencies:
-    adaptive-expressions: ~4.13.4
-    botbuilder: ~4.13.4
-    botbuilder-dialogs: ~4.13.4
-    botbuilder-dialogs-adaptive: ~4.13.4-preview
-    botbuilder-dialogs-adaptive-runtime-core: ~4.13.4-preview
-    botbuilder-dialogs-declarative: ~4.13.4-preview
-    botbuilder-stdlib: ~4.13.4-internal
+    adaptive-expressions: ~4.14.0-rc2
+    botbuilder: ~4.14.0-rc2
+    botbuilder-dialogs: ~4.14.0-rc2
+    botbuilder-dialogs-adaptive: ~4.14.0-preview.rc2
+    botbuilder-dialogs-adaptive-runtime-core: ~4.14.0-preview.rc2
+    botbuilder-dialogs-declarative: ~4.14.0-preview.rc2
+    botbuilder-stdlib: ~4.14.0-internal.rc2
+    botframework-connector: ~4.14.0-rc2
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
@@ -920,7 +922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adaptive-expressions@npm:4.14.0-rc2, adaptive-expressions@npm:^4.14.0-rc2":
+"adaptive-expressions@npm:4.14.0-rc2":
   version: 4.14.0-rc2
   resolution: "adaptive-expressions@npm:4.14.0-rc2"
   dependencies:
@@ -1670,7 +1672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview.rc2, botbuilder-dialogs-adaptive-runtime-core@npm:^4.14.0-preview.rc2":
+"botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview.rc2":
   version: 4.14.0-preview.rc2
   resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview.rc2"
   dependencies:
@@ -1699,7 +1701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive@npm:4.14.0-preview.rc2, botbuilder-dialogs-adaptive@npm:^4.14.0-preview.rc2":
+"botbuilder-dialogs-adaptive@npm:4.14.0-preview.rc2":
   version: 4.14.0-preview.rc2
   resolution: "botbuilder-dialogs-adaptive@npm:4.14.0-preview.rc2"
   dependencies:
@@ -1716,7 +1718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-declarative@npm:4.14.0-preview.rc2, botbuilder-dialogs-declarative@npm:^4.14.0-preview.rc2":
+"botbuilder-dialogs-declarative@npm:4.14.0-preview.rc2":
   version: 4.14.0-preview.rc2
   resolution: "botbuilder-dialogs-declarative@npm:4.14.0-preview.rc2"
   dependencies:
@@ -1728,7 +1730,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs@npm:4.14.0-rc2, botbuilder-dialogs@npm:^4.14.0-rc2":
+"botbuilder-dialogs@npm:4.14.0-rc2":
   version: 4.14.0-rc2
   resolution: "botbuilder-dialogs@npm:4.14.0-rc2"
   dependencies:
@@ -1759,14 +1761,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-stdlib@npm:4.14.0-internal.rc2, botbuilder-stdlib@npm:^4.14.0-internal.rc2":
+"botbuilder-stdlib@npm:4.14.0-internal.rc2":
   version: 4.14.0-internal.rc2
   resolution: "botbuilder-stdlib@npm:4.14.0-internal.rc2"
   checksum: fa437e8cc3d689901ff3a24276e64d7de998a5ce573793b28e026c0dc13631fb391ad7464367049da0e3249bc6a6f0b5a76392c013f351d9b97f6e2454030f07
   languageName: node
   linkType: hard
 
-"botbuilder@npm:4.14.0-rc2, botbuilder@npm:^4.14.0-rc2, botbuilder@npm:rc":
+"botbuilder@npm:4.14.0-rc2, botbuilder@npm:rc":
   version: 4.14.0-rc2
   resolution: "botbuilder@npm:4.14.0-rc2"
   dependencies:
