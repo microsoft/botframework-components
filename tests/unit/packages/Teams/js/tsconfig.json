@@ -1,0 +1,11 @@
+{
+    "extends": "@tsconfig/recommended",
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "composite": true,
+      "outDir": "lib",
+      "sourceMap": true,
+      "strict": true
+    }
+  }
+  
