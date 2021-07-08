@@ -1,7 +1,7 @@
 steps:
 - powershell: |
     if (Test-Path -Path package.json) {
-      # Get package.json ojbect
+      # Get package.json object
       $packageJson = Get-Content package.json;
       $packageJsonData = $packageJson | ConvertFrom-Json;
 
@@ -21,7 +21,7 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    yarn pack --filename $(NpmPackageVersion)
+    yarn pack --filename '$(NpmPackageVersion)'.tgz
   displayName: 'Run `yarn pack`'
   workingDirectory: '$(WorkingDirectory)'
 
