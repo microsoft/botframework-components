@@ -5,6 +5,35 @@ __metadata:
   version: 4
   cacheKey: 7
 
+"@azure/abort-controller@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "@azure/abort-controller@npm:1.0.4"
+  dependencies:
+    tslib: ^2.0.0
+  checksum: e772f6c9afd2c448260f08ef796e4ff73348c5dfd100ce557cf73dd08d7664e819f11f8e59c19a76daa46c1b271ce3061db23072c2150b112df655d38e82944b
+  languageName: node
+  linkType: hard
+
+"@azure/cognitiveservices-luis-runtime@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@azure/cognitiveservices-luis-runtime@npm:2.0.0"
+  dependencies:
+    "@azure/ms-rest-js": ^1.6.0
+    tslib: ^1.9.3
+  checksum: 15d51d16a707a29e9e72e74e96a4227f43a76e12e920328a8f5c7ebb41c711ac11a9676035b2410a198ba9f0007521f650ebd0046709677b557755327a41a325
+  languageName: node
+  linkType: hard
+
+"@azure/core-auth@npm:^1.1.4":
+  version: 1.3.2
+  resolution: "@azure/core-auth@npm:1.3.2"
+  dependencies:
+    "@azure/abort-controller": ^1.0.0
+    tslib: ^2.2.0
+  checksum: 66c7d074b55e15ecf75c2de64841693c680c326c969dd037bc3800674b658ae1d1b717975c543a34de2da1a1eb1410983d7d2f96ad1d26b61f0372d9214feeb7
+  languageName: node
+  linkType: hard
+
 "@azure/ms-rest-js@npm:1.9.1":
   version: 1.9.1
   resolution: "@azure/ms-rest-js@npm:1.9.1"
@@ -18,6 +47,22 @@ __metadata:
     uuid: ^3.2.1
     xml2js: ^0.4.19
   checksum: b0d483a70163be7ea33d7a87e57edc6d89b8e41a3f11582f534c41488f2e4f91d253dbfa331cd0532d85b459f12c8b530a627fe913ad7fbeb4423bf7052408e7
+  languageName: node
+  linkType: hard
+
+"@azure/ms-rest-js@npm:^1.6.0":
+  version: 1.11.2
+  resolution: "@azure/ms-rest-js@npm:1.11.2"
+  dependencies:
+    "@azure/core-auth": ^1.1.4
+    axios: ^0.21.1
+    form-data: ^2.3.2
+    tough-cookie: ^2.4.3
+    tslib: ^1.9.2
+    tunnel: 0.0.6
+    uuid: ^3.2.1
+    xml2js: ^0.4.19
+  checksum: a96f2f075ecbef968ad85606087ad8a1d40382d4b9581d184049c46027f2d470b6b669d5dfec722545f54b10e75f8d60ea5a950a69393bc8c431ec81dd5f561b
   languageName: node
   linkType: hard
 
@@ -132,9 +177,10 @@ __metadata:
   dependencies:
     "@microsoft/bot-components-teams": "workspace:packages/Teams/js"
     "@types/mocha": ^8.2.2
-    botbuilder: ^4.14.0
-    botbuilder-dialogs-adaptive: ^4.14.0-preview
-    botframework-connector: ^4.14.0
+    botbuilder: 4.14.0
+    botbuilder-dialogs-adaptive: 4.14.0-preview
+    botbuilder-dialogs-adaptive-testing: 4.14.0-preview
+    botframework-connector: 4.14.0
     mocha: ^9.0.2
     nock: ^13.1.1
     ts-node: ^10.0.0
@@ -939,34 +985,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adaptive-expressions@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "adaptive-expressions@npm:4.14.0-rc2"
-  dependencies:
-    "@microsoft/recognizers-text-data-types-timex-expression": 1.3.0
-    "@types/atob-lite": ^2.0.0
-    "@types/btoa-lite": ^1.0.0
-    "@types/lodash.isequal": ^4.5.5
-    "@types/lru-cache": ^5.1.0
-    "@types/xmldom": ^0.1.30
-    antlr4ts: 0.5.0-alpha.3
-    atob-lite: ^2.0.0
-    big-integer: ^1.6.48
-    btoa-lite: ^1.0.0
-    d3-format: ^1.4.4
-    dayjs: ^1.10.3
-    jspath: ^0.4.0
-    lodash.isequal: ^4.5.0
-    lru-cache: ^5.1.1
-    uuid: ^8.3.2
-    x2js: ^3.4.0
-    xml2js: ^0.4.23
-    xmldom: ^0.5.0
-    xpath: ^0.0.32
-  checksum: 97e1680fdc7d71614104bea5ba7a1cd4127967911688f5c287e30511f848f66b996df099412bb89ab668a81544662fa4c7e4c4822a3a512fddfc892715099193
-  languageName: node
-  linkType: hard
-
 "ajv@npm:^6.10.0, ajv@npm:^6.12.3, ajv@npm:^6.12.4":
   version: 6.12.6
   resolution: "ajv@npm:6.12.6"
@@ -1649,6 +1667,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bitwise@npm:^2.0.4":
+  version: 2.1.0
+  resolution: "bitwise@npm:2.1.0"
+  checksum: 51c7ae49c2c109444c6aafaf221b86c8caf10c60c3ac0316b0cb1a76d12c8af383170bec22863bdd378ac05730a145a0026a9ce1fe2ff4925dc75c3288e45011
+  languageName: node
+  linkType: hard
+
 "bl@npm:^4.1.0":
   version: 4.1.0
   resolution: "bl@npm:4.1.0"
@@ -1657,6 +1682,26 @@ __metadata:
     inherits: ^2.0.4
     readable-stream: ^3.4.0
   checksum: 15d009339c2eeaedb9dab39c48f910a2fd6a9ba11400e61990917ebf3b25fa32cd9b80c7531a95467078258f6a59bd3f5d93323565423a7843855a16a1794261
+  languageName: node
+  linkType: hard
+
+"botbuilder-ai@npm:4.14.0":
+  version: 4.14.0
+  resolution: "botbuilder-ai@npm:4.14.0"
+  dependencies:
+    "@azure/cognitiveservices-luis-runtime": 2.0.0
+    "@azure/ms-rest-js": 1.9.1
+    adaptive-expressions: 4.14.0
+    botbuilder-core: 4.14.0
+    botbuilder-dialogs: 4.14.0
+    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview
+    botbuilder-dialogs-declarative: 4.14.0-preview
+    botbuilder-stdlib: 4.14.0-internal
+    lodash: ^4.17.21
+    node-fetch: ^2.6.0
+    url-parse: ^1.5.1
+    zod: ~1.11.17
+  checksum: 1da331cc766169cf5b1a2ecca9e8c242ad51eced86656bafc134f3a53683aedb26d8bd1806e43ec14be2bba1950abbd7ef8a389b686f6d4e6339fb9eb2588f38
   languageName: node
   linkType: hard
 
@@ -1674,20 +1719,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-core@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botbuilder-core@npm:4.14.0-rc2"
-  dependencies:
-    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview.rc2
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    botframework-connector: 4.14.0-rc2
-    botframework-schema: 4.14.0-rc2
-    uuid: ^8.3.2
-    zod: ~1.11.17
-  checksum: 6a0a55bb576bdfb60e67d5779e7a663db9c546ef5520d75718e30389ddb0d6291fcdc7e7df104ba0443304b28ffe363d41a31ae961d59447be85328a02285cdf
-  languageName: node
-  linkType: hard
-
 "botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview":
   version: 4.14.0-preview
   resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview"
@@ -1697,12 +1728,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview.rc2":
-  version: 4.14.0-preview.rc2
-  resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.14.0-preview.rc2"
+"botbuilder-dialogs-adaptive-testing@npm:4.14.0-preview":
+  version: 4.14.0-preview
+  resolution: "botbuilder-dialogs-adaptive-testing@npm:4.14.0-preview"
   dependencies:
-    dependency-graph: ^0.10.0
-  checksum: ae23051cb664122f4f40ab5753a1655f34b6b06596bba25d347b3c877dfc986de5da8c30680946a154afc3925f6c9ab4d4ff286821306e570429380d0839dda8
+    adaptive-expressions: 4.14.0
+    bitwise: ^2.0.4
+    botbuilder-ai: 4.14.0
+    botbuilder-core: 4.14.0
+    botbuilder-dialogs: 4.14.0
+    botbuilder-dialogs-adaptive: 4.14.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview
+    botbuilder-dialogs-declarative: 4.14.0-preview
+    botbuilder-stdlib: 4.14.0-internal
+    murmurhash-js: ^1.0.0
+    nock: ^11.9.1
+    url-parse: ^1.5.1
+  checksum: 6bff035cf41273596df50a0755026a34a7b55ae31af21d2c0574b961e84d3622ae545a74db296de7df533f028daa96c563ba70df3dc864b291cccce35d4c61d2
   languageName: node
   linkType: hard
 
@@ -1723,23 +1765,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive@npm:^4.14.0-preview":
-  version: 4.14.0-preview.rc2
-  resolution: "botbuilder-dialogs-adaptive@npm:4.14.0-preview.rc2"
-  dependencies:
-    "@microsoft/recognizers-text-suite": 1.1.4
-    adaptive-expressions: 4.14.0-rc2
-    botbuilder: 4.14.0-rc2
-    botbuilder-dialogs: 4.14.0-rc2
-    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview.rc2
-    botbuilder-dialogs-declarative: 4.14.0-preview.rc2
-    botbuilder-lg: 4.14.0-rc2
-    lodash: ^4.17.21
-    node-fetch: ^2.6.0
-  checksum: 59ac133abad4fd91cf45b06de5ffc08d9839f2196d393d4f40f9863fb0a731b009bfd8df98985b066ba64e1050745a9422a7bbfbc762eb9e2c200b9ee8b05f3d
-  languageName: node
-  linkType: hard
-
 "botbuilder-dialogs-declarative@npm:4.14.0-preview":
   version: 4.14.0-preview
   resolution: "botbuilder-dialogs-declarative@npm:4.14.0-preview"
@@ -1749,18 +1774,6 @@ __metadata:
     botbuilder-stdlib: 4.14.0-internal
     chokidar: ^3.4.0
   checksum: 25863f1a2e4edd5982a5d103c44aa8f66c2ff16adf07a2fff8d49c48084f2c2143470478b978fbae0c6c82cf2f88e6fcd82a6887453f53526d186bd96d462c50
-  languageName: node
-  linkType: hard
-
-"botbuilder-dialogs-declarative@npm:4.14.0-preview.rc2":
-  version: 4.14.0-preview.rc2
-  resolution: "botbuilder-dialogs-declarative@npm:4.14.0-preview.rc2"
-  dependencies:
-    botbuilder-core: 4.14.0-rc2
-    botbuilder-dialogs: 4.14.0-rc2
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    chokidar: ^3.4.0
-  checksum: 65c685b15e7a9257bef4a0f8481f274909c10c2db93a2f72040ed66aa1c1e937c07ef389754e37e3f40a08e816eb85a76843c16f39b8dd4f1ae8aae221fec3ec
   languageName: node
   linkType: hard
 
@@ -1783,25 +1796,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botbuilder-dialogs@npm:4.14.0-rc2"
-  dependencies:
-    "@microsoft/recognizers-text-choice": 1.1.4
-    "@microsoft/recognizers-text-date-time": 1.1.4
-    "@microsoft/recognizers-text-number": 1.1.4
-    "@microsoft/recognizers-text-suite": 1.1.4
-    botbuilder-core: 4.14.0-rc2
-    botbuilder-dialogs-adaptive-runtime-core: 4.14.0-preview.rc2
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    botframework-connector: 4.14.0-rc2
-    globalize: ^1.4.2
-    lodash: ^4.17.21
-    zod: ~1.11.17
-  checksum: 552f8f244a5b3109071d8e930fd24ff08a5063db4d92005350e1e99ddd41a1dd159c6dedd739f9f76653d3b61f00f16e2d67d3c6176bc2a29cd17ce0a36395b8
-  languageName: node
-  linkType: hard
-
 "botbuilder-lg@npm:4.14.0":
   version: 4.14.0
   resolution: "botbuilder-lg@npm:4.14.0"
@@ -1814,18 +1808,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-lg@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botbuilder-lg@npm:4.14.0-rc2"
-  dependencies:
-    adaptive-expressions: 4.14.0-rc2
-    antlr4ts: 0.5.0-alpha.3
-    lodash: ^4.17.19
-    uuid: ^8.3.2
-  checksum: 28f2fd8d6fba0a2feb9887773034a42c4bf730cd4c414a33a5d6bdde795c7a4231a27750e8cdef29a0a5d24b418ce0d9252ebc326e07b337b0181aed9bd0776b
-  languageName: node
-  linkType: hard
-
 "botbuilder-stdlib@npm:4.14.0-internal":
   version: 4.14.0-internal
   resolution: "botbuilder-stdlib@npm:4.14.0-internal"
@@ -1833,14 +1815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-stdlib@npm:4.14.0-internal.rc2":
-  version: 4.14.0-internal.rc2
-  resolution: "botbuilder-stdlib@npm:4.14.0-internal.rc2"
-  checksum: fa437e8cc3d689901ff3a24276e64d7de998a5ce573793b28e026c0dc13631fb391ad7464367049da0e3249bc6a6f0b5a76392c013f351d9b97f6e2454030f07
-  languageName: node
-  linkType: hard
-
-"botbuilder@npm:4.14.0, botbuilder@npm:^4.14.0":
+"botbuilder@npm:4.14.0":
   version: 4.14.0
   resolution: "botbuilder@npm:4.14.0"
   dependencies:
@@ -1860,27 +1835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botbuilder@npm:4.14.0-rc2"
-  dependencies:
-    "@azure/ms-rest-js": 1.9.1
-    axios: ^0.21.1
-    botbuilder-core: 4.14.0-rc2
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    botframework-connector: 4.14.0-rc2
-    botframework-streaming: 4.14.0-rc2
-    dayjs: ^1.10.3
-    filenamify: ^4.1.0
-    fs-extra: ^7.0.1
-    htmlparser2: ^6.0.1
-    uuid: ^8.3.2
-    zod: ~1.11.17
-  checksum: 324beaa09fb3870a03247f6b76925c05f1c61d7b193184c71f55dcb5abf2f1efe1edebe3da84a0e182af7b3534b6273c4390e89faf282036f7a8e2a5d2dc3a35
-  languageName: node
-  linkType: hard
-
-"botframework-connector@npm:4.14.0, botframework-connector@npm:^4.14.0":
+"botframework-connector@npm:4.14.0":
   version: 4.14.0
   resolution: "botframework-connector@npm:4.14.0"
   dependencies:
@@ -1899,25 +1854,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botframework-connector@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botframework-connector@npm:4.14.0-rc2"
-  dependencies:
-    "@azure/ms-rest-js": 1.9.1
-    "@types/jsonwebtoken": 7.2.8
-    "@types/node": ^10.17.27
-    adal-node: 0.2.2
-    axios: ^0.21.1
-    base64url: ^3.0.0
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    botframework-schema: 4.14.0-rc2
-    cross-fetch: ^3.0.5
-    jsonwebtoken: 8.0.1
-    rsa-pem-from-mod-exp: ^0.8.4
-  checksum: 188c646db252281469786ee5964c394897995ef74ca604df14dead099a8681db77c2477e2928f5af5c532e7aba1e0b0ed4c24dfefe34d819f676e9ac6e71120d
-  languageName: node
-  linkType: hard
-
 "botframework-schema@npm:4.14.0":
   version: 4.14.0
   resolution: "botframework-schema@npm:4.14.0"
@@ -1925,16 +1861,6 @@ __metadata:
     botbuilder-stdlib: 4.14.0-internal
     uuid: ^8.3.2
   checksum: fd86f0a6eb5be4f84c90bdb58de20129fdd92138652aaebc4cc29ccdf7e0f7944e85c1c007ecb654d576b734fce984466ff2d7edc2f98c344f1210b23f0badf1
-  languageName: node
-  linkType: hard
-
-"botframework-schema@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botframework-schema@npm:4.14.0-rc2"
-  dependencies:
-    botbuilder-stdlib: 4.14.0-internal.rc2
-    uuid: ^8.3.2
-  checksum: 580a64fc1ebf6141497ed832025908f29a19b4dfafcb2a4b39897d6e66cab4696f793cb13ce8c0a5ea5138c47ecc9b595f49d6d01dac9159982124e2b7656541
   languageName: node
   linkType: hard
 
@@ -1947,18 +1873,6 @@ __metadata:
     uuid: ^8.3.2
     ws: ^7.1.2
   checksum: c23f75c1ddd95f2265bbf77c68ba0c188492398daaa0cda1cab113e9d22dcf63aec1831a5ce1df7382b91f20c0202c12e9afa4c6de799d64690825d3c3b5f76a
-  languageName: node
-  linkType: hard
-
-"botframework-streaming@npm:4.14.0-rc2":
-  version: 4.14.0-rc2
-  resolution: "botframework-streaming@npm:4.14.0-rc2"
-  dependencies:
-    "@types/node": ^10.17.27
-    "@types/ws": ^6.0.3
-    uuid: ^8.3.2
-    ws: ^7.1.2
-  checksum: e069264b1adb922a3aee3ee3bee3962d46a8db5176a29a5ab121f96b88b9294af59fa1176d10d85f344bc6c5ccac0c01bd29614617e49aa00e2e69a387788e84
   languageName: node
   linkType: hard
 
@@ -6439,7 +6353,7 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.10, lodash@npm:^4.17.11, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.3.0":
+"lodash@npm:^4.17.10, lodash@npm:^4.17.11, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4, lodash@npm:^4.3.0":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 4983720b9abca930a4a46f18db163d7dad8dd00dbed6db0cc7b499b33b717cce69f80928b27bbb1ff2cbd3b19d251ee90669a8b5ea466072ca81c2ebe91e7468
@@ -7041,6 +6955,13 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
+"murmurhash-js@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "murmurhash-js@npm:1.0.0"
+  checksum: 7b0f02796fde7a6fe0e41ed3197b758e6824f33b284a5cbdcca0942e629d34309a4e344760204ad5503dc1d75f9ba7574b72406ac654dc56ab69f22b1e9ee821
+  languageName: node
+  linkType: hard
+
 "mute-stream@npm:0.0.7":
   version: 0.0.7
   resolution: "mute-stream@npm:0.0.7"
@@ -7145,6 +7066,19 @@ fsevents@^1.2.3:
     just-extend: ^4.0.2
     path-to-regexp: ^1.7.0
   checksum: 87b37725d9e0e6dc951caa40685f8726d028ac48ca87e71773cbb705e2736e084cc3087530a92b9ebe87163212ee477d37318875984b1093f79bae600ce6d7c4
+  languageName: node
+  linkType: hard
+
+"nock@npm:^11.9.1":
+  version: 11.9.1
+  resolution: "nock@npm:11.9.1"
+  dependencies:
+    debug: ^4.1.0
+    json-stringify-safe: ^5.0.1
+    lodash: ^4.17.13
+    mkdirp: ^0.5.0
+    propagate: ^2.0.0
+  checksum: 4cbbe7ee50d7a1514c60dfdbd40e10b9ec51035b8f0282dbb1bdd795ae2dd6d8612713b5edcf7fb1034f2d6b4449f672be71880702f1f5d36e06b0e718731ffc
   languageName: node
   linkType: hard
 
@@ -8049,6 +7983,13 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
+"querystringify@npm:^2.1.1":
+  version: 2.2.0
+  resolution: "querystringify@npm:2.2.0"
+  checksum: 6235036be3aedff7919dfc06b23f759264915c5794c6352d52a917401d40d2b9bb43b1d82e4e5be983e469aa320e06992aefc218192f6fa1d9eba4f54dc4786c
+  languageName: node
+  linkType: hard
+
 "queue-microtask@npm:^1.2.2":
   version: 1.2.2
   resolution: "queue-microtask@npm:1.2.2"
@@ -8395,6 +8336,13 @@ fsevents@^1.2.3:
   version: 1.0.1
   resolution: "require-main-filename@npm:1.0.1"
   checksum: 26719298b8ba213424f69beea3898fa5bdddeb7039cbc78d8680524f05b459c7d9c523fda12d1aabe74d4475458480ba231ab5147fefb3855b8e6b6b65666d99
+  languageName: node
+  linkType: hard
+
+"requires-port@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "requires-port@npm:1.0.0"
+  checksum: 0db25fb2ac9b4f2345a350846b7ba99d1f25a6686b1728246d14f05450c8f2fc066bdfae4561b4be2627c184a030a27e17268cfefdf46836e271db13734bc49e
   languageName: node
   linkType: hard
 
@@ -9585,10 +9533,17 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1, tslib@npm:^1.9.0, tslib@npm:^1.9.2":
+"tslib@npm:^1.8.1, tslib@npm:^1.9.0, tslib@npm:^1.9.2, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: f44fe7f216946b17d3e3074df3746372703cf24e9127b4c045511456e8e4bf25515fb0a1bb3937676cc305651c5d4fcb6377b0588a4c6a957e748c4c28905d17
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.0.0, tslib@npm:^2.2.0":
+  version: 2.3.0
+  resolution: "tslib@npm:2.3.0"
+  checksum: 7b4fc9feff0f704743c3760f5d8d708f6417fac6458159e63df3a6b1100f0736e3b99edb9fe370f274ad15160a1f49ff05cb49402534c818ff552c48e38c3e6e
   languageName: node
   linkType: hard
 
@@ -9817,6 +9772,16 @@ typescript@^4.0.5:
   dependencies:
     prepend-http: ^2.0.0
   checksum: 334817036b300c35023798b8ceac23ea61b51f231a867112e3a85778d65191a3ccb67e7b69b608d45433d55da392cf0d72cd3c85f2542f6ec34733e455c229d5
+  languageName: node
+  linkType: hard
+
+"url-parse@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "url-parse@npm:1.5.1"
+  dependencies:
+    querystringify: ^2.1.1
+    requires-port: ^1.0.0
+  checksum: d8342b597bf1760c4b9e3c78458524d783fa1c901658f3db8b576fc73451c89e6686d218ddca4845b082a63b23971b4a8b916cccc91f4156cc9f97ffdabe0079
   languageName: node
   linkType: hard
 
