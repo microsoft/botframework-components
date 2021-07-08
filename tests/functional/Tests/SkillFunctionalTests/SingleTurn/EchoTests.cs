@@ -45,14 +45,31 @@ namespace SkillFunctionalTests.SingleTurn
 
             var targetSkills = new List<string>
             {
+                SkillBotNames.EchoSkillBotComposerDotNet,
+                SkillBotNames.EchoSkillBotDotNet,
+                SkillBotNames.EchoSkillBotDotNet21,
+                SkillBotNames.EchoSkillBotDotNetV3,
+                SkillBotNames.EchoSkillBotJS,
+                SkillBotNames.EchoSkillBotJSV3,
+                SkillBotNames.EchoSkillBotPython
             };
 
             var scripts = new List<string> { "EchoMultiSkill.json" };
 
             var testCaseBuilder = new TestCaseBuilder();
 
+            // This local function is used to exclude ExpectReplies test cases for v3 bots
             static bool ShouldExclude(TestCase testCase)
             {
+                if (testCase.DeliveryMode == DeliveryModes.ExpectReplies)
+                {
+                    // Note: ExpectReplies is not supported by DotNetV3 and JSV3 skills.
+                    if (testCase.TargetSkill == SkillBotNames.EchoSkillBotDotNetV3 || testCase.TargetSkill == SkillBotNames.EchoSkillBotJSV3)
+                    {
+                        return true;
+                    }
+                }
+
                 return false;
             }
 
@@ -76,7 +93,8 @@ namespace SkillFunctionalTests.SingleTurn
 
             var testParams = new Dictionary<string, string>
             {
-                { "DeliveryMode", testCase.DeliveryMode }
+                { "DeliveryMode", testCase.DeliveryMode },
+                { "TargetSkill", testCase.TargetSkill }
             };
 
             await runner.RunTestAsync(Path.Combine(_testScriptsFolder, testCase.Script), testParams);
