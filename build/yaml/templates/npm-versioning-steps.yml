@@ -13,7 +13,7 @@ steps:
       $deploymentRing = $deploymentRingOverride;
     }
 
-    if ($deploymentRing.ToLowerInvariant() -eq "rc") {
+    if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
       $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
       "Release Candidate Number = $releaseCandidateNumber";
 
