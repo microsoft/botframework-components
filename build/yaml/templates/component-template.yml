@@ -6,14 +6,14 @@ stages:
     condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), not(eq(variables.PublishPackageArtifacts, true)))
     jobs:
       - job: job_build_npm
-        displayName: Build Node project
+        displayName: Build & Test Node project
         steps:
         - template: yarn-build-steps.yml
         - template: yarn-test-steps.yml
         - template: debug-workspace-steps.yml
 
   - stage: stage_package_node
-    displayName: 'Node: Build, Version & Pack'
+    displayName: 'Node: Build, Test, Version & Pack'
     condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), eq(variables.PublishPackageArtifacts, true))
     jobs:
       - job: pack_npm

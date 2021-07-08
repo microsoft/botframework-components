@@ -6,9 +6,10 @@ steps:
       $packageJsonData = $packageJson | ConvertFrom-Json;
 
       # Get name, strip invalid filename characters up to '/' and save as pipeline variable
-      $name = $packageJsonData.name -replace ".*\/"
-      Write-Host $packagejsonData
-      Write-Host "##vso[task.setvariable variable=NpmPackageName;]$name"
+      $packageName = $packageJsonData.name -replace ".*\/"
+      "Package name = $packageJsonData.name";
+      "Package file name = $packageName";
+      Write-Host "##vso[task.setvariable variable=NpmPackageFileName;]$packageName"
 
       # Get variable passed from Setup stage
       $packageVersion = "$(NpmPackageVersion)";
@@ -26,7 +27,7 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    yarn pack --filename $(NpmPackageName)-$(NpmPackageVersion).tgz
+    yarn pack --filename $(NpmPackageFileName)-$(NpmPackageVersion).tgz
   displayName: 'Run `yarn pack`'
   workingDirectory: '$(WorkingDirectory)'
 
