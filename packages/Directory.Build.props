@@ -18,7 +18,7 @@
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/Microsoft/botframework-components</RepositoryUrl>
-    <NoWarn>$(NoWarn);</NoWarn>
+    <NoWarn>$(NoWarn);NU5048</NoWarn>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
