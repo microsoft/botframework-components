@@ -21,7 +21,7 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    yarn pack
+    yarn pack --filename $(NpmPackageVersion)
   displayName: 'Run `yarn pack`'
   workingDirectory: '$(WorkingDirectory)'
 
