@@ -22,7 +22,7 @@ stages:
         - template: yarn-build-steps.yml
         - template: yarn-test-steps.yml
         - template: npm-versioning-steps.yml
-        - template: npm-package-steps.yml
+        - template: yarn-package-steps.yml
         - template: debug-workspace-steps.yml
 
   - stage: stage_build_nuget

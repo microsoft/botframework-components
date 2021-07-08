@@ -22,11 +22,11 @@ steps:
 
 - script: |
     yarn pack
-  displayName: 'Generate package'
+  displayName: 'Run `yarn pack`'
   workingDirectory: '$(WorkingDirectory)'
 
 - task: CopyFiles@2
-  displayName: 'Copy packages'
+  displayName: 'Copy packages to staging directory'
   inputs:
     SourceFolder: '$(WorkingDirectory)'
     Contents: '*.tgz'
