@@ -6,9 +6,12 @@ steps:
       $packageJsonData = $packageJson | ConvertFrom-Json;
 
       # Get name, strip invalid filename characters up to '/' and save as pipeline variable
-      $packageName = $packageJsonData.name -replace ".*\/"
-      "Package name = $packageJsonData.name";
+      $packageName = $packageJsonData.name
+      "Package name = $packageName";
+
+      $packageName = $packageName -replace ".*\/"
       "Package file name = $packageName";
+      
       Write-Host "##vso[task.setvariable variable=NpmPackageFileName;]$packageName"
 
       # Get variable passed from Setup stage
