@@ -11,12 +11,12 @@ import {
   ResourceExplorer,
   ResourceExplorerOptions,
 } from 'botbuilder-dialogs-declarative';
-import { AdaptiveTeamsBotComponent } from '@microsoft/bot-components-teams';
 import path from 'path';
+import { BotComponent } from 'botbuilder';
 
 export function makeResourceExplorer(
   resourceFolder: string,
-  ...botComponents: typeof AdaptiveTeamsBotComponent[]
+  ...botComponents: Array<new () => BotComponent>
 ): ResourceExplorer {
   const services = new ServiceCollection({
     declarativeTypes: [],
