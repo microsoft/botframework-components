@@ -35,7 +35,10 @@ export function getValue<T>(
  * BotFrameworkAdapter and TestAdapter contain them, so we just need to make sure that dc.context.adapter contains
  * an adapter with the appropriate auth methods.
  */
-export type HasAuthMethods = Pick<BotFrameworkAdapter, 'getUserToken' | 'getSignInLink'>;
+export type HasAuthMethods = Pick<
+  BotFrameworkAdapter,
+  'getUserToken' | 'getSignInLink'
+>;
 
 /**
  * Test to assert val has required auth methods.
@@ -57,7 +60,10 @@ export const testAdapterHasAuthMethods: Test<HasAuthMethods> = (
  * This is similar to HasAuthMethods, but purely for testing since TestAdapter does not have
  * createConnectorClient, but BotFrameworkAdapter does.
  */
-export type HasCreateConnectorClientMethod = Pick<BotFrameworkAdapter, 'createConnectorClient'>;
+export type HasCreateConnectorClientMethod = Pick<
+  BotFrameworkAdapter,
+  'createConnectorClient'
+>;
 
 /**
  * Test to assert val has required createConnectorClient method.

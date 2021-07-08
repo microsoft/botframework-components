@@ -53,6 +53,7 @@
     "botbuilder-stdlib": "4.14.0-internal",
     "botframework-connector": "4.14.0",
     "eslint": "^7.30.0",
+    "eslint-plugin-prettier": "latest",
     "lodash": "^4.17.21",
     "rimraf": "^3.0.2",
     "typescript": "^4.0.5"
