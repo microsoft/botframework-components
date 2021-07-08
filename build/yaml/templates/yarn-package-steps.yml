@@ -5,6 +5,10 @@ steps:
       $packageJson = Get-Content package.json;
       $packageJsonData = $packageJson | ConvertFrom-Json;
 
+      # Get name and save as pipeline variable
+      $name = $packageJsonData.name
+      Write-Host "##vso[task.setvariable variable=NpmPackageName;]$name"
+
       # Get variable passed from Setup stage
       $packageVersion = "$(NpmPackageVersion)";
 
@@ -21,7 +25,7 @@ steps:
   workingDirectory: '$(WorkingDirectory)'
 
 - script: |
-    yarn pack --filename '$(NpmPackageVersion)'.tgz
+    yarn pack --filename $(NpmPackageName)-$(NpmPackageVersion).tgz
   displayName: 'Run `yarn pack`'
   workingDirectory: '$(WorkingDirectory)'
 
