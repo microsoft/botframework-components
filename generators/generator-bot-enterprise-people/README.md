@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-enterprise-people [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-enterprise-people [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people)
 
 A bot with the ability to interact with Office 365 users in an Azure Active Directory using Microsoft Graph. [Learn more](https://aka.ms/EnterprisePeopleBot)
 
@@ -26,7 +26,7 @@ The Enterprise People Bot uses packages to extend its capabilities. [Learn more]
     - People.Read.All
     - User.ReadBasic.All
     - User.Read.All
-- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
+- [Azure Language Understanding (LUIS)](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis), or another recognizer of your choice
 
 ### Supported languages
 
@@ -36,6 +36,3 @@ The Enterprise People Bot uses packages to extend its capabilities. [Learn more]
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
-[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people

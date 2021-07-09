@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-adaptive [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-adaptive [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-adaptive)
 
 This generator is for creating an Azure Bot Framework bot using the Adaptive Dialog stack. This generator is designed to be used as a base for other more purpose-specific generators, and is responsible for scaffolding:
 
@@ -28,6 +28,3 @@ This template can also be installed from the [command line](https://github.com/m
 ## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
-
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive

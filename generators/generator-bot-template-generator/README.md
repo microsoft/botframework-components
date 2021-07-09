@@ -1,4 +1,4 @@
-# bot-template-generator [![NPM version][npm-image]][npm-url]
+# bot-template-generator [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-adaptive)
 
 Yeoman generator generating a bot template generator for use with the Microsoft Bot Framework.
 
@@ -80,13 +80,5 @@ After making the change, run `yarn build:server` followed by `yarn start:dev`. Y
 
 ## License
 
-[MIT License][license]
-
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-adaptive
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
