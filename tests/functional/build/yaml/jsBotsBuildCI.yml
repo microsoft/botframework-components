@@ -1,0 +1,6 @@
+steps:
+- script: yarn
+  displayName: "yarn install"
+
+- script: yarn lint
+  displayName: "yarn lint"

@@ -169,13 +169,7 @@
          ]
       }
    ],
-   "selectAction":{
-      "type":"Action.Submit",
-      "title":"${text}",
-      "data":{
-         "intent":"${intent}"
-      }
-   },
+   "selectAction": ${SubmitAction(title, intent)},
    "separator": true
 }
 ```
@@ -236,11 +230,36 @@
 }
 ```
 
-# BuildSubmitAction(title, intent)
+# BuildSubmitAction(text, intent)
+- IF: ${ turn.activity.channelId == "msteams" }
+    - ${TeamsSubmitAction(text, intent)}
+- ELSE: 
+    - ${SubmitAction(text, intent)}
+
+
+# TeamsSubmitAction(text, intent)
 - ```
 {
     "type": "Action.Submit",
-    "title": "${title}",
-    "data": "${title}"
+    "title": "${text}",
+    "data": {
+        "intent": "${intent}",
+        "msteams": {
+            "type": "messageBack",
+            "text": "${text}"
+        }
+    }
+}
+```
+
+# SubmitAction(text, intent)
+- ```
+{
+    "type": "Action.Submit",
+    "title": "${text}",
+    "data": {
+        "intent": "${intent}", 
+        "value": "${text}"
+    }
 }
 ```

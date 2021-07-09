@@ -51,7 +51,7 @@
           "$designer": {
             "id": "siTpSb"
           },
-          "condition": "$autoChooseFirst && count(turn.Items) == 1",
+          "condition": "=$autoChooseFirst && count(turn.Items) == 1",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -110,7 +110,7 @@
               "$designer": {
                 "id": "lIowZt"
               },
-              "condition": "turn.selectedIndex != null",
+              "condition": "=turn.selectedIndex != null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -325,7 +325,7 @@
           "$designer": {
             "id": "P1awzy"
           },
-          "condition": "$pageIndex * $pageSize <  $itemCount",
+          "condition": "=$pageIndex * $pageSize <  $itemCount",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -441,7 +441,7 @@
           "$designer": {
             "id": "UVQphx"
           },
-          "condition": "$pageIndex >= 0",
+          "condition": "=$pageIndex >= 0",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",

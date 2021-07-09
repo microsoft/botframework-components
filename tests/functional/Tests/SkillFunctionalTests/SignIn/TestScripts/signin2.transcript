@@ -1,0 +1,124 @@
+[
+  {
+    "type": "message",
+    "serviceUrl": "https://259039676c61.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "73573150-60c5-11eb-b881-018622be8a2a",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "da522520-60d1-11eb-b881-018622be8a2a|livechat"
+    },
+    "recipient": {
+      "id": "b5d6e07f-f8f9-491d-b767-10a0817f89f2",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "You are now logged in.",
+    "speak": "You are now logged in.",
+    "inputHint": "ignoringInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "05fa4ae0-60d2-11eb-8b98-b971494822a6",
+    "id": "07013390-60d2-11eb-8b98-b971494822a6",
+    "localTimestamp": "2021-01-27T16:01:14-03:00",
+    "timestamp": "2021-01-27T19:01:14.185Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://259039676c61.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "73573150-60c5-11eb-b881-018622be8a2a",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "da522520-60d1-11eb-b881-018622be8a2a|livechat"
+    },
+    "recipient": {
+      "id": "b5d6e07f-f8f9-491d-b767-10a0817f89f2",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Here is your token: 37f0ba3c-24bd-485c-9a11-7151fe604b95",
+    "speak": "Here is your token:",
+    "inputHint": "ignoringInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "05fa4ae0-60d2-11eb-8b98-b971494822a6",
+    "id": "072c6240-60d2-11eb-8b98-b971494822a6",
+    "localTimestamp": "2021-01-27T16:01:14-03:00",
+    "timestamp": "2021-01-27T19:01:14.468Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://259039676c61.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "73573150-60c5-11eb-b881-018622be8a2a",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "da522520-60d1-11eb-b881-018622be8a2a|livechat"
+    },
+    "recipient": {
+      "id": "b5d6e07f-f8f9-491d-b767-10a0817f89f2",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "I have signed you out.",
+    "speak": "I have signed you out.",
+    "inputHint": "ignoringInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "05fa4ae0-60d2-11eb-8b98-b971494822a6",
+    "id": "077e2bc0-60d2-11eb-8b98-b971494822a6",
+    "localTimestamp": "2021-01-27T16:01:15-03:00",
+    "timestamp": "2021-01-27T19:01:15.004Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://259039676c61.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "73573150-60c5-11eb-b881-018622be8a2a",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "da522520-60d1-11eb-b881-018622be8a2a|livechat"
+    },
+    "recipient": {
+      "id": "b5d6e07f-f8f9-491d-b767-10a0817f89f2",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "speak": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "05fa4ae0-60d2-11eb-8b98-b971494822a6",
+    "id": "07aa92f0-60d2-11eb-8b98-b971494822a6",
+    "localTimestamp": "2021-01-27T16:01:15-03:00",
+    "timestamp": "2021-01-27T19:01:15.295Z"
+  }
+]

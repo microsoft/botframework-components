@@ -40,7 +40,7 @@
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Activity ID",
       "description": "ID of the cards activity to update.  Required unless sending a response to an invoked Action.Execute.",
-      "default": "=turn.activity.replyTo"
+      "default": "=turn.activity.replyToId"
     }
   },
   "required": [ "template", "data" ]

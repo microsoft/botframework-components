@@ -77,7 +77,7 @@
               "$designer": {
                 "id": "vwdsTV"
               },
-              "condition": "toLower($foreach.value.text) == \"my day\" || $foreach.value.typeName == \"datetimeV2.set\"",
+              "condition": "=toLower($foreach.value.text) == \"my day\" || $foreach.value.typeName == \"datetimeV2.set\"",
               "actions": [
                 {
                   "$kind": "Microsoft.ContinueLoop",
@@ -130,7 +130,7 @@
               "$designer": {
                 "id": "wUbrlv"
               },
-              "condition": "count($foreach.value.Resolution.values) == 1",
+              "condition": "=count($foreach.value.Resolution.values) == 1",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -298,7 +298,7 @@
               "$designer": {
                 "id": "IQInq1"
               },
-              "condition": "$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime(date($minDate)))",
+              "condition": "=$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime(date($minDate)))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -325,7 +325,7 @@
               "$designer": {
                 "id": "Xv3qc4"
               },
-              "condition": "$foreach.skip != true",
+              "condition": "=$foreach.skip != true",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -353,14 +353,14 @@
           "$designer": {
             "id": "Kxsxdt"
           },
-          "condition": "$choices != null",
+          "condition": "=$choices != null",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "rxH6X0"
               },
-              "condition": "count($choices) == 1",
+              "condition": "=count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
@@ -449,7 +449,7 @@
               "$designer": {
                 "id": "4nSPCc"
               },
-              "condition": "$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime($minDate))",
+              "condition": "=$minDate != null && ticks(formatDateTime($foreach.value.value)) < ticks(formatDateTime($minDate))",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -476,7 +476,7 @@
               "$designer": {
                 "id": "bYsQ7q"
               },
-              "condition": "$foreach.skip != true",
+              "condition": "=$foreach.skip != true",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -504,14 +504,14 @@
           "$designer": {
             "id": "OqJa6A"
           },
-          "condition": "$choices != null",
+          "condition": "=$choices != null",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "QhjFD1"
               },
-              "condition": "count($choices) == 1",
+              "condition": "=count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
