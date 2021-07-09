@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\packages\Telephony\Microsoft.Bot.Components.Telephony.csproj" />
+    <ProjectReference Include="..\..\..\..\packages\Telephony\Microsoft.Bot.Components.Telephony.csproj" />
   </ItemGroup>
 
   <ItemGroup>

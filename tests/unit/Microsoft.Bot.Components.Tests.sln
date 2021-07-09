@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "telephony", "telephony", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony.Tests", "packages\Microsoft.Bot.Components.Telephony.Tests\Microsoft.Bot.Components.Telephony.Tests.csproj", "{485E9D0F-6534-475D-8400-31BFF633EDE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "..\packages\Telephony\Microsoft.Bot.Components.Telephony.csproj", "{BDA3A62A-8762-44EA-A417-5DC01D26AAF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "..\..\packages\Telephony\Microsoft.Bot.Components.Telephony.csproj", "{BDA3A62A-8762-44EA-A417-5DC01D26AAF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +33,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C09226C-3DE0-48BF-BEB7-68F0691908EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94784B33-91CD-4EFE-A1DF-D0FD670A0058}.Release|Any CPU.ActiveCfg = Release|Any CPU
