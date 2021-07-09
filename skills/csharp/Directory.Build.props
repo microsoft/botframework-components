@@ -24,7 +24,7 @@
 
   <PropertyGroup>
     <RepositoryUrl>https://github.com/microsoft/botframework-skills</RepositoryUrl>
-    <LicenseUrl>https://github.com/microsoft/botframework-skills/blob/master/LICENSE</LicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <NoWarn>$(NoWarn);NU5125;NU1701;8002</NoWarn>

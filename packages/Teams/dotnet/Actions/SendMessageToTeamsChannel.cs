@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading;
@@ -119,19 +120,51 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 teamsChannelId = dc.Context.Activity.TeamsGetChannelId();
             }
 
-            // Retrieve the bot appid from TurnState's ClaimsIdentity
-            string appId; 
-            if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
+            Tuple<ConversationReference, string> result;
+
+            // Check for legacy adapter
+            if (dc.Context.Adapter is BotFrameworkAdapter)
             {
-                appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
+                // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
+                var credentials = dc.Context.TurnState.Get<IConnectorClient>()?.Credentials as MicrosoftAppCredentials;
+                if (credentials == null)
+                {
+                    throw new InvalidOperationException($"Missing credentials as {nameof(MicrosoftAppCredentials)} in {nameof(IConnectorClient)} from TurnState");
+                }
+
+                // The result comes back as a tuple, which is used to set the two properties (if present).
+                result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
+            } 
+            else if (dc.Context.Adapter is CloudAdapterBase)
+            {
+                // Retrieve the bot appid from TurnState's ClaimsIdentity
+                string appId;
+                if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
+                {
+                    // Apparently 'version' is sometimes empty, which will result in no id returned from GetAppIdFromClaims
+                    appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
+                    if (string.IsNullOrEmpty(appId))
+                    {
+                        appId = botIdentity.Claims.FirstOrDefault(claim => claim.Type == AuthenticationConstants.AudienceClaim)?.Value;
+                    }
+
+                    if (string.IsNullOrEmpty(appId))
+                    {
+                        throw new InvalidOperationException($"Missing AppIdClaim in ClaimsIdentity.");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Missing {BotAdapter.BotIdentityKey} in {nameof(ITurnContext)} TurnState.");
+                }
+
+                // The result comes back as a tuple, which is used to set the two properties (if present).
+                result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, appId, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                throw new InvalidOperationException($"Missing {BotAdapter.BotIdentityKey} in {nameof(ITurnContext)} TurnState");
+                throw new InvalidOperationException($"The adapter does not support {nameof(SendMessageToTeamsChannel)}.");
             }
-
-            // The result comes back as a tuple, which is used to set the two properties (if present).
-            var result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, appId, cancellationToken: cancellationToken).ConfigureAwait(false);
 
             if (ConversationReferenceProperty != null)
             {

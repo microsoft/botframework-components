@@ -2,18 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Microsoft.Bot.Components.HelpAndCancel</id>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <copyright>© Microsoft Corporation. All rights reserved.</copyright>
-        <licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
+        <license type="expression">MIT</license>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <projectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/HelpAndCancel</projectUrl>
         <releaseNotes>First version of HelpAndCancel package</releaseNotes>
         <description>Contains Adaptive Dialog assets to support Help and Cancel conversational flows in a bot built on the Azure Bot Framework.</description>
         <tags>msbot-component msbot-content conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.14.0-rc0" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.14.0" />
         </dependencies>
     </metadata>
 
