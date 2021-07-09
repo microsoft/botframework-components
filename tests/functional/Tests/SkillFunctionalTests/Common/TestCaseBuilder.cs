@@ -9,7 +9,7 @@ namespace SkillFunctionalTests.Common
 {
     public class TestCaseBuilder
     {
-        public IEnumerable<object[]> BuildTestCases(List<string> channelIds, List<string> deliveryModes, List<HostBot> hostBots, List<string> targetSkills, List<string> scripts, Func<TestCase, bool> shouldExclude = null)
+        public IEnumerable<object[]> BuildTestCases(List<string> channelIds, List<string> deliveryModes, List<HostBot> hostBots, List<string> scripts, Func<TestCase, bool> shouldExclude = null)
         {
             var testCases = new List<object[]>();
             var count = 1;
@@ -21,23 +21,19 @@ namespace SkillFunctionalTests.Common
                     {
                         foreach (var hostBot in hostBots)
                         {
-                            foreach (var targetSkill in targetSkills)
+                            var testCase = new TestCase
                             {
-                                var testCase = new TestCase
-                                {
-                                    Description = $"{script}, {hostBot}, {targetSkill}, {channelId}, {deliveryMode}",
-                                    ChannelId = channelId,
-                                    DeliveryMode = deliveryMode,
-                                    HostBot = hostBot,
-                                    TargetSkill = targetSkill,
-                                    Script = script
-                                };
+                                Description = $"{script}, {hostBot}, {channelId}, {deliveryMode}",
+                                ChannelId = channelId,
+                                DeliveryMode = deliveryMode,
+                                HostBot = hostBot,
+                                Script = script
+                            };
 
-                                if (!ExcludeTestCase(shouldExclude, testCase))
-                                {
-                                    testCases.Add(new object[] { new TestCaseDataObject(testCase) });
-                                    count++;
-                                }
+                            if (!ExcludeTestCase(shouldExclude, testCase))
+                            {
+                                testCases.Add(new object[] { new TestCaseDataObject(testCase) });
+                                count++;
                             }
                         }
                     }

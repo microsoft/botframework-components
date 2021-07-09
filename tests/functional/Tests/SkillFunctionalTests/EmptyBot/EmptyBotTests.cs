@@ -29,10 +29,9 @@ namespace SkillFunctionalTests.EmptyBot
         public static IEnumerable<object[]> TestCases()
         {
             var channelIds = new List<string> { Channels.Directline };
-            var deliverModes = new List<string>
+            var deliveryModes = new List<string>
             {
-                DeliveryModes.Normal,
-                DeliveryModes.ExpectReplies
+                DeliveryModes.Normal
             };
 
             var hostBots = new List<HostBot>
@@ -41,37 +40,11 @@ namespace SkillFunctionalTests.EmptyBot
                 HostBot.EmptyBotJSWebApp
             };
 
-            var targetSkills = new List<string>
-            {
-                SkillBotNames.EchoSkillBotComposerDotNet,
-                SkillBotNames.EchoSkillBotDotNet,
-                SkillBotNames.EchoSkillBotDotNet21,
-                SkillBotNames.EchoSkillBotDotNetV3,
-                SkillBotNames.EchoSkillBotJS,
-                SkillBotNames.EchoSkillBotJSV3,
-                SkillBotNames.EchoSkillBotPython
-            };
-
             var scripts = new List<string> { "EmptyBot.json" };
 
             var testCaseBuilder = new TestCaseBuilder();
 
-            // This local function is used to exclude ExpectReplies test cases for v3 bots
-            static bool ShouldExclude(TestCase testCase)
-            {
-                if (testCase.DeliveryMode == DeliveryModes.ExpectReplies)
-                {
-                    // Note: ExpectReplies is not supported by DotNetV3 and JSV3 skills.
-                    if (testCase.TargetSkill == SkillBotNames.EchoSkillBotDotNetV3 || testCase.TargetSkill == SkillBotNames.EchoSkillBotJSV3)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            var testCases = testCaseBuilder.BuildTestCases(channelIds, deliverModes, hostBots, targetSkills, scripts, ShouldExclude);
+            var testCases = testCaseBuilder.BuildTestCases(channelIds, deliveryModes, hostBots, scripts);
             foreach (var testCase in testCases)
             {
                 yield return testCase;
@@ -91,8 +64,7 @@ namespace SkillFunctionalTests.EmptyBot
 
             var testParams = new Dictionary<string, string>
             {
-                { "DeliveryMode", testCase.DeliveryMode },
-                { "TargetSkill", testCase.TargetSkill }
+                { "DeliveryMode", testCase.DeliveryMode }
             };
 
             await runner.RunTestAsync(Path.Combine(_testScriptsFolder, testCase.Script), testParams);

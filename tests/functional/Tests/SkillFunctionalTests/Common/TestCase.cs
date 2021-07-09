@@ -16,8 +16,6 @@ namespace SkillFunctionalTests.Common
 
         public HostBot HostBot { get; set; }
 
-        public string TargetSkill { get; set; }
-
         public string Script { get; set; }
     }
 }
