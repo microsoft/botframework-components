@@ -13,7 +13,7 @@
         "from.role == 'bot'",
         "recipient.role == 'user'",
         "text == 'Welcome to your bot.'",
-        "speak == '<speak version=\\'1.0\\' xmlns=\\'http://www.w3.org/2001/10/synthesis\\' xml:lang=\\'en-us\\'><voice name=\\'en-US-AriaNeural\\'>Welcome to your bot.</voice></speak>'"
+        "speak == 'Welcome to your bot.'"
       ]
     },
     {
@@ -42,7 +42,7 @@
         "from.role == 'bot'",
         "recipient.role == 'user'",
         "text == 'Sorry, I didn\\'t get that.'",
-        "speak == '<speak version=\\'1.0\\' xmlns=\\'http://www.w3.org/2001/10/synthesis\\' xml:lang=\\'en-us\\'><voice name=\\'en-US-AriaNeural\\'>Sorry, I didn\\'t get that.</voice></speak>'"
+        "speak == 'Sorry, I didn\\'t get that.'"
       ]
     },
     {
