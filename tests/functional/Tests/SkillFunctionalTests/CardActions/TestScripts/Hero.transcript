@@ -1,0 +1,173 @@
+[
+  {
+    "channelData": {
+      "clientActivityID": "1611839251501nwivvhmw61i",
+      "clientTimestamp": "2021-01-28T13:07:31.501Z"
+    },
+    "text": "Hero",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "f748dcdb-2d9b-4540-a2dc-341070aaf910",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:07:31.554Z",
+    "conversation": {
+      "id": "bd2d1200-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "c7be7420-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:07:31-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "bd2d1200-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "f748dcdb-2d9b-4540-a2dc-341070aaf910",
+      "role": "user"
+    },
+    "attachmentLayout": "list",
+    "locale": "",
+    "inputHint": "acceptingInput",
+    "attachments": [
+      {
+        "contentType": "application/vnd.microsoft.card.hero",
+        "content": {
+          "title": "BotFramework Hero Card",
+          "subtitle": "Microsoft Bot Framework",
+          "text": "Build and connect intelligent bots to interact with your users naturally wherever they are, from text/sms to Skype, Slack, Office 365 mail and other popular services.",
+          "images": [
+            {
+              "url": "https://sec.ch9.ms/ch9/7ff5/e07cfef0-aa3b-40bb-9baa-7c9ef8ff7ff5/buildreactionbotframework_960.jpg"
+            }
+          ],
+          "buttons": [
+            {
+              "type": "openUrl",
+              "title": "Get Started",
+              "value": "https://docs.microsoft.com/bot-framework"
+            }
+          ]
+        }
+      }
+    ],
+    "entities": [],
+    "replyToId": "c7be7420-6169-11eb-b46e-c3c3213a748e",
+    "id": "c87519f0-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:07:32-03:00",
+    "timestamp": "2021-01-28T13:07:32.750Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "bd2d1200-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "f748dcdb-2d9b-4540-a2dc-341070aaf910",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What card do you want?\n\n   1. AdaptiveCardBotAction\n   2. AdaptiveCardTaskModule\n   3. AdaptiveCardSumbitAction\n   4. Hero\n   5. Thumbnail\n   6. Receipt\n   7. Signin\n   8. Carousel\n   9. List\n   10. O365\n   11. TeamsFileConsent\n   12. Animation\n   13. Audio\n   14. Video\n   15. End",
+    "speak": "What card do you want?",
+    "inputHint": "expectingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "c7be7420-6169-11eb-b46e-c3c3213a748e",
+    "id": "c8e67960-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:07:33-03:00",
+    "timestamp": "2021-01-28T13:07:33.494Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1611839255359ffrgmvahfew",
+      "clientTimestamp": "2021-01-28T13:07:35.359Z"
+    },
+    "text": "end",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "f748dcdb-2d9b-4540-a2dc-341070aaf910",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:07:35.435Z",
+    "conversation": {
+      "id": "bd2d1200-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "ca0ea5b0-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:07:35-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "bd2d1200-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "f748dcdb-2d9b-4540-a2dc-341070aaf910",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "speak": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "ca0ea5b0-6169-11eb-b46e-c3c3213a748e",
+    "id": "cab03ce0-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:07:36-03:00",
+    "timestamp": "2021-01-28T13:07:36.494Z"
+  }
+]

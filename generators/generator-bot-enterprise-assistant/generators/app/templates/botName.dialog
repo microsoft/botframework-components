@@ -140,6 +140,13 @@
           "activity": "${SendActivity_bGYBta()}"
         },
         {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "JoL99F"
+          },
+          "property": "conversation.activeSkill"
+        },
+        {
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
             "id": "5BAUTN"
@@ -184,7 +191,7 @@
           "$designer": {
             "id": "uCZ5AG"
           },
-          "condition": "=count(dialog.candidates)",
+          "condition": "=string(count(dialog.candidates))",
           "cases": [
             {
               "value": "0",
@@ -496,7 +503,7 @@
           "eventValue": "Calendar"
         }
       ],
-      "condition": "=turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8 && conversation.activeSkill != 'Calendar'"
     },
     {
       "$kind": "Microsoft.OnIntent",
@@ -522,7 +529,7 @@
           "eventValue": "People"
         }
       ],
-      "condition": "=turn.recognized.score > 0.8"
+      "condition": "=turn.recognized.score > 0.8 && conversation.activeSkill != 'People'"
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
@@ -558,6 +565,14 @@
               "value": "Calendar",
               "actions": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "Fvjb09"
+                  },
+                  "property": "conversation.activeSkill",
+                  "value": "Calendar"
+                },
+                {
                   "$kind": "Microsoft.BeginSkill",
                   "$designer": {
                     "id": "lnBCke"
@@ -577,6 +592,14 @@
               "value": "People",
               "actions": [
                 {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cx0OI0"
+                  },
+                  "property": "conversation.activeSkill",
+                  "value": "People"
+                },
+                {
                   "$kind": "Microsoft.BeginSkill",
                   "$designer": {
                     "id": "1Hw4uy"
@@ -593,6 +616,13 @@
               ]
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.DeleteProperty",
+          "$designer": {
+            "id": "2rIt4u"
+          },
+          "property": "conversation.activeSkill"
         },
         {
           "$kind": "Microsoft.IfCondition",

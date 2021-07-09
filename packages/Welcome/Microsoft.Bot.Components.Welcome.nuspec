@@ -2,18 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Microsoft.Bot.Components.Welcome</id>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <copyright>© Microsoft Corporation. All rights reserved.</copyright>
-        <licenseUrl>https://github.com/Microsoft/BotBuilder/blob/master/LICENSE</licenseUrl>
+        <license type="expression">MIT</license>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <projectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Welcome</projectUrl>
         <releaseNotes>First version of welcome package</releaseNotes>
         <description>An Adaptive Dialog for greeting new and returning users on first interaction with your bot built on the Azure Bot Framework.</description>
         <tags>msbot-component msbot-content conversationalcore welcome preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.13.1" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.14.0" />
         </dependencies>
     </metadata>
 

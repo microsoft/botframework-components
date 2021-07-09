@@ -1,0 +1,480 @@
+[
+  {
+    "type": "conversationUpdate",
+    "membersAdded": [
+      {
+        "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+        "name": "Bot"
+      },
+      {
+        "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+        "name": "User"
+      }
+    ],
+    "membersRemoved": [],
+    "channelId": "emulator",
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "id": "67d08fd0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:48-03:00",
+    "recipient": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "timestamp": "2021-01-05T13:17:48.237Z",
+    "from": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "serviceUrl": "https://60ecb8345374.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Hello and welcome!",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "67d08fd0-4f58-11eb-80df-41840e87027c",
+    "id": "68722700-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:49-03:00",
+    "timestamp": "2021-01-05T13:17:49.296Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What delivery mode would you like to use?",
+    "speak": "What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "67d08fd0-4f58-11eb-80df-41840e87027c",
+    "id": "689ae4b0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:49-03:00",
+    "timestamp": "2021-01-05T13:17:49.563Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1609852670737zdf39h87ze9",
+      "clientTimestamp": "2021-01-05T13:17:50.737Z"
+    },
+    "text": "expectReplies",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-05T13:17:50.760Z",
+    "entities": [
+      {
+        "requiresBotState": true,
+        "supportsListening": true,
+        "supportsTts": true,
+        "type": "ClientCapabilities"
+      }
+    ],
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "id": "69518a80-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:50-03:00",
+    "recipient": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://60ecb8345374.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What skill would you like to call?",
+    "speak": "What skill would you like to call?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "EchoSkillBotDotNet",
+          "value": "EchoSkillBotDotNet"
+        },
+        {
+          "type": "imBack",
+          "title": "EchoSkillBotDotNet21",
+          "value": "EchoSkillBotDotNet21"
+        },
+		{
+          "type": "imBack",
+          "title": "EchoSkillBotDotNetV3",
+          "value": "EchoSkillBotDotNetV3"
+        },
+        {
+          "type": "imBack",
+          "title": "EchoSkillBotJS",
+          "value": "EchoSkillBotJS"
+        },
+		{
+          "type": "imBack",
+          "title": "EchoSkillBotJSV3",
+          "value": "EchoSkillBotJSV3"
+        },
+		{
+          "type": "imBack",
+          "title": "EchoSkillBotPython",
+          "value": "EchoSkillBotPython"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "69518a80-4f58-11eb-80df-41840e87027c",
+    "id": "69f93c30-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:51-03:00",
+    "timestamp": "2021-01-05T13:17:51.859Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "16098526780751zl7loernbj",
+      "clientTimestamp": "2021-01-05T13:17:58.075Z"
+    },
+    "text": "EchoSkillBotDotNet",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-05T13:17:58.102Z",
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "id": "6db1d760-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:58-03:00",
+    "recipient": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://60ecb8345374.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Type anything to send to the skill.",
+    "inputHint": "expectingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "6db1d760-4f58-11eb-80df-41840e87027c",
+    "id": "6e4ae310-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:17:59-03:00",
+    "timestamp": "2021-01-05T13:17:59.105Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1609852686824zhcy1hqt9dd",
+      "clientTimestamp": "2021-01-05T13:18:06.824Z"
+    },
+    "text": "Hello",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-05T13:18:06.848Z",
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "id": "72e86000-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:06-03:00",
+    "recipient": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://60ecb8345374.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Echo: Hello",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "72e86000-4f58-11eb-80df-41840e87027c",
+    "id": "740cbbc0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:08-03:00",
+    "timestamp": "2021-01-05T13:18:08.764Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Say \"end\" or \"stop\" and I'll end the conversation and back to the parent.",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "72e86000-4f58-11eb-80df-41840e87027c",
+    "id": "74411230-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:09-03:00",
+    "timestamp": "2021-01-05T13:18:09.107Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "16098526945962f14ibp83pt",
+      "clientTimestamp": "2021-01-05T13:18:14.596Z"
+    },
+    "text": "end",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-05T13:18:14.627Z",
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "id": "778b5b30-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:14-03:00",
+    "recipient": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://60ecb8345374.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Ending conversation from the skill...",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "778b5b30-4f58-11eb-80df-41840e87027c",
+    "id": "7839c3a0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:15-03:00",
+    "timestamp": "2021-01-05T13:18:15.770Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Received endOfConversation.\n\nCode: completedSuccessfully",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "778b5b30-4f58-11eb-80df-41840e87027c",
+    "id": "78684db0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:16-03:00",
+    "timestamp": "2021-01-05T13:18:16.075Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Back in the host bot.",
+    "inputHint": "acceptingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "778b5b30-4f58-11eb-80df-41840e87027c",
+    "id": "7898faa0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:16-03:00",
+    "timestamp": "2021-01-05T13:18:16.394Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://60ecb8345374.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "56b5e650-4f58-11eb-aad9-1dbdd1591611",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "67c4f710-4f58-11eb-aad9-1dbdd1591611|livechat"
+    },
+    "recipient": {
+      "id": "c13a9ba2-8ba2-4364-85eb-5dd06d9c9331",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What delivery mode would you like to use?",
+    "speak": "What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "778b5b30-4f58-11eb-80df-41840e87027c",
+    "id": "78c317e0-4f58-11eb-80df-41840e87027c",
+    "localTimestamp": "2021-01-05T10:18:16-03:00",
+    "timestamp": "2021-01-05T13:18:16.670Z"
+  }
+]

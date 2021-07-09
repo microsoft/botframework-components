@@ -1,0 +1,64 @@
+parameters:  
+  - name: packages
+    displayName: Dependency Packages
+    type: object
+
+  - name: project
+    displayName: Project
+    type: object
+
+  - name: registry
+    displayName: Registry source
+    type: string
+
+  - name: solutiondir
+    displayName: Solution directory
+    type: string  
+
+  - name: version
+    displayName: Version number
+    type: string
+
+steps:
+  - task: PowerShell@2
+    displayName: 'Install dependencies for ${{ parameters.project.name }}'
+    inputs:
+      targetType: inline
+      workingDirectory: '${{ parameters.solutiondir }}'
+      failOnStderr: true
+      script: |
+        $version = ""
+        $source = ""
+
+        if (-not ([string]::IsNullOrEmpty("${{ parameters.version }}"))) {
+          $version = "--version ${{ parameters.version }}"
+        }
+
+        if (-not ([string]::IsNullOrEmpty("${{ parameters.registry }}"))) {
+          $source = "--source ${{ parameters.registry }}"
+        }
+
+        foreach ($package in "${{ parameters.packages }}".Split()) {
+          if ($package -eq "Microsoft.Bot.Builder.Dialogs.Debugging") {
+            $versionAux = $version
+            if ($version -Match "rc") {
+              $version = "$version.preview"
+            } elseif ($version -Match "daily") {
+              $version = $version.replace("daily", "daily.preview")
+            } else {
+              $version = "$version-preview"
+            }
+          }
+
+          Invoke-Expression "dotnet add ""./${{ parameters.project.name }}.csproj"" package $version $source $package"
+
+          if (-not ([string]::IsNullOrEmpty("$versionAux"))) {
+            $version = $versionAux
+            $versionAux = ""
+          }
+        }
+
+        write-host " `nPackages:"
+        foreach ($package in "${{ parameters.packages }}".Split()) {
+          write-host "  - $package"
+        }

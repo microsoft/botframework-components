@@ -1,0 +1,178 @@
+[
+  {
+    "channelData": {
+      "clientActivityID": "16118391929936yytoz4eh0g",
+      "clientTimestamp": "2021-01-28T13:06:32.993Z"
+    },
+    "text": "AdaptiveCardTaskModule",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "8402a6ae-fe88-4f1b-91cf-6026ed39d32a",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:06:33.044Z",
+    "conversation": {
+      "id": "9a706690-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "a4de8940-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:06:33-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "9a706690-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "8402a6ae-fe88-4f1b-91cf-6026ed39d32a",
+      "role": "user"
+    },
+    "attachmentLayout": "list",
+    "locale": "",
+    "inputHint": "acceptingInput",
+    "attachments": [
+      {
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": {
+          "type": "AdaptiveCard",
+          "version": "1.2",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Task Module Adaptive Card"
+            }
+          ],
+          "actions": [
+            {
+              "type": "Action.Submit",
+              "data": {
+                "msteams": {
+                  "type": "invoke",
+                  "value": "{\r\n  \"hiddenKey\": \"hidden value from task module launcher\",\r\n  \"type\": \"task/fetch\"\r\n}"
+                }
+              },
+              "title": "Launch Task Module"
+            }
+          ]
+        }
+      }
+    ],
+    "entities": [],
+    "replyToId": "a4de8940-6169-11eb-b46e-c3c3213a748e",
+    "id": "a5a115f0-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:06:34-03:00",
+    "timestamp": "2021-01-28T13:06:34.319Z"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "9a706690-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "8402a6ae-fe88-4f1b-91cf-6026ed39d32a",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "What card do you want?\n\n   1. AdaptiveCardBotAction\n   2. AdaptiveCardTaskModule\n   3. AdaptiveCardSumbitAction\n   4. Hero\n   5. Thumbnail\n   6. Receipt\n   7. Signin\n   8. Carousel\n   9. List\n   10. O365\n   11. TeamsFileConsent\n   12. Animation\n   13. Audio\n   14. Video\n   15. End",
+    "speak": "What card do you want?",
+    "inputHint": "expectingInput",
+    "attachments": [],
+    "entities": [],
+    "replyToId": "a4de8940-6169-11eb-b46e-c3c3213a748e",
+    "id": "a5cd07f0-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:06:34-03:00",
+    "timestamp": "2021-01-28T13:06:34.607Z"
+  },
+  {
+    "channelData": {
+      "clientActivityID": "1611839197644k7d79gt7vgr",
+      "clientTimestamp": "2021-01-28T13:06:37.644Z"
+    },
+    "text": "end",
+    "textFormat": "plain",
+    "type": "message",
+    "channelId": "emulator",
+    "from": {
+      "id": "8402a6ae-fe88-4f1b-91cf-6026ed39d32a",
+      "name": "User",
+      "role": "user"
+    },
+    "locale": "",
+    "timestamp": "2021-01-28T13:06:37.717Z",
+    "conversation": {
+      "id": "9a706690-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "id": "a7a79450-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:06:37-03:00",
+    "recipient": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io"
+  },
+  {
+    "type": "message",
+    "serviceUrl": "https://9ed82cccfc76.ngrok.io",
+    "channelId": "emulator",
+    "from": {
+      "id": "48224d50-60a5-11eb-881a-afe376da3863",
+      "name": "Bot",
+      "role": "bot"
+    },
+    "conversation": {
+      "id": "9a706690-6169-11eb-881a-afe376da3863|livechat"
+    },
+    "recipient": {
+      "id": "8402a6ae-fe88-4f1b-91cf-6026ed39d32a",
+      "role": "user"
+    },
+    "locale": "",
+    "text": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "speak": "Done with \"WaterfallSkillBotDotNet\". \n\n What delivery mode would you like to use?",
+    "inputHint": "expectingInput",
+    "suggestedActions": {
+      "actions": [
+        {
+          "type": "imBack",
+          "title": "normal",
+          "value": "normal"
+        },
+        {
+          "type": "imBack",
+          "title": "expectReplies",
+          "value": "expectReplies"
+        }
+      ]
+    },
+    "attachments": [],
+    "entities": [],
+    "replyToId": "a7a79450-6169-11eb-b46e-c3c3213a748e",
+    "id": "a84e0d80-6169-11eb-b46e-c3c3213a748e",
+    "localTimestamp": "2021-01-28T10:06:38-03:00",
+    "timestamp": "2021-01-28T13:06:38.808Z"
+  }
+]

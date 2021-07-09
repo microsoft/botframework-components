@@ -9,6 +9,7 @@ stages:
         displayName: Build Node project
         steps:
         - template: npm-build-steps.yml
+        - template: npm-test-steps.yml
 
   - stage: stage_package_node
     displayName: 'Node: Build, Version & Pack'
@@ -18,6 +19,7 @@ stages:
         displayName: 'Build & Pack Node project'
         steps:
         - template: npm-build-steps.yml
+        - template: npm-test-steps.yml
         - template: npm-versioning-steps.yml
         - template: npm-package-steps.yml
 

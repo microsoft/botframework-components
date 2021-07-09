@@ -1,0 +1,15 @@
+{
+  "name": "botframework-functional-tests",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "Bots/JavaScript/*/*/*"
+    ]
+  },
+  "devDependencies": {
+    "semistandard": "^16.0.0"
+  },
+  "scripts": {
+    "lint": "semistandard"
+  }
+}
