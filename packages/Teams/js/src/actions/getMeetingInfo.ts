@@ -19,8 +19,7 @@ import {
 } from 'botbuilder-dialogs';
 import { getValue } from './actionHelpers';
 
-export interface GetMeetingInfoConfiguration
-  extends DialogConfiguration {
+export interface GetMeetingInfoConfiguration extends DialogConfiguration {
   disabled?: boolean | string | BoolExpression;
   property?: string | Expression | StringExpression;
   meetingId?: string | Expression | StringExpression;
@@ -97,10 +96,7 @@ export class GetMeetingInfo
 
     const meetingId = getValue(dc, this.meetingId);
 
-    const result = await TeamsInfo.getMeetingInfo(
-      dc.context,
-      meetingId
-    );
+    const result = await TeamsInfo.getMeetingInfo(dc.context, meetingId);
 
     if (this.property != null) {
       dc.state.setValue(this.property.getValue(dc.state), result);
