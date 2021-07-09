@@ -1,4 +1,4 @@
-# @microsoft/generator-bot-enterprise-calendar [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-enterprise-calendar [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-calendar)
 
 This bot project was created using the [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot) template. You **must complete the configuration steps outlined below for your bot to function.**
 
@@ -24,7 +24,7 @@ The Enterprise Calendar Bot uses packages to extend its capabilities. [Learn mor
     - Contacts.Read
     - People.Read
     - User.ReadBasic.All
-- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
+- [Azure Language Understanding (LUIS)](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis), or another recognizer of your choice
 
 ### Supported languages
 
@@ -33,7 +33,3 @@ The Enterprise Calendar Bot uses packages to extend its capabilities. [Learn mor
 ### License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
-
-[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-calendar.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-calendar
