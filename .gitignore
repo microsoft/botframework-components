@@ -384,6 +384,9 @@ experimental/generator-dotnet-yeoman/node_modules
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
 
+# Allow the packages directory under tests
+!/tests/unit/[Pp]ackages/*
+
 # Ignore correct yarn files (no zero install support)
 .yarn/*
 !.yarn/patches

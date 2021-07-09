@@ -26,7 +26,7 @@ namespace Microsoft.Bot.Components.Teams.Tests
             ComponentRegistration.Add(new DeclarativeComponentRegistrationBridge<TeamsBotComponent>());
 
             ResourceExplorer = new ResourceExplorer()
-                .AddFolder(Path.Combine(TestUtils.GetProjectPath(), "Tests", nameof(ConditionalTests)), monitorChanges: false);
+                .AddFolder(Path.Combine(TestUtils.GetProjectPath(), "..", "Shared Tests", nameof(ConditionalTests)), monitorChanges: false);
         }
 
         public static ResourceExplorer ResourceExplorer { get; set; }

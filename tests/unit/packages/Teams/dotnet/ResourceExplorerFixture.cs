@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Components.Teams.Tests
         {
             if (_folderPath.Length == 0)
             {
-                _folderPath = Path.Combine(TestUtils.GetProjectPath(), "Tests", resourceFolder);
+                _folderPath = Path.Combine(TestUtils.GetProjectPath(), "..", "Shared Tests", resourceFolder);
                 ResourceExplorer = ResourceExplorer.AddFolder(_folderPath, monitorChanges: false);
             }
 
