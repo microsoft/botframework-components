@@ -12,7 +12,6 @@
         "type == 'message'",
         "from.role == 'bot'",
         "recipient.role == 'user'",
-        "locale == 'en-us'",
         "text == 'Welcome to your bot.'",
         "speak == '<speak version=\\'1.0\\' xmlns=\\'http://www.w3.org/2001/10/synthesis\\' xml:lang=\\'en-us\\'><voice name=\\'en-US-AriaNeural\\'>Welcome to your bot.</voice></speak>'"
       ]
@@ -24,7 +23,6 @@
         "type == 'trace'",
         "from.role == 'bot'",
         "recipient.role == 'user'",
-        "locale == 'en-us'",
         "label == 'Bot State'",
         "valueType == 'https://www.botframework.com/schemas/botState'",
         "name == 'BotState'"
@@ -43,7 +41,6 @@
         "type == 'message'",
         "from.role == 'bot'",
         "recipient.role == 'user'",
-        "locale == 'en-us'",
         "text == 'Sorry, I didn\\'t get that.'",
         "speak == '<speak version=\\'1.0\\' xmlns=\\'http://www.w3.org/2001/10/synthesis\\' xml:lang=\\'en-us\\'><voice name=\\'en-US-AriaNeural\\'>Sorry, I didn\\'t get that.</voice></speak>'"
       ]
@@ -55,7 +52,6 @@
         "type == 'trace'",
         "from.role == 'bot'",
         "recipient.role == 'user'",
-        "locale == 'en-us'",
         "label == 'Bot State'",
         "valueType == 'https://www.botframework.com/schemas/botState'",
         "name == 'BotState'"
