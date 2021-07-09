@@ -38,9 +38,7 @@ namespace SkillFunctionalTests.SingleTurn
             var hostBots = new List<HostBot>
             {
                 HostBot.EmptyBotDotNetWebApp,
-                HostBot.EmptyBotDotNetFunctions,
-                HostBot.EmptyBotJSWebApp,
-                HostBot.EmptyBotJSFunctions
+                HostBot.EmptyBotJSWebApp
             };
 
             var targetSkills = new List<string>
@@ -54,7 +52,7 @@ namespace SkillFunctionalTests.SingleTurn
                 SkillBotNames.EchoSkillBotPython
             };
 
-            var scripts = new List<string> { "EchoMultiSkill.json" };
+            var scripts = new List<string> { "EmptyBot.json" };
 
             var testCaseBuilder = new TestCaseBuilder();
 

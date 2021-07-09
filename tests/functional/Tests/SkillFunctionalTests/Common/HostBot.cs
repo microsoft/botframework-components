@@ -11,18 +11,8 @@ namespace SkillFunctionalTests.Common
         EmptyBotDotNetWebApp,
 
         /// <summary>
-        /// Empty bot implemented using DotNet and Functions.
-        /// </summary>
-        EmptyBotDotNetFunctions,
-
-        /// <summary>
         /// Empty bot implemented using JS and Web App.
         /// </summary>
-        EmptyBotJSWebApp,
-
-        /// <summary>
-        /// Empty bot implemented using JS and Functions.
-        /// </summary>
-        EmptyBotJSFunctions
+        EmptyBotJSWebApp
     }
 }
