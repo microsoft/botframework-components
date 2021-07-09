@@ -4,17 +4,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using ComponentsFunctionalTests.Common;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SkillFunctionalTests.Common;
 using TranscriptTestRunner;
 using TranscriptTestRunner.XUnit;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace SkillFunctionalTests.EmptyBot
+namespace ComponentsFunctionalTests.EmptyBot
 {
     [Trait("TestCategory", "EmptyBot")]
     public class EmptyBotTests : ScriptTestBase

@@ -24,12 +24,12 @@ steps:
 - task: NuGetCommand@2
   displayName: "NuGet restore"
   inputs:
-    restoreSolution: SkillFunctionalTests.sln
+    restoreSolution: ComponentsFunctionalTests.sln
 
 - task: MSBuild@1
   displayName: "Build"
   inputs:
-    solution: "SkillFunctionalTests.sln"
+    solution: "ComponentsFunctionalTests.sln"
     vsVersion: 16.0
     platform: "${{ parameters.buildPlatform }}"
     configuration: "${{ parameters.buildConfiguration }}"

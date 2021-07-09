@@ -443,7 +443,7 @@ steps:
 
         # Configure steps.
         Write-Host $(AddTimeStamp -text "Configuring the Test Project.");
-        ConfigureTestProjectAppSettings -bots $consumersToConfigure -appSettingsPath "tests/functional/Tests/SkillFunctionalTests/appsettings.json";
+        ConfigureTestProjectAppSettings -bots $consumersToConfigure -appSettingsPath "tests/functional/Tests/ComponentsFunctionalTests/appsettings.json";
 
         Write-Host $(AddTimeStamp -text "Configuring the Consumer bots App Settings in Azure.");
         ConfigureConsumers -consumers $consumersToConfigure

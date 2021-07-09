@@ -4,7 +4,7 @@
 using Microsoft.Bot.Connector;
 using TranscriptTestRunner;
 
-namespace SkillFunctionalTests.Common
+namespace ComponentsFunctionalTests.Common
 {
     public class TestCase
     {
