@@ -11,7 +11,5 @@ steps:
 
 - script: |
     yarn exec npm run --if-present build
-  displayName: 'Run build if it exists'
+  displayName: 'Run `yarn build` if it exists'
   workingDirectory: '$(WorkingDirectory)'
-
-- template: debug-workspace-steps.yml
