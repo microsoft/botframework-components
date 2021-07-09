@@ -14,14 +14,14 @@ using TranscriptTestRunner.XUnit;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace SkillFunctionalTests.SingleTurn
+namespace SkillFunctionalTests.EmptyBot
 {
-    [Trait("TestCategory", "SingleTurn")]
-    public class EchoTests : ScriptTestBase
+    [Trait("TestCategory", "EmptyBot")]
+    public class EmptyBotTests : ScriptTestBase
     {
-        private readonly string _testScriptsFolder = Directory.GetCurrentDirectory() + @"/SingleTurn/TestScripts";
+        private readonly string _testScriptsFolder = Directory.GetCurrentDirectory() + @"/EmptyBot/TestScripts";
 
-        public EchoTests(ITestOutputHelper output)
+        public EmptyBotTests(ITestOutputHelper output)
             : base(output)
         {
         }
