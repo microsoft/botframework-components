@@ -9,6 +9,8 @@ export * from './onTeamsChannelDeleted';
 export * from './onTeamsChannelRenamed';
 export * from './onTeamsChannelRestored';
 export * from './onTeamsFileConsent';
+export * from './onTeamsMeetingStart';
+export * from './onTeamsMeetingEnd';
 export * from './onTeamsMEBotMessagePreviewEdit';
 export * from './onTeamsMEBotMessagePreviewSend';
 export * from './onTeamsMECardButtonClicked';
