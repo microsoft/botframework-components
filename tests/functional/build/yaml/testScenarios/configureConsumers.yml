@@ -4,9 +4,7 @@ parameters:
   type: object
   default:
     EmptyBotDotNetWebApp: ""
-    EmptyBotDotNetFunctions: ""
     EmptyBotJSWebApp: ""
-    EmptyBotJSFunctions: ""
 
 - name: azureSubscription
   displayName: Azure Service Connection
@@ -404,20 +402,8 @@ steps:
             configType    = $types.Appsettings
           }
           @{
-            key           = "EmptyBotDotNetFunctions"
-            botName       = "bfcfnemptybotdotnetfunctions"
-            resourceGroup = $groups.DotNet
-            configType    = $types.Appsettings
-          }
-          @{
             key           = "EmptyBotJSWebApp"
             botName       = "bfcfnemptybotjswebapp"
-            resourceGroup = $groups.JS
-            configType    = $types.Appsettings
-          }
-          @{
-            key           = "EmptyBotJSFunctions"
-            botName       = "bfcfnemptybotjsfunctions"
             resourceGroup = $groups.JS
             configType    = $types.Appsettings
           }
@@ -426,12 +412,10 @@ steps:
         # Bots Test Scenarios
         $scenarios = @(
           @{ 
-            name      = "SingleTurn"; 
+            name      = "EmptyBot"; 
             consumers = @(
               "EmptyBotDotNetWebApp",
-              "EmptyBotDotNetFunctions",
-              "EmptyBotJSWebApp",
-              "EmptyBotJSFunctions"
+              "EmptyBotJSWebApp"
             );
           }
         )
