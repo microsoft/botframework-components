@@ -26,7 +26,7 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.1.0-preview.1",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.1.0-rc0",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },

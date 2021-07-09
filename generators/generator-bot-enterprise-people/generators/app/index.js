@@ -16,7 +16,7 @@ module.exports = class extends BaseGenerator {
           {
             isPlugin: true,
             name: 'Microsoft.Bot.Components.Graph',
-            version: '1.1.0-preview.1',
+            version: '1.1.0-rc0',
           },
         ],
         modifyApplicationSettings: (appSettings) => {
