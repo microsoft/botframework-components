@@ -9,6 +9,7 @@ import {
 } from 'botbuilder-dialogs-adaptive-runtime-core';
 
 import {
+  GetMeetingInfo,
   GetMeetingParticipant,
   GetMember,
   GetPagedMembers,
@@ -40,12 +41,13 @@ import {
   OnTeamsChannelRenamed,
   OnTeamsChannelRestored,
   OnTeamsFileConsent,
+  OnTeamsMeetingStart,
+  OnTeamsMeetingEnd,
   OnTeamsMEBotMessagePreviewEdit,
   OnTeamsMEBotMessagePreviewSend,
   OnTeamsMECardButtonClicked,
   OnTeamsMEConfigQuerySettingUrl,
   OnTeamsMEConfigSetting,
-  OnTeamsMEConfigurationSetting,
   OnTeamsMEFetchTask,
   OnTeamsMEQuery,
   OnTeamsMESelectItem,
@@ -75,6 +77,10 @@ export class AdaptiveTeamsBotComponent extends BotComponent {
           getDeclarativeTypes() {
             return [
               // Actions
+              {
+                kind: GetMeetingInfo.$kind,
+                type: GetMeetingInfo,
+              },
               {
                 kind: GetMeetingParticipant.$kind,
                 type: GetMeetingParticipant,
@@ -153,6 +159,8 @@ export class AdaptiveTeamsBotComponent extends BotComponent {
                 type: OnTeamsChannelRestored,
               },
               { kind: OnTeamsFileConsent.$kind, type: OnTeamsFileConsent },
+              { kind: OnTeamsMeetingStart.$kind, type: OnTeamsMeetingStart },
+              { kind: OnTeamsMeetingEnd.$kind, type: OnTeamsMeetingEnd },
               {
                 kind: OnTeamsMEBotMessagePreviewEdit.$kind,
                 type: OnTeamsMEBotMessagePreviewEdit,
@@ -176,10 +184,6 @@ export class AdaptiveTeamsBotComponent extends BotComponent {
               { kind: OnTeamsMEFetchTask.$kind, type: OnTeamsMEFetchTask },
               { kind: OnTeamsMEQuery.$kind, type: OnTeamsMEQuery },
               { kind: OnTeamsMESelectItem.$kind, type: OnTeamsMESelectItem },
-              {
-                kind: OnTeamsMEConfigurationSetting.$kind,
-                type: OnTeamsMEConfigurationSetting,
-              },
               {
                 kind: OnTeamsMESubmitAction.$kind,
                 type: OnTeamsMESubmitAction,
