@@ -48,7 +48,6 @@ import {
   OnTeamsMECardButtonClicked,
   OnTeamsMEConfigQuerySettingUrl,
   OnTeamsMEConfigSetting,
-  OnTeamsMEConfigurationSetting,
   OnTeamsMEFetchTask,
   OnTeamsMEQuery,
   OnTeamsMESelectItem,
@@ -185,10 +184,6 @@ export class AdaptiveTeamsBotComponent extends BotComponent {
               { kind: OnTeamsMEFetchTask.$kind, type: OnTeamsMEFetchTask },
               { kind: OnTeamsMEQuery.$kind, type: OnTeamsMEQuery },
               { kind: OnTeamsMESelectItem.$kind, type: OnTeamsMESelectItem },
-              {
-                kind: OnTeamsMEConfigurationSetting.$kind,
-                type: OnTeamsMEConfigurationSetting,
-              },
               {
                 kind: OnTeamsMESubmitAction.$kind,
                 type: OnTeamsMESubmitAction,
