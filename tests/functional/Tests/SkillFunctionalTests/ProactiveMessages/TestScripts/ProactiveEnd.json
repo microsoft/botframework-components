@@ -1,0 +1,47 @@
+{
+  "items": [
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Got proactive message for user: ${UserId}",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Got proactive message for user: ${UserId}'",
+        "inputHint == 'acceptingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "We received a proactive message, ending the dialog",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'We received a proactive message, ending the dialog'",
+        "inputHint == 'acceptingInput'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "speak == 'Done with \"${TargetSkill}\". \n\n What delivery mode would you like to use?'",
+        "inputHint == 'expectingInput'",
+        "suggestedActions.actions[0].type == 'imBack'",
+        "suggestedActions.actions[0].title == 'normal'",
+        "suggestedActions.actions[0].value == 'normal'",
+        "suggestedActions.actions[1].type == 'imBack'",
+        "suggestedActions.actions[1].title == 'expectReplies'",
+        "suggestedActions.actions[1].value == 'expectReplies'"
+      ]
+    }
+  ]
+}

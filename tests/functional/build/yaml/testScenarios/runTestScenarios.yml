@@ -1,0 +1,102 @@
+#
+# Executes the test scenarios.
+#
+
+# "name" here defines the build number format. Build number is accessed via $(Build.BuildNumber)
+name: $(BUILD.BUILDID)
+trigger: none
+pr: none
+
+variables:
+  BuildConfiguration: "Debug"
+
+  ## Azure Resources (Define these variables in Azure)
+  # AzureSubscription: Service Connection Name to Manage Azure resources.
+  # ResourceGroup: (optional) Name of the Resource Group where the bots are deployed.
+  # ResourceSuffix: (optional) Suffix to add to the resources' name to avoid collitions.
+
+  ## Bots Configuration (Define these variables in Azure)
+  # BfcfnEchoSkillBotComposerDotNetAppId: (optional) App Id for BfcfnEchoSkillBotComposerDotNet bot.
+  # BfcfnEchoSkillBotDotNet21AppId: (optional) App Id for BfcfnEchoSkillBotDotNet21 bot.
+  # BfcfnEchoSkillBotDotNetAppId: (optional) App Id for BfcfnEchoSkillBotDotNet bot.
+  # BfcfnEchoSkillBotDotNetV3AppId: (optional) App Id for BfcfnEchoSkillBotDotNetV3 bot.
+  # BfcfnEchoSkillBotJSAppId: (optional) App Id for BfcfnEchoSkillBotJS bot.
+  # BfcfnEchoSkillBotJSV3AppId: (optional) App Id for BfcfnEchoSkillBotJSV3 bot.
+  # BfcfnEchoSkillBotPythonAppId: (optional) App Id for BfcfnEchoSkillBotPython bot.
+  # BfcfnWaterfallSkillBotDotNetAppId: (optional) App Id for BfcfnWaterfallSkillBotDotNet bot.
+  # BfcfnWaterfallSkillBotJSAppId: (optional) App Id for BfcfnWaterfallSkillBotJS bot.
+  # BfcfnWaterfallSkillBotPythonAppId: (optional) App Id for BfcfnWaterfallSkillBotPython bot.
+  # DeployBotResourcesGuid: (optional) Deploy Bot Resources pipeline GUID.
+
+  ## Internal variables
+  InternalKeyVaultName: "bfcfnbotkeyvault$(INTERNALRESOURCESUFFIX)"
+  InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUP'], 'bfcfnbots')]
+  InternalResourceSuffix: $[coalesce(variables['RESOURCESUFFIX'], '')]
+
+pool:
+  vmImage: "windows-2019"
+
+stages:
+  - stage: "Download_Variables"
+    displayName: "Download Variables"
+    jobs:
+      - job: "Download_Variables"
+        displayName: "Download Variables"
+        steps:
+          - powershell: |
+              $pipelineGuid = if ([string]::IsNullOrEmpty("$env:DEPLOYBOTRESOURCESGUID")) { "02 - Deploy Bot Resources" } else { "$(DEPLOYBOTRESOURCESGUID)" }
+              Write-Host "Deploy Bot Resources Pipeline GUID: " $pipelineGuid
+              Write-Host "##vso[task.setvariable variable=PipelineGuid]$pipelineGuid"
+            displayName: "Set Deploy Bot Resources GUID"
+
+          - task: DownloadPipelineArtifact@2
+            displayName: "Download Variables artifact"
+            inputs:
+              source: "specific"
+              project: "$(SYSTEM.TEAMPROJECT)"
+              pipeline: "$(PIPELINEGUID)"
+              allowPartiallySucceededBuilds: true
+              allowFailedBuilds: true
+              artifact: "Variables"
+              path: "$(SYSTEM.DEFAULTWORKINGDIRECTORY)/Variables/"
+
+          - powershell: |
+              $deploymentBuildSuffix = (Get-Content -Path "$(SYSTEM.DEFAULTWORKINGDIRECTORY)/Variables/variables.json" | ConvertFrom-Json).deploymentBuildSuffix
+              Write-Host "Deployment Build Suffix: " $deploymentBuildSuffix
+              Write-Host "##vso[task.setvariable variable=DeploymentBuildSuffix;isOutput=true]-$deploymentBuildSuffix"
+            displayName: "Set variables"
+            name: "Set_Variables"
+
+  - template: runScenario.yml
+    parameters:
+      appIds:
+        EchoSkillBotComposerDotNet: "$(BFFNECHOSKILLBOTCOMPOSERDOTNETAPPID)"
+        EchoSkillBotDotNet: "$(BFFNECHOSKILLBOTDOTNETAPPID)"
+        EchoSkillBotDotNet21: "$(BFFNECHOSKILLBOTDOTNET21APPID)"
+        EchoSkillBotDotNetV3: "$(BFFNECHOSKILLBOTDOTNETV3APPID)"
+        EchoSkillBotJS: "$(BFFNECHOSKILLBOTJSAPPID)"
+        EchoSkillBotJSV3: "$(BFFNECHOSKILLBOTJSV3APPID)"
+        EchoSkillBotPython: "$(BFFNECHOSKILLBOTPYTHONAPPID)"
+        WaterfallSkillBotDotNet: "$(BFFNWATERFALLSKILLBOTDOTNETAPPID)"
+        WaterfallSkillBotJS: "$(BFFNWATERFALLSKILLBOTJSAPPID)"
+        WaterfallSkillBotPython: "$(BFFNWATERFALLSKILLBOTPYTHONAPPID)"
+      azureSubscription: "$(AZURESUBSCRIPTION)"
+      buildConfiguration: "$(BUILDCONFIGURATION)"
+      buildIdSuffix: $[stageDependencies.Download_Variables.Download_Variables.outputs['Set_Variables.DeploymentBuildSuffix']]
+      keyVault: "$(INTERNALKEYVAULTNAME)"
+      resourceGroup: "$(INTERNALRESOURCEGROUPNAME)"
+      resourceSuffix: "$(INTERNALRESOURCESUFFIX)"
+      scenarios:
+        - name: Waterfall
+          dependsOn: [Download_Variables]
+          testCategories:
+            - Attachments
+            - CardActions
+            - ProactiveMessages
+            - FileUpload
+            - SignIn
+
+        - name: SingleTurn
+          dependsOn: [Download_Variables]
+          testCategories:
+            - SingleTurn

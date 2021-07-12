@@ -36,7 +36,7 @@
           "$designer": {
             "id": "NbCgE7"
           },
-          "condition": "$doSelection",
+          "condition": "=$doSelection",
           "actions": [
             {
               "$kind": "Microsoft.ChoiceInput",
@@ -72,7 +72,7 @@
               "$designer": {
                 "id": "lIowZt"
               },
-              "condition": "$selectedIndex != null",
+              "condition": "=$selectedIndex != null",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
@@ -239,7 +239,7 @@
           "$designer": {
             "id": "P1awzy"
           },
-          "condition": "$pageIndex * $pageSize <  count($items)",
+          "condition": "=$pageIndex * $pageSize <  count($items)",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
@@ -347,7 +347,7 @@
           "$designer": {
             "id": "UVQphx"
           },
-          "condition": "$pageIndex >= 0",
+          "condition": "=$pageIndex >= 0",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",

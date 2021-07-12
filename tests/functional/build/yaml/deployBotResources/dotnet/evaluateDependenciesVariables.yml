@@ -1,0 +1,62 @@
+parameters:
+  - name: botType
+    displayName: Bot type
+    type: string
+
+  - name: registry
+    displayName: Registry source
+    type: string
+
+  - name: version
+    displayName: Version number
+    type: string
+
+steps:
+  - task: PowerShell@2
+    displayName: 'Evaluate source & version'
+    inputs:
+      targetType: inline
+      failOnStderr: true
+      script: |
+        # Get Source
+        $sourceDotNetArtifacts = "https://pkgs.dev.azure.com/ConversationalAI/BotFramework/_packaging/SDK/nuget/v3/index.json" 
+        $sourceDotNetMyGet = "https://botbuilder.myget.org/F/botbuilder-v4-dotnet-daily/api/v3/index.json"
+        switch -regex ("${{ parameters.registry }}") {
+          "^($null|)$" {
+            switch ("${{ parameters.botType }}") {
+              default { $source = $sourceDotNetArtifacts }
+            }
+          }
+          "Artifacts" { $source = $sourceDotNetArtifacts }
+          "MyGet" { 
+            switch ("${{ parameters.botType }}") {
+              default { $source = $sourceDotNetMyGet }
+            }
+          }
+          "NuGet" { $source = "" }
+          default { $source = "${{ parameters.registry }}" }
+        }
+        Write-Host "Source: $source"
+        
+        # Get Version Number
+        switch -regex ("${{ parameters.version }}") {
+          "^($null||LATEST)$" {
+            if ("${{ parameters.registry }}".ToUpper() -in "NUGET") {
+              [Console]::ForegroundColor = "red"
+              [Console]::Error.WriteLine("Preview versions of BotBuilder are not available for this source.")
+              [Console]::ResetColor()
+              exit 1 # Force exit
+            }
+            if ("${{ parameters.botType }}" -in "Host", "Skill") {
+              $PackageList = nuget list Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime -Source "$source" -PreRelease
+              $versionNumber = $PackageList.Split(" ")[-1]
+            }
+          }
+          STABLE { $versionNumber = "" }
+          default { $versionNumber = "${{ parameters.version }}" }
+        }
+        Write-Host "Version Number: $versionNumber"
+        
+        # Set environment variables
+        Write-Host "##vso[task.setvariable variable=DependenciesSource]$source"
+        Write-Host "##vso[task.setvariable variable=DependenciesVersionNumber]$versionNumber"
