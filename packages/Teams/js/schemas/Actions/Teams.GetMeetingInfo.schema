@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Get meeting information",
+  "description": "Get teams meeting information.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "property": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Property",
+      "description": "Property (named location to store information).",
+      "examples": [
+        "dialog.meetingInfo"
+      ]
+    },
+    "meetingId": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Meeting id",
+      "description": "Meeting Id or expression to a meetingId to use to get the meeting information. Default value is the current turn.activity.channelData.meeting.id.",
+      "examples": [
+        "=turn.activity.channelData.meeting.id"
+      ]
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "=user.age > 3"
+      ]
+    }
+  }
+}

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+export * from './getMeetingInfo';
 export * from './getMeetingParticipant';
 export * from './getMember';
 export * from './getPagedMembers';

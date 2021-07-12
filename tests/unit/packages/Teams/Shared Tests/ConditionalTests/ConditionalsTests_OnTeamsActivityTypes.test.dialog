@@ -94,6 +94,26 @@
         ]
       },
       {
+        "$kind": "Teams.OnMEBotMessagePreviewEdit",
+        "condition": "turn.activity.text == 'OnMEBotMessagePreviewEdit'",
+        "actions": [
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "OnMEBotMessagePreviewEdit"
+          }
+        ]
+      },
+      {
+        "$kind": "Teams.OnMEBotMessagePreviewSend",
+        "condition": "turn.activity.text == 'OnMEBotMessagePreviewSend'",
+        "actions": [
+          {
+            "$kind": "Microsoft.SendActivity",
+            "activity": "OnMEBotMessagePreviewSend"
+          }
+        ]
+      },
+      {
         "$kind": "Teams.OnMECardButtonClicked",
         "condition": "turn.activity.text == 'OnCardButtonClicked'",
         "actions": [
@@ -371,6 +391,36 @@
     {
       "$kind": "Microsoft.Test.AssertReply",
       "text": "OnFileConsent"
+    },
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "invoke",
+        "text": "OnMEBotMessagePreviewEdit",
+        "value": {
+          "botMessagePreviewAction": "edit"
+        },
+        "name": "composeExtension/submitAction"
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OnMEBotMessagePreviewEdit"
+    },
+    {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "invoke",
+        "text": "OnMEBotMessagePreviewSend",
+        "value": {
+          "botMessagePreviewAction": "send"
+        },
+        "name": "composeExtension/submitAction"
+      }
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "OnMEBotMessagePreviewSend"
     },
     {
       "$kind": "Microsoft.Test.UserActivity",

@@ -42,6 +42,8 @@ namespace Microsoft.Bot.Components.Teams
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsChannelRenamed>(OnTeamsChannelRenamed.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsChannelRestored>(OnTeamsChannelRestored.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsFileConsent>(OnTeamsFileConsent.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsMeetingStart>(OnTeamsMeetingStart.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsMeetingEnd>(OnTeamsMeetingEnd.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsMECardButtonClicked>(OnTeamsMECardButtonClicked.Kind));
 
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<OnTeamsMEConfigQuerySettingUrl>(OnTeamsMEConfigQuerySettingUrl.Kind));
@@ -68,6 +70,7 @@ namespace Microsoft.Bot.Components.Teams
 
             // Actions
 
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<GetMeetingInfo>(GetMeetingInfo.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<GetMeetingParticipant>(GetMeetingParticipant.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<GetMember>(GetMember.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<GetPagedMembers>(GetPagedMembers.Kind));

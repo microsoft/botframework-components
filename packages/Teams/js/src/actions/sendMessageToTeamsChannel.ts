@@ -8,7 +8,13 @@ import {
   StringExpression,
   StringExpressionConverter,
 } from 'adaptive-expressions';
-import { Activity, Channels, TeamsInfo } from 'botbuilder';
+import {
+  Activity,
+  Channels,
+  CloudAdapterBase,
+  ConversationReference,
+  TeamsInfo,
+} from 'botbuilder';
 import {
   Converter,
   ConverterFactory,
@@ -19,8 +25,17 @@ import {
   DialogTurnResult,
   TemplateInterface,
 } from 'botbuilder-dialogs';
+import {
+  AuthenticationConstants,
+  ClaimsIdentity,
+  ConnectorClient,
+  JwtTokenValidation,
+} from 'botframework-connector';
 import { ActivityTemplateConverter } from 'botbuilder-dialogs-adaptive/lib/converters';
-import { getValue } from './actionHelpers';
+import {
+  getValue,
+  testAdapterHasCreateConnectorClientMethod,
+} from './actionHelpers';
 
 export interface SendMessageToTeamsChannelConfiguration
   extends DialogConfiguration {
@@ -124,11 +139,58 @@ export class SendMessageToTeamsChannel
       getValue(dc, this.teamsChannelId) ??
       dc.context?.activity.channelData?.channel?.id;
 
-    const result = await TeamsInfo.sendMessageToTeamsChannel(
-      dc.context,
-      activity,
-      teamsChannelId
-    );
+    let result: [ConversationReference, string];
+
+    // Check for legacy adapter
+    if (testAdapterHasCreateConnectorClientMethod(dc.context.adapter)) {
+      const credentials = dc.context.turnState.get<ConnectorClient>(
+        dc.context.adapter.ConnectorClientKey
+      )?.credentials;
+      if (!credentials) {
+        throw new Error(
+          'Missing credentials as MicrosoftAppCredentials in ConnectorClient from TurnState'
+        );
+      }
+
+      result = await TeamsInfo.sendMessageToTeamsChannel(
+        dc.context,
+        activity,
+        teamsChannelId
+      );
+    } else if (dc.context.adapter instanceof CloudAdapterBase) {
+      const botIdentity = dc.context.turnState.get<ClaimsIdentity>(
+        dc.context.adapter.BotIdentityKey
+      );
+
+      let appId: string | undefined;
+      if (botIdentity) {
+        // 'version' is sometimes empty, which will result in no id returned from GetAppIdFromClaims.
+        appId = JwtTokenValidation.getAppIdFromClaims(botIdentity.claims);
+
+        if (!appId) {
+          appId = botIdentity.claims.find(
+            (claim) => claim.type === AuthenticationConstants.AudienceClaim
+          )?.value;
+        }
+
+        if (!appId) {
+          throw new Error('Missing AppIdClaim in ClaimsIdentity');
+        }
+      } else {
+        throw new Error(
+          'Missing dc.context.adapter.BotIdentityKey in TurnContext TurnState'
+        );
+      }
+
+      result = await TeamsInfo.sendMessageToTeamsChannel(
+        dc.context,
+        activity,
+        teamsChannelId,
+        appId
+      );
+    } else {
+      throw new Error('The adapter does not support SendMessageToTeamsChannel');
+    }
 
     if (this.conversationReferenceProperty != null) {
       dc.state.setValue(

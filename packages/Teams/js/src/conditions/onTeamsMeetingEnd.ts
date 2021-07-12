@@ -4,13 +4,14 @@
 import { Expression } from 'adaptive-expressions';
 import { Channels } from 'botbuilder';
 import { TurnPath } from 'botbuilder-dialogs';
-import { OnInvokeActivity } from 'botbuilder-dialogs-adaptive';
+import { OnEventActivity } from 'botbuilder-dialogs-adaptive';
 
 /**
- * Actions triggered when a Teams InvokeActivity is received with activity.name='composeExtension/setting'.
+ * Actions triggered when a Teams Meeting End event is received.
+ * Note: turn.activity.value has meeting data.
  */
-export class OnTeamsMEConfigurationSetting extends OnInvokeActivity {
-  static $kind = 'Teams.OnMEConfigurationSetting';
+export class OnTeamsMeetingEnd extends OnEventActivity {
+  static $kind = 'Teams.OnMeetingEnd';
 
   /**
    * Create expression for this condition.
@@ -20,7 +21,7 @@ export class OnTeamsMEConfigurationSetting extends OnInvokeActivity {
   protected createExpression(): Expression {
     return Expression.andExpression(
       Expression.parse(
-        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'composeExtension/setting'`
+        `${TurnPath.activity}.channelId == '${Channels.Msteams}' && ${TurnPath.activity}.name == 'application/vnd.microsoft.meetingEnd'`
       ),
       super.createExpression()
     );
