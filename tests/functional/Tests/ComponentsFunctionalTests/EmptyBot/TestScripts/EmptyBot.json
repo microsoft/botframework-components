@@ -1,0 +1,61 @@
+{
+  "items": [
+    {
+      "type": "conversationUpdate",
+      "role": "user"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Welcome to your bot.",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Welcome to your bot.'",
+        "speak == 'Welcome to your bot.'"
+      ]
+    },
+    {
+      "type": "trace",
+      "role": "bot",
+      "assertions": [
+        "type == 'trace'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "label == 'Bot State'",
+        "valueType == 'https://www.botframework.com/schemas/botState'",
+        "name == 'BotState'"
+      ]
+    },
+    {
+      "type": "message",
+      "role": "user",
+      "text": "test"
+    },
+    {
+      "type": "message",
+      "role": "bot",
+      "text": "Sorry, I didn't get that.",
+      "assertions": [
+        "type == 'message'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "text == 'Sorry, I didn\\'t get that.'",
+        "speak == 'Sorry, I didn\\'t get that.'"
+      ]
+    },
+    {
+      "type": "trace",
+      "role": "bot",
+      "assertions": [
+        "type == 'trace'",
+        "from.role == 'bot'",
+        "recipient.role == 'user'",
+        "label == 'Bot State'",
+        "valueType == 'https://www.botframework.com/schemas/botState'",
+        "name == 'BotState'"
+      ]
+    }
+  ]
+}
