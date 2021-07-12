@@ -16,7 +16,6 @@ export * from './onTeamsMEBotMessagePreviewSend';
 export * from './onTeamsMECardButtonClicked';
 export * from './onTeamsMEConfigQuerySettingUrl';
 export * from './onTeamsMEConfigSetting';
-export * from './onTeamsMEConfigurationSetting';
 export * from './onTeamsMEFetchTask';
 export * from './onTeamsMEQuery';
 export * from './onTeamsMESelectItem';
