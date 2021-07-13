@@ -54,7 +54,8 @@
         "name": "[parameters('botName')]",
         "kind": "functionapp",
         "httpsOnly": true,
-        "alwaysOn": true
+        "alwaysOn": true,
+        "webSocketsEnabled": true
       },
       "resources": [
         {
@@ -66,7 +67,8 @@
           ],
           "properties": {
             "FUNCTIONS_EXTENSION_VERSION": "~3",
-            "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+            "FUNCTIONS_WORKER_RUNTIME": "node",
+            "WEBSITE_NODE_DEFAULT_VERSION": "~14",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[if(empty(parameters('appInsightsName')), '', reference(resourceId(parameters('appServicePlanResourceGroup'),'Microsoft.Insights/components', parameters('appInsightsName')), '2015-05-01', 'Full').properties.InstrumentationKey)]",
             "MicrosoftAppId": "[parameters('appId')]",
             "MicrosoftAppPassword": "[parameters('appSecret')]"
