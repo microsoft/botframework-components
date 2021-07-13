@@ -1,27 +1,39 @@
 # @microsoft/generator-bot-core-qna [![NPM version][npm-image]][npm-url]
 
-A simple question-and-answer bot with Azure QnA Maker.
+This template guides you through creating and connecting a bot to a QnA Maker knowledge base. You can connect to an existing knowledge base, create one from scratch using .qna files, or create one from an existing FAQ-style website.
 
-### Recommended use
+## What this template is for
 
-- Create a simple question-and-answer bot with Azure QnA Maker
-- Customize and extend question-and-answer pairs or connect to your website's FAQ
-- Extend your bot with [Azure Bot Framework components](https://aka.ms/ComponentTemplateDocumentation)
+Use this template if you want to...
 
-### Included capabilities
+- Create a bot and connect it to a QnA Maker knowledge base
 
-- Answer questions from a QnA Maker knowled gebase
+## Packages
 
-### Required Azure resources
+Your bot can use the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend the base functionality. From Composer, use the Package Manager to discover additional packages you can add to your bot.
 
-- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
-- [Azure QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
-
-### Supported languages
+## Languages
 
 - English (en-US)
 
-### License
+## Azure Resource Deployment
+
+To run this bot you'll need the resources listed below. Create a publishing profile in Composer to provision and publish to your Azure resources for your bot.
+
+- [LUIS][luis], or another recognizer of your choice
+- [QnA Maker](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/overview/overview)
+
+## Using this template
+
+### From Composer
+
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through making customizations to your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+
+### From the command-line
+
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+
+## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 

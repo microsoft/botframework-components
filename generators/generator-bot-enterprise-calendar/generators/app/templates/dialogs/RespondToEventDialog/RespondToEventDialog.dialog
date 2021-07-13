@@ -92,7 +92,7 @@
           "$designer": {
             "id": "Jhz67U"
           },
-          "condition": "=$event.isOrganizer",
+          "condition": "$event.isOrganizer",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -164,7 +164,7 @@
           "$designer": {
             "id": "0I6DX5"
           },
-          "condition": "=$event.isOrganizer",
+          "condition": "$event.isOrganizer",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",
@@ -241,7 +241,7 @@
           "$designer": {
             "id": "1elpcm"
           },
-          "condition": "=$event.isOrganizer",
+          "condition": "$event.isOrganizer",
           "actions": [
             {
               "$kind": "Microsoft.SendActivity",

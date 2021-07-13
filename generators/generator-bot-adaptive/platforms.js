@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const dotnet = {
-  name: 'dotnet',
-  defaultSdkVersion: '4.13.2',
-};
-
-const js = {
-  name: 'js',
-  defaultSdkVersion: '4.13.4-preview',
-};
+const dotnet = 'dotnet';
+const js = 'js';
 
 module.exports = { dotnet, js };

@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This bot project was created using the **[Enterprise Assistant Bot](https://aka.ms/EnterpriseAssistant)** template, and contains a root bot and two skills. You **must complete the configuration steps outlined below for your bot to function.**
+This Bot Project was created using the **[Enterprise Assistant Bot](https://aka.ms/EnterpriseAssistant)** template, and contains a root bot and two skills. You **must complete the configuration steps outlined below for your bot to function.**
 
 ## Configure your Enterprise Assistant Bot
 To test this bot locally, complete the steps in the **[Enterprise Assistant Bot Tutorial](https://aka.ms/CreateEnterpriseAssistant)**.

@@ -1,36 +1,44 @@
 # @microsoft/generator-bot-enterprise-calendar [![NPM version][npm-image]][npm-url]
 
-This bot project was created using the [Enterprise Calendar Bot](https://aka.ms/EnterpriseCalendarBot) template. You **must complete the configuration steps outlined below for your bot to function.**
+This template creates a bot configured to manage Office 365 calendars using the Microsoft Graph API. **[Learn more](https://aka.ms/EnterpriseCalendarBot)**
 
-### Recommended use
+## What this template is for
 
-- Create a sophisticated bot that enables customers to interact with Office 365 Calendar using Microsoft Graph
-- Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
+Use this template if you want to...
 
-### Included capabilities
+- Support managing Office 365 calendars using Microsoft Graph
+- Start from an advanced template including dialogs, language understanding, and language generation 
 
-- Manage Office 365 calendars using Microsoft Graph
+## Packages
 
-### Included packages
+This bot uses the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend its base functionality. The following packages come pre-installed:
+- [Microsoft.Bot.Components.Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
 
-- [Microsoft Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
+## Supported Languages
 
-The Enterprise Calendar Bot uses packages to extend its capabilities. [Learn more](https://aka.ms/ComponentTemplateDocumentation)
+- English (en-US)
 
-### Required Azure resources
+## Azure Resource Deployment
 
-- Azure Bot Service Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+This template requires the following Azure resources:
+- Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
     - Calendars.ReadWrite
     - Contacts.Read
     - People.Read
     - User.ReadBasic.All
-- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
+- [Language Understanding (LUIS)][luis] authoring resource
 
-### Supported languages
+## Using this template
 
-- English (en-US)
+### From Composer
 
-### License
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through setting up your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+
+### From the command-line
+
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+
+## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 

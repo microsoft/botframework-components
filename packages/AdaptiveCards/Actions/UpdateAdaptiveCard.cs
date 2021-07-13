@@ -34,7 +34,6 @@ namespace Microsoft.Bot.Components.AdaptiveCards
                 }
 
                 // Update existing activity
-                activity.Id = activityId;
                 await dc.Context.UpdateActivityAsync(activity, cancellationToken).ConfigureAwait(false);
             }
             else

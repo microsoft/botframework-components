@@ -37,7 +37,7 @@
           "$designer": {
             "id": "rqPdz8"
           },
-          "condition": "=not(exists($UserIdFound))",
+          "condition": "= not(exists($UserIdFound))",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -84,7 +84,7 @@
           "$designer": {
             "id": "hFpZL4"
           },
-          "condition": "=exists($UserIdFound)",
+          "condition": "= exists($UserIdFound)",
           "actions": [
             {
               "$kind": "Microsoft.Graph.User.GetUserProfile",

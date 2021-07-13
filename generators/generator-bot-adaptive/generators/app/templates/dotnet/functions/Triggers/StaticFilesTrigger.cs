@@ -10,7 +10,7 @@ namespace <%= botName %>.Triggers
 {
     public class StaticFilesTrigger
     {
-        private const string StaticFilesDirectory = "wwwroot";
+        private const string StaticFilesDirectory = "www";
 
         private readonly FileExtensionContentTypeProvider _provider;
 

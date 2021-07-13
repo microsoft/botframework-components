@@ -33,8 +33,7 @@
           "dialog": "ResolveUserDialog",
           "resultProperty": "turn.UserFound",
           "options": {
-            "UserIdFound": "=$UserIdFound",
-            "NameEntity": "=$NameEntity"
+            "UserIdFound": "=$UserIdFound"
           }
         },
         {

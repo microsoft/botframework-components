@@ -22,7 +22,7 @@ module.exports = class extends Generator {
         platforms
       ).join(', ')}`,
       type: String,
-      default: platforms.dotnet.name,
+      default: platforms.dotnet,
       alias: 'p',
     });
 
@@ -33,12 +33,6 @@ module.exports = class extends Generator {
       type: String,
       default: integrations.webapp,
       alias: 'i',
-    });
-
-    this.option('sdkVersion', {
-      desc: 'The Bot Framework SDK version to use',
-      type: String,
-      alias: 's',
     });
 
     const { botName, platform, integration } = this.options;

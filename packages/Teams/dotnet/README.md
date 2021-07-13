@@ -12,34 +12,6 @@ Once you've installed the package using [Bot Framework Composer](https://docs.mi
 
 Make sure you've enabled the connection to Microsoft Teams in the `Connections` tab of your `Project Settings` in Composer.
 
-### Usage
-
-Once installed you should find a Microsoft.Bot.Components.Team in the Components section of the config. In order to use the Single Sign On Middleware, ensure there is also a root level section titled "Microsoft.Bot.Components.Team", with useSingleSignOnMiddleware set to true and the proper Bot Oauth connectionName:
-
-```json
-  "runtimeSettings": {
-    "components": [
-      {
-        "name": "Microsoft.Bot.Components.Teams",
-        "settingsPrefix": "Microsoft.Bot.Components.Teams"
-      }
-    ],
-	...
-  },
-  
-  "Microsoft.Bot.Components.Teams":{
-     "useSingleSignOnMiddleware": true,
-     "connectionName": "TestTeamsSSO"
-  },
-  
-  "CosmosDbPartitionedStorage": {
-    "authKey": "YourCosmosDbAuthKey",
-    "containerId": "YourBotStateContainer",
-    "cosmosDBEndpoint": "https://yourcosmosdb.documents.azure.com:443/",
-    "databaseId": "YourDatabaseName"
-  },
-```  
-
 ## Learn more
 
 Learn more about [creating bots for Microsoft Teams](https://docs.microsoft.com/microsoftteams/platform/bots/what-are-bots).

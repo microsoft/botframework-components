@@ -6,24 +6,20 @@ stages:
     condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), not(eq(variables.PublishPackageArtifacts, true)))
     jobs:
       - job: job_build_npm
-        displayName: Build & Test Node project
+        displayName: Build Node project
         steps:
-        - template: yarn-build-steps.yml
-        - template: yarn-test-steps.yml
-        - template: debug-workspace-steps.yml
+        - template: npm-build-steps.yml
 
   - stage: stage_package_node
-    displayName: 'Node: Build, Test, Version & Pack'
+    displayName: 'Node: Build, Version & Pack'
     condition: and(or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'generator'), and(eq(variables.ComponentType, 'codeExtension'), eq(variables.Language, 'js'))), eq(variables.PublishPackageArtifacts, true))
     jobs:
       - job: pack_npm
         displayName: 'Build & Pack Node project'
         steps:
-        - template: yarn-build-steps.yml
-        - template: yarn-test-steps.yml
+        - template: npm-build-steps.yml
         - template: npm-versioning-steps.yml
-        - template: yarn-package-steps.yml
-        - template: debug-workspace-steps.yml
+        - template: npm-package-steps.yml
 
   - stage: stage_build_nuget
     displayName: '.NET: Build & Test'
@@ -33,7 +29,6 @@ stages:
       - job: build_test_dotnet
         displayName: Build and test .csproj with dotnet
         steps:
-        - template: dotnet-install-sdk-steps.yml
         - template: dotnet-build-test-steps.yml
 
   - stage: stage_package_nuget
@@ -46,7 +41,6 @@ stages:
         condition: eq(variables.ComponentType, 'codeExtension')
         steps:
         - template: nuget-versioning-steps.yml
-        - template: dotnet-install-sdk-steps.yml
         - template: dotnet-package-steps.yml
         - template: nuget-signing-steps.yml
       - job: job_pack_nuspec

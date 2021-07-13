@@ -1,6 +1,6 @@
 # Welcome to your new bot
 
-This bot project was created using the Empty Bot template, and contains a minimal set of files necessary to have a working bot.
+This Bot Project was created using the Empty Bot template, and contains a minimal set of files necessary to have a working bot.
 
 ## Next steps
 

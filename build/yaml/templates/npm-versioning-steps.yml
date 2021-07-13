@@ -61,3 +61,5 @@ steps:
     tags: |
       NpmPackageVersion: $(NpmPackageVersion)
   continueOnError: true
+
+- template: debug-workspace-steps.yml

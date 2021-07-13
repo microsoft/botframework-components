@@ -1,7 +1,6 @@
 {
   "env": {
-    "es2017": true,
-    "mocha": true,
+    "es6": true,
     "node": true
   },
   "extends": ["eslint:recommended"],

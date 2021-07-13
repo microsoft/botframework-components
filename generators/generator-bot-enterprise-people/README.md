@@ -1,38 +1,46 @@
 # @microsoft/generator-bot-enterprise-people [![NPM version][npm-image]][npm-url]
 
-A bot with the ability to interact with Office 365 users in an Azure Active Directory using Microsoft Graph. [Learn more](https://aka.ms/EnterprisePeopleBot)
+This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph. **[Learn more](https://aka.ms/EnterprisePeopleBot)**
 
-### Recommended use
+## What this template is for
 
-- Create a sophisticated bot that enables customers to interact with Azure Active Directory using Microsoft Graph
-- Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
+Use this template if you want to...
 
-### Included capabilities
+- Support searching for Azure Active Directory users
+- Start from an advanced template including dialogs, language understanding, and language generation 
 
-- Search and interact with Office 365 users in an Azure Active Directory using Microsoft Graph
+## Packages
 
-### Included packages
+This bot uses the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend its base functionality. The following packages come pre-installed:
+- [Microsoft.Bot.Components.Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
 
-- [Microsoft Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
+## Supported Languages
 
-The Enterprise People Bot uses packages to extend its capabilities. [Learn more](https://aka.ms/ComponentTemplateDocumentation)
+- English (en-US)
 
-### Required Azure resources
+## Azure Resource Deployment
 
-- Azure Bot Service Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+This template requires the following Azure resources:
+- Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
     - Contacts.Read
     - Directory.Read.All
     - People.Read
     - People.Read.All
     - User.ReadBasic.All
     - User.Read.All
-- [Azure Language Understanding (LUIS)][luis], or another recognizer of your choice
+- [Language Understanding (LUIS)][luis] authoring resource
 
-### Supported languages
+## Using this template
 
-- English (en-US)
+### From Composer
 
-### License
+From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through setting up your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
+
+### From the command-line
+
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+
+## License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 

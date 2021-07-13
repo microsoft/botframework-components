@@ -29,7 +29,7 @@
           "$designer": {
             "id": "2Szxt3"
           },
-          "condition": "=turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -626,6 +626,7 @@
       ]
     }
   ],
+  "$schema": "https://raw.githubusercontent.com/microsoft/BotFramework-Composer/stable/Composer/packages/server/schemas/sdk.schema",
   "generator": "People.lg",
   "id": "People",
   "recognizer": "People.lu.qna"

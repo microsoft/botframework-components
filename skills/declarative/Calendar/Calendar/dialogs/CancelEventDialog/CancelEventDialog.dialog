@@ -29,7 +29,7 @@
           "$designer": {
             "id": "itkIrW"
           },
-          "condition": "=$event.IsOrganizer",
+          "condition": "$event.IsOrganizer",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -86,7 +86,7 @@
           "$designer": {
             "id": "9dab8n"
           },
-          "condition": "=$confirmation",
+          "condition": "$confirmation",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -159,7 +159,7 @@
           "$designer": {
             "id": "wF3uxS"
           },
-          "condition": "=$confirmation",
+          "condition": "$confirmation",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",

@@ -43,7 +43,7 @@
 
 # CreateConfirmNotUnderstood()
 [Activity
-    text = Sorry, I didn't understand that. ${CreateConfirmText()}
+    text = Sorry, I didn't understand that. ${CreateConfirmPrompt()}
     attachments = ${json(EventDetailEditCard($event))}
 ]
 
