@@ -195,7 +195,7 @@ stages:
                 azureSubscription: "${{ parameters.azureSubscription }}"
                 appName: '${{ bot.name }}${{ parameters.resourceSuffix }}-$(BUILD.BUILDID)'
                 resourceGroupName: '${{ parameters.resourceGroup }}'
-                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}/${{ bot.name }}.zip'
+                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}.zip'
                 deploymentMethod: runFromPackage
 
           - ${{ if eq(bot.project.integration, 'functions') }}:
@@ -221,7 +221,7 @@ stages:
                 azureSubscription: "${{ parameters.azureSubscription }}"
                 appType: 'functionApp'
                 appName: '${{ bot.name }}${{ parameters.resourceSuffix }}-$(BUILD.BUILDID)'
-                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}/${{ bot.name }}.zip'
+                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/build/${{ bot.name }}.zip'
                 deploymentMethod: runFromPackage
 
           # Configure OAuth

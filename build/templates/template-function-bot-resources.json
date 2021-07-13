@@ -54,8 +54,7 @@
         "name": "[parameters('botName')]",
         "kind": "functionapp",
         "httpsOnly": true,
-        "alwaysOn": true,
-        "serverFarmId": "[concat('/subscriptions/', subscription().id,'/resourcegroups/', parameters('appServicePlanResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('appServicePlanName'))]"
+        "alwaysOn": true
       },
       "resources": [
         {
