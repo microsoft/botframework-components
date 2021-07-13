@@ -154,30 +154,57 @@ stages:
               pathToPublish: "$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}/${{ bot.name }}.zip"
               artifactName: dotnet-$(BUILD.BUILDID)
 
+          - ${{ if eq(bot.project.integration, 'webapp') }}:
           # Create App Service and Bot Channel Registration
-          - template: ../common/createAppService.yml
-            parameters:
-              appId: $(APPID)
-              appInsight: "${{ parameters.appInsight }}"
-              appSecret: $(APPSECRET)
-              appServicePlan: "${{ parameters.appServicePlan }}"
-              appServicePlanRG: "${{ parameters.appServicePlanRG }}"
-              azureSubscription: "${{ parameters.azureSubscription }}"
-              botGroup: "${{ parameters.resourceGroup }}"
-              botName: "${{ bot.name }}"
-              botPricingTier: "${{ parameters.botPricingTier }}"
-              resourceSuffix: "${{ parameters.resourceSuffix }}"
-              templateFile: "build/templates/template-bot-resources.json"
+            - template: ../common/createAppService.yml
+              parameters:
+                appId: $(APPID)
+                appInsight: "${{ parameters.appInsight }}"
+                appSecret: $(APPSECRET)
+                appServicePlan: "${{ parameters.appServicePlan }}"
+                appServicePlanRG: "${{ parameters.appServicePlanRG }}"
+                azureSubscription: "${{ parameters.azureSubscription }}"
+                botGroup: "${{ parameters.resourceGroup }}"
+                botName: "${{ bot.name }}"
+                botPricingTier: "${{ parameters.botPricingTier }}"
+                resourceSuffix: "${{ parameters.resourceSuffix }}"
+                templateFile: "build/templates/template-bot-resources.json"
 
-          # Deploy bot
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : ${{ bot.name }}-$(BUILD.BUILDID)'
-            inputs:
-              azureSubscription: "${{ parameters.azureSubscription }}"
-              appName: '${{ bot.name }}${{ parameters.resourceSuffix }}-$(BUILD.BUILDID)'
-              resourceGroupName: '${{ parameters.resourceGroup }}'
-              package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}/${{ bot.name }}.zip'
-              deploymentMethod: runFromPackage
+          # Deploy bot to Azure Web App
+            - task: AzureWebApp@1
+              displayName: 'Deploy Azure Web App : ${{ bot.name }}-$(BUILD.BUILDID)'
+              inputs:
+                azureSubscription: "${{ parameters.azureSubscription }}"
+                appName: '${{ bot.name }}${{ parameters.resourceSuffix }}-$(BUILD.BUILDID)'
+                resourceGroupName: '${{ parameters.resourceGroup }}'
+                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}/${{ bot.name }}.zip'
+                deploymentMethod: runFromPackage
+
+          - ${{ if eq(bot.project.integration, 'functions') }}:
+          # Create Functions App and Bot Channel Registration
+            - template: ../common/createAppService.yml
+              parameters:
+                appId: $(APPID)
+                appInsight: "${{ parameters.appInsight }}"
+                appSecret: $(APPSECRET)
+                appServicePlan: "${{ parameters.appServicePlan }}"
+                appServicePlanRG: "${{ parameters.appServicePlanRG }}"
+                azureSubscription: "${{ parameters.azureSubscription }}"
+                botGroup: "${{ parameters.resourceGroup }}"
+                botName: "${{ bot.name }}"
+                botPricingTier: "${{ parameters.botPricingTier }}"
+                resourceSuffix: "${{ parameters.resourceSuffix }}"
+                templateFile: "build/templates/template-function-bot-resources.json"
+
+          # Deploy bot to Azure Web App
+            - task: AzureWebApp@1
+              displayName: 'Deploy Azure Web App : ${{ bot.name }}-$(BUILD.BUILDID)'
+              inputs:
+                azureSubscription: "${{ parameters.azureSubscription }}"
+                appName: '${{ bot.name }}${{ parameters.resourceSuffix }}-$(BUILD.BUILDID)'
+                resourceGroupName: '${{ parameters.resourceGroup }}'
+                package: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ parameters.buildFolder }}/${{ bot.name }}/${{ bot.name }}.zip'
+                deploymentMethod: runFromPackage
 
           # Configure OAuth
           - ${{ if eq(bot.type, 'Skill') }}:
