@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
-using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Actions;
+using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
@@ -55,12 +55,17 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var phoneNumber = this.PhoneNumber?.GetValue(dc.State);
+            if (dc.Context.Activity.ChannelId == Channels.Telephony)
+            {
+                var phoneNumber = this.PhoneNumber?.GetValue(dc.State);
 
-            // Create handoff event, passing the phone number to transfer to as context.
-            HandoffContext = new { TargetPhoneNumber = phoneNumber };
-            
-            return await base.BeginDialogAsync(dc, options, cancellationToken).ConfigureAwait(false);
+                // Create handoff event, passing the phone number to transfer to as context.
+                HandoffContext = new { TargetPhoneNumber = phoneNumber };
+
+                return await base.BeginDialogAsync(dc, options, cancellationToken).ConfigureAwait(false);
+            }
+
+            return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
     }
 }
