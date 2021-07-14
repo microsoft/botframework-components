@@ -429,7 +429,7 @@ steps:
             name      = "EmptyBot"; 
             consumers = @(
               "EmptyBotDotNetWebApp",
-              "EmptyBotJSFunctions",
+              "EmptyBotDotNetFunctions",
               "EmptyBotJSWebApp",
               "EmptyBotJSFunctions"
             );
