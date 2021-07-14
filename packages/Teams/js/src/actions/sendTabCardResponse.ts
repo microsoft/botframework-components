@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import {
+  BoolExpression,
   BoolExpressionConverter,
   StringExpressionConverter,
 } from 'adaptive-expressions';
@@ -16,32 +17,32 @@ import {
 import {
   Converter,
   ConverterFactory,
+  Dialog,
   DialogContext,
   DialogStateManager,
   DialogTurnResult,
   TemplateInterface,
 } from 'botbuilder-dialogs';
 import { ActivityTemplateConverter } from 'botbuilder-dialogs-adaptive/lib/converters';
-import {
-  BaseAuthResponseDialog,
-  BaseAuthResponseDialogConfiguration,
-} from './baseAuthResponseDialog';
 
-export interface SendTabCardResponseConfiguration
-  extends BaseAuthResponseDialogConfiguration {
+export interface SendTabCardResponseConfiguration extends Dialog {
   cards?: TemplateInterface<Activity, DialogStateManager>;
+  disabled?: boolean | string | BoolExpression;
 }
 
 /**
  * Send a Card Tab response to the user.
  */
-export class SendTabCardResponse
-  extends BaseAuthResponseDialog
-  implements BaseAuthResponseDialogConfiguration {
+export class SendTabCardResponse extends Dialog {
   /**
    * Class identifier.
    */
   public static $kind = 'Teams.SendTabCardResponse';
+
+  /**
+   * Gets or sets an optional expression which if is true will disable this action.
+   */
+  public disabled?: BoolExpression;
 
   /**
    * Template for the activity expression containing Adaptive Cards to send.
@@ -49,14 +50,12 @@ export class SendTabCardResponse
   public cards?: TemplateInterface<Activity, DialogStateManager>;
 
   public getConverter(
-    property: keyof BaseAuthResponseDialogConfiguration | string
+    property: keyof Dialog | string
   ): Converter | ConverterFactory {
     switch (property) {
       case 'disabled':
         return new BoolExpressionConverter();
       case 'property':
-      case 'connectionName':
-      case 'title':
         return new StringExpressionConverter();
       case 'cards':
         return new ActivityTemplateConverter();
@@ -114,7 +113,7 @@ export class SendTabCardResponse
    */
   protected onComputeId(): string {
     return `SendTabCardResponse[\
-            ${this.title?.toString() ?? ''}\
+            ${this.cards?.toString() ?? ''}\
         ]`;
   }
 

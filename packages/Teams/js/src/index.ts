@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+import { AdaptiveTeamsBotComponent } from './adaptiveTeamsBotComponent';
 
 /**
  * @module @microsoft/bot-components-teams
  */
 
 export * from './actions';
-export * from './adaptiveTeamsBotComponent';
+export { AdaptiveTeamsBotComponent };
 export * from './conditions';
+export default AdaptiveTeamsBotComponent;

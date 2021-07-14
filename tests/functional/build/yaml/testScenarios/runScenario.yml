@@ -1,0 +1,83 @@
+parameters:
+- name: appIds
+  displayName: Bot's App Registration Ids
+  type: object
+  default:
+    EchoSkillBotComposerDotNet: ""
+    EchoSkillBotDotNet: ""
+    EchoSkillBotDotNet21: ""
+    EchoSkillBotDotNetV3: ""
+    EchoSkillBotJS: ""
+    EchoSkillBotJSV3: ""
+    EchoSkillBotPython: ""
+    WaterfallSkillBotDotNet: ""
+    WaterfallSkillBotJS: ""
+    WaterfallSkillBotPython: ""
+
+- name: azureSubscription
+  displayName: Azure Service Connection
+  type: string
+
+- name: buildConfiguration
+  displayName: Build Configuration
+  type: string
+
+- name: buildIdSuffix
+  displayName: Build Id Suffix
+  type: string
+
+- name: keyVault
+  displayName: KeyVault name
+  type: string
+
+- name: resourceGroup
+  displayName: Resource Group name
+  type: string
+
+- name: resourceSuffix
+  displayName: Azure resources' name suffix
+  type: string
+
+- name: scenarios
+  displayName: Test Scenarios
+  type: object
+
+stages:
+  - ${{ each scenario in parameters.scenarios }}:
+    - stage: "${{ scenario.name }}"
+      displayName: "Test ${{ scenario.name }} Scenario"
+      dependsOn: "${{ scenario.dependsOn }}"
+      jobs:
+        - job: Test
+          variables:
+            BuildIdSuffix: "${{ parameters.buildIdSuffix }}"
+          steps:
+            - template: configureConsumers.yml
+              parameters:
+                appIds: "${{ parameters.appIds }}"
+                azureSubscription: "${{ parameters.azureSubscription }}"
+                keyVault: "${{ parameters.keyVault }}"
+                resourceGroup: "${{ parameters.resourceGroup }}"
+                resourceSuffix: "${{ parameters.resourceSuffix }}$(BUILDIDSUFFIX)"
+                scenario: "${{ scenario.name }}"
+
+            - task: UseDotNet@2
+              displayName: "Use .Net Core sdk 3.1.x"
+              inputs:
+                version: 3.1.x
+
+            - task: DotNetCoreCLI@2
+              displayName: "Build"
+              inputs:
+                command: build
+                publishWebProjects: false
+                projects: "tests/functional/Tests/ComponentsFunctionalTests/ComponentsFunctionalTests.csproj"
+                arguments: "-v n --configuration ${{ parameters.buildConfiguration }}"
+
+            - task: DotNetCoreCLI@2
+              displayName: "DotNet Test"
+              inputs:
+                command: test
+                testRunTitle: "ComponentsFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER)"
+                projects: "tests/functional/Tests/ComponentsFunctionalTests/ComponentsFunctionalTests.csproj"
+                arguments: "-v n --configuration ${{ parameters.buildConfiguration }} --no-build --no-restore --logger trx;LogFileName=ComponentsFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER).trx --filter TestCategory!=IgnoreInAutomatedBuild&TestCategory=${{ join('|TestCategory=', scenario.testCategories) }}"

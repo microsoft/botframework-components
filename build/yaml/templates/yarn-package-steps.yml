@@ -1,0 +1,49 @@
+steps:
+- powershell: |
+    if (Test-Path -Path package.json) {
+      # Get package.json object
+      $packageJson = Get-Content package.json;
+      $packageJsonData = $packageJson | ConvertFrom-Json;
+
+      # Get name, strip invalid filename characters up to '/' and save as pipeline variable
+      $packageName = $packageJsonData.name
+      "Package name = $packageName";
+
+      $packageName = $packageName -replace ".*\/"
+      "Package file name = $packageName";
+      
+      Write-Host "##vso[task.setvariable variable=NpmPackageFileName;]$packageName"
+
+      # Get variable passed from Setup stage
+      $packageVersion = "$(NpmPackageVersion)";
+
+      # Convert back into package.json
+      "Writing version $packageVersion to package.json"
+      $packageJsonData.version = $packageVersion;
+      $packageJsonData | ConvertTo-Json |
+      Out-File package.json -Encoding utf8
+    } else {
+        Write-Host "Missing package.json"
+        exit 1
+    }
+  displayName: 'Set package.json version with NpmPackageVersion'
+  workingDirectory: '$(WorkingDirectory)'
+
+- script: |
+    yarn pack --filename $(NpmPackageFileName)-$(NpmPackageVersion).tgz
+  displayName: 'Run `yarn pack`'
+  workingDirectory: '$(WorkingDirectory)'
+
+- task: CopyFiles@2
+  displayName: 'Copy packages to staging directory'
+  inputs:
+    SourceFolder: '$(WorkingDirectory)'
+    Contents: '*.tgz'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\npm'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish the npm package to artifacts'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\npm'
+    ArtifactName: 'npm'
+    publishLocation: 'Container'

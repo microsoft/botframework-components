@@ -19,7 +19,7 @@
           "$designer": {
             "id": "1mbleA"
           },
-          "condition": "count(turn.recognized.answers[0].context.prompts) > 0",
+          "condition": "=count(turn.recognized.answers[0].context.prompts) > 0",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
@@ -60,7 +60,7 @@
               "$designer": {
                 "id": "qYZxID"
               },
-              "condition": "turn.qnaMatchFromContext && count(turn.qnaMatchFromContext) > 0",
+              "condition": "=turn.qnaMatchFromContext && count(turn.qnaMatchFromContext) > 0",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",

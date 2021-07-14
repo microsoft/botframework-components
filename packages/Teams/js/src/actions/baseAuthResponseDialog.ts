@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import isEmpty from 'lodash/isEmpty';
-import { ActionTypes, Activity, CardAction, TokenResponse } from 'botbuilder';
+import {
+  ActionTypes,
+  Activity,
+  CardAction,
+  CloudAdapterBase,
+  TokenResponse,
+} from 'botbuilder';
 import {
   BoolExpressionConverter,
   Expression,
@@ -22,6 +28,7 @@ import {
   BaseTeamsCacheInfoResponseDialog,
   BaseTeamsCacheInfoResponseDialogConfiguration,
 } from './baseTeamsCacheInfoResponseDialog';
+import { UserTokenClient } from 'botframework-connector';
 
 export interface BaseAuthResponseDialogConfiguration
   extends BaseTeamsCacheInfoResponseDialogConfiguration {
@@ -98,8 +105,8 @@ export abstract class BaseAuthResponseDialog
     if (tokenResponse) {
       // We have the token, so the user is already signed in.
       // Similar to OAuthInput, just return the token in the property.
-      if (this.property != null) {
-        dc.state.setValue(this.property?.getValue(dc.state), tokenResponse);
+      if (this.property) {
+        dc.state.setValue(this.property.getValue(dc.state), tokenResponse);
       }
 
       // End the dialog and return the token response.
@@ -125,19 +132,32 @@ export abstract class BaseAuthResponseDialog
    * @param {CardAction} _cardAction CardAction with a valid Sign In Link.
    * @returns {Partial<Activity>} Promise representing the InvokeResponse Activity specific to this type of auth dialog.
    */
-  protected createOAuthInvokeResponseActivityFromCardAction(
+  protected abstract createOAuthInvokeResponseActivityFromCardAction(
     _dc: DialogContext,
     _cardAction: CardAction
-  ): Partial<Activity> {
-    throw new Error('NotImplemented');
-  }
+  ): Partial<Activity>;
 
   private async createOAuthInvokeResponseActivityFromTitleAndConnectionName(
     dc: DialogContext,
-    title?: string,
-    connectionName?: string
+    title: string,
+    connectionName: string
   ): Promise<Partial<Activity>> {
-    // TODO: Switch to using Cloud OAuth after this PR gets merged: https://github.com/microsoft/botbuilder-js/pull/3149
+    const userTokenClient = dc.context.turnState.get<UserTokenClient>(
+      (dc.context.adapter as CloudAdapterBase).UserTokenClientKey
+    );
+    if (userTokenClient) {
+      const signInResource = await userTokenClient.getSignInResource(
+        connectionName,
+        dc.context.activity,
+        ''
+      );
+      return this.createOAuthInvokeResponseActivityFromTitleAndSignInLink(
+        dc,
+        title,
+        signInResource.signInLink as string
+      );
+    }
+
     if (!testAdapterHasAuthMethods(dc.context.adapter)) {
       throw new Error('Auth is not supported by the current adapter.');
     } else if (!title || !connectionName) {
@@ -176,13 +196,27 @@ export abstract class BaseAuthResponseDialog
     dc: DialogContext,
     connectionName: string
   ): Promise<TokenResponse> {
-    // TODO: Switch to using Cloud OAuth after this PR gets merged: https://github.com/microsoft/botbuilder-js/pull/3149
+    // When the Bot Service Auth flow completes, the action.State will contain a magic code used for verification.
+    const state = dc.context.activity.value?.state;
+
+    const userTokenClient = dc.context.turnState.get<UserTokenClient>(
+      (dc.context.adapter as CloudAdapterBase).UserTokenClientKey
+    );
+    if (userTokenClient) {
+      return userTokenClient.getUserToken(
+        dc.context.activity.from?.id,
+        connectionName,
+        dc.context.activity.channelId,
+        state
+      );
+    }
+
     if (!testAdapterHasAuthMethods(dc.context.adapter)) {
       throw new Error('Auth is not supported by the current adapter.');
     }
 
     // When the Bot Service Auth flow completes, the action.State will contain a magic code used for verification.
-    const magicCode = !isEmpty(dc.context.activity?.value)
+    const magicCode = !isEmpty(dc.context.activity.value)
       ? dc.context.activity.value.state
       : undefined;
 

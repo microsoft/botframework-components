@@ -1,0 +1,451 @@
+parameters:
+- name: appIds
+  displayName: Bot's App Registration Ids
+  type: object
+  default:
+    EmptyBotDotNetWebApp: ""
+    EmptyBotJSWebApp: ""
+
+- name: azureSubscription
+  displayName: Azure Service Connection
+  type: string
+
+- name: keyVault
+  displayName: KeyVault name
+  type: string
+
+- name: resourceGroup
+  displayName: Resource Group name
+  type: string
+
+- name: resourceSuffix
+  displayName: Azure resources' name suffix
+  type: string
+
+- name: scenario
+  displayName: Test scenario
+  type: object
+
+steps:
+  - task: AzureCLI@2
+    displayName: "Set Consumers AppSettings"
+    inputs:
+      azureSubscription: ${{ parameters.azureSubscription }}
+      scriptType: pscore
+      scriptLocation: inlineScript
+      failOnStderr: true
+      inlineScript: |
+        # Global Variables
+        $scenario = "${{ parameters.scenario }}";
+        $resourceGroup = "${{ parameters.resourceGroup }}";
+        $keyVault = "${{ parameters.keyVault }}";
+        $suffix = "${{ parameters.resourceSuffix }}";
+
+        # Helper Functions.
+
+        $noBotsFoundMessage = "No bots were found in the configuration.";
+
+        function AddTimeStamp {
+          param($text)
+          return "$("[{0:MM/dd/yy} {0:HH:mm:ss}]" -f (Get-Date)): $text";
+        }
+
+        function AddBotsSuffix {
+          param($bots, $suffix)
+          # Add a suffix for each bot.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          return $bots | ForEach-Object {
+            $bot = $_;
+            $bot.resourceBotName = $bot.botName + $suffix;
+            return $bot;
+          }
+        }
+
+        function AddBotsAppIdFromKeyVault {
+          param($bots, $keyVault)
+          # Load AppIds from KeyVault.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          $AddTimeStampDef = $function:AddTimeStamp.ToString();
+
+          return $bots | ForEach-Object -Parallel {
+            $bot = $_;
+            $function:AddTimeStamp = $using:AddTimeStampDef
+            $keyVault = $using:keyVault
+
+            if ([string]::IsNullOrEmpty($bot.appId)) {
+              Write-Host $(AddTimeStamp -text "$($bot.key): Unable to find the AppId in the Pipeline Variables, proceeding to search in the KeyVault '$keyVault'.");
+
+              $entry = az keyvault secret list --vault-name $keyVault --query "[?name == 'Bffn$($bot.key)AppId']" | ConvertFrom-Json;
+
+              if ($entry) {
+                $secretVault = az keyvault secret show --id $entry.id | ConvertFrom-Json;
+                $bot.appId = $secretVault.value;
+              }
+              else {
+                Write-Host $(AddTimeStamp -text "$($bot.key): Unable to find the AppId in the KeyVault '$keyVault'.");
+              }
+            }
+            else {
+              Write-Host $(AddTimeStamp -text "$($bot.key): Using AppId from the Pipeline Variable.");
+            }
+
+            return $bot;
+          }
+        }
+
+        function FilterBotsByScenario {
+          param($bots, $scenarios, $scenario)
+          # Filter bots by a specific test scenario.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          $scenarioSelected = $scenarios | Where-Object { $_.name -eq $scenario }
+
+          if (-not $scenarioSelected) {
+            Write-Host $(AddTimeStamp -text "$($scenario): Unable to find the Test Scenario.");
+            return @();
+          }
+
+          return $bots | Where-Object {
+            $bot = $_;
+
+            $scenarioBots = $scenarioSelected.consumers + $scenarioSelected.skills;
+            return $scenarioBots -contains $bot.key;
+          }
+        }
+
+        function FilterResourceGroupsByExistence {
+          param($groups)
+          # Filter created resource groups.
+
+          $AddTimeStampDef = $function:AddTimeStamp.ToString();
+          
+          return $groups.GetEnumerator() | ForEach-Object -Parallel {
+            $function:AddTimeStamp = $using:AddTimeStampDef
+            $group = $_;
+
+            $exists = (az group exists -n $group.Value) -eq "true";
+            if ($exists) {
+              Write-Host $(AddTimeStamp -text "$($group.Value): Resource Group found.");
+              return $group;
+            }
+            else {
+              Write-Host $(AddTimeStamp -text "$($group.Value): Unable to find the Resource Group.");
+            }
+          }
+        }
+
+        function FilterBotsByResourceExistence {
+          param($groups, $bots)
+          # Filter bots only if their resource exists in Azure.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          $AddTimeStampDef = $function:AddTimeStamp.ToString();
+
+          return $bots | ForEach-Object -Parallel {
+            $groups = $using:groups
+            $function:AddTimeStamp = $using:AddTimeStampDef
+            $bot = $_;
+
+            if ($groups.Value -contains $bot.resourceGroup) {
+              $enabled = (az webapp show --name $bot.resourceBotName --resource-group $bot.resourceGroup 2>$null | ConvertFrom-Json).enabled;
+
+              if ($enabled) {
+                Write-Host $(AddTimeStamp -text "$($bot.key): Resource '$($bot.resourceBotName)' found.");
+                return $bot;
+              }
+              else {
+                Write-Host $(AddTimeStamp -text "$($bot.key): Unable to find the resource '$($bot.resourceBotName)'.");
+              }
+            }
+          };
+        }
+
+        function FilterBotsWithAppId {
+          param($bots)
+          # Filter bots that have an AppId.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          return @($bots | Where-Object {
+              $bot = $_;
+
+              if ($bot.appId.Trim().Length -eq 0) {
+                Write-Host $(AddTimeStamp -text "$($bot.key): AppId not found in the configuration, Skiping ...");
+                return $false;
+              }
+
+              return $true;
+            })
+        }
+
+        function AddAzureAppSettings {
+          param($consumers, $skills)
+          # Add Azure AppSettings to each Consumer. 
+
+          if (-not $consumers) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $consumers;
+          }
+
+          return $consumers | Sort-Object { $_.key } | ForEach-Object {
+            $consumer = $_;
+            $consumer.appSettings = @(
+              @{name = "SkillHostEndpoint"; value = "https://$($consumer.resourceBotName).azurewebsites.net/api/skills" };
+            );
+
+            $orderedSkills = $skills | Sort-Object { $_.key }
+
+            for ($index = 0; $index -lt $orderedSkills.Count; $index++) {
+              $skill = $orderedSkills[$index];
+
+              switch ($consumer.configType) {
+                $types.Appsettings { 
+                  $consumer.appSettings += @{name = "BotFrameworkSkills:$($index):Id"; value = "$($skill.key)" };
+                  $consumer.appSettings += @{name = "BotFrameworkSkills:$($index):AppId"; value = "$($skill.appId)" };
+                  $consumer.appSettings += @{name = "BotFrameworkSkills:$($index):SkillEndpoint"; value = "https://$($skill.resourceBotName).azurewebsites.net/api/messages" };
+                  $consumer.appSettings += @{name = "BotFrameworkSkills:$($index):Group"; value = "$($skill.group)" };
+                }
+                $types.Env { 
+                  $consumer.appSettings += @{name = "skill_$($skill.key)_appId"; value = "$($skill.appId)" };
+                  $consumer.appSettings += @{name = "skill_$($skill.key)_endpoint"; value = "https://$($skill.resourceBotName).azurewebsites.net/api/messages" };
+                  $consumer.appSettings += @{name = "skill_$($skill.key)_group"; value = "$($skill.group)" };
+                }
+                $types.Composer {
+                  # NOTE: Composer uses different capitalization for the skill keys.
+                  $consumer.appSettings += @{name = "skill__$($skill.keyComposer)__msAppId"; value = "$($skill.appId)" };
+                  $consumer.appSettings += @{name = "skill__$($skill.keyComposer)__endpointUrl"; value = "https://$($skill.resourceBotName).azurewebsites.net/api/messages" };
+                }
+              }
+            }
+
+            return $consumer;
+          }
+        }
+
+        function ConfigureTestProjectAppSettings {
+          param($bots, $appSettingsPath)
+          # Save each bot direct line into the Test Project AppSettings file.
+
+          if (-not $bots) {
+            Write-Host $(AddTimeStamp -text $noBotsFoundMessage);
+            return $bots;
+          }
+
+          $appSettings = Get-Content -Raw $appSettingsPath | ConvertFrom-Json;
+          $appSettings.HostBotClientOptions = @{}
+
+          $AddTimeStampDef = $function:AddTimeStamp.ToString();
+
+          $bots | ForEach-Object -Parallel {
+            # Gets the Bot DirectLine
+            $function:AddTimeStamp = $using:AddTimeStampDef
+            $appSettings = $using:appSettings
+            $bot = $_;
+
+            Write-Host $(AddTimeStamp -text "$($bot.key): Getting the DirectLine secret.");
+            $tries = 3;
+            $directLine = "";
+
+            while($tries -gt 0) {
+              $directLine = (az bot directline show --name $bot.resourceBotName --resource-group $bot.resourceGroup --with-secrets true 2>$null | ConvertFrom-Json).properties.properties.sites.key;
+              if (-not [string]::IsNullOrEmpty($directLine)) {
+                $appSettings.HostBotClientOptions[$bot.key] = @{
+                  DirectLineSecret = $directLine
+                  BotId            = $bot.botName
+                }
+                break;
+              }
+              $tries--;
+            }
+          }
+
+          if ($appSettings.HostBotClientOptions.count -ne $bots.length) {
+            Write-Host "##vso[task.logissue type=error]Some host bots' DirectLine secrets couldn't be retrieved from Azure."
+            $config = $appSettings.HostBotClientOptions | Out-String
+            Write-Host "##vso[task.logissue type=error]$config"
+            exit 1 # Force exit
+          }
+
+          $appSettings | ConvertTo-Json | Set-Content $appsettingsPath;
+
+          Write-Host $(AddTimeStamp -text "Test Project AppSettings saved:");
+          $appSettings.HostBotClientOptions;
+          Write-Host ""; # Separator
+        }
+
+        function ConfigureConsumers {
+          param($consumers, $skills)
+          # Configure Consumers with all the Skills to connect to. 
+
+          $AddTimeStampDef = $function:AddTimeStamp.ToString();
+
+          Write-Host $(AddTimeStamp -text "Waiting for configuration to finish ...");
+          $consumers | ForEach-Object -Parallel {
+            $function:AddTimeStamp = $using:AddTimeStampDef
+            $skills = $using:skills
+            $types = $using:types
+
+            $consumer = $_;
+            $output = @();
+
+            $conditions = @(
+              "SkillHostEndpoint"
+              "BotFrameworkSkills*"
+              "skill_*"
+            )
+          
+            $output += AddTimeStamp -text "$($consumer.key): Looking for existing Azure AppSettings ...";
+          
+            $json = (az webapp config appsettings list --name $consumer.resourceBotName --resource-group $consumer.resourceGroup) | ConvertFrom-Json
+            $appSettings = @($json | Where-Object { $_.name -match ($conditions -join "|") })
+
+            $settings = @{
+              toSet    = [System.Collections.ArrayList]$consumer.appSettings;
+              toRemove = [System.Collections.ArrayList]@();
+            }
+
+            # Lookup for Azure AppSettings that are needed to be added/updated, otherwise, skip.
+            foreach ($appSetting in $appSettings) {
+              $setting = $settings.toSet | Where-Object { $_.name -eq $appSetting.name } | Select-Object -Unique
+              if ($setting) {
+                if ($setting.value -eq $appSetting.value) {
+                  $settings.toSet.Remove($setting);
+                }
+              }
+              else {
+                $settings.toRemove.Add($appSetting);
+              }
+            }
+          
+            if ($settings.toRemove) {
+              $output += AddTimeStamp -text "$($consumer.key): Removing unnecessary Azure AppSettings ...";
+              
+              $config = $settings.toRemove | ForEach-Object { $_.name }
+              az webapp config appsettings delete --name $consumer.resourceBotName --resource-group $consumer.resourceGroup --setting-names $config --output none
+              
+              $output += AddTimeStamp -text "$($consumer.key): Azure AppSettings removed:";
+              $output += $config | ForEach-Object { [PSCustomObject]@{ Name = $_ } } | Format-Table -AutoSize;
+            }
+          
+            if ($settings.toSet) {
+              $output += AddTimeStamp -text "$($consumer.key): Adding new Azure AppSettings ...";
+              
+              $config = $settings.toSet | ForEach-Object { "$($_.name)=$($_.value)" }
+              az webapp config appsettings set --name $consumer.resourceBotName --resource-group $consumer.resourceGroup --settings $config --output none
+              
+              $output += AddTimeStamp -text "$($consumer.key): Azure AppSettings added:";
+              # Format output
+              $output += $settings.toSet | ForEach-Object { 
+                $setting = $_;
+                        
+                if ($setting.name.ToLower().EndsWith("appid")) {
+                  $setting.value = $setting.value.Substring(0, 3) + "***"
+                }
+                      
+                return [PSCustomObject]@{ 
+                  Name  = $setting.name
+                  Value = $setting.value
+                } 
+              } | Format-Table -AutoSize
+            }
+
+            if (-not $settings.toSet -and -not $settings.toRemove) {
+              $output += AddTimeStamp -text "$($consumer.key): Azure AppSettings are up to date.";
+            }
+
+            $output;
+          }
+        }
+
+        # Configuration
+
+        # Type of setting to use for the AppSettings variables.
+        $types = @{
+          Appsettings = 0
+          Env         = 1
+          Composer    = 2
+        }
+
+        # Bots Resource Groups
+        $groups = @{
+          DotNet = "$resourceGroup-DotNet"
+          JS     = "$resourceGroup-JS"
+        }
+
+        # Bots Settings
+        $consumers = @(
+          @{
+            key           = "EmptyBotDotNetWebApp"
+            botName       = "bfcfnemptybotdotnetwebapp"
+            resourceGroup = $groups.DotNet
+            configType    = $types.Appsettings
+          }
+          @{
+            key           = "EmptyBotJSWebApp"
+            botName       = "bfcfnemptybotjswebapp"
+            resourceGroup = $groups.JS
+            configType    = $types.Appsettings
+          }
+        )
+
+        # Bots Test Scenarios
+        $scenarios = @(
+          @{ 
+            name      = "EmptyBot"; 
+            consumers = @(
+              "EmptyBotDotNetWebApp",
+              "EmptyBotJSWebApp"
+            );
+          }
+        )
+
+        # Pre-configure and filter bots.
+        Write-Host $(AddTimeStamp -text "Filtering bots by '$scenario' scenario ...");
+        $consumersToConfigure = FilterBotsByScenario -bots $consumers -scenarios $scenarios -scenario $scenario;
+
+        Write-Host $(AddTimeStamp -text "Adding the suffix '$suffix' to the bot resources ...");
+        $consumersToConfigure = AddBotsSuffix -bots $consumersToConfigure -suffix $suffix
+
+        Write-Host $(AddTimeStamp -text "Filtering existing Resource Groups ...");
+        $resourceGroups = FilterResourceGroupsByExistence -groups $groups
+
+        Write-Host $(AddTimeStamp -text "Filtering deployed bots in Azure ...");
+        $consumersToConfigure = FilterBotsByResourceExistence -groups $resourceGroups -bots $consumersToConfigure
+
+        Write-Host $(AddTimeStamp -text "Adding Azure AppSettings to Consumers' configuration.");
+        $consumersToConfigure = AddAzureAppSettings -consumers $consumersToConfigure
+
+        if (-not $consumersToConfigure) {
+          Write-Error $(AddTimeStamp -text "No Consumers were found to configure. Cancelling the configuration ...");
+          return;
+        }
+
+        # Configure steps.
+        Write-Host $(AddTimeStamp -text "Configuring the Test Project.");
+        ConfigureTestProjectAppSettings -bots $consumersToConfigure -appSettingsPath "tests/functional/Tests/ComponentsFunctionalTests/appsettings.json";
+
+        Write-Host $(AddTimeStamp -text "Configuring the Consumer bots App Settings in Azure.");
+        ConfigureConsumers -consumers $consumersToConfigure
+
+        Write-Host $(AddTimeStamp -text "Process Finished!");

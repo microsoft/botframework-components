@@ -1,49 +1,38 @@
-# @microsoft/generator-bot-enterprise-people [![NPM version][npm-image]][npm-url]
+# @microsoft/generator-bot-enterprise-people [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people)
 
-This template creates a bot configured to search for users in an Azure Active Directory using Microsoft Graph. **[Learn more](https://aka.ms/EnterprisePeopleBot)**
+A bot with the ability to interact with Office 365 users in an Azure Active Directory using Microsoft Graph. [Learn more](https://aka.ms/EnterprisePeopleBot)
 
-## What this template is for
+### Recommended use
 
-Use this template if you want to...
+- Create a sophisticated bot that enables customers to interact with Azure Active Directory using Microsoft Graph
+- Customize and extend sophisticated example dialogs, bot logic, language understanding and bot responses
 
-- Support searching for Azure Active Directory users
-- Start from an advanced template including dialogs, language understanding, and language generation 
+### Included capabilities
 
-## Packages
+- Search and interact with Office 365 users in an Azure Active Directory using Microsoft Graph
 
-This bot uses the [Azure Bot Framework component model](https://aka.ms/ComponentTemplateDocumentation) to extend its base functionality. The following packages come pre-installed:
-- [Microsoft.Bot.Components.Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
+### Included packages
 
-## Supported Languages
+- [Microsoft Graph](https://www.nuget.org/packages/Microsoft.Bot.Components.Graph/)
 
-- English (en-US)
+The Enterprise People Bot uses packages to extend its capabilities. [Learn more](https://aka.ms/ComponentTemplateDocumentation)
 
-## Azure Resource Deployment
+### Required Azure resources
 
-This template requires the following Azure resources:
-- Azure Bot Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
+- Azure Bot Service Registration configured with Microsoft Azure Active Directory authentication with access to the following scopes:
     - Contacts.Read
     - Directory.Read.All
     - People.Read
     - People.Read.All
     - User.ReadBasic.All
     - User.Read.All
-- [Language Understanding (LUIS)][luis] authoring resource
+- [Azure Language Understanding (LUIS)](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis), or another recognizer of your choice
 
-## Using this template
+### Supported languages
 
-### From Composer
+- English (en-US)
 
-From Composer you'll use the **New** button on the **Home** screen to create a new bot. After creation, Composer will guide you through setting up your bot. If you'd like to extend your bot with code, you can open up your bot using your favorite IDE (like Visual Studio) from the location you choose during the creation flow.
-
-### From the command-line
-
-This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
-
-## License
+### License
 
 [MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
-[luis]: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis
-[npm-image]: https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-enterprise-people.svg
-[npm-url]: https://www.npmjs.com/package/@microsoft/generator-bot-enterprise-people

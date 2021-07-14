@@ -117,7 +117,7 @@
           "$designer": {
             "id": "QBgXJe"
           },
-          "condition": "turn.addLocation",
+          "condition": "=turn.addLocation",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
@@ -501,7 +501,7 @@
               "$designer": {
                 "id": "MGvqYl"
               },
-              "condition": "not(exists($options.dateTime))",
+              "condition": "=not(exists($options.dateTime))",
               "actions": [
                 {
                   "$kind": "Microsoft.DateTimeInput",
@@ -969,7 +969,7 @@
           "$designer": {
             "id": "m2E2Qw"
           },
-          "condition": "turn.createConfirmResult",
+          "condition": "=turn.createConfirmResult",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
@@ -994,7 +994,7 @@
               "$designer": {
                 "id": "yt4PWR"
               },
-              "condition": "exists($createEventResult)",
+              "condition": "=exists($createEventResult)",
               "actions": [
                 {
                   "$kind": "Microsoft.SendActivity",

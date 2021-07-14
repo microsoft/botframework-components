@@ -1,4 +1,4 @@
-# bot-template-generator
+# bot-template-generator [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-adaptive.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-adaptive)
 
 Yeoman generator generating a bot template generator for use with the Microsoft Bot Framework.
 
@@ -13,7 +13,7 @@ Yeoman generator generating a bot template generator for use with the Microsoft 
 
 - Navigate to the root dir of your local version of `generator-bot-template-generator` and run `npm install`
 - Navigate to the directory where you want to instantiate your bot template generator and run `yo {path to your local versions of generator-bot-template-generator's ./app/index.js file}`
-  - OR run npm link within the root of the `generator-bot-template-generator` directory and then navigate to where you want to instantiate your bot and run `yo bot-template-generator` 
+  - OR run npm link within the root of the `generator-bot-template-generator` directory and then navigate to where you want to instantiate your bot and run `yo bot-template-generator`
 
 ## Commands
 
@@ -37,7 +37,7 @@ All you need to know from a yeomen perspective is that yeomen will run the boots
 
 **Thats it! A template is just a list of dependent component packages (declared in index.js) and the glue/routing logic for those packages (bot files in the templates dir)**
 
-For this particular empty bot template in the image above, little post generation config is needed because the tool defaults to generating an empty bot template. However more advanced templates will need some post creation config outlined in the next step. 
+For this particular empty bot template in the image above, little post generation config is needed because the tool defaults to generating an empty bot template. However more advanced templates will need some post creation config outlined in the next step.
 
 ## How to populate your bot specific assets
 
@@ -80,10 +80,5 @@ After making the change, run `yarn build:server` followed by `yarn start:dev`. Y
 
 ## License
 
-[MIT License][license]
+[MIT License](https://github.com/microsoft/botframework-components/blob/main/LICENSE)
 
-[composer]: https://github.com/microsoft/botframework-composer
-[yeoman]: https://yeoman.io
-[npm]: https://npmjs.com
-[nodejs]: https://nodejs.org/
-[license]: https://github.com/microsoft/botframework-components/blob/main/LICENSE

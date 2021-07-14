@@ -13,7 +13,7 @@ steps:
       $deploymentRing = $deploymentRingOverride;
     }
 
-    if ($deploymentRing.ToLowerInvariant() -eq "rc") {
+    if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
       $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
       "Release Candidate Number = $releaseCandidateNumber";
 
@@ -61,5 +61,3 @@ steps:
     tags: |
       NpmPackageVersion: $(NpmPackageVersion)
   continueOnError: true
-
-- template: debug-workspace-steps.yml
