@@ -1,0 +1,49 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Aggregate Input",
+    "subtitle": "Termination Character",
+    "order": [
+      "batchLength",
+      "property",
+      "*"
+    ],
+    "properties": {
+      "batchLength": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "property": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Aggregate Input (n)",
+    "submenu": [ "Telephony" ]
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "header": {
+      "widget": "ActionHeader",
+      "icon": "MessageBot",
+      "colors": {
+        "theme": "#EEEAF4",
+        "icon": "#5C2E91"
+      }
+    },
+    "body": {
+      "widget": "LgWidget",
+      "field": "prompt"
+    },
+    "footer": {
+      "widget": "PropertyDescription",
+      "property": "=action.defaultOperation",
+      "description": "= Default operation"
+    },
+    "hideFooter": "=!action.defaultOperation"
+  }
+}

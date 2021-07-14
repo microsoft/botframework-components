@@ -1,0 +1,38 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Termination Character Batch Input",
+  "description": "Prompts the user for multiple inputs that are aggregated until a specified number of characters are reached.",
+  "type": "object",
+  "required": [
+    "batchLength",
+    "*"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "batchLength": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Batch Length",
+      "description": "The number of characters to aggregate before returning the result.",
+      "examples": [
+        "4,11,10"
+      ]
+    },
+    "property": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Property",
+      "description": "Property to assign the batch result to",
+      "examples": [
+        "conversation.BatchResult"
+      ]
+    },
+    "prompt": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Initial prompt",
+      "description": "Message to send to collect information.",
+      "examples": [
+        "Enter your four digit phone number."
+      ]
+    }
+  }
+}

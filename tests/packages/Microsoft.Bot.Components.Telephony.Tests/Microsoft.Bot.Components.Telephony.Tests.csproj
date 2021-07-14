@@ -30,6 +30,18 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLengthBaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLengthHappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_TerminationHappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_TerminationBaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Integration\CallTransferTests\CallTransfer_BaseScenario.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
