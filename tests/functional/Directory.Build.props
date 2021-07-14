@@ -25,7 +25,7 @@
 
   <PropertyGroup>    
     <RepositoryUrl>https://github.com/microsoft/BotFramework-FunctionalTests</RepositoryUrl>
-    <LicenseUrl>https://github.com/microsoft/BotFramework-FunctionalTests/blob/main/LICENSE</LicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

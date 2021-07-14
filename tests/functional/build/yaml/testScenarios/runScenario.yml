@@ -71,13 +71,13 @@ stages:
               inputs:
                 command: build
                 publishWebProjects: false
-                projects: "Tests/SkillFunctionalTests/SkillFunctionalTests.csproj"
+                projects: "tests/functional/Tests/ComponentsFunctionalTests/ComponentsFunctionalTests.csproj"
                 arguments: "-v n --configuration ${{ parameters.buildConfiguration }}"
 
             - task: DotNetCoreCLI@2
               displayName: "DotNet Test"
               inputs:
                 command: test
-                testRunTitle: "SkillFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER)"
-                projects: "Tests/SkillFunctionalTests/SkillFunctionalTests.csproj"
-                arguments: "-v n --configuration ${{ parameters.buildConfiguration }} --no-build --no-restore --logger trx;LogFileName=SkillFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER).trx --filter TestCategory!=IgnoreInAutomatedBuild&TestCategory=${{ join('|TestCategory=', scenario.testCategories) }}"
+                testRunTitle: "ComponentsFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER)"
+                projects: "tests/functional/Tests/ComponentsFunctionalTests/ComponentsFunctionalTests.csproj"
+                arguments: "-v n --configuration ${{ parameters.buildConfiguration }} --no-build --no-restore --logger trx;LogFileName=ComponentsFunctionalTests-${{ scenario.name }}-$(BUILD.BUILDNUMBER).trx --filter TestCategory!=IgnoreInAutomatedBuild&TestCategory=${{ join('|TestCategory=', scenario.testCategories) }}"

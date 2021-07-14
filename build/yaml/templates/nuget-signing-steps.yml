@@ -2,11 +2,6 @@
 # Extra steps are required to sign the binaries of the code extensions.
 
 steps:
-- task: UseDotNet@2
-  displayName: 'Use .Net Core sdk 2.1.x'
-  inputs:
-    version: 2.1.x
-
 - task: CopyFiles@2
   displayName: 'Copy packages to Signing'
   inputs:
