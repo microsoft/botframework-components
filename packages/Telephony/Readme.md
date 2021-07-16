@@ -17,14 +17,14 @@ Like any other channel, Telephony channel allows you to transfer call to an agen
 * The call transfer action is only valid when called in a conversation on the Telephony channel. The action can be considered a No-op for all other channels.
 
 #### Dialog Flow
-* Once the call transfer is completed, the bot is removed from the current conversation and control is transferred to the extenal phone nunber.
+* Once the call transfer is completed, the bot is removed from the current conversation and control is transferred to the external phone number.
 * The bot will not get any handoff status on success.
 * Any actions specified after call transfer will not be executed. Treat it like a call end.
 
 #### Failures
 * For all failure cases where the connection is not established, either due to Phone Number being empty, invalid, bogus or just connection failure, an asynchronous "handoff.status" event is sent with value "failed". More details [here](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-pattern-handoff-human?view=azure-bot-service-4.0).
 * This can be handled either in code as per [this](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md) or in Composer by adding a trigger -> Activities -> Event Received (Event Activity), with this condition, turn.activity.name == "handoff.status", following which @turn.activity.value can be used for handling the failure case.
-
+* In the failure case, subsequent actions will be executed.
 
 ## **Call Recording**
 The call recording commands enable bots to request that calls are recorded by the phone provider. The bot can control when to start, stop, pause and resume the recording with these commands. For more information about the call recording capabilities, see [Telephony Advanced Features - Call Recording](https://github.com/microsoft/botframework-telephony/blob/main/CallRecording.md).

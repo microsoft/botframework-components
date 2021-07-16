@@ -21,8 +21,8 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
-		
-		[Fact]
+        
+        [Fact]
         public async Task CallTransfer_IgnoredInNonTelephonyChannel()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Msteams);

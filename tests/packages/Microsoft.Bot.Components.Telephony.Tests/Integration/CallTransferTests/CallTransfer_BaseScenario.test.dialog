@@ -5,7 +5,7 @@
     "triggers": [
         {
             "$kind": "Microsoft.OnBeginDialog",
-          "actions": [
+            "actions": [
             {
               "$kind": "Microsoft.Telephony.CallTransfer",
               "phoneNumber": "+15554434432"
