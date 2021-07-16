@@ -1,8 +1,8 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
-    "label": "Aggregate Input",
-    "subtitle": "Termination Character",
+    "label": "Aggregate DTMF Input (#)",
+    "subtitle": "Aggregate DTMF input with termination character",
     "order": [
       "terminationCharacter",
       "property",
@@ -22,7 +22,7 @@
     }
   },
   "menu": {
-    "label": "Aggregate Input (#)",
+    "label": "Aggregate DTMF Input (#)",
     "submenu": [ "Telephony" ]
   },
   "flow": {

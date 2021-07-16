@@ -12,7 +12,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// <summary>
     /// Aggregates input until it matches a regex pattern and then stores the result in an output property.
     /// </summary>
-    public class FixedLengthBatchInput : RegexAggregatorInput
+    public class BatchFixedLengthInput : RegexAggregatorInput
     {
         /// <summary>
         /// Class identifier.
@@ -23,13 +23,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         private int _batchLength;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FixedLengthBatchInput"/> class.
+        /// Initializes a new instance of the <see cref="BatchFixedLengthInput"/> class.
         /// </summary>
         /// <param name="regexAggregatorInput">Implementation for aggregatingInput.</param>
         /// <param name="sourceFilePath">Optional, source file full path.</param>
         /// <param name="sourceLineNumber">Optional, line number in source file.</param>
         [JsonConstructor]
-        public FixedLengthBatchInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public BatchFixedLengthInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
         {
             // enable instances of this command as debug break point

@@ -6,14 +6,15 @@
   "type": "object",
   "required": [
     "terminationCharacter",
+    "prompt",
     "*"
   ],
   "additionalProperties": false,
   "properties": {
     "terminationCharacter": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Termination String",
-      "description": "Checks the latest character against the string and returns the completed batch if a match is found.",
+      "title": "Termination Character",
+      "description": "Checks the latest character against the string and returns the completed batch if a match is found. Result will include specified character.",
       "examples": [
         "#"
       ]

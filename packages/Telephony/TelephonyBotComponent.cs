@@ -22,8 +22,8 @@ namespace Microsoft.Bot.Components.Telephony
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<PauseRecording>(PauseRecording.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<ResumeRecording>(ResumeRecording.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<StartRecording>(StartRecording.Kind));
-            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<FixedLengthBatchInput>(FixedLengthBatchInput.Kind));
-            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<TerminationCharacterBatchInput>(TerminationCharacterBatchInput.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchFixedLengthInput>(BatchFixedLengthInput.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchTerminationCharacterInput.Kind));
         }
     }
 }

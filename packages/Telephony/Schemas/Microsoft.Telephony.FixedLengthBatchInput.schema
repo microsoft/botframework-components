@@ -6,6 +6,7 @@
   "type": "object",
   "required": [
     "batchLength",
+    "prompt",
     "*"
   ],
   "additionalProperties": false,
@@ -15,7 +16,7 @@
       "title": "Batch Length",
       "description": "The number of characters to aggregate before returning the result.",
       "examples": [
-        "4,11,10"
+        "4"
       ]
     },
     "property": {

@@ -105,12 +105,43 @@ The Stop Recording action stops recording of the conversation. Note that it is n
 #### Failures
 * When a stop recording result is received and indicates error, the dialog throws an `ErrorResponseException`.
 
-## **DTMF Batching**
-_In progress_
+## **Aggregate DTMF Input (n)**
+Prompts the user for multiple inputs that are aggregated until a fixed character length is reached
+
+#### Parameters
+* Batch Length
+* Property
+* Prompt
+
+#### Usage
+* After started, each input the user sends will be appended to the last message until the user provides a number of characters equal to or greater than the batch length.
+
+#### Dialog Flow
+* The dialog will only end and continue to the next dialog when the batch length is reached.
+
+#### Failures
+* In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
+
+## **Aggregate DTMF Input (#)**
+Prompts the user for multiple inputs that are aggregated until the termination string is received.
+
+#### Parameters
+* Termination Character
+* Property
+* Prompt
+
+#### Usage
+* After started, each input the user sends will be appended to the last message until the user sends the provided termination character
+
+#### Dialog Flow
+* The dialog will only end and continue to the next dialog when the termination character is sent.
+
+#### Failures
+* In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
+
 
 ## Learn more
 Learn more about [creating bots with telephony capabilities](https://github.com/microsoft/botframework-telephony).
 
 ## Feedback and issues
 If you encounter any issues with this package, or would like to share any feedback please open an Issue in our [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
-
