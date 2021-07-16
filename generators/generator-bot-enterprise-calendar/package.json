@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/generator-bot-enterprise-calendar",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Yeoman generator for creating an Adaptive bot built on the Azure Bot Framework using the Calendar template.",
   "keywords": [
     "microsoft",
@@ -24,7 +24,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.1.1",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.1.2",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
