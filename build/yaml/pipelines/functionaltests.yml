@@ -28,9 +28,6 @@ steps:
   displayName: "Build"
   inputs:
     solution: "tests/functional/ComponentsFunctionalTests.sln"
-    vsVersion: 16.0
-    platform: "${{ parameters.buildPlatform }}"
-    configuration: "${{ parameters.buildConfiguration }}"
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Unit Tests'
