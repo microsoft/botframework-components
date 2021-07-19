@@ -4,7 +4,7 @@ The Microsoft.Bot.Components.Telephon package contains pre-built actions for bui
 
 - [Call Transfer](#Call-Transfer)
 - [Call Recording](#Call-Recording)
-- [DTMF Batching ](#DTMF-Batching)
+- [Aggregate DTMF Input](#Aggregate-DTMF-Input-(n))
 
 ## **Call Transfer**
 Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Learn more at [Telephony Advanced Features - Call Transfer](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md).
