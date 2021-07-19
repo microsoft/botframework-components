@@ -37,7 +37,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         }
 
         /// <summary>
-        /// Gets or sets the character that will be used to signal that the batch of input is complete.
+        /// Gets or sets the minimum amount of characters collected before storing the value and ending the dialog
         /// </summary>
         [JsonProperty("batchLength")]
         public int BatchLength
