@@ -1,3 +1,0 @@
-
-# Ignore web.config files generated to deploy JS to IIS on Windows
-**/web.config
