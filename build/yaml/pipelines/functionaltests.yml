@@ -2,10 +2,12 @@ parameters:
   - name: buildConfiguration
     displayName: Build Configuration
     type: string
+    default: Debug
 
   - name: buildPlatform
     displayName: Build Platform
     type: string
+    default: AnyCPU
 
 steps:
 - task: UseDotNet@2
