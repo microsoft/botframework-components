@@ -186,7 +186,7 @@ stages:
                 botName: "${{ bot.name }}"
                 botPricingTier: "${{ parameters.botPricingTier }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
-                templateFile: "build/templates/template-bot-resources.json"
+                templateFile: "build/arm/template-bot-resources.json"
 
           # Deploy bot to Azure Web App
             - task: AzureWebApp@1
@@ -212,7 +212,7 @@ stages:
                 botName: "${{ bot.name }}"
                 botPricingTier: "${{ parameters.botPricingTier }}"
                 resourceSuffix: "${{ parameters.resourceSuffix }}"
-                templateFile: "build/templates/template-function-js-bot-resources.json"
+                templateFile: "build/arm/template-function-js-bot-resources.json"
 
           # Deploy bot to Azure Functions
             - task: AzureFunctionApp@1
