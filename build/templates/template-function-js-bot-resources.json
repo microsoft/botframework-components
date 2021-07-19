@@ -1,0 +1,116 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appId": {
+      "type": "string",
+      "metadata": {
+        "description": "Active Directory App ID, set as MicrosoftAppId in the Web App's Application Settings."
+      }
+    },
+    "appSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "Active Directory App Password, set as MicrosoftAppPassword in the Web App's Application Settings."
+      }
+    },
+    "botName": {
+      "type": "string"
+    },
+    "botLocation": {
+      "type": "string"
+    },
+    "appInsightsName": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "appServicePlanName": {
+      "type": "string"
+    },
+    "appServicePlanResourceGroup": {
+      "type": "string"
+    },
+    "botSku": {
+      "type": "string",
+      "defaultValue": "F0",
+      "metadata": {
+        "description": "The pricing tier of the Bot Service Registration. Acceptable values are F0 and S1."
+      }
+    }
+  },
+  "variables": {
+    "siteHost": "[concat(parameters('botName'), '.azurewebsites.net')]",
+    "botEndpoint": "[concat('https://', variables('siteHost'), '/api/messages')]",
+    "publishingUsername": "[concat('$', parameters('botName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2015-08-01",
+      "location": "[parameters('botLocation')]",
+      "kind": "functionapp",
+      "name": "[parameters('botName')]",
+      "properties": {
+        "name": "[parameters('botName')]",
+        "kind": "functionapp",
+        "httpsOnly": true,
+        "alwaysOn": true,
+        "webSocketsEnabled": true
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', parameters('botName'))]"
+          ],
+          "properties": {
+            "FUNCTIONS_EXTENSION_VERSION": "~3",
+            "FUNCTIONS_WORKER_RUNTIME": "node",
+            "WEBSITE_NODE_DEFAULT_VERSION": "~14",
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[if(empty(parameters('appInsightsName')), '', reference(resourceId(parameters('appServicePlanResourceGroup'),'Microsoft.Insights/components', parameters('appInsightsName')), '2015-05-01', 'Full').properties.InstrumentationKey)]",
+            "MicrosoftAppId": "[parameters('appId')]",
+            "MicrosoftAppPassword": "[parameters('appSecret')]"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "apiVersion": "2020-09-01",
+      "name": "[concat(parameters('botName'), '/', parameters('botName'), '.azurewebsites.net')]",
+      "location": "[parameters('botLocation')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('botName'))]"
+      ],
+      "properties": {
+        "siteName": "[parameters('botName')]",
+        "hostNameType": "Verified"
+      }
+    },
+    {
+      "type": "Microsoft.BotService/botServices",
+      "apiVersion": "2020-06-02",
+      "name": "[parameters('botName')]",
+      "location": "global",
+      "kind": "bot",
+      "sku": {
+        "name": "[parameters('botSku')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('botName'))]"
+      ],
+      "properties": {
+        "name": "[parameters('botName')]",
+        "displayName": "[parameters('botName')]",
+        "endpoint": "[variables('botEndpoint')]",
+        "msaAppId": "[parameters('appId')]",
+        "developerAppInsightsApplicationId": "",
+        "developerAppInsightKey": "",
+        "publishingCredentials": null,
+        "storageResourceId": null
+      }
+    }
+  ]
+}
