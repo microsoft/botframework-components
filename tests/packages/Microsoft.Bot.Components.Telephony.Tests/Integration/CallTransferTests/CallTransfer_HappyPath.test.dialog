@@ -2,17 +2,22 @@
     "$schema": "../../../tests.schema",
     "$kind": "Microsoft.Test.Script",
     "dialog": "CallTransfer_BaseScenario.test",
-    "script": [
-        {
-            "$kind": "Microsoft.Test.UserSays",
-            "text": "Hello I'm Calculon"
-        },
-        {
-            "$kind": "Microsoft.Test.AssertReplyActivity",
-            "assertions": [
-                "type == 'event'",
-                "value.TargetPhoneNumber == '+1555443443'"
-            ]
-        }
-    ]
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "Hello I'm Calculon"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'event'",
+        "value.TargetPhoneNumber == '+15554434432'"
+      ]
+    },
+    // Due to this being a mock, after actual call transfer this will not execute 
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Transfer Initiated!"
+    }
+  ]
 }
