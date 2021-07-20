@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
@@ -20,6 +21,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("$kind")]
         public new const string Kind = "Microsoft.Telephony.FixedLengthBatchInput";
 
+        private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
         private int _batchLength;
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         }
 
         /// <summary>
-        /// Gets or sets the minimum amount of characters collected before storing the value and ending the dialog
+        /// Gets or sets the minimum amount of characters collected before storing the value and ending the dialog.
         /// </summary>
         [JsonProperty("batchLength")]
         public int BatchLength
@@ -63,7 +65,14 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <inheritdoc/>
         public override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            return base.ContinueDialogAsync(dc, cancellationToken);
+            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success)
+            {
+                return base.ContinueDialogAsync(dc, cancellationToken);
+            }
+            else
+            {
+                return Task.FromResult(new DialogTurnResult(DialogTurnStatus.Waiting));
+            }
         }
     }
 }

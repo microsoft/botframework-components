@@ -33,7 +33,13 @@
     <None Update="Integration\BatchInputTests\BatchInput_FixedLengthBaseScenario.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLengthIgnoresNonDTMF.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Integration\BatchInputTests\BatchInput_FixedLengthHappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_TerminationIgnoresNonDTMF.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\BatchInputTests\BatchInput_TerminationHappyPath.test.dialog">

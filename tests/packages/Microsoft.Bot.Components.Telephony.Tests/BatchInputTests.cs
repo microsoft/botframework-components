@@ -26,5 +26,15 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
+        [Fact]
+        public async Task BatchInput_FixedLengthIgnoresNonDTMF()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+        [Fact]
+        public async Task BatchInput_TerminationIgnoresNonDTMF()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
     }
 }

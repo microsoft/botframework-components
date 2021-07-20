@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
@@ -20,6 +21,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("$kind")]
         public new const string Kind = "Microsoft.Telephony.TerminationCharacterBatchInput";
 
+        private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
         private string _terminationCharacter;
 
         /// <summary>
@@ -55,15 +57,16 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         }
 
         /// <inheritdoc/>
-        public override Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return base.BeginDialogAsync(dc, options, cancellationToken);
-        }
-
-        /// <inheritdoc/>
         public override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            return base.ContinueDialogAsync(dc, cancellationToken);
+            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success)
+            {
+                return base.ContinueDialogAsync(dc, cancellationToken);
+            }
+            else
+            {
+                return Task.FromResult(new DialogTurnResult(DialogTurnStatus.Waiting));
+            }
         }
     }
 }
