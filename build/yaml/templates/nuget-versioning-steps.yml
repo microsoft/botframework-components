@@ -53,7 +53,7 @@ steps:
 
     # Configure version suffix based on deployment ring
     if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-      $nugetVersionSuffix = $deploymentRing + $vs;
+      $nugetVersionSuffix = $deploymentRing;
       "Version Suffix = $nugetVersionSuffix";
       $packageVersion +=  "-" + $nugetVersionSuffix;
     }

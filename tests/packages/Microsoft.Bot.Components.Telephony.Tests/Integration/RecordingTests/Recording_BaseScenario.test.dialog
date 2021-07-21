@@ -1,0 +1,76 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.AdaptiveDialog",
+    "id": "Recording_BaseScenario.test",
+    "triggers": [
+        {
+            "$kind": "Microsoft.OnBeginDialog",
+            "actions": [
+                {
+                    "$kind": "Microsoft.Telephony.StartRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, true)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Started recording!"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Enter your account number."
+                },
+                {
+                    "$kind": "Microsoft.Telephony.PauseRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, false)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Paused recording!"
+                },
+                {
+                    "$kind": "Microsoft.EndTurn"                
+                }
+            ]
+        },
+        {
+            "$kind": "Microsoft.OnIntent",
+            "intent": "HelpIntent",
+            "actions": [
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "On help intent handler"
+                }
+            ]
+        },
+        {
+            "$kind": "Microsoft.OnIntent",
+            "intent": "AccountIntent",
+            "actions": [
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Your account is active."
+                },
+                {
+                    "$kind": "Microsoft.Telephony.ResumeRecording",
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, false)"
+                },
+                {
+                    "$kind": "Microsoft.SendActivity",
+                    "activity": "Resumed recording!"
+                }
+            ]
+        }
+    ],
+    "recognizer": {
+        "$kind": "Microsoft.RegexRecognizer",
+        "intents": [
+            {
+              "intent": "HelpIntent",
+              "pattern": "help"
+            },
+            {
+              "intent": "AccountIntent",
+              "pattern": "account"
+            }
+        ]
+    }
+}

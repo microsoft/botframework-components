@@ -1,0 +1,28 @@
+{
+    "$schema": "../../../tests.schema",
+    "$kind": "Microsoft.Test.Script",
+    "dialog": "Recording_BaseScenario.test",
+    "script": [
+        {
+            "$kind": "Microsoft.Test.UserSays",
+            "text": "Hello I'm Bender"
+        },
+        {
+            "$kind": "Microsoft.Test.AssertReplyActivity",
+            "assertions": [
+              "type == 'command'",
+              "name == 'channel/vnd.microsoft.telephony.recording.start'"
+          ]
+        },
+        {
+            "$kind": "Microsoft.Test.UserActivity",
+            "activity": {
+                "type": "commandResult",
+                "name": "wrong name"
+            }
+        },
+        {
+            "$kind": "Microsoft.Test.AssertNoActivity"
+        }
+    ]
+}

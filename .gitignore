@@ -383,6 +383,7 @@ experimental/generator-dotnet-yeoman/node_modules
 
 # Allow the root-level /packages/ directory or it gets confused with NuGet directories
 !/[Pp]ackages/*
+!/tests/[Pp]ackages/*
 
 # Allow the packages directory under tests
 !/tests/unit/[Pp]ackages/*

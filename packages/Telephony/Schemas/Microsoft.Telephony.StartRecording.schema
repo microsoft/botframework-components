@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Recording Start",
+  "description": "Starts recording the current conversation.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "allowInterruptions": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Allow Interruptions",
+      "description": "Allow the dialog to continue when recording start operation is in progress"
+    }
+  }
+}
