@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Graph</PackageId>
-    <VersionPrefix>1.1.1</VersionPrefix>
+    <VersionPrefix>1.1.2</VersionPrefix>
     <Description>Custom actions for the MS Graph API for Bot Framework bots.</Description>
     <Summary>A set of custom actions for working with the Microsoft Graph API from Bot Framework Composer.</Summary>
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Graph</PackageProjectUrl>
