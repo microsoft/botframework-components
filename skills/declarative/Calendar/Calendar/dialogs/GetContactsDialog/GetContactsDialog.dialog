@@ -3,7 +3,8 @@
   "$designer": {
     "id": "iRR3CJ",
     "name": "GetContactsDialog",
-    "description": ""
+    "description": "",
+    "comment": "Looks up names or emails in MS Graph and returns an array of contact objects"
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -11,7 +12,7 @@
     {
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
-        "name": "OnBeginDialog",
+        "name": "BeginDialog",
         "id": "4Oub2q"
       },
       "actions": [

@@ -3,7 +3,8 @@
   "$designer": {
     "id": "aZc9SE",
     "name": "AuthenticationDialog",
-    "description": "Authenticates user through AAD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
+    "description": "Authenticates user through AAD and accesses their MS Graph user profile and mail box settings to capture their name and time zone.",
+    "comment": "Logs user in, stores token, and gets user profile and working hours from MS Graph."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -12,7 +13,8 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "MnLHqD"
+        "id": "MnLHqD",
+        "comment": "Logs user in, stores token, and gets user profile and working hours from MS Graph."
       },
       "actions": [
         {

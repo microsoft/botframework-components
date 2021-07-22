@@ -3,7 +3,8 @@
   "$designer": {
     "id": "T6pvbO",
     "name": "CancelEventDialog",
-    "description": ""
+    "description": "",
+    "comment": "Cancels a dialog event. Requires an event in dialog options."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "coEW4g"
+        "id": "coEW4g",
+        "comment": "Cancels a dialog event. Requires an event in dialog options."
       },
       "actions": [
         {
@@ -27,14 +29,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "itkIrW"
+            "id": "itkIrW",
+            "comment": ""
           },
           "condition": "=$event.IsOrganizer",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "ZsImtn"
+                "id": "ZsImtn",
+                "comment": "If the user is the meeting organizer, emit CancelEvent event."
               },
               "eventName": "CancelEvent"
             }
@@ -43,7 +47,8 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "HwUbEa"
+                "id": "HwUbEa",
+                "comment": "If the user is not the meeting organizer, emit the DeclineEvent event."
               },
               "eventName": "DeclineEvent"
             }
@@ -55,14 +60,16 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "ez9la7",
-        "name": "OnEvent (CancelEvent)"
+        "name": "OnEvent (CancelEvent)",
+        "comment": "Handles CancelEvent event"
       },
       "event": "CancelEvent",
       "actions": [
         {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "lfDkBw"
+            "id": "lfDkBw",
+            "comment": "Prompts user to confirm cancelling the event."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -84,7 +91,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "9dab8n"
+            "id": "9dab8n",
+            "comment": "If the user confirms the cancellation, delete the event, otherwise, show a message (dialog ends automatically)."
           },
           "condition": "=$confirmation",
           "actions": [
@@ -129,14 +137,16 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "tvRSf0",
-        "name": "OnEvent (DeclineEvent)"
+        "name": "OnEvent (DeclineEvent)",
+        "comment": "Handles DeclineEvent event"
       },
       "event": "DeclineEvent",
       "actions": [
         {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "Ef32OL"
+            "id": "Ef32OL",
+            "comment": "Prompts user to confirm they want to decline the event."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -157,7 +167,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "wF3uxS"
+            "id": "wF3uxS",
+            "comment": "If user confirms, launch the RespondToEventDialog with the event object and response. Otherwise show cancel message."
           },
           "condition": "=$confirmation",
           "actions": [
@@ -189,5 +200,6 @@
   ],
   "generator": "CancelEventDialog.lg",
   "recognizer": "CancelEventDialog.lu.qna",
-  "id": "CancelEventDialog"
+  "id": "CancelEventDialog",
+  "dialogs": []
 }
