@@ -37,12 +37,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Schemas\Microsoft.Telephony.FixedLengthBatchInput.schema" />
+    <None Remove="Schemas\Microsoft.Telephony.FixedLengthBatchInput.uischema" />
     <None Remove="Schemas\Microsoft.Telephony.StartRecording.schema" />
     <None Remove="Schemas\Microsoft.Telephony.StartRecording.uischema" />
     <None Remove="Schemas\Microsoft.Telephony.PauseRecording.schema" />
     <None Remove="Schemas\Microsoft.Telephony.PauseRecording.uischema" />
     <None Remove="Schemas\Microsoft.Telephony.ResumeRecording.schema" />
     <None Remove="Schemas\Microsoft.Telephony.ResumeRecording.uischema" />
+    <None Remove="Schemas\Microsoft.Telephony.TerminationCharacterBatchInput.schema" />
+    <None Remove="Schemas\Microsoft.Telephony.TerminationCharacterBatchInput.uischema" />
   </ItemGroup>
 
   <PropertyGroup>

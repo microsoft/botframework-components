@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.AdaptiveDialog",
+  "id": "BatchInput_BaseScenario.test",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.Telephony.FixedLengthBatchInput",
+          "property": "conversation.DTMFResult",
+          "prompt": "Enter your 6 digit phone number.",
+          "batchLength": "6"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "${conversation.DTMFResult}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "HelpIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "On help intent handler"
+        }
+      ]
+    }
+  ],
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "HelpIntent",
+        "pattern": "help"
+      }
+    ]
+  }
+}

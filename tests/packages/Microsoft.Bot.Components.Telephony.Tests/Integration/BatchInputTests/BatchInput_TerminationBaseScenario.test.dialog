@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.AdaptiveDialog",
+  "id": "BatchInput_BaseScenario.test",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.Telephony.TerminationCharacterBatchInput",
+          "property": "conversation.DTMFResult",
+          "prompt": "Enter phone number ending with 9.",
+          "terminationCharacter": "9"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "${conversation.DTMFResult}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "HelpIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "On help intent handler"
+        }
+      ]
+    }
+  ],
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "HelpIntent",
+        "pattern": "help"
+      }
+    ]
+  }
+}

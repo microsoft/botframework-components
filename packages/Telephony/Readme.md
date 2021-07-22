@@ -4,7 +4,7 @@ The Microsoft.Bot.Components.Telephon package contains pre-built actions for bui
 
 - [Call Transfer](#Call-Transfer)
 - [Call Recording](#Call-Recording)
-- [DTMF Batching ](#DTMF-Batching)
+- [Aggregate DTMF Input](#Aggregate-DTMF-Input-(n))
 
 ## **Call Transfer**
 Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Learn more at [Telephony Advanced Features - Call Transfer](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md).
@@ -104,8 +104,43 @@ The Stop Recording action stops recording of the conversation. Note that it is n
 #### Failures
 * When a stop recording result is received and indicates error, the dialog throws an `ErrorResponseException`.
 
-## **DTMF Batching**
-_In progress_
+## **Aggregate DTMF Input (n)**
+Prompts the user for multiple inputs that are aggregated until a specified character length is met or exceeded.
+Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
+
+#### Parameters
+* Batch Length
+* Property
+* Prompt
+
+#### Usage
+* After started, each input the user sends will be appended to the last message until the user provides a number of characters equal to or greater than the batch length.
+
+#### Dialog Flow
+* The dialog will only end and continue to the next dialog when the batch length is reached.
+
+#### Failures
+* In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
+* If the user enters anything other than a valid dtmf character
+
+## **Aggregate DTMF Input (#)**
+Prompts the user for multiple inputs that are aggregated until the termination string is received.
+Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
+
+#### Parameters
+* Termination Character
+* Property
+* Prompt
+
+#### Usage
+* After started, each input the user sends will be appended to the last message until the user sends the provided termination character
+
+#### Dialog Flow
+* The dialog will only end and continue to the next dialog when the termination character is sent.
+
+#### Failures
+* In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
+
 
 ## Learn more
 Learn more about [creating bots with telephony capabilities](https://github.com/microsoft/botframework-telephony).
