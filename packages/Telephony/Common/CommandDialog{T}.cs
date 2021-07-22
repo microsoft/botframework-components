@@ -132,10 +132,6 @@ namespace Microsoft.Bot.Components.Telephony.Common
             commandActivity.Value = commandValue;
 
             commandActivity.From = turnContext.Activity.From;
-            
-            // TODO: Check with SDK crew
-            //commandActivity.RelatesTo = turnContext.Activity.GetConversationReference();
-            
             commandActivity.ReplyToId = turnContext.Activity.Id;
             commandActivity.ServiceUrl = turnContext.Activity.ServiceUrl;
             commandActivity.ChannelId = turnContext.Activity.ChannelId;

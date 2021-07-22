@@ -17,7 +17,9 @@ variables:
 
   ## Bots Configuration (Define these variables in Azure)
   # BfcfnEmptyBotDotNetWebAppId: (optional) App Id for BfcfnEmptyBotDotNetWebApp bot.
-  # BfcfnEmptyBotJSWebAppAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotDotNetFunctionsId: (optional) App Id for BfcfnEmptyBotDotNetFunctions bot.
+  # BfcfnEmptyBotJSWebAppId: (optional) App Id for BfcfnEmptyBotJSWebApp bot.
+  # BfcfnEmptyBotJSFunctionsId: (optional) App Id for BfcfnEmptyBotJSFunctions bot.
 
   # DeployBotResourcesGuid: (optional) Deploy Bot Resources pipeline GUID.
 
@@ -64,7 +66,9 @@ stages:
     parameters:
       appIds:
         EmptyBotDotNetWebApp: "$(BFCFNEMPTYBOTDOTNETWEBAPPID)"
+        EmptyBotDotNetFunctions: "$(BFCFNEMPTYBOTDOTNETFUNCTIONSID)"
         EmptyBotJSWebApp: "$(BFCFNEMPTYBOTJSWEBAPPID)"
+        EmptyBotJSFunctions: "$(BFCFNEMPTYBOTJSFUNCTIONSID)"
       azureSubscription: "$(AZURESUBSCRIPTION)"
       buildConfiguration: "$(BUILDCONFIGURATION)"
       buildIdSuffix: $[stageDependencies.Download_Variables.Download_Variables.outputs['Set_Variables.DeploymentBuildSuffix']]

@@ -1,76 +1,77 @@
 steps:
-- powershell: |
-    $deploymentRing = "$env:DEPLOYMENTRING";
-    "Deployment Ring = $deploymentRing";
+  - powershell: |
+      $deploymentRing = "$env:DEPLOYMENTRING";
+      "Deployment Ring = $deploymentRing";
 
-    $deploymentRingOverride = "$env:DEPLOYMENTRINGOVERRIDE";
-    "Deployment Ring Override = $deploymentRingOverride";
+      $deploymentRingOverride = "$env:DEPLOYMENTRINGOVERRIDE";
+      "Deployment Ring Override = $deploymentRingOverride";
 
-    $componentType = "$env:COMPONENTTYPE";
-    "Component Type = $componentType";
+      $componentType = "$env:COMPONENTTYPE";
+      "Component Type = $componentType";
 
-    if ($deploymentRingOverride) {
-      $deploymentRing = $deploymentRingOverride;
-    }
 
-    if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
-      $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
-      "Release Candidate Number = $releaseCandidateNumber";
-
-      if (-not $releaseCandidateNumber) {
-        Write-Host "Release Candidate Number not defined"
-        exit 1
+      if ($deploymentRingOverride) {
+        $deploymentRing = $deploymentRingOverride;
       }
 
-      $vs = $releaseCandidateNumber.ToLowerInvariant();
-    } else {
-      $dateStamp = (Get-Date -format "yyyyMMdd");
-      $commitHash = "$(Build.SourceVersion)".SubString(0,7);
-      $vs = "." + $dateStamp + "." + $commitHash;
-    }
+      if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
+        $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
+        "Release Candidate Number = $releaseCandidateNumber";
 
-    if ($componentType.ToLowerInvariant() -eq "codeExtension") {
-      if (Test-Path -Path *.csproj) {
-        $xml = [Xml] (Get-Content ./*.csproj)
-        $packageVersion = [string] $xml.Project.PropertyGroup.VersionPrefix
-      } else {
-          Write-Host "Missing .csproj"
+        if (-not $releaseCandidateNumber) {
+          Write-Host "Release Candidate Number not defined"
           exit 1
-      }
-    }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
-      if (Test-Path -Path *.nuspec) {
-        $xml = [Xml] (Get-Content ./*.nuspec)
-        $packageVersion = [string] $xml.Package.MetaData.Version
+        }
+
+        $vs = $releaseCandidateNumber.ToLowerInvariant();
       } else {
-          Write-Host "Missing .nuspec"
-          exit 1
+        $dateStamp = (Get-Date -format "yyyyMMdd");
+        $commitHash = "$(Build.SourceVersion)".SubString(0,7);
+        $vs = "." + $dateStamp + "." + $commitHash;
       }
-    }
 
-    # Remove any whitespace from parse version
-    $packageVersion = $packageVersion.Trim();
-    "Version Prefix = $packageVersion";
+      if ($componentType.ToLowerInvariant() -eq "codeExtension") {
+        if (Test-Path -Path *.csproj) {
+          $xml = [Xml] (Get-Content ./*.csproj)
+          $packageVersion = [string] $xml.Project.PropertyGroup.VersionPrefix
+        } else {
+            Write-Host "Missing .csproj"
+            exit 1
+        }
+      }elseif ($componentType.ToLowerInvariant() -eq "declarativeAsset") {
+        if (Test-Path -Path *.nuspec) {
+          $xml = [Xml] (Get-Content ./*.nuspec)
+          $packageVersion = [string] $xml.Package.MetaData.Version
+        } else {
+            Write-Host "Missing .nuspec"
+            exit 1
+        }
+      }
 
-    # Configure version suffix based on deployment ring
-    if ($deploymentRing.ToLowerInvariant() -ne "stable") {
-      $nugetVersionSuffix = $deploymentRing;
-      "Version Suffix = $nugetVersionSuffix";
-      $packageVersion +=  "-" + $nugetVersionSuffix;
-    }
+      # Remove any whitespace from parse version
+      $packageVersion = $packageVersion.Trim();
+      "Version Prefix = $packageVersion";
 
-    Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
+      # Configure version suffix based on deployment ring
+      if ($deploymentRing.ToLowerInvariant() -ne "stable") {
+        $nugetVersionSuffix = $deploymentRing + $vs;
+        "Version Suffix = $nugetVersionSuffix";
+        $packageVersion +=  "-" + $nugetVersionSuffix;
+      }
 
-    "Version = $packageVersion";
-  displayName: 'Resolve package version variables'
-  name: SetVersion
-  workingDirectory: '$(WorkingDirectory)'
-  condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
+      Write-Host "##vso[task.setvariable variable=NugetPackageVersion;]$packageVersion";
 
-- task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-  displayName: Tag build for Nuget
-  inputs: 
-    tags: |
-      NugetPackageVersion: $(NugetPackageVersion)
-  continueOnError: true
+      "Version = $packageVersion";
+    displayName: 'Resolve package version variables'
+    name: SetVersion
+    workingDirectory: '$(WorkingDirectory)'
+    condition: or(eq(variables.ComponentType, 'declarativeAsset'), eq(variables.ComponentType, 'codeExtension'))
 
-- template: debug-workspace-steps.yml
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+    displayName: Tag build for Nuget
+    inputs:
+      tags: |
+        NugetPackageVersion: $(NugetPackageVersion)
+    continueOnError: true
+
+  - template: debug-workspace-steps.yml

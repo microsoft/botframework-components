@@ -1,8 +1,8 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
-    "label": "Transfer a call",
-    "subtitle": "Call Transfer",
+    "label": "Call Transfer",
+    "subtitle": "Transfers call to the phone number specified (in E.164 format such as +1425123456)",
     "order": [
       "phoneNumber",
       "*"
@@ -16,7 +16,7 @@
     }
   },
   "menu": {
-    "label": "Transfer a call",
+    "label": "Call Transfer",
     "submenu": [ "Telephony" ]
   },
   "flow": {

@@ -37,7 +37,9 @@ namespace ComponentsFunctionalTests.EmptyBot
             var hostBots = new List<HostBot>
             {
                 HostBot.EmptyBotDotNetWebApp,
-                HostBot.EmptyBotJSWebApp
+                HostBot.EmptyBotDotNetFunctions,
+                HostBot.EmptyBotJSWebApp,
+                HostBot.EmptyBotJSFunctions
             };
 
             var scripts = new List<string> { "EmptyBot.json" };
