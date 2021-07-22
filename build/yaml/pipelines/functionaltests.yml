@@ -2,16 +2,14 @@ parameters:
   - name: buildConfiguration
     displayName: Build Configuration
     type: string
+    default: Debug
 
   - name: buildPlatform
     displayName: Build Platform
     type: string
+    default: AnyCPU
 
 steps:
-- task: UseDotNet@2
-  displayName: "Use .Net Core sdk 2.1.x"
-  inputs:
-    version: 2.1.x
 
 - task: UseDotNet@2
   displayName: "Use .Net Core sdk 3.1.x"
@@ -24,21 +22,18 @@ steps:
 - task: NuGetCommand@2
   displayName: "NuGet restore"
   inputs:
-    restoreSolution: ComponentsFunctionalTests.sln
+    restoreSolution: tests/functional/ComponentsFunctionalTests.sln
 
 - task: MSBuild@1
   displayName: "Build"
   inputs:
-    solution: "ComponentsFunctionalTests.sln"
-    vsVersion: 16.0
-    platform: "${{ parameters.buildPlatform }}"
-    configuration: "${{ parameters.buildConfiguration }}"
+    solution: "tests/functional/ComponentsFunctionalTests.sln"
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Unit Tests'
   inputs:
     command: test
-    projects: 'Tests/TranscriptTestRunnerTests/TranscriptTestRunnerTests.csproj'
+    projects: 'tests/functional/Tests/TranscriptTestRunnerTests/TranscriptTestRunnerTests.csproj'
     testRunTitle: 'FunctionalTests-CI-Results-$(BUILD.BUILDNUMBER)'
     arguments: '-v n --configuration ${{ parameters.buildConfiguration }} --no-build --no-restore --collect "Code Coverage" --logger "trx;LogFileName=FunctionalTests-CI-Results-$(BUILD.BUILDNUMBER).trx"'
 
