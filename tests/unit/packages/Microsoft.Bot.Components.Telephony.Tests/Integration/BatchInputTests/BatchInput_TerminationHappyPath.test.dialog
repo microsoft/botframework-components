@@ -8,6 +8,13 @@
       "membersAdded": [ "user" ]
     },
     {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter phone number ending with 9.'"
+      ]
+    },
+    {
       "$kind": "Microsoft.Test.UserSays",
       "text": "1"
     },
@@ -30,13 +37,6 @@
     {
       "$kind": "Microsoft.Test.UserSays",
       "text": "9"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyActivity",
-      "assertions": [
-        "type == 'message'",
-        "text == 'Enter phone number ending with 9.'"
-      ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",

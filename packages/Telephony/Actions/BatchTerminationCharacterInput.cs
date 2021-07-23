@@ -19,7 +19,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
-        public new const string Kind = "Microsoft.Telephony.TerminationCharacterBatchInput";
+        public const string Kind = "Microsoft.Telephony.BatchTerminationCharacterInput";
 
         private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
         private string _terminationCharacter;
@@ -59,7 +59,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <inheritdoc/>
         public override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success)
+            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success || dc.State.GetValue(TurnPath.Interrupted, () => false))
             {
                 return base.ContinueDialogAsync(dc, cancellationToken);
             }

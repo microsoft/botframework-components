@@ -4,8 +4,11 @@
     "label": "Aggregate DTMF Input (#)",
     "subtitle": "Aggregate DTMF input with termination character",
     "order": [
+      "prompt",
       "terminationCharacter",
       "property",
+      "allowInterruptions",
+      "alwaysPrompt",
       "*"
     ],
     "properties": {
@@ -18,6 +21,16 @@
         "intellisenseScopes": [
           "variable-scopes"
         ]
+      },
+      "allowInterruptions": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "alwaysPrompt": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
       }
     }
   },
@@ -27,23 +40,17 @@
   },
   "flow": {
     "widget": "ActionCard",
-    "header": {
-      "widget": "ActionHeader",
-      "icon": "MessageBot",
-      "colors": {
-        "theme": "#EEEAF4",
-        "icon": "#5C2E91"
-      }
-    },
     "body": {
-      "widget": "LgWidget",
-      "field": "prompt"
+        "widget": "LgWidget",
+        "field": "prompt"
     },
-    "footer": {
-      "widget": "PropertyDescription",
-      "property": "=action.defaultOperation",
-      "description": "= Default operation"
-    },
-    "hideFooter": "=!action.defaultOperation"
+    "header": {
+        "widget": "ActionHeader",
+        "icon": "MessageBot",
+        "colors": {
+            "theme": "#EEEAF4",
+            "icon": "#5C2E91"
+        }
+    }
   }
 }

@@ -33,19 +33,31 @@
     <None Update="Integration\BatchInputTests\BatchInput_FixedLengthBaseScenario.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Integration\BatchInputTests\BatchInput_FixedLengthIgnoresNonDTMF.test.dialog">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Integration\BatchInputTests\BatchInput_FixedLengthHappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Integration\BatchInputTests\BatchInput_TerminationIgnoresNonDTMF.test.dialog">
+    <None Update="Integration\BatchInputTests\BatchInput_Termination_WithTangent_InterruptionEnabled_WithReprompt.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLength_WithTangent_InterruptionEnabled_WithReprompt.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLength_WithTangent_InterruptionEnabled.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\BatchInputTests\BatchInput_TerminationHappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\BatchInputTests\BatchInput_TerminationBaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLength_WithTangent_InterruptionDisabled.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_Termination_WithTangent_InterruptionDisabled.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_Termination_WithTangent_InterruptionEnabled.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Integration\CallTransferTests\CallTransfer_BaseScenario.test.dialog">
