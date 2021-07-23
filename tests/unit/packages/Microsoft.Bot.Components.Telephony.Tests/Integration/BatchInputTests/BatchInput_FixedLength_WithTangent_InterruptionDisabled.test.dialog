@@ -36,6 +36,10 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
+      "text": "help"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
       "text": "9"
     },
     {

@@ -1,7 +1,7 @@
 {
   "$schema": "../../../tests.schema",
   "$kind": "Microsoft.Test.Script",
-  "dialog": "BatchInput_FixedLengthBaseScenario.test",
+  "dialog": "BatchInput_TerminationBaseScenario.test",
   "script": [
     {
       "$kind": "Microsoft.Test.UserConversationUpdate",
@@ -11,7 +11,42 @@
       "$kind": "Microsoft.Test.AssertReplyActivity",
       "assertions": [
         "type == 'message'",
-        "text == 'Enter your 6 digit phone number.'"
+        "text == 'Enter phone number ending with 9.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "3"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "4"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "5"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "help"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "On help intent handler"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter phone number ending with 9.'"
       ]
     },
     {

@@ -28,12 +28,24 @@
       ]
     },
     "prompt": {
-        "$kind": "Microsoft.IActivityTemplate",
-        "title": "Initial prompt",
-        "description": "Message to send to collect information.",
-        "examples": [
-            "Enter your phone number followed by the pound sign."
-        ]
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Initial prompt",
+      "description": "Message to send to collect information.",
+      "examples": [
+        "Enter your phone number followed by the pound sign."
+      ]
+    },
+    "allowInterruptions": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Allow Interruptions",
+      "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway."
+    },
+    "alwaysPrompt": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Always Prompt",
+      "description": "When true, if batch is interrupted, it will attempt to restart the batch rather than abandon it."
     }
-  }
+  },"$policies": {
+        "interactive": true
+    }
 }

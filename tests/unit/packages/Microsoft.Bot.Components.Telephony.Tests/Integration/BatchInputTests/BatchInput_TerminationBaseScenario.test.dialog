@@ -7,14 +7,16 @@
       "$kind": "Microsoft.OnConversationUpdateActivity",
       "actions": [
         {
-          "$kind": "Microsoft.Telephony.TerminationCharacterBatchInput",
+          "$kind": "Microsoft.Telephony.BatchTerminationCharacterInput",
           "property": "conversation.DTMFResult",
           "prompt": "Enter phone number ending with 9.",
-          "terminationCharacter": "9"
+          "terminationCharacter": "9",
+          "allowInterruptions": "=coalesce(settings.allowInterruptions, true)",
+          "alwaysPrompt": "=coalesce(settings.alwaysPrompt, false)"
         },
         {
           "$kind": "Microsoft.SendActivity",
-          "activity": "${conversation.DTMFResult}"
+          "activity": "${coalesce(conversation.DTMFResult, 'empty')}"
         }
       ]
     },

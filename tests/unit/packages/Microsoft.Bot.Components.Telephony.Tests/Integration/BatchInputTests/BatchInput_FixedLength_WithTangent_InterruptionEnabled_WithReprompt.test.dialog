@@ -8,6 +8,13 @@
       "membersAdded": [ "user" ]
     },
     {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter your 6 digit phone number.'"
+      ]
+    },
+    {
       "$kind": "Microsoft.Test.UserSays",
       "text": "1"
     },
@@ -21,7 +28,38 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "4was brillg#, and the slithy t0ves."
+      "text": "4"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "5"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "help"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "On help intent handler"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter your 6 digit phone number.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "2"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "3"
     },
     {
       "$kind": "Microsoft.Test.UserSays",
@@ -33,18 +71,7 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "Did gyre and gimble in the wabe"
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
       "text": "9"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyActivity",
-      "assertions": [
-        "type == 'message'",
-        "text == 'Enter your 6 digit phone number.'"
-      ]
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",

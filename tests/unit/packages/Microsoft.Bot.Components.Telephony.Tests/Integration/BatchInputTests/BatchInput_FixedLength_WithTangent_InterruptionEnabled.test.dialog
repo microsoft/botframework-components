@@ -1,11 +1,18 @@
 {
   "$schema": "../../../tests.schema",
   "$kind": "Microsoft.Test.Script",
-  "dialog": "BatchInput_TerminationBaseScenario.test",
+  "dialog": "BatchInput_FixedLengthBaseScenario.test",
   "script": [
     {
       "$kind": "Microsoft.Test.UserConversationUpdate",
       "membersAdded": [ "user" ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter your 6 digit phone number.'"
+      ]
     },
     {
       "$kind": "Microsoft.Test.UserSays",
@@ -21,10 +28,6 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "4was brillg#, and the slithy t0ves."
-    },
-    {
-      "$kind": "Microsoft.Test.UserSays",
       "text": "4"
     },
     {
@@ -33,24 +36,17 @@
     },
     {
       "$kind": "Microsoft.Test.UserSays",
-      "text": "Did gyre and gimble in the wabe"
+      "text": "help"
     },
     {
-      "$kind": "Microsoft.Test.UserSays",
-      "text": "9"
-    },
-    {
-      "$kind": "Microsoft.Test.AssertReplyActivity",
-      "assertions": [
-        "type == 'message'",
-        "text == 'Enter phone number ending with 9.'"
-      ]
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "On help intent handler"
     },
     {
       "$kind": "Microsoft.Test.AssertReplyActivity",
       "assertions": [
         "type == 'message'",
-        "text == '123459'"
+        "text == 'empty'"
       ]
     }
   ]

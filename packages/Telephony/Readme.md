@@ -112,12 +112,18 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 * Batch Length
 * Property
 * Prompt
+* AllowInterruptions
+* AlwaysPrompt
 
 #### Usage
 * After started, each input the user sends will be appended to the last message until the user provides a number of characters equal to or greater than the batch length.
 
 #### Dialog Flow
 * The dialog will only end and continue to the next dialog when the batch length is reached.
+* If AllowInterruptions is true, the parent dialog will receive the input and can handle it as an intent.
+* After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
+* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
+
 
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
@@ -131,12 +137,17 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 * Termination Character
 * Property
 * Prompt
+* AllowInterruptions
+* AlwaysPrompt
 
 #### Usage
 * After started, each input the user sends will be appended to the last message until the user sends the provided termination character
 
 #### Dialog Flow
 * The dialog will only end and continue to the next dialog when the termination character is sent.
+* If AllowInterruptions is true, the parent dialog will receive the input and can handle it as an intent.
+* After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
+* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
 
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.

@@ -7,14 +7,16 @@
       "$kind": "Microsoft.OnConversationUpdateActivity",
       "actions": [
         {
-          "$kind": "Microsoft.Telephony.FixedLengthBatchInput",
+          "$kind": "Microsoft.Telephony.BatchFixedLengthInput",
           "property": "conversation.DTMFResult",
           "prompt": "Enter your 6 digit phone number.",
-          "batchLength": "6"
+          "batchLength": "6",
+          "allowInterruptions": "=coalesce(settings.allowInterruptions, true)",
+          "alwaysPrompt": "=coalesce(settings.alwaysPrompt, false)"
         },
         {
           "$kind": "Microsoft.SendActivity",
-          "activity": "${conversation.DTMFResult}"
+          "activity": "${coalesce(conversation.DTMFResult, 'empty')}"
         }
       ]
     },

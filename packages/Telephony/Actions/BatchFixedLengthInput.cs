@@ -5,7 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
@@ -19,7 +22,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
-        public new const string Kind = "Microsoft.Telephony.FixedLengthBatchInput";
+        public new const string Kind = "Microsoft.Telephony.BatchFixedLengthInput";
 
         private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
         private int _batchLength;
@@ -37,6 +40,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
         }
+
+        /// <summary>
+        /// Gets or sets intteruption policy. 
+        /// </summary>
+        /// <value>
+        /// Bool or expression which evalutes to bool.
+        /// </value>
+        [JsonProperty("allowInterruptions")]
+        public BoolExpression AllowInterruptions { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the minimum amount of characters collected before storing the value and ending the dialog.
@@ -65,7 +77,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <inheritdoc/>
         public override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success)
+            if (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success || dc.State.GetValue(TurnPath.Interrupted, () => false))
             {
                 return base.ContinueDialogAsync(dc, cancellationToken);
             }
@@ -73,6 +85,29 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             {
                 return Task.FromResult(new DialogTurnResult(DialogTurnStatus.Waiting));
             }
+        }
+
+        /// <inheritdoc/>
+        protected override async Task<bool> OnPreBubbleEventAsync(DialogContext dc, DialogEvent e, CancellationToken cancellationToken)
+        {
+            if (e.Name == DialogEvents.ActivityReceived && dc.Context.Activity.Type == ActivityTypes.Message)
+            {
+                // Ask parent to perform recognition
+                await dc.Parent.EmitEventAsync(AdaptiveEvents.RecognizeUtterance, value: dc.Context.Activity, bubble: false, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                // Should we allow interruptions
+                var canInterrupt = true;
+                if (this.AllowInterruptions != null)
+                {
+                    var (allowInterruptions, error) = this.AllowInterruptions.TryGetValue(dc.State);
+                    canInterrupt = error == null && allowInterruptions;
+                }
+
+                // Stop bubbling if interruptions ar NOT allowed
+                return !canInterrupt;
+            }
+
+            return false;
         }
     }
 }
