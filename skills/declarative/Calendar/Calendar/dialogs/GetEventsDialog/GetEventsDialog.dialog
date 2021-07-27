@@ -2,7 +2,8 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "tMMCfJ",
-    "name": "GetEventsDialog"
+    "name": "GetEventsDialog",
+    "comment": "This dialog accepts optional parameters to retrieve events from the MS Graph Calendar API. It can return either an array of search results or a spcific event if the event Id parameter is provided."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -33,21 +34,24 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "WnfDMU"
+            "id": "WnfDMU",
+            "comment": "Triggers the OnEvent (SetParameters) handler. This step collects any parameters for looking up the event from the user including: subject, attendees, date and/or time, or location. All parameters are optional."
           },
           "eventName": "SetParameters"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "80CHa6"
+            "id": "80CHa6",
+            "comment": "If the eventId was passed as a dialog option, then perform an event lookup rather than a search. This is typically triggered by selecting an event from a list of search results. "
           },
           "condition": "=$parameters.eventId != null",
           "elseActions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "IgNZGN"
+                "id": "IgNZGN",
+                "comment": "Triggers the OnEvent (GetEventById) handler. Performs an event search based on the parameters provided by the user."
               },
               "eventName": "GetEvents"
             }
@@ -56,7 +60,8 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "A4djYr"
+                "id": "A4djYr",
+                "comment": "Triggers the OnEvent (GetEventById) handler. Looks up an event by its unique Id in the MS Graph Calendar API."
               },
               "eventName": "GetEventById"
             }
@@ -65,7 +70,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "isyBmx"
+            "id": "isyBmx",
+            "comment": "The $doSelection property indicates whether to return a list of events, or to require the user to select a specific event in order to continue. When showing a schedule, or search results, $doSelection should be false. If performing an event update or event cancellation, $doSelection should be true."
           },
           "actions": [
             {
@@ -78,7 +84,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "Mw6r42"
+                    "id": "Mw6r42",
+                    "comment": "Triggers the OnEvent (NoEventsFound) handler."
                   },
                   "eventName": "NoEventsFound"
                 }
@@ -87,7 +94,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "7dJElW"
+                    "id": "7dJElW",
+                    "comment": "Triggers the OnEvent (SelectEvent) handler. Calls the ListDialog with the results so the user can select one."
                   },
                   "eventName": "SelectEvent"
                 }
@@ -100,7 +108,8 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "BbEPfj"
+            "id": "BbEPfj",
+            "comment": "Ends the dialog and returns either the $selectedEvent or $events, whichever has a value."
           },
           "value": "=coalesce($selectedEvent, $events)"
         }
@@ -125,7 +134,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "FT8qfi"
+            "id": "FT8qfi",
+            "comment": "Saves any dialog options into parameters scope."
           },
           "assignments": [
             {
@@ -165,14 +175,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "1cNXeh"
+            "id": "1cNXeh",
+            "comment": "If no parameters were provided."
           },
           "condition": "=count(where(flatten($parameters), p, exists(p))) == 0",
           "actions": [
             {
               "$kind": "Microsoft.TextInput",
               "$designer": {
-                "id": "Fej6Ub"
+                "id": "Fej6Ub",
+                "comment": "Prompts users to provide any search parameters. After the prompt is answered, the dialog is repeated so that a search can be performed with those parameters. If no events were found, the prompt will be repeated and the turnCount will have been incremented so the \"I couldn't find a match.\" message will be displayed."
               },
               "disabled": false,
               "maxTurnCount": 3,
@@ -184,7 +196,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "aR3uwW"
+                "id": "aR3uwW",
+                "comment": "Date time recognition is run on the user's query to extract any datetime  entities."
               },
               "activityProcessed": true,
               "dialog": "ResolveDateTimeDialog",
@@ -217,7 +230,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "nfaMkj"
+                "id": "nfaMkj",
+                "comment": "If no entities were detected in the query, the plain text will be stored to perform the search."
               },
               "condition": "=not(exists(@@contact)) && not(exists(@@email)) && not(exists(@subject)) && not(exists($options.start)) && not(exists($options.end))",
               "actions": [
@@ -248,7 +262,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "YB34jG"
+            "id": "YB34jG",
+            "comment": "If no date time parameters were provided, sets the start parameter to the current time and the end parameters to current time + 14 days."
           },
           "condition": "=not(exists($parameters.start))",
           "actions": [
@@ -291,7 +306,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "u8Bei9"
+            "id": "u8Bei9",
+            "comment": "Refreshes user token"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -299,7 +315,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.GetEventById",
           "$designer": {
-            "id": "HWwB5X"
+            "id": "HWwB5X",
+            "comment": "Gets a specific event object by its unique ID in MS Graph."
           },
           "resultProperty": "$event",
           "token": "=turn.token.token",
@@ -309,7 +326,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "F2utcg"
+            "id": "F2utcg",
+            "comment": "Adds the single event to the array of results (this simplifies the logic of the calling dialog)."
           },
           "property": "$events",
           "value": "=createArray($event)"
@@ -335,7 +353,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "WHqskX"
+            "id": "WHqskX",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -343,7 +362,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.GetEvents",
           "$designer": {
-            "id": "4jD1d5"
+            "id": "4jD1d5",
+            "comment": "Performs a search for events based on the provided datetimes."
           },
           "resultProperty": "$events",
           "token": "=turn.token.token",
@@ -358,7 +378,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.Helpers.FilterEvents",
           "$designer": {
-            "id": "uI3CaY"
+            "id": "uI3CaY",
+            "comment": "Filters a list of events based on the provided parameters. "
           },
           "resultProperty": "$events",
           "events": "=$events",
@@ -388,14 +409,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "KmSBRT"
+            "id": "KmSBRT",
+            "comment": "If there is only one event in the array, automatically selects that event."
           },
           "condition": "=count($events) == 1",
           "elseActions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "S1FCQO"
+                "id": "S1FCQO",
+                "comment": "List options for event selection."
               },
               "assignments": [
                 {
@@ -432,7 +455,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "n9iNhj"
+                "id": "n9iNhj",
+                "comment": "Shows list of events and prompts user to select one to continue."
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
@@ -442,7 +466,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "QAnsVO"
+                "id": "QAnsVO",
+                "comment": "If the user did not select an event, emits a Cancel dialog event which is caught by the OnEvent (Cancel) handler."
               },
               "condition": "=$selectedEvent == null",
               "actions": [

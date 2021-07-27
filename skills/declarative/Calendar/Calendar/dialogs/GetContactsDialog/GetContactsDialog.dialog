@@ -27,28 +27,32 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "I2X350"
+            "id": "I2X350",
+            "comment": "Triggers the OnEvent (SetContactQuery) handler. This step gets the emails and/or contact names to look up."
           },
           "eventName": "SetContactQuery"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "4hJSa3"
+            "id": "4hJSa3",
+            "comment": "If contacts are already provided in dialog.options"
           },
           "condition": "=exists($contactArray)",
           "actions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "DZjBwA"
+                "id": "DZjBwA",
+                "comment": "Extracts emails and adds directly to contact results"
               },
               "eventName": "AddEmails"
             },
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "EIW0OT"
+                "id": "EIW0OT",
+                "comment": "Looks up and disambiguates contact names in MS Graph"
               },
               "eventName": "AddContacts"
             }
@@ -57,7 +61,8 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "CdJAP6"
+                "id": "CdJAP6",
+                "comment": "Looks up plain-text response in MS Graph. This handles scenarios where the name was not recognized as an entity in the utterance."
               },
               "eventName": "LookupContacts",
               "eventValue": "=$contactQuery"
@@ -143,7 +148,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "pNZ1RI"
+            "id": "pNZ1RI",
+            "comment": "If neither emails nor contact names have been provided in dialog options"
           },
           "condition": "=not(exists($emailArray)) && not(exists($contactArray))",
           "actions": [
@@ -182,7 +188,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "FMjjsU"
+            "id": "FMjjsU",
+            "comment": "For each email address in the emailArray, adds directly to contacts result property without looking up in MS Graph."
           },
           "condition": "=exists($emailArray)",
           "actions": [
@@ -245,7 +252,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "V4szkf"
+            "id": "V4szkf",
+            "comment": "For each contact name in the $contactArray, looks up and disambiguates contact in MS Graph."
           },
           "condition": "=exists($contactArray)",
           "actions": [
@@ -291,7 +299,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "ECk0NA"
+            "id": "ECk0NA",
+            "comment": "The name property is passed through the event value whenever the LookupContacts event is emitted."
           },
           "property": "$nameProperty",
           "value": "=turn.dialogEvent.value"
@@ -299,7 +308,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "1IGw8o"
+            "id": "1IGw8o",
+            "comment": "Refreshes user token"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -307,7 +317,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.GetContacts",
           "$designer": {
-            "id": "Ha1csy"
+            "id": "Ha1csy",
+            "comment": "Looks up a name in MS Graph contacts, people, and user APIs and returns a list of user objects containing the user's name and email."
           },
           "name": "=$nameProperty",
           "resultProperty": "$searchResults",
@@ -323,7 +334,8 @@
             {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "mCBwai"
+                "id": "mCBwai",
+                "comment": "Clears temp array for contact choice options whenever a new lookup is started"
               },
               "changeType": "clear",
               "itemsProperty": "$contactCandidates"
@@ -331,7 +343,8 @@
             {
               "$kind": "Microsoft.Foreach",
               "$designer": {
-                "id": "oEq2mP"
+                "id": "oEq2mP",
+                "comment": "Each contact in MS Graph can have multiple email addresses. This loop add each email address for each contact to an array for the user to select the correct user/address to add."
               },
               "index": "$foreach.searchResultIndex",
               "value": "$foreach.searchResultValue",
@@ -378,14 +391,16 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "7sfKeI"
+                "id": "7sfKeI",
+                "comment": "If there are more than one result for the contact search, prompt the user to select one. Otherwise, add the single result directly to the contact results."
               },
               "condition": "=count($contactCandidates) > 1",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "eQQmD2"
+                    "id": "eQQmD2",
+                    "comment": "Contact list dialog options"
                   },
                   "assignments": [
                     {
@@ -428,7 +443,8 @@
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "5gcg61"
+                    "id": "5gcg61",
+                    "comment": "Launches the list dialog with the contact results so the user can select one."
                   },
                   "activityProcessed": true,
                   "dialog": "ListDialog",
@@ -445,7 +461,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "5aONuR"
+                        "id": "5aONuR",
+                        "comment": "Adds the select contact to the contacts result."
                       },
                       "assignments": [
                         {
@@ -483,7 +500,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "MhszJk"
+                "id": "MhszJk",
+                "comment": "If there is a contact to add, and the contact has not already been added to the results list, push it into the $contacts array. This logic prevents adding duplicates to the list."
               },
               "actions": [
                 {
@@ -532,7 +550,8 @@
         {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "pjKHu4"
+            "id": "pjKHu4",
+            "comment": "This card shows the list of contacts currently added to the contact list and asks if the user wants to add more attendees."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -562,7 +581,8 @@
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-                "id": "uQPaXt"
+                "id": "uQPaXt",
+                "comment": "If the user asks to add more contacts, repeats the dialog with the current $contacts array."
               },
               "activityProcessed": true,
               "options": {
@@ -593,7 +613,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "Yt83Kf"
+            "id": "Yt83Kf",
+            "comment": "If the user says an explicit utterance to add an email and/or contact name, extracts those entities."
           },
           "assignments": [
             {
@@ -609,7 +630,8 @@
         {
           "$kind": "Microsoft.RepeatDialog",
           "$designer": {
-            "id": "B2tJQf"
+            "id": "B2tJQf",
+            "comment": "Restarts the dialog with the new extracted entities."
           },
           "activityProcessed": true,
           "options": {
@@ -639,7 +661,8 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "GPAfJL"
+            "id": "GPAfJL",
+            "comment": "If the user wants to skip, ends this dialog and passes current $contacts array back to calling dialog."
           },
           "value": "=$contacts"
         }
@@ -664,7 +687,8 @@
         {
           "$kind": "Microsoft.CancelAllDialogs",
           "$designer": {
-            "id": "4gphM0"
+            "id": "4gphM0",
+            "comment": "Cancels this dialog, and passes a Cancel event to the parent so it can decide what to do next."
           },
           "activityProcessed": true,
           "eventName": "Cancel"

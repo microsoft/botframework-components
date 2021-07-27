@@ -3,7 +3,8 @@
   "$designer": {
     "id": "WRF5mG",
     "name": "RespondToEventDialog",
-    "description": ""
+    "description": "",
+    "comment": "Updates a user's response (accepted/declined/tentative) to a meeting invite."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -27,7 +28,8 @@
         {
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "T4tAUA"
+            "id": "T4tAUA",
+            "comment": "The dialog accepts a $response property to be passed through dialog options."
           },
           "condition": "$response",
           "cases": [
@@ -37,7 +39,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "ez9uAo"
+                    "id": "ez9uAo",
+                    "comment": "Triggers the OnEvent (AcceptEvent) handler."
                   },
                   "eventName": "AcceptEvent"
                 }
@@ -49,7 +52,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "hdHXOC"
+                    "id": "hdHXOC",
+                    "comment": "Triggers the OnEvent (DeclineEvent) handler."
                   },
                   "eventName": "DeclineEvent"
                 }
@@ -61,7 +65,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "kvD2EI"
+                    "id": "kvD2EI",
+                    "comment": "Triggers the OnEvent (TentativelyAccept) handler."
                   },
                   "eventName": "TentativelyAcceptEvent"
                 }
@@ -90,7 +95,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "Jhz67U"
+            "id": "Jhz67U",
+            "comment": "If the user is the organizer of the event, they cannot accept it. They are shown a message and the dialog is ended."
           },
           "condition": "=$event.isOrganizer",
           "actions": [
@@ -112,7 +118,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "r6bf1q"
+            "id": "r6bf1q",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -120,7 +127,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
           "$designer": {
-            "id": "2F9RxQ"
+            "id": "2F9RxQ",
+            "comment": "Updates the user's response to 'accepted' for the provided event."
           },
           "resultProperty": "$result",
           "token": "=turn.token.token",
@@ -129,7 +137,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "Xs8DT3"
+            "id": "Xs8DT3",
+            "comment": "Updates the event response in state so the card UI will be updated."
           },
           "property": "$event.Response",
           "value": "='accepted'"
@@ -162,7 +171,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "0I6DX5"
+            "id": "0I6DX5",
+            "comment": "If the user is the organizer of the event, they cannot decline it. They are redirected to the CancelEventDialog instead."
           },
           "condition": "=$event.isOrganizer",
           "actions": [
@@ -189,7 +199,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "8wZGwZ"
+            "id": "8wZGwZ",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -197,7 +208,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
           "$designer": {
-            "id": "w2IgGa"
+            "id": "w2IgGa",
+            "comment": "Updates the user's response to 'declined' for the provided event."
           },
           "resultProperty": "$result",
           "token": "=turn.token.token",
@@ -206,7 +218,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "yzE1s5"
+            "id": "yzE1s5",
+            "comment": "Updates the event response in state so the card UI will be updated."
           },
           "property": "$event.Response",
           "value": "='declined'"
@@ -239,7 +252,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "1elpcm"
+            "id": "1elpcm",
+            "comment": "If the user is the organizer of the event, they cannot tentatively accept it. They are redirected to the UpdateEventDialog instead."
           },
           "condition": "=$event.isOrganizer",
           "actions": [
@@ -266,7 +280,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "MIElov"
+            "id": "MIElov",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -274,7 +289,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
           "$designer": {
-            "id": "baSSxn"
+            "id": "baSSxn",
+            "comment": "Updates the user's response to 'tentativelyAccepted' for the provided event."
           },
           "resultProperty": "$result",
           "token": "=turn.token.token",
@@ -283,7 +299,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "C0GtDY"
+            "id": "C0GtDY",
+            "comment": "Updates the event response in state so the card UI will be updated."
           },
           "property": "$event.Response",
           "value": "='tentativelyAccepted'"

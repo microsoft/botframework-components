@@ -174,7 +174,7 @@
           "property": "turn.title",
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "value": "=coalesce($options.subject, @subject)",
-          "outputFormat": "=if(isMatch(this.Value, '[^A-Z]+$', sentenceCase(this.value), this.value)"
+          "outputFormat": "=if(isMatch(this.Value, '[^A-Z]+$'), sentenceCase(this.value), this.value)"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -837,7 +837,7 @@
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=(not(exists(#SetDuration)) && turn.recognized.score > 0.8) || || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(not(exists(#SetDuration)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_NBZi0g()}",
           "value": "=coalesce($options.duration, @duration)",
           "property": "turn.query"
@@ -954,7 +954,7 @@
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=(not(exists(#SetLocation)) && turn.recognized.score > 0.8) || || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(not(exists(#SetLocation)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_1LdFal()}",
           "unrecognizedPrompt": "",
           "value": "=coalesce($options.location, @location)",
@@ -1196,7 +1196,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "EKSQWL",
-            "comment": "Emits the SetTitle event that is caught by the OnEvent (SetTitle) trigger."
+            "comment": "Triggers the OnEvent (SetTitle) handler."
           },
           "eventName": "SetTitle"
         },
@@ -1256,7 +1256,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "W9Qu4d",
-            "comment": "Emits the SetAttendees event that is caught by the OnEvent (SetAttendees) trigger with the \"add\" action."
+            "comment": "Triggers the OnEvent (SetAttendees) handler with the \"add\" action."
           },
           "eventName": "SetAttendees",
           "eventValue": {
@@ -1319,7 +1319,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "S7JXBq",
-            "comment": "Emits the SetAttendees event that is caught by the OnEvent (SetAttendees) trigger with the \"remove\" action."
+            "comment": "Triggers the OnEvent (SetAttendees) handler with the \"remove\" action."
           },
           "eventName": "SetAttendees",
           "eventValue": {
@@ -1413,7 +1413,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "Aa8MZT",
-            "comment": "Emits the SetDateTime event that is caught by the OnEvent (SetDateTime) trigger."
+            "comment": "Triggers the OnEvent (SetDateTime) handler."
           },
           "eventName": "SetDateTime"
         },
@@ -1456,7 +1456,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "8Pwzv9",
-            "comment": "Emits the SetDescription event that is caught by the OnEvent (SetDescription) trigger."
+            "comment": "Triggers the OnEvent (SetDescription) handler."
           },
           "eventName": "SetDescription"
         },
@@ -1511,7 +1511,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "hBF1Tp",
-            "comment": "Emits the SetDuration event that is caught by the OnEvent (SetDuration) trigger."
+            "comment": "Triggers the OnEvent (SetDuration) handler."
           },
           "eventName": "SetDuration"
         },
@@ -1554,7 +1554,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "nBimuO",
-            "comment": "Emits the SetOnlineMeeting event that is caught by the OnEvent (SetOnlineMeeting) trigger with the \"add\" action."
+            "comment": "Triggers the OnEvent (SetOnlineMeeting) handler with the \"add\" action."
           },
           "eventName": "SetOnlineMeeting",
           "eventValue": {
@@ -1600,7 +1600,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "dLCdSc",
-            "comment": "Emits the SetLocation event that is caught by the OnEvent (SetLocation) trigger with the \"remove\" action."
+            "comment": "Triggers the OnEvent (SetLocation) handler with the \"remove\" action."
           },
           "eventName": "SetOnlineMeeting",
           "eventValue": {
@@ -1658,7 +1658,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "R40YIi",
-            "comment": "Emits the SetLocation event that is caught by the OnEvent (SetLocation) trigger."
+            "comment": "Triggers the OnEvent (SetLocation) handler."
           },
           "eventName": "SetLocation"
         },
@@ -1728,7 +1728,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "XsBGwQ",
-            "comment": "Emits the Cancel event that is caught by the OnEvent (Cancel) trigger."
+            "comment": "Triggers the OnEvent (Cancel) handler."
           },
           "eventName": "Cancel"
         }
