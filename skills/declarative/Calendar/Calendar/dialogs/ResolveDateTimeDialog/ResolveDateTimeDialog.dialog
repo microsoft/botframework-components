@@ -2,7 +2,8 @@
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
     "id": "UrfxdD",
-    "name": "ResolveDateTimeDialog"
+    "name": "ResolveDateTimeDialog",
+    "comment": "Recognizes datetime entities from an utterance and disambiguates ambiguous results."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -25,7 +26,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "kxvYi4"
+            "id": "kxvYi4",
+            "comment": "Extracts dialog options. \n\nQuery is the string to run recognition against and defaults to either the dialog option $query or the text of the last activity.\n\nExpected type is the expected datetime resolution type (e.g. date, datetime, time, datetimerange, daterange, timerange, duration)\n\nMinDate is the minimum date to accept. This prevents showing disambiguation for resolutions older than then minimum date."
           },
           "assignments": [
             {
@@ -57,7 +59,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime",
           "$designer": {
-            "id": "SZKf8v"
+            "id": "SZKf8v",
+            "comment": "Recognizes date time types from the provided query and converts all times into the user's time zone."
           },
           "query": "=$query",
           "resultProperty": "$recognitionResults",
@@ -75,7 +78,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "vwdsTV"
+                "id": "vwdsTV",
+                "comment": "Skips any recognized values of type \"datetimeV2.set\" beause it can caused unexpected behavior."
               },
               "condition": "=toLower($foreach.value.text) == \"my day\" || $foreach.value.typeName == \"datetimeV2.set\"",
               "actions": [
@@ -90,7 +94,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "0FTMUN"
+                "id": "0FTMUN",
+                "comment": "Extracts the type of resolution"
               },
               "property": "$resolvedType",
               "value": "=$foreach.value.Resolution.values[0].type"
@@ -107,7 +112,8 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "ATOu0j"
+                    "id": "ATOu0j",
+                    "comment": "Extracts resolution text into simpler state property."
                   },
                   "assignments": [
                     {
@@ -121,21 +127,24 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "QvhQlR"
+                "id": "QvhQlR",
+                "comment": "Triggers OnEvent (CheckExpectedType_) handler which validates against provided dialog option."
               },
               "eventName": "CheckExpectedType"
             },
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "wUbrlv"
+                "id": "wUbrlv",
+                "comment": "If only one value was resolved"
               },
               "condition": "=count($foreach.value.Resolution.values) == 1",
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "cPoVPR"
+                    "id": "cPoVPR",
+                    "comment": "Returns resolved value to calling dialog."
                   },
                   "property": "$datetimeResolution",
                   "value": "=$foreach.value.Resolution.values[0]"
@@ -161,7 +170,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "NqrxcU"
+                            "id": "NqrxcU",
+                            "comment": "Prompts to diambiguate date values."
                           },
                           "eventName": "RefineDate",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -174,7 +184,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "MOsZUP"
+                            "id": "MOsZUP",
+                            "comment": "Prompts to diambiguate datetime values."
                           },
                           "eventName": "RefineDateTime",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -187,7 +198,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "0RrVbm"
+                            "id": "0RrVbm",
+                            "comment": "Prompts to diambiguate time values."
                           },
                           "eventName": "RefineTime",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -200,7 +212,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "iBRM3d"
+                            "id": "iBRM3d",
+                            "comment": "Prompts to diambiguate date range values."
                           },
                           "eventName": "RefineDateRange",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -213,7 +226,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "vfve3B"
+                            "id": "vfve3B",
+                            "comment": "Prompts to diambiguate date time range values."
                           },
                           "eventName": "RefineDateTimeRange",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -226,7 +240,8 @@
                         {
                           "$kind": "Microsoft.EmitEvent",
                           "$designer": {
-                            "id": "xpEzrS"
+                            "id": "xpEzrS",
+                            "comment": "Prompts to diambiguate time range values."
                           },
                           "eventName": "RefineTimeRange",
                           "eventValue": "=$foreach.value.Resolution.values"
@@ -239,7 +254,8 @@
                     {
                       "$kind": "Microsoft.SendActivity",
                       "$designer": {
-                        "id": "JrfC1C"
+                        "id": "JrfC1C",
+                        "comment": "If the date time provided is not configured, dialog is ended. "
                       },
                       "activity": "${SendActivity_JrfC1C()}"
                     },
@@ -254,7 +270,8 @@
                 {
                   "$kind": "Microsoft.RepeatDialog",
                   "$designer": {
-                    "id": "Ejtr7m"
+                    "id": "Ejtr7m",
+                    "comment": "Repeats this dialog with the specified value. This allows the dialog to narrow down the results. "
                   },
                   "activityProcessed": true,
                   "allowLoop": true,
@@ -287,7 +304,8 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "a43OOw"
+            "id": "a43OOw",
+            "comment": "Removes any options that do not pass validation against the $minDate option."
           },
           "index": "$foreach.index",
           "value": "$foreach.value",
@@ -330,7 +348,8 @@
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "uYrpos"
+                    "id": "uYrpos",
+                    "comment": "Formats the value into a readable format."
                   },
                   "property": "$formattedOption",
                   "value": "=formatDateTime($foreach.value.value, \"dddd, MMMM d, yyyy\")"
@@ -358,21 +377,22 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "rxH6X0"
+                "id": "rxH6X0",
+                "comment": "If there is only one value."
               },
               "condition": "=count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
                   "$designer": {
-                    "id": "xntS1t"
+                    "id": "xntS1t",
+                    "comment": "Prompts user to select between the date options."
                   },
                   "defaultLocale": "en-us",
                   "disabled": false,
                   "maxTurnCount": 3,
                   "alwaysPrompt": false,
                   "allowInterruptions": false,
-                  "prompt": "${ChoiceInput_Prompt_xntS1t()}",
                   "choiceOptions": {
                     "includeNumbers": true,
                     "inlineOrMore": ", or ",
@@ -384,14 +404,16 @@
                   "style": "heroCard",
                   "recognizerOptions": {
                     "recognizeOrdinals": true
-                  }
+                  },
+                  "prompt": "${ChoiceInput_Prompt_xntS1t()}"
                 }
               ],
               "actions": [
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "cTs1XM"
+                    "id": "cTs1XM",
+                    "comment": "Default to single option."
                   },
                   "property": "$selected",
                   "value": "=$choices[0]"
@@ -403,7 +425,8 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "22HYzp"
+                "id": "22HYzp",
+                "comment": "If the date does not meet the minimum requirement, defaults to the minimum date."
               },
               "activity": "${SendActivity_22HYzp()}"
             },
@@ -438,7 +461,8 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "b2a4gT"
+            "id": "b2a4gT",
+            "comment": "Removes any options that do not pass validation against the $minDate option."
           },
           "index": "$foreach.index",
           "value": "$foreach.value",
@@ -481,7 +505,8 @@
                 {
                   "$kind": "Microsoft.SetProperty",
                   "$designer": {
-                    "id": "uCS9Ou"
+                    "id": "uCS9Ou",
+                    "comment": "Formats the value into a readable format."
                   },
                   "property": "$formattedOption",
                   "value": "=formatDateTime($foreach.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
@@ -509,14 +534,16 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "QhjFD1"
+                "id": "QhjFD1",
+                "comment": "If there is only one value."
               },
               "condition": "=count($choices) == 1",
               "elseActions": [
                 {
                   "$kind": "Microsoft.ChoiceInput",
                   "$designer": {
-                    "id": "RSIYeJ"
+                    "id": "RSIYeJ",
+                    "comment": "Prompts user to select between the date time options."
                   },
                   "defaultLocale": "en-us",
                   "disabled": false,
@@ -598,7 +625,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "MmvPBY"
+                "id": "MmvPBY",
+                "comment": "Formats the value into a readable format."
               },
               "property": "$formattedOption",
               "value": "=formatDateTime($foreach.value.value, \"h:mm tt\")"
@@ -617,7 +645,8 @@
         {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "yHRsbS"
+            "id": "yHRsbS",
+            "comment": "Prompts user to select between the time options."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -665,7 +694,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "PaDCIS"
+                "id": "PaDCIS",
+                "comment": "Formats the value into a readable format."
               },
               "property": "$formattedOption",
               "value": "=concat(formatDateTime($foreach.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime($foreach.value.end, \"dddd, MMMM d, yyyy\"))"
@@ -684,7 +714,8 @@
         {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "kbCCbs"
+            "id": "kbCCbs",
+            "comment": "Prompts user to select between the date range options."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -732,7 +763,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "xDRpmj"
+                "id": "xDRpmj",
+                "comment": "Formats the value into a readable format."
               },
               "property": "$formattedOption",
               "value": "=concat(formatDateTime($foreach.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime($foreach.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
@@ -751,7 +783,8 @@
         {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "QkdpPG"
+            "id": "QkdpPG",
+            "comment": "Prompts user to select between the date time range options."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -799,7 +832,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "ifIblU"
+                "id": "ifIblU",
+                "comment": "Formats the value into a readable format."
               },
               "property": "$formattedOption",
               "value": "=concat(formatDateTime($foreach.value.start, \"h:mm tt\"), ' - ', formatDateTime($foreach.value.end, \"h:mm tt\"))"
@@ -818,7 +852,8 @@
         {
           "$kind": "Microsoft.ChoiceInput",
           "$designer": {
-            "id": "pO5zQk"
+            "id": "pO5zQk",
+            "comment": "Prompts user to select between the time range options."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -849,7 +884,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "VXcLqd"
+            "id": "VXcLqd",
+            "comment": "Validates that the expected type from dialog options is present."
           },
           "condition": "=exists($expectedType) && $resolvedType != $expectedType",
           "actions": [
@@ -857,7 +893,8 @@
               "$kind": "Microsoft.TextInput",
               "$designer": {
                 "id": "g2RoUz",
-                "name": "Prompt for textn a diffe"
+                "name": "Prompt for textn a diffe",
+                "comment": "Prompts user to retry if the required type is not present."
               },
               "disabled": false,
               "maxTurnCount": 3,
@@ -872,7 +909,8 @@
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-                "id": "hoOdR8"
+                "id": "hoOdR8",
+                "comment": "Repeats dialog with the new query."
               },
               "activityProcessed": true,
               "options": {
