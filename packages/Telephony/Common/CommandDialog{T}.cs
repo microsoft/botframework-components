@@ -77,7 +77,9 @@ namespace Microsoft.Bot.Components.Telephony.Common
                     throw new ErrorResponseException($"{commandResult.Error.Code}: {commandResult.Error.Message}");
                 }
 
-                return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await dc.EndDialogAsync(
+                    new DialogTurnResult(DialogTurnStatus.Complete),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
             // This activity was not the command result we were expecting. Mark as waiting and end the turn.
