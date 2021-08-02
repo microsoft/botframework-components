@@ -3,7 +3,6 @@
   "$designer": {
     "id": "WRF5mG",
     "name": "RespondToEventDialog",
-    "description": "",
     "comment": "Updates a user's response (accepted/declined/tentative) to a meeting invite."
   },
   "autoEndDialog": true,
@@ -13,7 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "description": "",
+        "comment": "Updates a user's response (accepted/declined/tentative) to a meeting invite.",
         "id": "hFpXgd"
       },
       "actions": [

@@ -3,7 +3,6 @@
   "$designer": {
     "id": "T6pvbO",
     "name": "CancelEventDialog",
-    "description": "",
     "comment": "Cancels a dialog event. Requires an event in dialog options."
   },
   "autoEndDialog": true,

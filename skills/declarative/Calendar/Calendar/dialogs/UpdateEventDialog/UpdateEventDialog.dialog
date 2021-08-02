@@ -3,8 +3,7 @@
   "$designer": {
     "id": "BZjMau",
     "name": "UpdateEventDialog",
-    "description": "",
-    "comment": " Walks user through updating an event. Includes support for interruptions and slot filling from entities in user utterances."
+    "comment": "Updates an event. Includes support for interruptions and slot filling from entities in user utterances."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -13,6 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
+        "comment": "Ordered steps to update an event. Includes support for interruptions and slot filling from entities in user utterances.",
         "description": "",
         "id": "5kgyVZ"
       },

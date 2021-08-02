@@ -3,7 +3,7 @@
   "$designer": {
     "id": "tMMCfJ",
     "name": "GetEventsDialog",
-    "comment": "This dialog accepts optional parameters to retrieve events from the MS Graph Calendar API. It can return either an array of search results or a spcific event if the event Id parameter is provided."
+    "comment": "Retrieves events from the MS Graph Calendar API. It can return either an array of search results or a specific event if the event Id parameter is provided."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -12,6 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
+        "comment": "Retrieves events from the MS Graph Calendar API. It can return either an array of search results or a specific event if the event Id parameter is provided.\n\nIt is incremented in the OnEvent (NoEventsFound) handler.",
         "id": "UnSYCl"
       },
       "actions": [
@@ -26,7 +27,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "mi47ko"
+            "id": "mi47ko",
+            "comment": "This property is used to indicate the number of turns the user has spent in this dialog. It is set in dialog state so that it can persist even when the dialog is repeated. \n\nIt is incremented in the OnEvent (NoEventsFound) handler."
           },
           "property": "$turnCount",
           "value": "=coalesce($turnCount, 1)"
@@ -248,7 +250,8 @@
             {
               "$kind": "Microsoft.RepeatDialog",
               "$designer": {
-                "id": "DHf1li"
+                "id": "DHf1li",
+                "comment": "Repeats this dialog with the collected parameters."
               },
               "activityProcessed": false,
               "options": {
@@ -517,7 +520,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "DM5U3G"
+            "id": "DM5U3G",
+            "comment": "While the turnCount is still < 2, meaning the search has not failed more than twice, repeat the dialog. Otherwise, triggers the OnEvent (GetEventsFailed) handler."
           },
           "condition": "=$turnCount < 2",
           "actions": [

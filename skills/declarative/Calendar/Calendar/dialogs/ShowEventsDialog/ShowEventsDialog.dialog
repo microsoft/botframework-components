@@ -3,7 +3,6 @@
   "$designer": {
     "id": "4ImDL3",
     "name": "ShowEventsDialog",
-    "description": "",
     "comment": "Displays events as a schedule, a list of search results, or individually."
   },
   "autoEndDialog": true,
@@ -13,7 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "description": "",
+        "comment": "Displays events as a schedule, a list of search results, or individually.",
         "id": "ApwwL4"
       },
       "actions": [

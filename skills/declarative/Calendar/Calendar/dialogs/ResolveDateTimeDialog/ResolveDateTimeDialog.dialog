@@ -3,7 +3,7 @@
   "$designer": {
     "id": "UrfxdD",
     "name": "ResolveDateTimeDialog",
-    "comment": "Recognizes datetime entities from an utterance and disambiguates ambiguous results."
+    "comment": "Recognizes datetime entities from an utterance and disambiguates results."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -12,6 +12,7 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
+        "comment": "Recognizes datetime entities from an utterance and disambiguates results.",
         "id": "42clMH"
       },
       "actions": [

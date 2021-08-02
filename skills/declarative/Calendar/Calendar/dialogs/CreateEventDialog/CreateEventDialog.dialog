@@ -3,8 +3,7 @@
   "$designer": {
     "id": "7Wk4XJ",
     "name": "CreateEventDialog",
-    "description": "",
-    "comment": " Walks user through creating an event. Includes support for interruptions and slot filling from entities in user utterances.\n\nAccepts extracted entities in Options property."
+    "comment": "Creates an event. Includes support for interruptions and slot filling from entities in user utterances."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -15,7 +14,7 @@
         "name": "BeginDialog",
         "description": "",
         "id": "r2tHdG",
-        "comment": "Starts with ordered steps to create a new calendar event. Each step is represented as an EmitEvent action + an OnEvent trigger to catch that event (e.g. SetTitle event + OnEvent (SetTitle) trigger. This pattern allows the user to start with a specific flow (setTitle, SetAttendees, SetDateTime, etc.) but have the ability to change that order or provide more information whenever they want via interruptions."
+        "comment": "Ordered steps to create a new calendar event. Each step is represented as an EmitEvent action + an OnEvent trigger to catch that event (e.g. SetTitle event + OnEvent (SetTitle) trigger. This pattern allows the user to start with a specific flow (setTitle, SetAttendees, SetDateTime, etc.) but have the ability to change that order or provide more information whenever they want via interruptions."
       },
       "actions": [
         {
