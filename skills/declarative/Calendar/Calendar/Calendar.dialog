@@ -18,8 +18,7 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "vd6Jx9",
-            "comment": ""
+            "id": "vd6Jx9"
           },
           "name": "Calendar.Greeting",
           "value": "=turn.activity"
@@ -74,8 +73,7 @@
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "t7QY3g",
-            "comment": ""
+            "id": "t7QY3g"
           },
           "name": "Calendar.Cancel",
           "value": "=null"
@@ -107,7 +105,7 @@
       "$designer": {
         "id": "70AczX",
         "name": "OnIntent (Help)",
-        "comment": "Shows a help message. If another dialog is interrupted, it will be resumed after the message is shown.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.8. "
+        "comment": "Shows a help message. If another dialog is interrupted, it will be resumed after the message is shown.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.8."
       },
       "intent": "Help",
       "actions": [
@@ -431,14 +429,14 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "rsg9n8",
-            "comment": "If a start date was not provided"
+            "comment": "If a start date was not provided."
           },
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
                 "id": "wxfA8N",
-                "comment": "Set $options.start to current datetime"
+                "comment": "Set $options.start to current datetime."
               },
               "assignments": [
                 {
@@ -503,14 +501,14 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "VxCYVO",
-            "comment": "If a start date was not provided"
+            "comment": "If a start date was not provided."
           },
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
                 "id": "0FHA3C",
-                "comment": "Set $options.start to current datetime"
+                "comment": "Set $options.start to current datetime."
               },
               "assignments": [
                 {
@@ -575,14 +573,14 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "v97tES",
-            "comment": "If a start date was not provided"
+            "comment": "If a start date was not provided."
           },
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
                 "id": "TKz0HS",
-                "comment": "Set $options.start to current datetime"
+                "comment": "Set $options.start to current datetime."
               },
               "assignments": [
                 {
@@ -611,7 +609,7 @@
           "$kind": "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes",
           "$designer": {
             "id": "Cb07qI",
-            "comment": "Returns a list of combined events and open time slots"
+            "comment": "Returns a list of combined events and open time slots."
           },
           "resultProperty": "$availabilityList",
           "events": "=$events",
@@ -623,7 +621,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "ijHFYq",
-            "comment": "If no events were found"
+            "comment": "If no events were found."
           },
           "condition": "=count($availabilityList) > 0",
           "actions": [
@@ -631,7 +629,7 @@
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "QqvaSr",
-                "comment": "Shows the availability card"
+                "comment": "Shows the availability card."
               },
               "activity": "${SendActivity_QqvaSr()}"
             }
@@ -927,8 +925,7 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "z90pOz",
-        "name": "OnIntent (LaunchChat)",
-        "comment": ""
+        "name": "OnIntent (LaunchChat)"
       },
       "intent": "LaunchChat",
       "actions": [
@@ -1765,8 +1762,7 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "ArqMn7",
-                "comment": ""
+                "id": "ArqMn7"
               },
               "assignments": [
                 {
