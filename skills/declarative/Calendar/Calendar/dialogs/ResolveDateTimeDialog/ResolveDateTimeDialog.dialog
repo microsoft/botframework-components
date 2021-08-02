@@ -96,7 +96,7 @@
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "0FTMUN",
-                "comment": "Extracts the type of resolution"
+                "comment": "Extracts the type of resolution."
               },
               "property": "$resolvedType",
               "value": "=$foreach.value.Resolution.values[0].type"
@@ -137,7 +137,7 @@
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "wUbrlv",
-                "comment": "If only one value was resolved"
+                "comment": "If only one value was resolved."
               },
               "condition": "=count($foreach.value.Resolution.values) == 1",
               "actions": [

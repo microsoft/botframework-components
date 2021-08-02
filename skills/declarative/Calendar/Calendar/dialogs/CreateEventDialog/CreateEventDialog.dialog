@@ -137,7 +137,7 @@
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "DI7VGw",
-            "comment": "Confirms and creates event"
+            "comment": "Confirms and creates event."
           },
           "eventName": "ConfirmCreate"
         }
@@ -206,7 +206,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "0XBGS4",
-            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'"
+            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'."
           },
           "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
           "actions": [
@@ -228,7 +228,7 @@
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "zqgAVO",
-                "comment": "If the names/emails were resolved"
+                "comment": "If the names/emails were resolved."
               },
               "condition": "=exists($contacts)",
               "actions": [
@@ -236,7 +236,7 @@
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
                     "id": "276TzP",
-                    "comment": "Add all contacts to the event attendees array"
+                    "comment": "Add all contacts to the event attendees array."
                   },
                   "index": "$foreach.index",
                   "value": "$foreach.value",
@@ -261,7 +261,7 @@
               "$kind": "Microsoft.SetProperties",
               "$designer": {
                 "id": "3h5xdT",
-                "comment": "List settings for Remove attendee list "
+                "comment": "List settings for Remove attendee list."
               },
               "assignments": [
                 {
@@ -309,7 +309,7 @@
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "yxp9U4",
-                "comment": "Looks up selectedContact in attendee list"
+                "comment": "Looks up selectedContact in attendee list."
               },
               "property": "$contactToRemove",
               "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
@@ -318,7 +318,7 @@
               "$kind": "Microsoft.EditArray",
               "$designer": {
                 "id": "uCfE6z",
-                "comment": "Removed contact from attendee list"
+                "comment": "Removed contact from attendee list."
               },
               "changeType": "remove",
               "itemsProperty": "$event.attendees",
@@ -356,7 +356,7 @@
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "5b98oM",
-            "comment": "Refreshes user token "
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -365,7 +365,7 @@
           "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
           "$designer": {
             "id": "JRs7I1",
-            "comment": "Looks up meeting times for a list of attendees and stores them in $timeslots"
+            "comment": "Looks up meeting times for a list of attendees and stores them in $timeslots."
           },
           "resultProperty": "$timeslots",
           "token": "=turn.token.token",
@@ -384,7 +384,7 @@
               "$kind": "Microsoft.SetProperties",
               "$designer": {
                 "id": "4OsSFV",
-                "comment": "Time slots list options"
+                "comment": "Time slots list options."
               },
               "assignments": [
                 {
@@ -447,7 +447,7 @@
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
                     "id": "tqufQn",
-                    "comment": "Set event start and end to selected time slot"
+                    "comment": "Set event start and end to selected time slot."
                   },
                   "assignments": [
                     {
@@ -466,7 +466,7 @@
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
                     "id": "xRlF1S",
-                    "comment": "If no time slot was selected, triggers the manual SetDateTime event steps instead"
+                    "comment": "If no time slot was selected, triggers the manual SetDateTime event steps instead."
                   },
                   "eventName": "SetDateTime"
                 }
@@ -485,7 +485,7 @@
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "dcTvpp",
-                "comment": "If there are no time suggestions, triggers the manual SetDateTime event steps instead"
+                "comment": "If there are no time suggestions, triggers the manual SetDateTime event steps instead."
               },
               "eventName": "SetDateTime"
             }
@@ -514,7 +514,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "PQ31QI",
-            "comment": "If start and end are not both provided in dialog options"
+            "comment": "If start and end are not both provided in dialog options."
           },
           "condition": "=not(exists($options.start) && exists($options.end))",
           "actions": [
@@ -522,7 +522,7 @@
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "MGvqYl",
-                "comment": "If a dateTime has not already been recognized and passed to this dialog"
+                "comment": "If a dateTime has not already been recognized and passed to this dialog."
               },
               "condition": "=not(exists($options.dateTime))",
               "actions": [
@@ -571,7 +571,7 @@
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
                 "id": "X3qUs9",
-                "comment": "Based on the type of the resolved date time, perform different actions"
+                "comment": "Based on the type of the resolved date time, perform different actions."
               },
               "condition": "$dateTime.type",
               "cases": [
@@ -859,7 +859,7 @@
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "yGoNtQ",
-            "comment": "$event.end is set to the existing start date time + the new duration (in minutes)"
+            "comment": "$event.end is set to the existing start date time + the new duration (in minutes)."
           },
           "property": "$event.end.dateTime",
           "value": "=addSeconds(formatDateTime($event.start.dateTime), int(turn.duration.value))"
@@ -886,7 +886,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "6lIKTQ",
-            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'"
+            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'."
           },
           "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
           "actions": [
@@ -894,7 +894,7 @@
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "a5WUmn",
-                "comment": "Sets online meeting to true"
+                "comment": "Sets online meeting to true."
               },
               "property": "$event.isOnlineMeeting",
               "value": "=true"
@@ -912,7 +912,7 @@
               "$kind": "Microsoft.SetProperty",
               "$designer": {
                 "id": "lYmPDC",
-                "comment": "Sets online meeting to false"
+                "comment": "Sets online meeting to false."
               },
               "property": "$event.isOnlineMeeting",
               "value": "=false"
@@ -1010,7 +1010,7 @@
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "2dK0lN",
-                "comment": "Refreshes user token "
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
@@ -1019,7 +1019,7 @@
               "$kind": "Microsoft.Graph.Calendar.CreateEvent",
               "$designer": {
                 "id": "arM1WX",
-                "comment": "Posts the $event object to MS Graph Calendar API"
+                "comment": "Posts the $event object to MS Graph Calendar API."
               },
               "resultProperty": "$createEventResult",
               "token": "=turn.token.token",
@@ -1030,7 +1030,7 @@
               "$kind": "Microsoft.IfCondition",
               "$designer": {
                 "id": "yt4PWR",
-                "comment": "If the event was created successfully"
+                "comment": "If the event was created successfully."
               },
               "condition": "=exists($createEventResult)",
               "actions": [

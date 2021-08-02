@@ -36,7 +36,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "4hJSa3",
-            "comment": "If contacts are already provided in dialog.options"
+            "comment": "If contacts are already provided in dialog.options."
           },
           "condition": "=exists($contactArray)",
           "actions": [
@@ -44,7 +44,7 @@
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "DZjBwA",
-                "comment": "Extracts emails and adds directly to contact results"
+                "comment": "Extracts emails and adds directly to contact results."
               },
               "eventName": "AddEmails"
             },
@@ -52,7 +52,7 @@
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "EIW0OT",
-                "comment": "Looks up and disambiguates contact names in MS Graph"
+                "comment": "Looks up and disambiguates contact names in MS Graph."
               },
               "eventName": "AddContacts"
             }
@@ -149,7 +149,7 @@
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "pNZ1RI",
-            "comment": "If neither emails nor contact names have been provided in dialog options"
+            "comment": "If neither emails nor contact names have been provided in dialog options."
           },
           "condition": "=not(exists($emailArray)) && not(exists($contactArray))",
           "actions": [
@@ -335,7 +335,7 @@
               "$kind": "Microsoft.EditArray",
               "$designer": {
                 "id": "mCBwai",
-                "comment": "Clears temp array for contact choice options whenever a new lookup is started"
+                "comment": "Clears temp array for contact choice options whenever a new lookup is started."
               },
               "changeType": "clear",
               "itemsProperty": "$contactCandidates"
@@ -400,7 +400,7 @@
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
                     "id": "eQQmD2",
-                    "comment": "Contact list dialog options"
+                    "comment": "Contact list dialog options."
                   },
                   "assignments": [
                     {

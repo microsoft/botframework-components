@@ -720,7 +720,7 @@
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
             "id": "BACMD2",
-            "comment": "Based on the type of the resolved date time, perform different actions"
+            "comment": "Based on the type of the resolved date time, perform different actions."
           },
           "condition": "$dateTime.type",
           "cases": [
@@ -1016,7 +1016,7 @@
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "5hAU0k",
-            "comment": "$event.end is set to the existing start date time + the new duration (in minutes)"
+            "comment": "$event.end is set to the existing start date time + the new duration (in minutes)."
           },
           "property": "$event.end.dateTime",
           "value": "=addSeconds(formatDateTime($event.start.dateTime), int(turn.duration.value))"

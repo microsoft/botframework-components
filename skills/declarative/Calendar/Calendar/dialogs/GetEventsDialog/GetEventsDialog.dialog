@@ -199,7 +199,7 @@
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
                 "id": "aR3uwW",
-                "comment": "Date time recognition is run on the user's query to extract any datetime  entities."
+                "comment": "Date time recognition is run on the user's query to extract any datetime entities."
               },
               "activityProcessed": true,
               "dialog": "ResolveDateTimeDialog",
@@ -310,7 +310,7 @@
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
             "id": "u8Bei9",
-            "comment": "Refreshes user token"
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"

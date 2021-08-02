@@ -28,8 +28,7 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "itkIrW",
-            "comment": ""
+            "id": "itkIrW"
           },
           "condition": "=$event.IsOrganizer",
           "actions": [
@@ -60,7 +59,7 @@
       "$designer": {
         "id": "ez9la7",
         "name": "OnEvent (CancelEvent)",
-        "comment": "Handles CancelEvent event"
+        "comment": "Handles CancelEvent event."
       },
       "event": "CancelEvent",
       "actions": [
@@ -137,7 +136,7 @@
       "$designer": {
         "id": "tvRSf0",
         "name": "OnEvent (DeclineEvent)",
-        "comment": "Handles DeclineEvent event"
+        "comment": "Handles DeclineEvent event."
       },
       "event": "DeclineEvent",
       "actions": [
