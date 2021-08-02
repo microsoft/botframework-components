@@ -26,6 +26,15 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
+            "id": "np0nny",
+            "comment": "This property controls whether the list of options will require the user to choose one, or whether the options will be displayed only. It is set to false by default."
+          },
+          "property": "$doSelection",
+          "value": "=coalesce($doSelection, false)"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
             "id": "VSEs71",
             "comment": "This property is used to indicate the number of turns the user has spent in this dialog. It is set in dialog state so that it can persist even when the dialog is repeated. \n\nIt is incremented in the OnIntent (Next) and OnIntent (Previous) handlers."
           },
