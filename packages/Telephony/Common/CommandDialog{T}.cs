@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
@@ -24,13 +25,13 @@ namespace Microsoft.Bot.Components.Telephony.Common
     public class CommandDialog<T> : Dialog
     {
         /// <summary>
-        /// Gets or sets intteruption policy. 
+        /// Gets or sets interruption policy. Default is FALSE since interruptions are tricky to model.
         /// </summary>
         /// <value>
         /// Bool or expression which evalutes to bool.
         /// </value>
         [JsonProperty("allowInterruptions")]
-        public BoolExpression AllowInterruptions { get; set; } = true;
+        public BoolExpression AllowInterruptions { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the name of the command.
@@ -104,6 +105,13 @@ namespace Microsoft.Bot.Components.Telephony.Common
 
                 // Stop bubbling if interruptions ar NOT allowed
                 return !canInterrupt;
+            }
+
+            // Mark activity as handled if this is the CommandResult that we are expecting.
+            if (dc.Context.Activity.Type == ActivityTypes.CommandResult
+                && dc.Context.Activity.Name == this.CommandName.GetValue(dc.State))
+            {
+                return true;
             }
 
             return false;

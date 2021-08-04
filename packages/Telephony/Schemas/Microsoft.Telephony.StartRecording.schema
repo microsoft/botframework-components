@@ -9,7 +9,12 @@
     "allowInterruptions": {
       "$ref": "schema:#/definitions/booleanExpression",
       "title": "Allow Interruptions",
-      "description": "Allow the dialog to continue when recording start operation is in progress"
+      "description": "Allow the dialog to continue when recording start operation is in progress",
+      "default": false,
+      "examples": [
+        true,
+        "=user.xyz"
+      ]
     }
   }
 }

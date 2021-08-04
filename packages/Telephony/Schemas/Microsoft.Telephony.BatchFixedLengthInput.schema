@@ -38,7 +38,12 @@
     "allowInterruptions": {
       "$ref": "schema:#/definitions/booleanExpression",
       "title": "Allow Interruptions",
-      "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway."
+      "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway.",
+      "default": false,
+      "examples": [
+        true,
+        "=user.xyz"
+      ]
     },
     "alwaysPrompt": {
       "$ref": "schema:#/definitions/booleanExpression",
