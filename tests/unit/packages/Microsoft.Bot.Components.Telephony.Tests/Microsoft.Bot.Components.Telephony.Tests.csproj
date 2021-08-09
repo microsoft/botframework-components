@@ -36,6 +36,12 @@
     <None Update="Integration\BatchInputTests\BatchInput_FixedLengthHappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\BatchInputTests\BatchInput_FixedLength_InterruptionIgnoredForMaskedDigits.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\BatchInputTests\BatchInput_Termination_InterruptionIgnoredForMaskedDigits.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Integration\BatchInputTests\BatchInput_Termination_WithTangent_InterruptionEnabled_WithReprompt.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
