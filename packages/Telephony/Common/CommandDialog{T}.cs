@@ -25,7 +25,7 @@ namespace Microsoft.Bot.Components.Telephony.Common
     public class CommandDialog<T> : Dialog
     {
         /// <summary>
-        /// Gets or sets interruption policy. Default is FALSE since interruptions are tricky to model.
+        /// Gets or sets interruption policy.
         /// </summary>
         /// <value>
         /// Bool or expression which evalutes to bool.
