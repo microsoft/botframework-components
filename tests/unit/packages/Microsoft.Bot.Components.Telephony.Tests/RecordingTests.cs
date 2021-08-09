@@ -25,7 +25,12 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         [Fact]
         public async Task StartRecording_WithTangent_InterruptionEnabled()
         {
-            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+            await TestUtils.RunTestScript(
+                _resourceExplorerFixture.ResourceExplorer, 
+                adapterChannel: Channels.Telephony,
+                configuration: new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>() { { "allowInterruptions", "true" } })
+                    .Build());
         }
 
         [Fact]
@@ -33,10 +38,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             await TestUtils.RunTestScript(
                 _resourceExplorerFixture.ResourceExplorer,
-                adapterChannel: Channels.Telephony,
-                configuration: new ConfigurationBuilder()
-                    .AddInMemoryCollection(new Dictionary<string, string>() { { "allowInterruptions", "false" } })
-                    .Build());
+                adapterChannel: Channels.Telephony);
         }
 
         [Fact]
