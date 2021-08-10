@@ -120,7 +120,7 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 
 #### Dialog Flow
 * The dialog will only end and continue to the next dialog when the batch length is reached.
-* If AllowInterruptions is true, the parent dialog will receive the input and can handle it as an intent.
+* If AllowInterruptions is true, the parent dialog will receive non-digit input and can handle it as an intent.
 * After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
 * Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
 
@@ -145,7 +145,7 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 
 #### Dialog Flow
 * The dialog will only end and continue to the next dialog when the termination character is sent.
-* If AllowInterruptions is true, the parent dialog will receive the input and can handle it as an intent.
+* If AllowInterruptions is true, the parent dialog will receive non-digit input and can handle it as an intent.
 * After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
 * Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
 
@@ -158,4 +158,3 @@ Learn more about [creating bots with telephony capabilities](https://github.com/
 
 ## Feedback and issues
 If you encounter any issues with this package, or would like to share any feedback please open an Issue in our [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
-

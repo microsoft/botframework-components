@@ -22,6 +22,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public const string Kind = "Microsoft.Telephony.BatchTerminationCharacterInput";
 
         private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
+        private const string _interruptionMaskRegex = @"^[\d]+$";
         private string _terminationCharacter;
 
         /// <summary>
@@ -36,6 +37,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         {
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
+            InterruptionMask = _interruptionMaskRegex;
         }
 
         /// <summary>
