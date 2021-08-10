@@ -29,6 +29,15 @@
           "activity": "On help intent handler"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "Event received"
+        }
+      ]
     }
   ],
   "recognizer": {
