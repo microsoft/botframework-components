@@ -4,9 +4,15 @@
     "label": "Recording Start",
     "subtitle": "Starts recording the current conversation",
     "order": [
+      "allowInterruptions",
       "*"
     ],
     "properties": {
+      "allowInterruptions": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
     }
   },
   "menu": {

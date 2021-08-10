@@ -36,13 +36,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         }
 
         /// <summary>
-        /// Gets or sets intteruption policy. 
+        /// Gets or sets interruption policy. 
         /// </summary>
         /// <value>
         /// Bool or expression which evalutes to bool.
         /// </value>
         [JsonProperty("allowInterruptions")]
-        public BoolExpression AllowInterruptions { get; set; } = true;
+        public BoolExpression AllowInterruptions { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the regex pattern to use to decide when the dialog has aggregated the whole message.

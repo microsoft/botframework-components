@@ -38,13 +38,13 @@ The Start Recording action starts recording of the conversation.
 * AllowInterruptions [`true`,`false`]
 
 #### Usage
-* If a recording is started for a conversation, another recording for the same conversation cannot be started. In such case, the Telephony Channel returns an error indicating that the _"Recording is already in progress"_.
+* If a recording is started for a conversation, another recording for the same conversation cannot be started.
 * The start recording action is only valid when called in a conversation on the Telephony channel.
 
 #### Dialog Flow
-* By default AllowInterruptions is set to `true` i.e. dialog continues while the recording is started in the background.
-* To block the dialog when a recording is started, set AllowInterruptions to `false`.
-* When a start recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interrruptions will be unblocked once the result is received.
+* By default AllowInterruptions is set to `false` i.e. dialog blocks while the recording is started in the background.
+* To allow the interruptions when the recording dialog when a recording is started, set AllowInterruptions to `true`.
+* When a start recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interruptions will be unblocked once the result is received.
 
 #### Failures
 * When a start recording result is received and indicates error, the dialog throws an `ErrorResponseException`. 
@@ -56,13 +56,14 @@ The Pause Recording action pauses recording of the conversation. This action is 
 * AllowInterruptions [`true`,`false`] 
 
 #### Usage
-* If PauseRecording is called and there is no recording in progress, Telephony channel returns an error indicating that the _"Recording has not started"_.
+* If there is no recording in progress, the recording cannot be paused.
+* If a recording is already paused, the recording cannot be paused again.
 * The pause recording action is only valid when called in a conversation on the Telephony channel.
 
 #### Dialog Flow
-* By default AllowInterruptions is set to `true` i.e. dialog continues while the recording is being paused in the background.
-* To block the dialog when recording is paused, set AllowInterruptions to `false`.
-* When a pause recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interrruptions will be unblocked once the result is received.
+* By default AllowInterruptions is set to `false` i.e. dialog blocks while the recording is being paused in the background.
+* To allow the interruptions when the recording dialog when a recording is started, set AllowInterruptions to `true`.
+* When a pause recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interruptions will be unblocked once the result is received.
 
 #### Failures
 * When a pause recording result is received and indicates error, the dialog throws an `ErrorResponseException`. 
@@ -74,32 +75,33 @@ The Resume Recording action resumes recording of the conversation. This action i
 * AllowInterruptions [`true`,`false`] 
 
 #### Usage
-* [Open] _Add error details_
-* The pause recording action is only valid when called in a conversation on the Telephony channel.
+* If there is no recording in progress, the recording cannot be resumed.
+* If a recording is already resumed, the recording cannot be resumed again.
+* The resume recording action is only valid when called in a conversation on the Telephony channel.
 
 #### Dialog Flow
-* By default AllowInterruptions is set to `true` i.e. dialog continues while the recording is being resumed in the background.
-* To block the dialog when recording is resumed, set AllowInterruptions to `false`.
-* When a resume recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interrruptions will be unblocked once the result is received.
+* By default AllowInterruptions is set to `false` i.e. dialog blocks while the recording is being resumed in the background.
+* To allow the interruptions when the recording dialog when a recording is started, set AllowInterruptions to `true`.
+* When a resume recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interruptions will be unblocked once the result is received.
 
 #### Failures
 * When a resume recording result is received and indicates error, the dialog throws an `ErrorResponseException`. 
 
-### **Stop Recording**
+### **Stop Recording** _Pending Implementation_
 The Stop Recording action stops recording of the conversation. Note that it is not required to call StopRecording explicitly. The recording is always stopped when the bot/caller ends the conversation or if the call is transferred to an external phone number.
 
 #### Parameters
 * AllowInterruptions [`true`,`false`] 
 
 #### Usage
-* If StopRecording is called and there is no recording in progress, Telephony channel returns an error indicating that the _"Recording has not started"_.
+* If there is no recording in progress, the recording cannot be stopped.
 * If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage. We do not recommend using the pattern StartRecording-StopRecording-StartRecording-StopRecording since it creates multiple recording files for a single conversation. Instead, we recommend using StartRecording-PauseRecording-ResumeRecording-EndCall/StopRecording to create a single recording file for the converastion.
 * The stop recording action is only valid when called in a conversation on the Telephony channel.
 
 #### Dialog Flow
-* By default AllowInterruptions is set to `true` i.e. dialog continues while the recording is being stopped in the background.
-* To block the dialog when recording is stopped, set AllowInterruptions to `false`.
-* When a stop recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interrruptions will be unblocked once the result is received.
+* By default AllowInterruptions is set to `false` i.e. dialog blockss while the recording is being stopped in the background.
+* To allow the interruptions when the recording dialog when a recording is started, set AllowInterruptions to `true`.
+* When a resume recording result is received and indicates success, the action is considered complete. If the dialog was blocked, interruptions will be unblocked once the result is received.
 
 #### Failures
 * When a stop recording result is received and indicates error, the dialog throws an `ErrorResponseException`.

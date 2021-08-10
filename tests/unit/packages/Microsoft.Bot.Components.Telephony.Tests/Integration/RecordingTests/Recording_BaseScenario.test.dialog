@@ -8,7 +8,7 @@
             "actions": [
                 {
                     "$kind": "Microsoft.Telephony.StartRecording",
-                    "allowInterruptions": "=coalesce(settings.allowInterruptions, true)"
+                    "allowInterruptions": "=coalesce(settings.allowInterruptions, false)"
                 },
                 {
                     "$kind": "Microsoft.SendActivity",

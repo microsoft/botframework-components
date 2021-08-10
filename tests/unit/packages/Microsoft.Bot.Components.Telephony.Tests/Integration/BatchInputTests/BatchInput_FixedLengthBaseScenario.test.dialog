@@ -31,6 +31,15 @@
       ]
     },
     {
+      "$kind": "Microsoft.OnEventActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "Event received"
+        }
+      ]
+    },
+    {
       "$kind": "Microsoft.OnIntent",
       "intent": "ZeroIntent",
       "actions": [

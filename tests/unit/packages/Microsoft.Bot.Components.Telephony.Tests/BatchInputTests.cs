@@ -35,6 +35,12 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         }
 
         [Fact]
+        public async Task BatchInput_Termination_WithTangent_InterruptionEnabled_EventInterrupt()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+        
+        [Fact]
         public async Task BatchInput_Termination_InterruptionIgnoredForMaskedDigits()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
@@ -90,6 +96,12 @@ namespace Microsoft.Bot.Components.Telephony.Tests
                     .Build());
         }
 
+        [Fact]
+        public async Task BatchInput_FixedLength_WithTangent_InterruptionEnabled_EventInterrupt()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+        
         [Fact]
         public async Task BatchInput_FixedLength_InterruptionIgnoredForMaskedDigits()
         {
