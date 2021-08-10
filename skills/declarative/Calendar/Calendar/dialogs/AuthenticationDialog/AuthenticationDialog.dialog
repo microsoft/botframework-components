@@ -3,7 +3,7 @@
   "$designer": {
     "id": "aZc9SE",
     "name": "AuthenticationDialog",
-    "description": "Authenticates user through AAD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
+    "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -12,7 +12,8 @@
       "$kind": "Microsoft.OnBeginDialog",
       "$designer": {
         "name": "BeginDialog",
-        "id": "MnLHqD"
+        "id": "MnLHqD",
+        "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile and mail box settings to capture their name and time zone."
       },
       "actions": [
         {

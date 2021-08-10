@@ -73,4 +73,9 @@
 ]
 
 # SendActivity_UA2sps()
--
+[Activity
+    Text = ${SendActivity_UA2sps_text()}
+]
+
+# SendActivity_UA2sps_text()
+- ${GeneralErrorMessage()}
