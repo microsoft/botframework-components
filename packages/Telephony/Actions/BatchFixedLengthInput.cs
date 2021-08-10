@@ -23,6 +23,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public const string Kind = "Microsoft.Telephony.BatchFixedLengthInput";
 
         private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
+        private const string _interruptionMaskRegex = @"^[\d]+$";
         private int _batchLength;
 
         /// <summary>
@@ -37,6 +38,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         {
             // enable instances of this command as debug break point
             this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
+            InterruptionMask = _interruptionMaskRegex;
         }
 
         /// <summary>

@@ -28,4 +28,9 @@
 - I couldn't recognize a ${expectedType} in your query. Can you try rephrasing?
 
 # ChoiceInput_Prompt_xntS1t()
--
+[Activity
+    Text = ${ChoiceInput_Prompt_xntS1t_text()}
+]
+
+# ChoiceInput_Prompt_xntS1t_text()
+- Which date?

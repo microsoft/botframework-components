@@ -74,6 +74,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("alwaysPrompt")]
         public BoolExpression AlwaysPrompt { get; set; }
 
+        /// <summary>
+        /// Gets or sets a regex describing input that should be flagged as handled and not bubble.
+        /// </summary>
+        /// <value>
+        /// String or expression which evaluates to string.
+        /// </value>
+        [JsonProperty("interruptionMask")]
+        public StringExpression InterruptionMask { get; set; }
+
         /// <inheritdoc/>
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -120,6 +129,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         {
             if (e.Name == DialogEvents.ActivityReceived && dc.Context.Activity.Type == ActivityTypes.Message)
             {
+                //Get interruption mask pattern from expression
+                string regexPattern = this.InterruptionMask?.GetValue(dc.State);
+
+                // Return true( already handled ) if input matches our regex interruption mask
+                if (!string.IsNullOrEmpty(regexPattern) && Regex.Match(dc.Context.Activity.Text, regexPattern).Success)
+                {
+                    return true;
+                }
+
                 // Ask parent to perform recognition
                 await dc.Parent.EmitEventAsync(AdaptiveEvents.RecognizeUtterance, value: dc.Context.Activity, bubble: false, cancellationToken: cancellationToken).ConfigureAwait(false);
 

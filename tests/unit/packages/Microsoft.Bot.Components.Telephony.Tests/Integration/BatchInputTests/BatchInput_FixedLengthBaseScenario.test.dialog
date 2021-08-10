@@ -38,6 +38,16 @@
           "activity": "Event received"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "ZeroIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "On zero intent handler"
+        }
+      ]
     }
   ],
   "recognizer": {
@@ -46,6 +56,10 @@
       {
         "intent": "HelpIntent",
         "pattern": "help"
+      },
+      {
+        "intent": "ZeroIntent",
+        "pattern": "0"
       }
     ]
   }
