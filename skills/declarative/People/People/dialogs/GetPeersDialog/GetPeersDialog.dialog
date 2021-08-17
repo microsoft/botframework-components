@@ -30,93 +30,94 @@
             "id": "TqcvPH"
           },
           "activityProcessed": true,
-          "dialog": "ResolveUserDialog",
-          "resultProperty": "turn.UserFound",
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
           "options": {
-            "UserIdFound": "=$UserIdFound",
-            "NameEntity": "=$NameEntity"
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "F8ARgq"
+            "id": "qS8hYn"
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "property": "$userId",
+          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "qBDQhh"
           },
-          "condition": "=exists(turn.UserFound)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "9JCLK1"
-              },
-              "activity": "${SendActivity_9JCLK1()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "rnko0k"
-              }
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "Ldr65P"
-          },
-          "activityProcessed": true,
-          "dialog": "UserListDialog",
-          "options": {
-            "Scenario": "Peers",
-            "User": "=turn.UserFound",
-            "AutoChooseFirst": false,
-            "GetListItemEvent": "GetListItems",
-            "doSelection": false
-          },
-          "resultProperty": "turn.DetailUser"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "2bT4YD"
-          },
-          "condition": "=exists(turn.DetailUser)",
+          "condition": "=exists(turn.user)",
+          "elseActions": [],
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "8wYSH6"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse",
+                    "noItemsResponse": "NoItemsFound"
+                  }
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "GetListItems"
+                },
+                {
+                  "property": "$listOptions.itemsProperty",
+                  "value": "turn.items"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "scenario": "Peers",
+                    "userName": "=turn.user.displayName"
+                  }
+                }
+              ]
+            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "yuDqlV"
+                "id": "QIaJMZ"
               },
               "activityProcessed": true,
-              "dialog": "GetProfileDialog",
+              "dialog": "ListDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser"
+                "templates.icon": "=$listOptions.templates.icon",
+                "templates.title": "=$listOptions.templates.title",
+                "templates.item": "=$listOptions.templates.item",
+                "templates.initialPrompt": "=$listOptions.templates.initialPrompt",
+                "templates.showMorePrompt": "=$listOptions.templates.showMorePrompt",
+                "templates.skipResponse": "=$listOptions.templates.skipResponse",
+                "templates.defaultValueResponse": "=$listOptions.templates.defaultValueResponse",
+                "templates.noItemsResponse": "=$listOptions.templates.noItemsResponse",
+                "actionTitleProperty": "=$listOptions.actionTitleProperty",
+                "getItemsEvent": "=$listOptions.getItemsEvent",
+                "itemsProperty": "=$listOptions.itemsProperty",
+                "doSelection": "=$listOptions.doSelection",
+                "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "7uCWqD"
-              },
-              "activity": "${SendActivity_7uCWqD()}"
-            }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "YtwbHP"
-          }
         }
       ]
     },
@@ -149,7 +150,7 @@
           "$designer": {
             "id": "ww53aA"
           },
-          "resultProperty": "turn.Items",
+          "resultProperty": "turn.items",
           "token": "=turn.token.token",
           "maxCount": 15,
           "propertiesToSelect": [
@@ -161,7 +162,7 @@
             "jobTitle",
             "department"
           ],
-          "userId": "=turn.UserFound.Id"
+          "userId": "=$userId"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -177,11 +178,11 @@
                 "id": "VsikRa"
               },
               "token": "=turn.token.token",
-              "userId": "=turn.foreach.value.Id",
-              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+              "userId": "=turn.foreach.value.id",
+              "resultProperty": "turn.items[turn.foreach.index].photo"
             }
           ],
-          "itemsProperty": "turn.Items"
+          "itemsProperty": "turn.items"
         }
       ]
     }

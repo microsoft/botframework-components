@@ -1,8 +1,8 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "nfUy4u",
-    "name": "GetCollaboratorsDialog",
+    "id": "Uknjye",
+    "name": "GetUserDialog",
     "description": ""
   },
   "autoEndDialog": true,
@@ -13,51 +13,28 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "7urTxr"
+        "id": "T5HUu8"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "oatn8b"
+            "id": "DkZ1R6"
           },
-          "name": "People.GetCollaboratorsDialog.BeginDialog",
+          "name": "People.GetUserDialog.BeginDialog",
           "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "ON21f5"
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "vL94h9"
-          },
-          "property": "$userId",
-          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "nUeEx5"
+            "id": "DWpCWb"
           },
-          "condition": "=exists(turn.user)",
-          "elseActions": [],
+          "condition": "=not(exists($userId))",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "GZhBJq"
+                "id": "kY3tqs"
               },
               "assignments": [
                 {
@@ -75,7 +52,7 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
+                  "value": "displayName"
                 },
                 {
                   "property": "$listOptions.getItemsEvent",
@@ -86,10 +63,14 @@
                   "value": "turn.items"
                 },
                 {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
+                },
+                {
                   "property": "$listOptions.additionalOptions",
                   "value": {
-                    "scenario": "Collaborators",
-                    "userName": "=turn.user.displayName"
+                    "scenario": "PersonSearch",
+                    "userName": "=$contactName"
                   }
                 }
               ]
@@ -97,10 +78,11 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "wOa0IP"
+                "id": "ExNJvT"
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
+              "resultProperty": "$userId",
               "options": {
                 "templates.icon": "=$listOptions.templates.icon",
                 "templates.title": "=$listOptions.templates.title",
@@ -117,49 +99,100 @@
                 "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
+          ],
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "tjEwDX"
+          },
+          "condition": "=exists($userId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "F4RcGM"
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "hko4nj"
+              },
+              "resultProperty": "turn.user",
+              "token": "=turn.token.token",
+              "userId": "=$userId",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
+            }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "vSi8AI"
+          },
+          "value": "=coalesce(turn.user, null)"
         }
       ]
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "Vqq2HS",
-        "name": "OnEvent (GetListItems)"
+        "id": "6pMM4Q",
+        "name": "GetListItems"
       },
       "event": "GetListItems",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "kTe9ET"
+            "id": "uUcb4B"
           },
-          "name": "People.GetCollaboratorsDialog.OnEvent_GetListItems",
+          "name": "GetUserDialog.OnEvent_GetListItems",
           "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ZKKInz"
+            "id": "umBqPf"
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.Graph.User.GetWorksWith",
+          "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
-            "id": "nt8FTI",
-            "name": "Microsoft Graph - Get People That Work With Me"
+            "id": "EkF8O7"
           },
+          "nameToSearchFor": "=$contactName",
+          "propertiesToSelect": [
+            "id",
+            "displayName",
+            "mail",
+            "officeLocation",
+            "businessPhones",
+            "jobTitle",
+            "department"
+          ],
+          "maxCount": 16,
           "token": "=turn.token.token",
-          "maxCount": 15,
-          "userId": "=$userId",
           "resultProperty": "turn.items"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "vADC8V"
+            "id": "BlACeB"
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
@@ -168,18 +201,18 @@
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "mq1B9p"
+                "id": "VG1DTG"
               },
-              "resultProperty": "turn.items[turn.foreach.index].photo",
+              "token": "=turn.token.token",
               "userId": "=turn.foreach.value.id",
-              "token": "=turn.token.token"
+              "resultProperty": "turn.items[turn.foreach.index].photo"
             }
           ]
         }
       ]
     }
   ],
-  "generator": "GetCollaboratorsDialog.lg",
-  "recognizer": "GetCollaboratorsDialog.lu.qna",
-  "id": "GetCollaboratorsDialog"
+  "generator": "GetUserDialog.lg",
+  "recognizer": "GetUserDialog.lu.qna",
+  "id": "GetUserDialog"
 }

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "ListDialog",
+  "type": "object",
+  "properties": {
+    "templates.icon": {
+      "description": "LG template ID for list card icon",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Icon"
+    },
+    "templates.title": {
+      "description": "LG template ID for list card title",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Title"
+    },
+    "templates.item": {
+      "description": "LG template ID for list item",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Item"
+    },
+    "templates.initialPrompt": {
+      "description": "LG template ID for the initial prompt to show with the list card",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Initial Prompt"
+    },
+    "templates.showMorePrompt": {
+      "description": "LG template ID for the prompt to show when user navigates to see more results",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Show More Prompt"
+    },
+    "templates.skipResponse": {
+      "description": "LG template ID for the response when a user skips selecting an option",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Skip Response"
+    },
+    "templates.defaultValueResponse": {
+      "description": "LG template ID for the response when the default choice is selected",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates Default Value Response"
+    },
+    "templates.noItemsResponse": {
+      "description": "LG template ID for response when no items are found for the list card",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Templates No Items Response"
+    },
+    "actionTitleProperty": {
+      "description": "Property of the list item object to use for the action title of the choice objects.",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Action Title Property"
+    },
+    "getItemsEvent": {
+      "description": "ID for dialog event on calling dialog to populate list items",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Get Items Event"
+    },
+    "itemsProperty": {
+      "description": "Named state property where list items are stored.",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/stringExpression",
+      "title": "Items Property"
+    },
+    "doSelection": {
+      "description": "Boolean property indicating whether the list will require the user to select a choice",
+      "title": "Do Selection",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/booleanExpression"
+    },
+    "additionalOptions": {
+      "description": "Object property with custom properties used for LG responses",
+      "title": "Additional Options",
+      "$ref": "https://schemas.botframework.com/schemas/component/v1.0/component.schema#/definitions/objectExpression"
+    }
+  },
+  "$result": {
+    "type": "object",
+    "properties": {}
+  }
+}

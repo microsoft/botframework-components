@@ -7,7 +7,7 @@
 
 # SendActivity_HTkwlL()
 [Activity
-    Text = Sorry I didn't understand your phrase. Can you please try again?
+    Text = ${SendActivity_HTkwlL_text()}
 ]
 
 # SendActivity_DP3pJu()
@@ -22,40 +22,31 @@
 
 # SendActivity_W4IWlO_attachment_EvFkJ1()
 [HeroCard
-  title = Welcome to People Skill!
-  subtitle = Find people in your organization by asking.
-  text = WelcomeUser()
+   text = Try the people skill now!
+   buttons = ${LaunchCardAction()}
 ]
-
-
 
 # SendActivity_ipHTXS()
 [Activity
-    Text = Sorry! An error was encountered.
+    Text = ${SendActivity_ipHTXS_text()}
 ]
 
-# SendActivity_AV87xs()
+# SendActivity_G7Rfej_text()
+- ERROR: ${turn.dialogEvent.value}
+# SendActivity_G7Rfej()
 [Activity
-    Text = An error was encountered, please see below message for detail.
+    Text = ${SendActivity_G7Rfej_text()}
 ]
 
-# SendActivity_y3gv3g()
+# SendActivity_ipHTXS_text()
+- ${GeneralErrorMessage()}
+
+# SendActivity_OIka7e()
 [Activity
-    Text = Conversation Id: ${turn.activity.conversation.id}
+    to = turn.activity.from
+    deliveryMode = whisper
+    attachments = ${json(SendActivity_DP3pJu())}
 ]
 
-# SendActivity_Tcje3O()
-[Activity
-    Text = Error: ${turn.dialogEvent.value}
-]
-
-# WelcomeUser()
-- IF: ${turn.signedInUser.givenName != null}
-    - Hi ${turn.signedInUser.givenName} 🖐, ${IntroMessage()}
-- ELSE: 
-    - Hi there 🖐, ${IntroMessage()}
-
-# IntroMessage()
-- I can help you search for people in your organization.
-- I'm ready to help answer questions about people in your organization.
-- I'm here to help you find people in your organization.
+# SendActivity_HTkwlL_text()
+- Sorry I didn't understand your intent. Can you please try again?

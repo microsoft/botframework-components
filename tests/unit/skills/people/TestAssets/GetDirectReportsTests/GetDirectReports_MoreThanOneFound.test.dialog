@@ -7,6 +7,17 @@
   "dialog": "People",
   "script": [
     {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
       "$kind": "Microsoft.Test.UserConversationUpdate",
       "membersAdded": [
         "Bot",
@@ -15,12 +26,8 @@
       "membersRemoved": []
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Hi there 🖐, I'm ready to help answer questions about people in your organization.",
-        "Hi there 🖐, I can help you search for people in your organization.",
-        "Hi there 🖐, I'm here to help you find people in your organization."
-      ]
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Hi Test User 🖐, I can help you search for people in your organization."
     },
     {
       "$kind": "Microsoft.Test.UserSays",
@@ -28,7 +35,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "There are 2 people that are part of **Thomas Chung**'s team.",
+      "text": "There are 2 people that report to **Thomas Chung**.",
       "assertions": [
         "attachments[0].contentType == 'application/vnd.microsoft.card.adaptive'"
       ]
@@ -40,7 +47,7 @@
         "type": "message",
         "value": {
           "intent": "GetProfile",
-          "user": "9CB044E0-478C-4AC6-9E29-1A11A51113C5",
+          "userId": "9CB044E0-478C-4AC6-9E29-1A11A51113C5",
           "msteams": {
             "type": "messageBack"
           }

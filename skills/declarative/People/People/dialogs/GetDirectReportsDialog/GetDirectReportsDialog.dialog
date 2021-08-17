@@ -27,97 +27,97 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "6g7a8q"
+            "id": "ZYPAvm"
           },
           "activityProcessed": true,
-          "dialog": "ResolveUserDialog",
-          "resultProperty": "turn.UserFound",
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
           "options": {
-            "UserIdFound": "=$UserIdFound",
-            "NameEntity": "=$NameEntity"
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "2CmiAT"
+            "id": "pmfkqy"
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "property": "$userId",
+          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "0vENgn"
+            "id": "2YSwkP"
           },
-          "condition": "=exists(turn.UserFound)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "P6fqO4"
-              },
-              "activity": "${SendActivity_P6fqO4()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "xcr8th"
-              }
-            }
-          ],
-          "actions": []
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "PupWRK"
-          },
-          "activityProcessed": true,
-          "dialog": "UserListDialog",
-          "options": {
-            "User": "=turn.UserFound",
-            "Scenario": "DirectReports",
-            "AutoChooseFirst": false,
-            "GetListItemEvent": "GetListItems",
-            "doSelection": false
-          },
-          "resultProperty": "turn.DirectReportUser"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "WUuhtm"
-          },
-          "condition": "=exists(turn.DirectReportUser)",
+          "condition": "=exists(turn.user)",
+          "elseActions": [],
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "4usFqT"
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse",
+                    "noItemsResponse": "NoItemsFound"
+                  }
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "GetListItems"
+                },
+                {
+                  "property": "$listOptions.itemsProperty",
+                  "value": "turn.items"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "scenario": "DirectReports",
+                    "userName": "=turn.user.displayName"
+                  }
+                }
+              ]
+            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "ARtyS5"
+                "id": "fvBWh0"
               },
               "activityProcessed": true,
-              "dialog": "GetProfileDialog",
+              "dialog": "ListDialog",
               "options": {
-                "UserIdFound": "=turn.DirectReportUser"
+                "templates.icon": "=$listOptions.templates.icon",
+                "templates.title": "=$listOptions.templates.title",
+                "templates.item": "=$listOptions.templates.item",
+                "templates.initialPrompt": "=$listOptions.templates.initialPrompt",
+                "templates.showMorePrompt": "=$listOptions.templates.showMorePrompt",
+                "templates.skipResponse": "=$listOptions.templates.skipResponse",
+                "templates.defaultValueResponse": "=$listOptions.templates.defaultValueResponse",
+                "templates.noItemsResponse": "=$listOptions.templates.noItemsResponse",
+                "actionTitleProperty": "=$listOptions.actionTitleProperty",
+                "getItemsEvent": "=$listOptions.getItemsEvent",
+                "itemsProperty": "=$listOptions.itemsProperty",
+                "doSelection": "=$listOptions.doSelection",
+                "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "UTkQ6k"
-              },
-              "activity": "${SendActivity_UTkQ6k()}"
-            }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "0nZUOA"
-          }
         }
       ]
     },
@@ -161,8 +161,8 @@
           ],
           "token": "=turn.token.token",
           "maxCount": 15,
-          "resultProperty": "turn.Items",
-          "userId": "=turn.UserFound.Id"
+          "resultProperty": "turn.items",
+          "userId": "=$userId"
         },
         {
           "$kind": "Microsoft.Foreach",
@@ -171,14 +171,14 @@
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
-          "itemsProperty": "turn.Items",
+          "itemsProperty": "turn.items",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
                 "id": "uCR1y8"
               },
-              "resultProperty": "turn.Items[turn.foreach.index].Photo",
+              "resultProperty": "turn.items[turn.foreach.index].photo",
               "userId": "=turn.foreach.value.Id",
               "token": "=turn.token.token"
             }

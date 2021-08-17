@@ -5,16 +5,13 @@
 
 # SendActivity_ryFbw6()
 [Activity
-    Attachments = ${json(ProfileCard(turn.Result))}
+    Text = ${FoundUserText()}
+    Attachments = ${json(ProfileCard(turn.user))}
 ]
 
-# SendActivity_dTcyKk()
-[Activity
-    Text = Here is what I found for **${turn.Result.displayName}**:
-]
-
-# SendActivity_lcoztE()
-[Activity
-    Text = Sorry, I couldn't find anyone named **${dialog.nameEntity}** in your organization. Please try again.
-]
-
+# FoundUserText()
+- IF: ${not($haveUserId)}
+    - Here is what I found for **${turn.user.displayName}**:
+- ELSE: 
+    -
+    

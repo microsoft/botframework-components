@@ -7,6 +7,17 @@
   "dialog": "People",
   "script": [
     {
+      "$kind": "Microsoft.Test.UserActivity",
+      "activity": {
+        "type": "event",
+        "name": "SetTestOptions",
+        "value": {
+          "randomSeed": 0,
+          "randomValue": 0
+        }
+      }
+    },
+    {
       "$kind": "Microsoft.Test.UserConversationUpdate",
       "membersAdded": [
         "Bot",
@@ -15,12 +26,8 @@
       "membersRemoved": []
     },
     {
-      "$kind": "Microsoft.Test.AssertReplyOneOf",
-      "text": [
-        "Hi there 🖐, I'm ready to help answer questions about people in your organization.",
-        "Hi there 🖐, I can help you search for people in your organization.",
-        "Hi there 🖐, I'm here to help you find people in your organization."
-      ]
+      "$kind": "Microsoft.Test.AssertReply",
+      "text": "Hi Test User 🖐, I can help you search for people in your organization."
     },
     {
       "$kind": "Microsoft.Test.UserSays",
@@ -28,7 +35,7 @@
     },
     {
       "$kind": "Microsoft.Test.AssertReply",
-      "text": "I found that **Thomas Chung** does not have peers."
+      "text": "**Thomas Chung** does not have any peers."
     }
   ]
 }
