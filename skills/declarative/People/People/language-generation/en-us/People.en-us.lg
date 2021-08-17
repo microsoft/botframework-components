@@ -50,3 +50,8 @@
 
 # SendActivity_HTkwlL_text()
 - Sorry I didn't understand your intent. Can you please try again?
+
+# SendActivity_SqgeAv()
+[Activity
+    Text = ${SendActivity_ipHTXS_text()}
+]
