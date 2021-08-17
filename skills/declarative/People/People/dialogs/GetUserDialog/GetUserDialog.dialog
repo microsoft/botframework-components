@@ -3,7 +3,8 @@
   "$designer": {
     "id": "Uknjye",
     "name": "GetUserDialog",
-    "description": ""
+    "description": "",
+    "comment": "Looks up user from MS Graph API based on provided $userId or $contactName parameters."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "T5HUu8"
+        "id": "T5HUu8",
+        "comment": "Looks up user from MS Graph API based on provided $userId or $contactName parameters."
       },
       "actions": [
         {
@@ -27,14 +29,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "DWpCWb"
+            "id": "DWpCWb",
+            "comment": "If the $userId does not exist, a user lookup based on the $contactName is performed prompting the user to select which user they intended."
           },
           "condition": "=not(exists($userId))",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "kY3tqs"
+                "id": "kY3tqs",
+                "comment": "The list values are populated in the OnEvent (GetListItems) handler."
               },
               "assignments": [
                 {
@@ -78,7 +82,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "ExNJvT"
+                "id": "ExNJvT",
+                "comment": "Launches a List Dialog with the choice options and stores selected userId in state."
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
@@ -112,7 +117,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "F4RcGM"
+                "id": "F4RcGM",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
@@ -120,7 +126,8 @@
             {
               "$kind": "Microsoft.Graph.User.GetUserProfile",
               "$designer": {
-                "id": "hko4nj"
+                "id": "hko4nj",
+                "comment": "Gets profile of user based on the provided userId."
               },
               "resultProperty": "turn.user",
               "token": "=turn.token.token",
@@ -140,7 +147,8 @@
         {
           "$kind": "Microsoft.EndDialog",
           "$designer": {
-            "id": "vSi8AI"
+            "id": "vSi8AI",
+            "comment": "Returns the selected user object to calling dialog."
           },
           "value": "=coalesce(turn.user, null)"
         }
@@ -165,7 +173,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "umBqPf"
+            "id": "umBqPf",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -173,7 +182,8 @@
         {
           "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
-            "id": "EkF8O7"
+            "id": "EkF8O7",
+            "comment": "Gets list of user objects that match the provided $contactName parameter."
           },
           "nameToSearchFor": "=$contactName",
           "propertiesToSelect": [
@@ -192,7 +202,8 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "BlACeB"
+            "id": "BlACeB",
+            "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
@@ -201,7 +212,8 @@
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "VG1DTG"
+                "id": "VG1DTG",
+                "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
               },
               "token": "=turn.token.token",
               "userId": "=turn.foreach.value.id",

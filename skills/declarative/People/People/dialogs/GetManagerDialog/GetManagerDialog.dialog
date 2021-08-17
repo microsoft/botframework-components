@@ -3,7 +3,8 @@
   "$designer": {
     "id": "TiCQ7a",
     "name": "GetManagerDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets manager of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "75076Z"
+        "id": "75076Z",
+        "comment": "Gets manager of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -27,7 +29,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ansVmG"
+            "id": "ansVmG",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
           "dialog": "GetUserDialog",
@@ -49,7 +52,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "8BSpCh"
+                "id": "8BSpCh",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
@@ -57,7 +61,8 @@
             {
               "$kind": "Microsoft.Graph.User.GetManager",
               "$designer": {
-                "id": "8NITCX"
+                "id": "8NITCX",
+                "comment": "Gets the user that manages the provided userId."
               },
               "resultProperty": "turn.manager",
               "token": "=turn.token.token",
@@ -75,14 +80,16 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "JqZ9j7"
+                "id": "JqZ9j7",
+                "comment": "If the user has an manager."
               },
               "condition": "=exists(turn.manager)",
               "elseActions": [
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "zynwoz"
+                    "id": "zynwoz",
+                    "comment": "Shows a 'Not Found' response."
                   },
                   "activity": "${SendActivity_zynwoz()}"
                 }
@@ -91,14 +98,16 @@
                 {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "tSW5bL"
+                    "id": "tSW5bL",
+                    "comment": ""
                   },
                   "activity": "${SendActivity_tSW5bL()}"
                 },
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "z543ja"
+                    "id": "z543ja",
+                    "comment": "Gets the profile card for the manager user object."
                   },
                   "activityProcessed": true,
                   "dialog": "GetProfileDialog",

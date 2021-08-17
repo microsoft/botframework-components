@@ -3,7 +3,8 @@
   "$designer": {
     "id": "nfUy4u",
     "name": "GetCollaboratorsDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets list of collaborators for the given user from the MS Graph People API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "7urTxr"
+        "id": "7urTxr",
+        "comment": "Gets list of collaborators for the given user from the MS Graph People API."
       },
       "actions": [
         {
@@ -27,7 +29,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ON21f5"
+            "id": "ON21f5",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
           "dialog": "GetUserDialog",
@@ -41,7 +44,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "vL94h9"
+            "id": "vL94h9",
+            "comment": "Sets $userId to id of selected user."
           },
           "property": "$userId",
           "value": "=turn.user.id"
@@ -57,7 +61,8 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "GZhBJq"
+                "id": "GZhBJq",
+                "comment": "Sets list dialog options for Collaborators list. The list values are populated in the OnEvent (GetListItems) handler."
               },
               "assignments": [
                 {
@@ -97,7 +102,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "wOa0IP"
+                "id": "wOa0IP",
+                "comment": "Launches ListDialog with specified options."
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
@@ -140,7 +146,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ZKKInz"
+            "id": "ZKKInz",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -149,7 +156,8 @@
           "$kind": "Microsoft.Graph.User.GetWorksWith",
           "$designer": {
             "id": "nt8FTI",
-            "name": "Microsoft Graph - Get People That Work With Me"
+            "name": "Microsoft Graph - Get People That Work With Me",
+            "comment": "Returns list of users that collaborate with the provided userId."
           },
           "token": "=turn.token.token",
           "maxCount": 15,
@@ -159,7 +167,8 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "vADC8V"
+            "id": "vADC8V",
+            "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",

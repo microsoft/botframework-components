@@ -3,7 +3,8 @@
   "$designer": {
     "id": "VOwPpB",
     "name": "AuthenticationDialog",
-    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs"
+    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs",
+    "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "f5A0hE"
+        "id": "f5A0hE",
+        "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
       },
       "actions": [
         {

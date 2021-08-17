@@ -3,7 +3,8 @@
   "$designer": {
     "id": "1dAZlt",
     "name": "GetProfileDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets profile of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "XToxGY"
+        "id": "XToxGY",
+        "comment": "Gets profile of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -27,7 +29,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "Amg65J"
+            "id": "Amg65J",
+            "comment": "This property is used to modify the end response based on whether the userId was provided initially or not. If it was provided on dialog launch, only the profile card is shown to reduce conversation noise."
           },
           "property": "$haveUserId",
           "value": "=exists($userId)"
@@ -35,7 +38,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "KV9zcT"
+            "id": "KV9zcT",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
           "dialog": "GetUserDialog",
@@ -54,9 +58,19 @@
           "condition": "=exists(turn.user)",
           "actions": [
             {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "kPBvdA",
+                "comment": "Refreshes user token."
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "CQDmFd"
+                "id": "CQDmFd",
+                "comment": "Since the profile photo is not included by default, an additional call is made to get the photo for the profile."
               },
               "resultProperty": "turn.user.photo",
               "token": "=turn.token.token",
@@ -65,7 +79,8 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "ryFbw6"
+                "id": "ryFbw6",
+                "comment": "If the userId was not initially provided, a contextual message is shown.\n\nDisplays selected user profile in Profile Card."
               },
               "activity": "${SendActivity_ryFbw6()}"
             }

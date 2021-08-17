@@ -27,14 +27,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "2Szxt3"
+            "id": "2Szxt3",
+            "comment": "If the conversation update came from MS Teams in a group or team channel conversation."
           },
           "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Uaq27I"
+                "id": "Uaq27I",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
@@ -49,17 +51,10 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "K5P9dm"
-              },
-              "activityProcessed": true,
-              "dialog": "AuthenticationDialog"
-            },
-            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "W4IWlO"
+                "id": "W4IWlO",
+                "comment": "Shows a card which launches a 1:1 chat for MS Teams."
               },
               "activity": "${SendActivity_W4IWlO()}"
             }
@@ -71,7 +66,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "52Yo92",
-        "name": "OnIntent (Logout)"
+        "name": "OnIntent (Logout)",
+        "comment": "Logs the user out."
       },
       "intent": "Logout",
       "actions": [
@@ -105,7 +101,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "blfdn9",
-        "name": "OnIntent (GetCollaborators)"
+        "name": "OnIntent (GetCollaborators)",
+        "comment": "Handles the GetCollaborators intent and launches the GetCollaboratorsDialog."
       },
       "intent": "GetCollaborators",
       "actions": [
@@ -142,7 +139,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "bK5x7C",
-        "name": "OnIntent (GetDepartment)"
+        "name": "OnIntent (GetDepartment)",
+        "comment": "Handles the GetCollaborators intent and launches the GetProfileDialog."
       },
       "intent": "GetDepartment",
       "actions": [
@@ -179,7 +177,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "cuN0XW",
-        "name": "OnIntent (GetDirectReports)"
+        "name": "OnIntent (GetDirectReports)",
+        "comment": "Handles the GetDirectReports intent and launches the GetDirectReports Dialog."
       },
       "intent": "GetDirectReports",
       "entities": [],
@@ -217,7 +216,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "22Refo",
-        "name": "OnIntent (GetEmailAddress)"
+        "name": "OnIntent (GetEmailAddress)",
+        "comment": "Handles the GetEmailAddress intent and launches the GetProfileDialog."
       },
       "intent": "GetEmailAddress",
       "actions": [
@@ -254,7 +254,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "pjrr7d",
-        "name": "OnIntent (GetJobTitle)"
+        "name": "OnIntent (GetJobTitle)",
+        "comment": "Handles the GetJobTitle intent and launches the GetProfileDialog."
       },
       "intent": "GetJobTitle",
       "actions": [
@@ -291,7 +292,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "AUBLiD",
-        "name": "OnIntent (GetLocation)"
+        "name": "OnIntent (GetLocation)",
+        "comment": "Handles the GetLocation intent and launches the GetProfileDialog."
       },
       "intent": "GetLocation",
       "actions": [
@@ -328,7 +330,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "xAkucD",
-        "name": "OnIntent (GetManager)"
+        "name": "OnIntent (GetManager)",
+        "comment": "Handles the GetManager intent and launches the GetManagerDialog."
       },
       "intent": "GetManager",
       "actions": [
@@ -366,7 +369,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "qzK1HD",
-        "name": "OnIntent (GetPeers)"
+        "name": "OnIntent (GetPeers)",
+        "comment": "Handles the GetPeers intent and launches the GetPeersDialog."
       },
       "intent": "GetPeers",
       "entities": [],
@@ -404,7 +408,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "8zzS4g",
-        "name": "OnIntent (GetPhoneNumber)"
+        "name": "OnIntent (GetPhoneNumber)",
+        "comment": "Handles the GetPhoneNumber intent and launches the GetProfileDialog."
       },
       "intent": "GetPhoneNumber",
       "actions": [
@@ -441,7 +446,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "GRE2OG",
-        "name": "OnIntent (GetProfile)"
+        "name": "OnIntent (GetProfile)",
+        "comment": "Handles the GetProfile intent and launches the GetProfileDialog."
       },
       "intent": "GetProfile",
       "entities": [],
@@ -505,7 +511,8 @@
       "$kind": "Microsoft.OnUnknownIntent",
       "$designer": {
         "id": "C0Qlte",
-        "name": "OnIntent (Unknown)"
+        "name": "OnIntent (Unknown)",
+        "comment": "Handles unknownIntent events. "
       },
       "actions": [
         {
@@ -519,14 +526,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "ceaMpz"
+            "id": "ceaMpz",
+            "comment": "If the bot has been called as a skill."
           },
           "condition": "=turn.activity.recipient.role == \"skill\"",
           "actions": [
             {
               "$kind": "Microsoft.EndDialog",
               "$designer": {
-                "id": "wPwj7Y"
+                "id": "wPwj7Y",
+                "comment": "End the dialog with a value of 'false'. The calling bot should handle this response appropriately."
               },
               "value": false
             }
@@ -535,7 +544,8 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "UA2sps"
+                "id": "UA2sps",
+                "comment": "If bot was called directly, shows a 'did not understand' response."
               },
               "activity": "${SendActivity_HTkwlL()}"
             }
@@ -547,7 +557,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "JlhWE9",
-        "name": "OnEvent (SetOptions)"
+        "name": "OnEvent (SetOptions)",
+        "comment": "Stores values from user's query in dialog state."
       },
       "event": "SetOptions",
       "actions": [
@@ -562,7 +573,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "NpxNbN"
+            "id": "NpxNbN",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -570,7 +582,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "JGABEb"
+            "id": "JGABEb",
+            "comment": "$contactName is set to either the contact, email, or personName entity, whichever is present.\n\n$userId is set to either the turn.activity.value.userId property (which is sent when the user selects users from a listCard) or to the id of the current user if no other contactName value was provided."
           },
           "assignments": [
             {
@@ -624,6 +637,13 @@
             {
               "value": "emulator",
               "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "SqgeAv"
+                  },
+                  "activity": "${SendActivity_SqgeAv()}"
+                },
                 {
                   "$kind": "Microsoft.TraceActivity",
                   "$designer": {

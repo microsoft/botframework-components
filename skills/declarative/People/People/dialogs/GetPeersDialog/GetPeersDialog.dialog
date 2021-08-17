@@ -3,7 +3,8 @@
   "$designer": {
     "id": "2luWYj",
     "name": "GetPeersDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets peers of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "C0rITH"
+        "id": "C0rITH",
+        "comment": "Gets peers of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -27,7 +29,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "TqcvPH"
+            "id": "TqcvPH",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
           "dialog": "GetUserDialog",
@@ -41,7 +44,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "qS8hYn"
+            "id": "qS8hYn",
+            "comment": "Sets $userId to id of selected user."
           },
           "property": "$userId",
           "value": "=turn.user.id"
@@ -57,7 +61,8 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "8wYSH6"
+                "id": "8wYSH6",
+                "comment": "Sets list dialog options for Peers list. The list values are populated in the OnEvent (GetListItems) handler."
               },
               "assignments": [
                 {
@@ -97,7 +102,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "QIaJMZ"
+                "id": "QIaJMZ",
+                "comment": "Launches ListDialog with specified options."
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
@@ -140,7 +146,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "qZ7hQz"
+            "id": "qZ7hQz",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -148,7 +155,8 @@
         {
           "$kind": "Microsoft.Graph.User.GetPeers",
           "$designer": {
-            "id": "ww53aA"
+            "id": "ww53aA",
+            "comment": "Gets the list of user objects that report to the same manager as the provided userId."
           },
           "resultProperty": "turn.items",
           "token": "=turn.token.token",
@@ -167,7 +175,8 @@
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "3NzFtD"
+            "id": "3NzFtD",
+            "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",

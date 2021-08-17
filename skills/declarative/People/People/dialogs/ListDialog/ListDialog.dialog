@@ -60,7 +60,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "MINJTz"
+                "id": "MINJTz",
+                "comment": "If only one choice is available, returns that value by default."
               },
               "condition": "=count(turn.items) == 1",
               "actions": [
@@ -170,7 +171,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "aVXgYo"
+            "id": "aVXgYo",
+            "comment": "This event is provided by the calling dialog and is used to hydrate the turn.items property without passing extra data in dialog state."
           },
           "bubbleEvent": true,
           "eventName": "=$getItemsEvent"
@@ -186,7 +188,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "lA1N2Z"
+            "id": "lA1N2Z",
+            "comment": "If no choice items were found, sends a 'Not Found' response and ends the dialog with a null value."
           },
           "condition": "=not(exists(turn.items)) || count(turn.items) == 0",
           "actions": [
