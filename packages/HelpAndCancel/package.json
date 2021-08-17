@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/bot-components-helpandcancel",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Contains Adaptive Dialog assets to support Help and Cancel conversational flows in a bot built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
