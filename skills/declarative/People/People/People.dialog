@@ -54,7 +54,7 @@
               "$kind": "Microsoft.SendActivity",
               "$designer": {
                 "id": "W4IWlO",
-                "comment": "Shows a card which launches a 1:1 chat for MS Teams."
+                "comment": "Shows a card in which can a user can launch a 1:1 chat for MS Teams."
               },
               "activity": "${SendActivity_W4IWlO()}"
             }
