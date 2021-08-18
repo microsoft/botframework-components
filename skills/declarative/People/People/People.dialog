@@ -610,7 +610,7 @@
           "$designer": {
             "id": "U65idk"
           },
-          "name": "Calendar.OnError",
+          "name": "People.OnError",
           "value": "=turn.dialogEvent.value"
         },
         {
