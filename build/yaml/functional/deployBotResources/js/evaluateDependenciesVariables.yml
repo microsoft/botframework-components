@@ -44,14 +44,14 @@ steps:
             }
             
             if ($source -eq $sourceJSMyGet) {
-              $versionNumber = npm show botbuilder@next version | Out-String
+              $versionNumber = npm show botbuilder-dialogs-adaptive-runtime-integration-express@next version | Out-String
             } else {
-              $versionNumber = npm show botbuilder@latest version | Out-String
+              $versionNumber = npm show botbuilder-dialogs-adaptive-runtime-integration-express@latest version | Out-String
             }
           }
           STABLE { 
             if ("${{ parameters.botType }}" -in "Host", "Skill") {
-              $PackageList = npm show botbuilder@* version | Out-String;
+              $PackageList = npm show botbuilder-dialogs-adaptive-runtime-integration-express@* version | Out-String;
             }
             $versionNumber = ($PackageList.Split(" ")[-1]).Trim().TrimStart("'").TrimEnd("'");
           }
