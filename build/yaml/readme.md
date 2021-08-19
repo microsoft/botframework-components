@@ -9,14 +9,16 @@ When a component is ready to be packaged for testing, use the following instruct
   - codeExtension (_Has code for an adapter, custom action, middleware, recognizer, etc. Packages for nuget feeds (at this time)._)
   - generator (_Yeoman generators for bot templates. Packages for npm feeds._)
 1. Replace `{YOUR_DEPLOYMENT_RING}` with:
-  - alpha (_Package is in private preview_)
   - preview (_Package is in public preview_)
   - stable (_Package is ready for release_)
 1. Replace the `{YOUR_WORKING_DIRECTORY}` references with the working directory of your component. For example, "/packages/foo".
 
 ## Navigation
+### [Functional tests](/functional)
+Contains the pipelines that functional tests are instantiated against to deploy shared resources, language-specific bot resources, test the bots, and clean up resources.
+
 ### [Pipelines](/pipelines)
-Contains the pipelines that Azure DevOps will reference.
+Contains the pipelines that Azure DevOps Pipelines are run against.
 
 ### [Templates directory](/templates)
 Contains the templates that all pipelines should be built from.
