@@ -9,17 +9,8 @@ steps:
       $componentType = "$env:COMPONENTTYPE";
       "Component Type = $componentType";
 
-    if ($deploymentRingOverride) {
-      $deploymentRing = $deploymentRingOverride;
-    }
-
-    if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
-      $releaseCandidateNumber = "$env:RELEASECANDIDATENUMBER";
-      "Release Candidate Number = $releaseCandidateNumber";
-
-      if (-not $releaseCandidateNumber) {
-        Write-Host "Release Candidate Number not defined"
-        exit 1
+      if ($deploymentRingOverride) {
+        $deploymentRing = $deploymentRingOverride;
       }
 
       if (($deploymentRing.ToLowerInvariant() -eq "rc") -or ($deploymentRing.ToLowerInvariant() -eq "preview")) {
