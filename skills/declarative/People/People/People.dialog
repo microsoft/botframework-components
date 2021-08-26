@@ -4,7 +4,7 @@
     "$designer": {
       "name": "People",
       "description": "",
-      "id": "lutP84"
+      "id": "h2iDfu"
     }
   },
   "autoEndDialog": true,
@@ -27,25 +27,19 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "2Szxt3"
+            "id": "2Szxt3",
+            "comment": "If the conversation update came from MS Teams in a group or team channel conversation."
           },
-          "condition": "=turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "condition": "= turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
           "elseActions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Uaq27I"
+                "id": "Uaq27I",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
-            },
-            {
-              "$kind": "Microsoft.Graph.User.GetProfile",
-              "$designer": {
-                "id": "vTjoP3"
-              },
-              "token": "=turn.token.token",
-              "resultProperty": "turn.signedInUser"
             },
             {
               "$kind": "Microsoft.SendActivity",
@@ -57,17 +51,10 @@
           ],
           "actions": [
             {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "K5P9dm"
-              },
-              "activityProcessed": true,
-              "dialog": "AuthenticationDialog"
-            },
-            {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "W4IWlO"
+                "id": "W4IWlO",
+                "comment": "Shows a card in which can a user can launch a 1:1 chat for MS Teams."
               },
               "activity": "${SendActivity_W4IWlO()}"
             }
@@ -79,7 +66,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "52Yo92",
-        "name": "OnIntent (Logout)"
+        "name": "OnIntent (Logout)",
+        "comment": "Logs the user out."
       },
       "intent": "Logout",
       "actions": [
@@ -113,7 +101,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "blfdn9",
-        "name": "OnIntent (GetCollaborators)"
+        "name": "OnIntent (GetCollaborators)",
+        "comment": "Handles the GetCollaborators intent and launches the GetCollaboratorsDialog."
       },
       "intent": "GetCollaborators",
       "actions": [
@@ -140,8 +129,8 @@
           "activityProcessed": true,
           "dialog": "GetCollaboratorsDialog",
           "options": {
-            "UserIdFound": "=$options.user",
-            "nameEntity": "=$options.nameEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -150,7 +139,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "bK5x7C",
-        "name": "OnIntent (GetDepartment)"
+        "name": "OnIntent (GetDepartment)",
+        "comment": "Handles the GetCollaborators intent and launches the GetProfileDialog."
       },
       "intent": "GetDepartment",
       "actions": [
@@ -177,7 +167,8 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -186,7 +177,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "cuN0XW",
-        "name": "OnIntent (GetDirectReports)"
+        "name": "OnIntent (GetDirectReports)",
+        "comment": "Handles the GetDirectReports intent and launches the GetDirectReports Dialog."
       },
       "intent": "GetDirectReports",
       "entities": [],
@@ -214,8 +206,8 @@
           "activityProcessed": true,
           "dialog": "GetDirectReportsDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity",
-            "UserIdFound": "=$options.user"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -224,7 +216,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "22Refo",
-        "name": "OnIntent (GetEmailAddress)"
+        "name": "OnIntent (GetEmailAddress)",
+        "comment": "Handles the GetEmailAddress intent and launches the GetProfileDialog."
       },
       "intent": "GetEmailAddress",
       "actions": [
@@ -251,7 +244,8 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -260,7 +254,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "pjrr7d",
-        "name": "OnIntent (GetJobTitle)"
+        "name": "OnIntent (GetJobTitle)",
+        "comment": "Handles the GetJobTitle intent and launches the GetProfileDialog."
       },
       "intent": "GetJobTitle",
       "actions": [
@@ -287,7 +282,8 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -296,7 +292,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "AUBLiD",
-        "name": "OnIntent (GetLocation)"
+        "name": "OnIntent (GetLocation)",
+        "comment": "Handles the GetLocation intent and launches the GetProfileDialog."
       },
       "intent": "GetLocation",
       "actions": [
@@ -323,7 +320,8 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -332,7 +330,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "xAkucD",
-        "name": "OnIntent (GetManager)"
+        "name": "OnIntent (GetManager)",
+        "comment": "Handles the GetManager intent and launches the GetManagerDialog."
       },
       "intent": "GetManager",
       "actions": [
@@ -359,8 +358,8 @@
           "activityProcessed": true,
           "dialog": "GetManagerDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity",
-            "UserIdFound": "=$options.user"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ],
@@ -370,7 +369,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "qzK1HD",
-        "name": "OnIntent (GetPeers)"
+        "name": "OnIntent (GetPeers)",
+        "comment": "Handles the GetPeers intent and launches the GetPeersDialog."
       },
       "intent": "GetPeers",
       "entities": [],
@@ -398,8 +398,8 @@
           "activityProcessed": true,
           "dialog": "GetPeersDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity",
-            "UserIdFound": "=$options.user"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -408,7 +408,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "8zzS4g",
-        "name": "OnIntent (GetPhoneNumber)"
+        "name": "OnIntent (GetPhoneNumber)",
+        "comment": "Handles the GetPhoneNumber intent and launches the GetProfileDialog."
       },
       "intent": "GetPhoneNumber",
       "actions": [
@@ -435,7 +436,8 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
         }
       ]
@@ -444,7 +446,8 @@
       "$kind": "Microsoft.OnIntent",
       "$designer": {
         "id": "GRE2OG",
-        "name": "OnIntent (GetProfile)"
+        "name": "OnIntent (GetProfile)",
+        "comment": "Handles the GetProfile intent and launches the GetProfileDialog."
       },
       "intent": "GetProfile",
       "entities": [],
@@ -472,9 +475,81 @@
           "activityProcessed": true,
           "dialog": "GetProfileDialog",
           "options": {
-            "nameEntity": "=$options.contactEntity",
-            "userIdFound": "=$options.user"
+            "contactName": "=$contactName",
+            "userId": "=$userId"
           }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "z90pOz",
+        "name": "OnIntent (LaunchChat)"
+      },
+      "intent": "LaunchChat",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "OIka7e",
+            "comment": "This trigger sends a welcome message to a user from a group chat in a personal chat window. "
+          },
+          "activity": "${SendActivity_OIka7e()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "jNhIrI",
+            "comment": "This action cleans up the remaining group conversation for the user after they start a personal chat."
+          },
+          "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "C0Qlte",
+        "name": "OnIntent (Unknown)",
+        "comment": "Handles unknownIntent events. "
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6cuuag"
+          },
+          "name": "People.UnknownIntent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ceaMpz",
+            "comment": "If the bot has been called as a skill."
+          },
+          "condition": "=turn.activity.recipient.role == \"skill\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "wPwj7Y",
+                "comment": "End the dialog with a value of 'false'. The calling bot should handle this response appropriately."
+              },
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UA2sps",
+                "comment": "If bot was called directly, shows a 'did not understand' response."
+              },
+              "activity": "${SendActivity_HTkwlL()}"
+            }
+          ]
         }
       ]
     },
@@ -482,7 +557,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "JlhWE9",
-        "name": "OnEvent (SetOptions)"
+        "name": "OnEvent (SetOptions)",
+        "comment": "Stores values from user's query in dialog state."
       },
       "event": "SetOptions",
       "actions": [
@@ -495,72 +571,87 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.SetProperties",
-          "$designer": {
-            "id": "JGABEb"
-          },
-          "assignments": [
-            {
-              "property": "$options.contactEntity",
-              "value": "=coalesce(@contact, @email, @personName)"
-            },
-            {
-              "property": "$options.user",
-              "value": "=turn.activity.value.user"
-            }
-          ]
-        },
-        {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "TDHKsS"
+            "id": "NpxNbN",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "JGABEb",
+            "comment": "$contactName is set to either the contact, email, or personName entity, whichever is present.\n\n$userId is set to either the turn.activity.value.userId property (which is sent when the user selects users from a listCard) or to the id of the current user if no other contactName value was provided."
+          },
+          "assignments": [
+            {
+              "property": "$contactName",
+              "value": "=coalesce(@contact, @email, @personName)"
+            },
+            {
+              "property": "$userId",
+              "value": "=coalesce(turn.activity.value.userId, if(not(exists($contactName)), turn.currentUser.id, null))"
+            }
+          ]
         }
       ]
     },
     {
       "$kind": "Microsoft.OnError",
       "$designer": {
-        "id": "0XJm0e",
+        "id": "Z3bvh7",
         "name": "OnError"
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "BnGy6N"
+            "id": "U65idk"
           },
           "name": "People.OnError",
-          "value": "=null"
+          "value": "=turn.dialogEvent.value"
         },
         {
           "$kind": "Microsoft.SwitchCondition",
           "$designer": {
-            "id": "FSXy40"
+            "id": "MFU6ug",
+            "comment": "Provided different error handling depending on channel."
           },
-          "condition": "=turn.activity.channelId",
+          "condition": "turn.activity.channelId",
           "cases": [
+            {
+              "value": "test",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "G7Rfej",
+                    "comment": "Prints out full error message for unit testing channel."
+                  },
+                  "activity": "${SendActivity_G7Rfej()}"
+                }
+              ]
+            },
             {
               "value": "emulator",
               "actions": [
                 {
-                  "$kind": "Microsoft.TraceActivity",
-                  "$designer": {
-                    "id": "Pszd6H"
-                  },
-                  "name": "Error",
-                  "label": "Error",
-                  "valueType": "string",
-                  "value": "=turn.dialogEvent.value"
-                },
-                {
                   "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "ipHTXS"
+                    "id": "SqgeAv"
                   },
-                  "activity": "${SendActivity_ipHTXS()}"
+                  "activity": "${SendActivity_SqgeAv()}"
+                },
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "3oPM0a",
+                    "comment": "Emits trace with error message for emulator channel."
+                  },
+                  "value": "=turn.dialogEvent.value",
+                  "name": "Error Trace"
                 }
               ]
             }
@@ -569,61 +660,14 @@
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "AV87xs"
+                "id": "mWnyUh"
               },
-              "activity": "${SendActivity_AV87xs()}"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "y3gv3g"
-              },
-              "activity": "${SendActivity_y3gv3g()}"
-            },
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "Tcje3O"
-              },
-              "activity": "${SendActivity_Tcje3O()}"
-            },
-            {
-              "$kind": "Microsoft.TelemetryTrackEventAction",
-              "$designer": {
-                "id": "26G8Zg"
-              },
-              "properties": {
-                "TurnEvent": "=turn.dialogEvent.value"
-              },
-              "eventName": "BotError"
+              "activity": "${SendActivity_ipHTXS()}"
             }
           ]
         }
       ],
       "runOnce": true
-    },
-    {
-      "$kind": "Microsoft.OnUnknownIntent",
-      "$designer": {
-        "id": "YhLqAm"
-      },
-      "actions": [
-        {
-          "$kind": "Microsoft.TraceActivity",
-          "$designer": {
-            "id": "njVcFH"
-          },
-          "name": "People.UnknownIntent",
-          "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "HTkwlL"
-          },
-          "activity": "${SendActivity_HTkwlL()}"
-        }
-      ]
     }
   ],
   "generator": "People.lg",

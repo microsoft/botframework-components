@@ -3,7 +3,8 @@
   "$designer": {
     "id": "nfUy4u",
     "name": "GetCollaboratorsDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets list of collaborators for the given user from the MS Graph People API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "7urTxr"
+        "id": "7urTxr",
+        "comment": "Gets list of collaborators for the given user from the MS Graph People API."
       },
       "actions": [
         {
@@ -27,95 +29,101 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ON21f5"
+            "id": "ON21f5",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
-          "dialog": "ResolveUserDialog",
-          "resultProperty": "turn.UserFound",
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
           "options": {
-            "UserIdFound": "=$UserIdFound"
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "WEryuA"
+            "id": "vL94h9",
+            "comment": "Sets $userId to id of selected user."
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "property": "$userId",
+          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "nUeEx5"
           },
-          "condition": "=exists(turn.UserFound)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "puUO79"
-              },
-              "activity": "${SendActivity_puUO79()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "lyEABk"
-              }
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "wHB39C"
-          },
-          "activityProcessed": true,
-          "dialog": "UserListDialog",
-          "options": {
-            "User": "=turn.UserFound",
-            "Scenario": "Collaborator",
-            "AutoChooseFirst": false,
-            "GetListItemEvent": "GetListItems",
-            "doSelection": false
-          },
-          "resultProperty": "turn.DetailUser"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "cKj8jy"
-          },
-          "condition": "=exists(turn.DetailUser)",
+          "condition": "=exists(turn.user)",
+          "elseActions": [],
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "GZhBJq",
+                "comment": "Sets list dialog options for Collaborators list. The list values are populated in the OnEvent (GetListItems) handler."
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse",
+                    "noItemsResponse": "NoItemsFound"
+                  }
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "GetListItems"
+                },
+                {
+                  "property": "$listOptions.itemsProperty",
+                  "value": "turn.items"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "scenario": "Collaborators",
+                    "userName": "=turn.user.displayName"
+                  }
+                }
+              ]
+            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "Q24GGv"
+                "id": "wOa0IP",
+                "comment": "Launches ListDialog with specified options."
               },
               "activityProcessed": true,
-              "dialog": "GetProfileDialog",
+              "dialog": "ListDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser"
+                "templates.icon": "=$listOptions.templates.icon",
+                "templates.title": "=$listOptions.templates.title",
+                "templates.item": "=$listOptions.templates.item",
+                "templates.initialPrompt": "=$listOptions.templates.initialPrompt",
+                "templates.showMorePrompt": "=$listOptions.templates.showMorePrompt",
+                "templates.skipResponse": "=$listOptions.templates.skipResponse",
+                "templates.defaultValueResponse": "=$listOptions.templates.defaultValueResponse",
+                "templates.noItemsResponse": "=$listOptions.templates.noItemsResponse",
+                "actionTitleProperty": "=$listOptions.actionTitleProperty",
+                "getItemsEvent": "=$listOptions.getItemsEvent",
+                "itemsProperty": "=$listOptions.itemsProperty",
+                "doSelection": "=$listOptions.doSelection",
+                "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "mfLqxa"
-              },
-              "activity": "${SendActivity_mfLqxa()}"
-            }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "Stpfkh"
-          }
         }
       ]
     },
@@ -138,7 +146,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "ZKKInz"
+            "id": "ZKKInz",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -146,29 +155,32 @@
         {
           "$kind": "Microsoft.Graph.User.GetWorksWith",
           "$designer": {
-            "id": "nt8FTI"
+            "id": "nt8FTI",
+            "name": "Microsoft Graph - Get People That Work With Me",
+            "comment": "Returns list of users that collaborate with the provided userId."
           },
           "token": "=turn.token.token",
           "maxCount": 15,
-          "userId": "=turn.UserFound.Id",
-          "resultProperty": "turn.Items"
+          "userId": "=$userId",
+          "resultProperty": "turn.items"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "vADC8V"
+            "id": "vADC8V",
+            "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
-          "itemsProperty": "turn.Items",
+          "itemsProperty": "turn.items",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
                 "id": "mq1B9p"
               },
-              "resultProperty": "turn.Items[turn.foreach.index].Photo",
-              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.items[turn.foreach.index].photo",
+              "userId": "=turn.foreach.value.id",
               "token": "=turn.token.token"
             }
           ]

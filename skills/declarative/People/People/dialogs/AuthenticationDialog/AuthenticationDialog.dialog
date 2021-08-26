@@ -3,7 +3,8 @@
   "$designer": {
     "id": "VOwPpB",
     "name": "AuthenticationDialog",
-    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs"
+    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs",
+    "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "f5A0hE"
+        "id": "f5A0hE",
+        "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
       },
       "actions": [
         {
@@ -34,15 +36,25 @@
           "allowInterruptions": true,
           "connectionName": "=settings.oauthConnectionName",
           "title": "Sign in",
-          "text": "Time to sign in with your Microsoft account to access your contacts and company directory, and try out our new 💃🕺 Skill!",
-          "property": "turn.Token"
+          "text": "Please sign in with your Microsoft account to access your organization's user directory.",
+          "property": "turn.token"
         },
         {
-          "$kind": "Microsoft.EndDialog",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "vEkDa9"
+            "id": "11A1dz"
           },
-          "value": "=turn.Token"
+          "condition": "=not(exists(turn.currentUser))",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.User.GetProfile",
+              "$designer": {
+                "id": "sc6hO3"
+              },
+              "token": "=turn.token.token",
+              "resultProperty": "turn.currentUser"
+            }
+          ]
         }
       ]
     }

@@ -3,7 +3,8 @@
   "$designer": {
     "id": "TiCQ7a",
     "name": "GetManagerDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets manager of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "75076Z"
+        "id": "75076Z",
+        "comment": "Gets manager of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -27,105 +29,95 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "joMxmD"
+            "id": "ansVmG",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
-          "dialog": "ResolveUserDialog",
-          "resultProperty": "turn.UserFound",
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
           "options": {
-            "UserIdFound": "=$UserIdFound",
-            "NameEntity": "=$NameEntity"
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "FaxQmA"
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "cxCimf"
+            "id": "6XS1Gu"
           },
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "PbEMRW"
-              },
-              "activity": "${SendActivity_PbEMRW()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "5XsnT5"
-              }
-            }
-          ],
-          "condition": "=exists(turn.UserFound)"
-        },
-        {
-          "$kind": "Microsoft.Graph.User.GetManager",
-          "$designer": {
-            "id": "wHoNHt"
-          },
-          "resultProperty": "turn.Result",
-          "token": "=turn.token.token",
-          "userId": "=turn.UserFound.id",
-          "propertiesToSelect": [
-            "id",
-            "displayName",
-            "mail",
-            "businessPhones",
-            "department",
-            "jobTitle",
-            "officeLocation"
-          ]
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "LnZlB6"
-          },
-          "condition": "=exists(turn.Result)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "lgZtQO"
-              },
-              "activity": "${SendActivity_lgZtQO()}"
-            }
-          ],
+          "condition": "=exists(turn.user)",
+          "elseActions": [],
           "actions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "f1nPCd"
-              },
-              "activity": "${SendActivity_f1nPCd()}"
-            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "K7Ibr0"
+                "id": "8BSpCh",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
-              "dialog": "GetProfileDialog",
-              "options": {
-                "UserIdFound": "=turn.Result.Id"
-              }
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetManager",
+              "$designer": {
+                "id": "8NITCX",
+                "comment": "Gets the user that manages the provided userId."
+              },
+              "resultProperty": "turn.manager",
+              "token": "=turn.token.token",
+              "userId": "=turn.user.id",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JqZ9j7",
+                "comment": "If the user has an manager."
+              },
+              "condition": "=exists(turn.manager)",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "zynwoz",
+                    "comment": "Shows a 'Not Found' response."
+                  },
+                  "activity": "${SendActivity_zynwoz()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "tSW5bL",
+                    "comment": ""
+                  },
+                  "activity": "${SendActivity_tSW5bL()}"
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "z543ja",
+                    "comment": "Gets the profile card for the manager user object."
+                  },
+                  "activityProcessed": true,
+                  "dialog": "GetProfileDialog",
+                  "options": {
+                    "userId": "=turn.manager.id"
+                  }
+                }
+              ]
             }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "zzebs7"
-          }
         }
       ]
     }

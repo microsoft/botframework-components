@@ -1,10 +1,10 @@
 {
   "$kind": "Microsoft.AdaptiveDialog",
   "$designer": {
-    "id": "2luWYj",
-    "name": "GetPeersDialog",
+    "id": "Uknjye",
+    "name": "GetUserDialog",
     "description": "",
-    "comment": "Gets peers of the given user from the MS Graph User API."
+    "comment": "Looks up user from MS Graph API based on provided $userId or $contactName parameters."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -14,55 +14,31 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "C0rITH",
-        "comment": "Gets peers of the given user from the MS Graph User API."
+        "id": "T5HUu8",
+        "comment": "Looks up user from MS Graph API based on provided $userId or $contactName parameters."
       },
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "IozdU8"
+            "id": "DkZ1R6"
           },
-          "name": "People.GetPeersDialog.BeginDialog",
+          "name": "People.GetUserDialog.BeginDialog",
           "value": "=null"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "TqcvPH",
-            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "qS8hYn",
-            "comment": "Sets $userId to id of selected user."
-          },
-          "property": "$userId",
-          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "qBDQhh"
+            "id": "DWpCWb",
+            "comment": "If the $userId does not exist, a user lookup based on the $contactName is performed prompting the user to select which user they intended."
           },
-          "condition": "=exists(turn.user)",
-          "elseActions": [],
+          "condition": "=not(exists($userId))",
           "actions": [
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "8wYSH6",
-                "comment": "Sets list dialog options for Peers list. The list values are populated in the OnEvent (GetListItems) handler."
+                "id": "kY3tqs",
+                "comment": "The list values are populated in the OnEvent (GetListItems) handler."
               },
               "assignments": [
                 {
@@ -80,7 +56,7 @@
                 },
                 {
                   "property": "$listOptions.actionTitleProperty",
-                  "value": "index"
+                  "value": "displayName"
                 },
                 {
                   "property": "$listOptions.getItemsEvent",
@@ -91,10 +67,14 @@
                   "value": "turn.items"
                 },
                 {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
+                },
+                {
                   "property": "$listOptions.additionalOptions",
                   "value": {
-                    "scenario": "Peers",
-                    "userName": "=turn.user.displayName"
+                    "scenario": "PersonSearch",
+                    "userName": "=$contactName"
                   }
                 }
               ]
@@ -102,11 +82,12 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "QIaJMZ",
-                "comment": "Launches ListDialog with specified options."
+                "id": "ExNJvT",
+                "comment": "Launches a List Dialog with the choice options and stores selected userId in state."
               },
               "activityProcessed": true,
               "dialog": "ListDialog",
+              "resultProperty": "$userId",
               "options": {
                 "templates.icon": "=$listOptions.templates.icon",
                 "templates.title": "=$listOptions.templates.title",
@@ -123,80 +104,127 @@
                 "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
+          ],
+          "elseActions": []
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "tjEwDX"
+          },
+          "condition": "=exists($userId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "F4RcGM",
+                "comment": "Refreshes user token."
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$designer": {
+                "id": "hko4nj",
+                "comment": "Gets profile of user based on the provided userId."
+              },
+              "resultProperty": "turn.user",
+              "token": "=turn.token.token",
+              "userId": "=$userId",
+              "propertiesToSelect": [
+                "id",
+                "displayName",
+                "mail",
+                "businessPhones",
+                "department",
+                "jobTitle",
+                "officeLocation"
+              ]
+            }
           ]
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "vSi8AI",
+            "comment": "Returns the selected user object to calling dialog."
+          },
+          "value": "=coalesce(turn.user, null)"
         }
       ]
     },
     {
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
-        "id": "qk16FD",
-        "name": "OnEvent (GetListItems)"
+        "id": "6pMM4Q",
+        "name": "GetListItems"
       },
       "event": "GetListItems",
       "actions": [
         {
           "$kind": "Microsoft.TraceActivity",
           "$designer": {
-            "id": "NouegB"
+            "id": "uUcb4B"
           },
-          "name": "People.GetPeersDialog.OnEvent_GetListItems",
+          "name": "GetUserDialog.OnEvent_GetListItems",
           "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "qZ7hQz",
+            "id": "umBqPf",
             "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
         },
         {
-          "$kind": "Microsoft.Graph.User.GetPeers",
+          "$kind": "Microsoft.Graph.User.GetUsers",
           "$designer": {
-            "id": "ww53aA",
-            "comment": "Gets the list of user objects that report to the same manager as the provided userId."
+            "id": "EkF8O7",
+            "comment": "Gets list of user objects that match the provided $contactName parameter."
           },
-          "resultProperty": "turn.items",
-          "token": "=turn.token.token",
-          "maxCount": 15,
+          "nameToSearchFor": "=$contactName",
           "propertiesToSelect": [
             "id",
             "displayName",
             "mail",
-            "businessPhones",
             "officeLocation",
+            "businessPhones",
             "jobTitle",
             "department"
           ],
-          "userId": "=$userId"
+          "maxCount": 16,
+          "token": "=turn.token.token",
+          "resultProperty": "turn.items"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "3NzFtD",
+            "id": "BlACeB",
             "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
+          "itemsProperty": "turn.items",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "VsikRa"
+                "id": "VG1DTG",
+                "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
               },
               "token": "=turn.token.token",
               "userId": "=turn.foreach.value.id",
               "resultProperty": "turn.items[turn.foreach.index].photo"
             }
-          ],
-          "itemsProperty": "turn.items"
+          ]
         }
       ]
     }
   ],
-  "generator": "GetPeersDialog.lg",
-  "recognizer": "GetPeersDialog.lu.qna",
-  "id": "GetPeersDialog"
+  "generator": "GetUserDialog.lg",
+  "recognizer": "GetUserDialog.lu.qna",
+  "id": "GetUserDialog"
 }
