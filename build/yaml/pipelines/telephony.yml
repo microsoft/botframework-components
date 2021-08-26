@@ -13,7 +13,7 @@ variables:
   BuildPlatform: anycpu
   ComponentType: codeExtension # codeExtension, declarativeAsset, or generator
   Language: dotnet
-  DeploymentRing: preview # alpha, preview, rc, or stable
+  DeploymentRing: preview # preview, rc, or stable
   # DeploymentRingOverride: # set in ADO
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
