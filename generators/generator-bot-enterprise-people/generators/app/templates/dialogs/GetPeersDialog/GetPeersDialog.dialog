@@ -3,7 +3,8 @@
   "$designer": {
     "id": "2luWYj",
     "name": "GetPeersDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets peers of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "C0rITH"
+        "id": "C0rITH",
+        "comment": "Gets peers of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -21,102 +23,107 @@
           "$designer": {
             "id": "IozdU8"
           },
-          "name": "<%= botName %>.GetPeersDialog.BeginDialog",
+          "name": "GetPeersDialog.BeginDialog",
           "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "TqcvPH"
+            "id": "TqcvPH",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
-          "dialog": "ResolveUserDialog",
-          "resultProperty": "turn.UserFound",
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
           "options": {
-            "UserIdFound": "=$UserIdFound",
-            "NameEntity": "=$NameEntity"
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
           }
         },
         {
-          "$kind": "Microsoft.BeginDialog",
+          "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "F8ARgq"
+            "id": "qS8hYn",
+            "comment": "Sets $userId to id of selected user."
           },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
+          "property": "$userId",
+          "value": "=turn.user.id"
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "qBDQhh"
           },
-          "condition": "=exists(turn.UserFound)",
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "9JCLK1"
-              },
-              "activity": "${SendActivity_9JCLK1()}"
-            },
-            {
-              "$kind": "Microsoft.EndDialog",
-              "$designer": {
-                "id": "rnko0k"
-              }
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "Ldr65P"
-          },
-          "activityProcessed": true,
-          "dialog": "UserListDialog",
-          "options": {
-            "Scenario": "Peers",
-            "User": "=turn.UserFound",
-            "AutoChooseFirst": false,
-            "GetListItemEvent": "GetListItems",
-            "doSelection": false
-          },
-          "resultProperty": "turn.DetailUser"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "2bT4YD"
-          },
-          "condition": "=exists(turn.DetailUser)",
+          "condition": "=exists(turn.user)",
+          "elseActions": [],
           "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "8wYSH6",
+                "comment": "Sets list dialog options for Peers list. The list values are populated in the OnEvent (GetListItems) handler."
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "ContactIconUrl",
+                    "title": "UserListTitle",
+                    "item": "UserListItem",
+                    "initialPrompt": "UserListPrompt",
+                    "showMorePrompt": "UserListShowMorePrompt",
+                    "skipResponse": "UserListSkipResponse",
+                    "defaultValueResponse": "UserListDefaultValueResponse",
+                    "noItemsResponse": "NoItemsFound"
+                  }
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.getItemsEvent",
+                  "value": "GetListItems"
+                },
+                {
+                  "property": "$listOptions.itemsProperty",
+                  "value": "turn.items"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": {
+                    "scenario": "Peers",
+                    "userName": "=turn.user.displayName"
+                  }
+                }
+              ]
+            },
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "yuDqlV"
+                "id": "QIaJMZ",
+                "comment": "Launches ListDialog with specified options."
               },
               "activityProcessed": true,
-              "dialog": "GetProfileDialog",
+              "dialog": "ListDialog",
               "options": {
-                "UserIdFound": "=turn.DetailUser"
+                "templates.icon": "=$listOptions.templates.icon",
+                "templates.title": "=$listOptions.templates.title",
+                "templates.item": "=$listOptions.templates.item",
+                "templates.initialPrompt": "=$listOptions.templates.initialPrompt",
+                "templates.showMorePrompt": "=$listOptions.templates.showMorePrompt",
+                "templates.skipResponse": "=$listOptions.templates.skipResponse",
+                "templates.defaultValueResponse": "=$listOptions.templates.defaultValueResponse",
+                "templates.noItemsResponse": "=$listOptions.templates.noItemsResponse",
+                "actionTitleProperty": "=$listOptions.actionTitleProperty",
+                "getItemsEvent": "=$listOptions.getItemsEvent",
+                "itemsProperty": "=$listOptions.itemsProperty",
+                "doSelection": "=$listOptions.doSelection",
+                "additionalOptions": "=$listOptions.additionalOptions"
               }
             }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "7uCWqD"
-              },
-              "activity": "${SendActivity_7uCWqD()}"
-            }
           ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "YtwbHP"
-          }
         }
       ]
     },
@@ -133,13 +140,14 @@
           "$designer": {
             "id": "NouegB"
           },
-          "name": "<%= botName %>.GetPeersDialog.OnEvent_GetListItems",
+          "name": "GetPeersDialog.OnEvent_GetListItems",
           "value": "=null"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "qZ7hQz"
+            "id": "qZ7hQz",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -147,9 +155,10 @@
         {
           "$kind": "Microsoft.Graph.User.GetPeers",
           "$designer": {
-            "id": "ww53aA"
+            "id": "ww53aA",
+            "comment": "Gets the list of user objects that report to the same manager as the provided userId."
           },
-          "resultProperty": "turn.Items",
+          "resultProperty": "turn.items",
           "token": "=turn.token.token",
           "maxCount": 15,
           "propertiesToSelect": [
@@ -161,12 +170,13 @@
             "jobTitle",
             "department"
           ],
-          "userId": "=turn.UserFound.Id"
+          "userId": "=$userId"
         },
         {
           "$kind": "Microsoft.Foreach",
           "$designer": {
-            "id": "3NzFtD"
+            "id": "3NzFtD",
+            "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
           "index": "turn.foreach.index",
           "value": "turn.foreach.value",
@@ -177,11 +187,11 @@
                 "id": "VsikRa"
               },
               "token": "=turn.token.token",
-              "userId": "=turn.foreach.value.Id",
-              "resultProperty": "turn.Items[turn.foreach.index].Photo"
+              "userId": "=turn.foreach.value.id",
+              "resultProperty": "turn.items[turn.foreach.index].photo"
             }
           ],
-          "itemsProperty": "turn.Items"
+          "itemsProperty": "turn.items"
         }
       ]
     }

@@ -43,13 +43,13 @@
 ]
 
 # ChoiceInput_Prompt_VygDK3()
-- IF: ${$isFirstTurn == true}
+- IF: ${$turnCount == 1}
     - ${InitialChoicePrompt()}
 - ELSE: 
     - ${RepromptChoicePrompt()}
 
 # SendActivity_HOESBs()
-- IF: ${$isFirstTurn == true}
+- IF: ${$turnCount == 1}
     - ${InitialChoicePrompt()}
 - ELSE: 
     - ${RepromptChoicePrompt()}

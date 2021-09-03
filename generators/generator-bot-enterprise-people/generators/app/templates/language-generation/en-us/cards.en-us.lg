@@ -2,10 +2,10 @@
 [Actions](actions.en-us.lg)
 
 # IconSize()
-- Large
+- 18px
 
 # IconSizeSmall()
-- Small
+- 14px
 
 # TitleSize()
 - Medium
@@ -16,7 +16,7 @@
 # BodySize()
 - Small
 
-# CardTemplate(header, body)
+# CardTemplate(header, body, actions)
 -```
 {
     "type": "AdaptiveCard",
@@ -24,7 +24,8 @@
     "version": "1.2",
     "body": [
         ${header},
-        ${body}
+        ${body},
+        ${actions}
     ]
 }
 ```
@@ -47,7 +48,8 @@
                             "type": "Image",
                             "url": "${icon}",
                             "horizontalAlignment": "Center",
-                            "width": "${IconSize()}"
+                            "width": "${IconSize()}",
+                            "height": "${IconSize()}"
                         }
                     ]
                 },
@@ -59,7 +61,6 @@
                         {
                             "type": "TextBlock",
                             "text": "${title}",
-                            "wrap": true,
                             "size": "${TitleSize()}",
                             "weight": "Bolder"
                         }
@@ -101,13 +102,35 @@
 }
 ```
 
+# PaginatedListCardBody(totalItemCount, pageSize, pageItems, pageIndex, pageCount)
+- IF: ${ totalItemCount <= pageSize }
+    - ```
+    {
+        "type": "Container",
+        "separator": true,
+        "items": [
+            ${join(pageItems, ',')}
+        ]
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "Container",
+        "separator": true,
+        "items": [
+            ${join(pageItems, ',')}
+        ]
+    },
+    ${PaginationContainer(pageIndex, pageCount)}
+    ```
+
 # ExpandableListCardBody(itemElements, pageSize)
 - IF: ${ count(itemElements) <= pageSize }
     - ```
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(itemElements, ',')}
         ]
@@ -118,7 +141,6 @@
     {
         "type": "Container",
         "separator": true,
-        "spacing": "medium",
         "items": [
             ${join(take(itemElements, pageSize), ',')}
         ]
@@ -132,7 +154,6 @@
     "type": "Container",
     "id": "additionalItemsContainer",
     "separator": true,
-    "spacing": "medium",
     "isVisible": false,
     "items": [
         ${join(skip(itemElements, pageSize), ',')}
@@ -188,31 +209,6 @@ ${ToggleButtonContainer('additionalItemsContainer')}
     ]
 }
 ```
-
-# PaginatedListCardBody(totalItemCount, pageSize, pageItems, pageIndex, pageCount)
-- IF: ${ totalItemCount <= pageSize }
-    - ```
-    {
-        "type": "Container",
-        "separator": true,
-        "spacing": "medium",
-        "items": [
-            ${join(pageItems, ',')}
-        ]
-    }
-    ```
-- ELSE:
-    - ```
-    {
-        "type": "Container",
-        "separator": true,
-        "spacing": "medium",
-        "items": [
-            ${join(pageItems, ',')}
-        ]
-    },
-    ${PaginationContainer(pageIndex, pageCount)}
-    ```
 
 # PaginationContainer(pageIndex, pageCount)
 - ```
@@ -297,3 +293,10 @@ ${ToggleButtonContainer('additionalItemsContainer')}
         "selectAction": ${NextPageAction()}
     }
     ```
+    
+# CardActionTemplate(type, title, value)
+[CardAction
+    type = ${type}
+	title = ${title}
+    value = ${value}
+]
