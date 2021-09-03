@@ -3,7 +3,7 @@
   "$designer": {
     "id": "7Wk4XJ",
     "name": "CreateEventDialog",
-    "description": ""
+    "comment": "Creates an event. Includes support for interruptions and slot filling from entities in user utterances."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "$result",
@@ -13,7 +13,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "r2tHdG"
+        "id": "r2tHdG",
+        "comment": "Ordered steps to create a new calendar event. Each step is represented as an EmitEvent action + an OnEvent trigger to catch that event (e.g. SetTitle event + OnEvent (SetTitle) trigger. This pattern allows the user to start with a specific flow (setTitle, SetAttendees, SetDateTime, etc.) but have the ability to change that order or provide more information whenever they want via interruptions."
       },
       "actions": [
         {
@@ -27,7 +28,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "rOHXaF"
+            "id": "rOHXaF",
+            "comment": "This property is used to control the number of times a user can provide an invalid response before a prompt will fall back to its default value. It is set as a dialog property referenced in each prompt that is reset whenever a valid interruption happens to ensure interrupted prompts do not consider the interruption as an invalid response and end prematurely."
           },
           "property": "$maxTurnCount",
           "value": "=3"
@@ -52,7 +54,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "bHpmSQ"
+            "id": "bHpmSQ",
+            "comment": "If the event will have attendees and doesn't have a specified start time, call FindMeetingTimes to suggest time options when all attendees are available, otherwise prompt for specific time from user."
           },
           "condition": "=exists($event.attendees) && not(exists($options.start))",
           "actions": [
@@ -77,7 +80,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "amPmp4"
+            "id": "amPmp4",
+            "comment": "If event will have attendees, automatcally add an online meeting link."
           },
           "condition": "=exists($event.attendees)",
           "actions": [
@@ -93,7 +97,8 @@
         {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "bnSGew"
+            "id": "bnSGew",
+            "comment": "Prompt user to optionally add a physical location."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -131,7 +136,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "DI7VGw"
+            "id": "DI7VGw",
+            "comment": "Confirms and creates event."
           },
           "eventName": "ConfirmCreate"
         }
@@ -141,7 +147,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "IFUPn8",
-        "name": "OnEvent (SetTitle)"
+        "name": "OnEvent (SetTitle)",
+        "comment": "Handles setting the event title. Called from the BeginDialog trigger and SetTitle OnIntent trigger."
       },
       "event": "SetTitle",
       "actions": [
@@ -156,19 +163,17 @@
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "HmkRsB"
+            "id": "HmkRsB",
+            "comment": "Prompts for the event title. \n\nProperty is set to a turn property instead of $event.subject to allow the user to change the value after it is initially set. If it is set directly to $event.subject, when a user tries to change the value the prompt will be skipped.\n\nThe Output format formats the provided title to sentence case if it was all lowercase, otherwise it uses the user's provided casing.\n\nThe Value accepts either the $options.subject provied in dialog options or the @subject entity and will skip the prompt if either are present.\n\nIn Prompt Configurations, the max turn count is configured to 1 if the turn.skip property is true. If the user skips, the default value will be null.\n\nSince this is an open text prompt, Allow Interruptions is configured to only allow interuptions for the Skip and Cancel intents (if their score > 0.8) and for buttons with a configured intent (turn.activity.value.intent). "
           },
           "disabled": false,
           "alwaysPrompt": false,
           "allowInterruptions": "=#Skip.score > 0.8 || #Cancel.score > 0.8 || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_HmkRsB()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "property": "turn.title",
           "maxTurnCount": "=if(turn.skip, 1, 3)",
-          "outputFormat": "=sentenceCase(this.value)",
-          "value": "=coalesce($options.subject, @subject)"
+          "value": "=coalesce($options.subject, @subject)",
+          "outputFormat": "=if(isMatch(this.Value, '[^A-Z]+$'), sentenceCase(this.value), this.value)"
         },
         {
           "$kind": "Microsoft.SetProperty",
@@ -184,7 +189,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "k7v0z0",
-        "name": "OnEvent (SetAttendees)"
+        "name": "OnEvent (SetAttendees)",
+        "comment": "Handles setting the event title. Called from the BeginDialog trigger and SetAttendeesAdd and SetAttendeesRemove OnIntent triggers."
       },
       "event": "SetAttendees",
       "actions": [
@@ -199,14 +205,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "0XBGS4"
+            "id": "0XBGS4",
+            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'."
           },
           "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
           "actions": [
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "vp82Mq"
+                "id": "vp82Mq",
+                "comment": "Looks up contact name entities and/or email addresses in MS Graph, disambiguates results, and returns array of contact objects with name (if available) and email"
               },
               "activityProcessed": true,
               "dialog": "GetContactsDialog",
@@ -219,14 +227,16 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "zqgAVO"
+                "id": "zqgAVO",
+                "comment": "If the names/emails were resolved."
               },
               "condition": "=exists($contacts)",
               "actions": [
                 {
                   "$kind": "Microsoft.Foreach",
                   "$designer": {
-                    "id": "276TzP"
+                    "id": "276TzP",
+                    "comment": "Add all contacts to the event attendees array."
                   },
                   "index": "$foreach.index",
                   "value": "$foreach.value",
@@ -250,7 +260,8 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "3h5xdT"
+                "id": "3h5xdT",
+                "comment": "List settings for Remove attendee list."
               },
               "assignments": [
                 {
@@ -297,7 +308,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "yxp9U4"
+                "id": "yxp9U4",
+                "comment": "Looks up selectedContact in attendee list."
               },
               "property": "$contactToRemove",
               "value": "=where($event.Attendees, x, x.EmailAddress.Address == $selectedContact.email)"
@@ -305,7 +317,8 @@
             {
               "$kind": "Microsoft.EditArray",
               "$designer": {
-                "id": "uCfE6z"
+                "id": "uCfE6z",
+                "comment": "Removed contact from attendee list."
               },
               "changeType": "remove",
               "itemsProperty": "$event.attendees",
@@ -326,7 +339,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "S3lhI0",
-        "name": "OnEvent (FindMeetingTimes)"
+        "name": "OnEvent (FindMeetingTimes)",
+        "comment": "Looks up meeting times and prompts user to select one. Called from the BeginDialog trigger."
       },
       "event": "FindMeetingTimes",
       "actions": [
@@ -341,7 +355,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "5b98oM"
+            "id": "5b98oM",
+            "comment": "Refreshes user token."
           },
           "activityProcessed": true,
           "dialog": "AuthenticationDialog"
@@ -349,7 +364,8 @@
         {
           "$kind": "Microsoft.Graph.Calendar.FindMeetingTimes",
           "$designer": {
-            "id": "JRs7I1"
+            "id": "JRs7I1",
+            "comment": "Looks up meeting times for a list of attendees and stores them in $timeslots."
           },
           "resultProperty": "$timeslots",
           "token": "=turn.token.token",
@@ -367,7 +383,8 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "4OsSFV"
+                "id": "4OsSFV",
+                "comment": "Time slots list options."
               },
               "assignments": [
                 {
@@ -429,7 +446,8 @@
                 {
                   "$kind": "Microsoft.SetProperties",
                   "$designer": {
-                    "id": "tqufQn"
+                    "id": "tqufQn",
+                    "comment": "Set event start and end to selected time slot."
                   },
                   "assignments": [
                     {
@@ -447,7 +465,8 @@
                 {
                   "$kind": "Microsoft.EmitEvent",
                   "$designer": {
-                    "id": "xRlF1S"
+                    "id": "xRlF1S",
+                    "comment": "If no time slot was selected, triggers the manual SetDateTime event steps instead."
                   },
                   "eventName": "SetDateTime"
                 }
@@ -465,7 +484,8 @@
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
-                "id": "dcTvpp"
+                "id": "dcTvpp",
+                "comment": "If there are no time suggestions, triggers the manual SetDateTime event steps instead."
               },
               "eventName": "SetDateTime"
             }
@@ -477,7 +497,8 @@
       "$kind": "Microsoft.OnDialogEvent",
       "$designer": {
         "id": "aREGVo",
-        "name": "OnEvent (SetDateTime)"
+        "name": "OnEvent (SetDateTime)",
+        "comment": "Handles setting the event date and time. Called from the BeginDialog trigger, FineMeetingTimes OnEvent trigger, and SetDateTime OnIntent trigger."
       },
       "event": "SetDateTime",
       "actions": [
@@ -492,29 +513,29 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "PQ31QI"
+            "id": "PQ31QI",
+            "comment": "If start and end are not both provided in dialog options."
           },
           "condition": "=not(exists($options.start) && exists($options.end))",
           "actions": [
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "MGvqYl"
+                "id": "MGvqYl",
+                "comment": "If a dateTime has not already been recognized and passed to this dialog."
               },
               "condition": "=not(exists($options.dateTime))",
               "actions": [
                 {
                   "$kind": "Microsoft.DateTimeInput",
                   "$designer": {
-                    "id": "aB5ltS"
+                    "id": "aB5ltS",
+                    "comment": "Prompts for the event date and time. \n\nProperty is set to turn.query, which will be run through the date time resolution dialog to extract all date time values. This method allows for multiple date time resolutions form a single query, while using the DateTimePrompt alone only returns one resolution.\n\nThe Value accepts $options.start if it was provided. This will skip this prompt if $options.start is not null.\n\nIn Prompt Configurations, the max turn count is configured to 1 if the turn.skip property is true. If the user skips, the default value will be null.\n\nAllow Interruptions is configured to allow any interruptions except the SetDateTime intent (because that intent should be considered a valid response for this prompt) if their score > 0.8 and for buttons with a configured intent (turn.activity.value.intent). "
                   },
                   "disabled": false,
                   "maxTurnCount": "=if(turn.skip, 1, 3)",
                   "alwaysPrompt": false,
                   "prompt": "${DateTimeInput_Prompt_aB5ltS()}",
-                  "unrecognizedPrompt": "",
-                  "invalidPrompt": "",
-                  "defaultValueResponse": "",
                   "property": "turn.query",
                   "validations": [],
                   "allowInterruptions": "=(not(exists(#SetDateTime)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
@@ -523,7 +544,8 @@
                 {
                   "$kind": "Microsoft.BeginDialog",
                   "$designer": {
-                    "id": "3JlLSV"
+                    "id": "3JlLSV",
+                    "comment": "This dialog runs date time recognition and disambiguation for a user's query."
                   },
                   "activityProcessed": true,
                   "dialog": "ResolveDateTimeDialog",
@@ -548,7 +570,8 @@
             {
               "$kind": "Microsoft.SwitchCondition",
               "$designer": {
-                "id": "X3qUs9"
+                "id": "X3qUs9",
+                "comment": "Based on the type of the resolved date time, perform different actions."
               },
               "condition": "$dateTime.type",
               "cases": [
@@ -558,7 +581,8 @@
                     {
                       "$kind": "Microsoft.DateTimeInput",
                       "$designer": {
-                        "id": "2NG4Aa"
+                        "id": "2NG4Aa",
+                        "comment": "If user only provided a date, prompts for a time."
                       },
                       "disabled": false,
                       "maxTurnCount": 3,
@@ -607,7 +631,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "9tDiHc"
+                        "id": "9tDiHc",
+                        "comment": "If user provided a time, sets event.start to current date at the provided time, and sets event.end to start time + default duration (from project settings)."
                       },
                       "assignments": [
                         {
@@ -628,7 +653,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "pyce29"
+                        "id": "pyce29",
+                        "comment": "If user provided a datetime, sets event.start to provided datetime, and sets event.end to start time + default duration (from project settings)."
                       },
                       "assignments": [
                         {
@@ -649,7 +675,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "HaeNdD"
+                        "id": "HaeNdD",
+                        "comment": "If user provided a daterange, sets event.start to provided date range start, and sets event.end to provided date range end + 1 day (to include the full end date)."
                       },
                       "assignments": [
                         {
@@ -670,7 +697,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "W2uKi1"
+                        "id": "W2uKi1",
+                        "comment": "If user provided a timerange, sets event.start to current date at the provided time range start and sets event.end to current date at the provided time range end."
                       },
                       "assignments": [
                         {
@@ -691,7 +719,8 @@
                     {
                       "$kind": "Microsoft.SetProperties",
                       "$designer": {
-                        "id": "rmuq0u"
+                        "id": "rmuq0u",
+                        "comment": "If user provided a datetimerange, sets event.start to provided date time range start and sets event.end to provided date time range end."
                       },
                       "assignments": [
                         {
@@ -711,7 +740,8 @@
                 {
                   "$kind": "Microsoft.EndDialog",
                   "$designer": {
-                    "id": "TDQ38l"
+                    "id": "TDQ38l",
+                    "comment": "If there was no dateTime resolved or its type is not supported (date, datetime, daterange datetimerange, time, timerange), ends this dialog."
                   }
                 }
               ]
@@ -721,7 +751,8 @@
             {
               "$kind": "Microsoft.SetProperties",
               "$designer": {
-                "id": "Eg7bgy"
+                "id": "Eg7bgy",
+                "comment": "If start and end are already provided, set event.start and end accordingly."
               },
               "assignments": [
                 {
@@ -757,7 +788,8 @@
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "68Dudo"
+            "id": "68Dudo",
+            "comment": "Prompts for the event description.   \n\nProperty is set to a turn property instead of $event.description to allow the user to change the value after it is initially set. If it is set directly to $event.description, when a user tries to change the value the prompt will be skipped.  \n\nThe Output format formats the provided description to sentence case.\n\nIn Prompt Configurations, the max turn count is configured to 1 if the turn.skip property is true. If the user skips, the default value will be null.  \n\nSince this is an open text prompt, Allow Interruptions is configured to only allow interuptions for the Skip and Cancel intents (if their score > 0.8) and for buttons with a configured intent (turn.activity.value.intent). "
           },
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
@@ -766,7 +798,6 @@
           "prompt": "${TextInput_Prompt_68Dudo()}",
           "unrecognizedPrompt": "",
           "invalidPrompt": "",
-          "defaultValueResponse": "",
           "property": "turn.description",
           "outputFormat": "=sentenceCase(this.value)"
         },
@@ -799,22 +830,22 @@
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "NBZi0g"
+            "id": "NBZi0g",
+            "comment": "Prompts for the event duration. \n\nProperty is set to a turn property instead of $event.duration to allow the user to change the value after it is initially set. If it is set directly to $event.duration, when a user tries to change the value the prompt will be skipped.\n\nThe Value accepts either the $options.duration provided in dialog options or the @duration entity and will skip the prompt if either are present.\n\nIn Prompt Configurations, the max turn count is configured to 1 if the turn.skip property is true. If the user skips, the default value will be null.\n\nAllow Interruptions is configured to allow any interruptions except the SetDuration intent (because that intent should be considered a valid response for this prompt) if their score > 0.8 and for buttons with a configured intent (turn.activity.value.intent). "
           },
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=#Skip.score > 0.8 || #Cancel.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(not(exists(#SetDuration)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_NBZi0g()}",
-          "unrecognizedPrompt": "",
-          "defaultValueResponse": "",
           "value": "=coalesce($options.duration, @duration)",
           "property": "turn.query"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "lyJcVq"
+            "id": "lyJcVq",
+            "comment": "Once the user's response to the prompt is stored, it is passed through the ResolveDateTimeDialog to validate the response and convert it into minutes."
           },
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
@@ -827,7 +858,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "yGoNtQ"
+            "id": "yGoNtQ",
+            "comment": "$event.end is set to the existing start date time + the new duration (in minutes)."
           },
           "property": "$event.end.dateTime",
           "value": "=addSeconds(formatDateTime($event.start.dateTime), int(turn.duration.value))"
@@ -853,14 +885,16 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "6lIKTQ"
+            "id": "6lIKTQ",
+            "comment": "If there is no explicit action (add/remove) from the user or the action is 'add'."
           },
           "condition": "=turn.dialogEvent.value.action == null || turn.dialogEvent.value.action == 'add'",
           "actions": [
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "a5WUmn"
+                "id": "a5WUmn",
+                "comment": "Sets online meeting to true."
               },
               "property": "$event.isOnlineMeeting",
               "value": "=true"
@@ -877,7 +911,8 @@
             {
               "$kind": "Microsoft.SetProperty",
               "$designer": {
-                "id": "lYmPDC"
+                "id": "lYmPDC",
+                "comment": "Sets online meeting to false."
               },
               "property": "$event.isOnlineMeeting",
               "value": "=false"
@@ -912,16 +947,15 @@
         {
           "$kind": "Microsoft.TextInput",
           "$designer": {
-            "id": "1LdFal"
+            "id": "1LdFal",
+            "comment": "Prompts for the event location. \n\nProperty is set to a turn property instead of $event.location to allow the user to change the value after it is initially set. If it is set directly to $event.location, when a user tries to change the value the prompt will be skipped.\n\nThe Value accepts either the $options.location provided in dialog options or the @location entity and will skip the prompt if either are present.\n\nIn Prompt Configurations, the max turn count is configured to 1 if the turn.skip property is true. If the user skips, the default value will be null.\n\nAllow Interruptions is configured to allow any interruptions except the SetLocation intent (because that intent should be considered a valid response for this prompt) if their score > 0.8 and for buttons with a configured intent (turn.activity.value.intent). "
           },
           "disabled": false,
           "maxTurnCount": "=if(turn.skip, 1, 3)",
           "alwaysPrompt": false,
-          "allowInterruptions": "=turn.recognized.score > 0.8 || exists(turn.activity.value.intent)",
+          "allowInterruptions": "=(not(exists(#SetLocation)) && turn.recognized.score > 0.8) || exists(turn.activity.value.intent)",
           "prompt": "${TextInput_Prompt_1LdFal()}",
           "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "defaultValueResponse": "",
           "value": "=coalesce($options.location, @location)",
           "property": "turn.location"
         },
@@ -946,7 +980,8 @@
         {
           "$kind": "Microsoft.ConfirmInput",
           "$designer": {
-            "id": "ui2fg1"
+            "id": "ui2fg1",
+            "comment": "Prompts the user to confirm the new event. Shows an event detail card with the event properties and buttons to update properties.\n\nThe if/else condition shows a different text prompt depending on how many times the user has seen the prompt. If it is the first turn, or the prompt was interrupted by a valid intent, the CreateConfirmPrompt() template is shown. If the turnCount > 1 (meaning the prompt has been shown more than once due to an invalid response) and it was not due to an interruption, the CreateConfirmNotUnderstood() prompt is shown, which includes a \"Did not understand, please try again\" message before the confirm prompt."
           },
           "defaultLocale": "en-us",
           "disabled": false,
@@ -974,7 +1009,8 @@
             {
               "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "2dK0lN"
+                "id": "2dK0lN",
+                "comment": "Refreshes user token."
               },
               "activityProcessed": true,
               "dialog": "AuthenticationDialog"
@@ -982,7 +1018,8 @@
             {
               "$kind": "Microsoft.Graph.Calendar.CreateEvent",
               "$designer": {
-                "id": "arM1WX"
+                "id": "arM1WX",
+                "comment": "Posts the $event object to MS Graph Calendar API."
               },
               "resultProperty": "$createEventResult",
               "token": "=turn.token.token",
@@ -992,7 +1029,8 @@
             {
               "$kind": "Microsoft.IfCondition",
               "$designer": {
-                "id": "yt4PWR"
+                "id": "yt4PWR",
+                "comment": "If the event was created successfully."
               },
               "condition": "=exists($createEventResult)",
               "actions": [
@@ -1051,7 +1089,8 @@
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "dcLkuQ"
+            "id": "dcLkuQ",
+            "comment": "If any of the new event properties have been stored, prompt the user before cancelling the operation so they don't lose their progress unintentionally."
           },
           "condition": "=count(where(flatten($options), o, exists(o))) > 0",
           "actions": [
@@ -1142,7 +1181,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "rNNbpg"
+            "id": "rNNbpg",
+            "comment": "Sets the $options.subject property to either the @newSubject or @subject entity if present."
           },
           "assignments": [
             {
@@ -1154,14 +1194,16 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "EKSQWL"
+            "id": "EKSQWL",
+            "comment": "Triggers the OnEvent (SetTitle) handler."
           },
           "eventName": "SetTitle"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "JjVhty"
+            "id": "JjVhty",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1195,7 +1237,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "vtqs0D"
+            "id": "vtqs0D",
+            "comment": "Sets the $options.emailArray property to @email entity and the $options.contactArray property to the @newContact entity if present."
           },
           "assignments": [
             {
@@ -1211,7 +1254,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "W9Qu4d"
+            "id": "W9Qu4d",
+            "comment": "Triggers the OnEvent (SetAttendees) handler with the \"add\" action."
           },
           "eventName": "SetAttendees",
           "eventValue": {
@@ -1221,7 +1265,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "TMGKgg"
+            "id": "TMGKgg",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1255,7 +1300,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "hsaXyp"
+            "id": "hsaXyp",
+            "comment": "Sets the $options.emailArray property to @email entity and the $options.contactArray property to the @currentContact entity if present."
           },
           "assignments": [
             {
@@ -1271,7 +1317,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "S7JXBq"
+            "id": "S7JXBq",
+            "comment": "Triggers the OnEvent (SetAttendees) handler with the \"remove\" action."
           },
           "eventName": "SetAttendees",
           "eventValue": {
@@ -1281,7 +1328,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "xSkzUa"
+            "id": "xSkzUa",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1315,7 +1363,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "r8pqSe"
+            "id": "r8pqSe",
+            "comment": "Sets $query to the text of the current activity."
           },
           "assignments": [
             {
@@ -1327,7 +1376,8 @@
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "r4O4lE"
+            "id": "r4O4lE",
+            "comment": "Resolves any date time values from $query."
           },
           "activityProcessed": true,
           "dialog": "ResolveDateTimeDialog",
@@ -1340,7 +1390,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "Mng9hy"
+            "id": "Mng9hy",
+            "comment": "Saves resolved date time values in $options."
           },
           "assignments": [
             {
@@ -1360,14 +1411,16 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "Aa8MZT"
+            "id": "Aa8MZT",
+            "comment": "Triggers the OnEvent (SetDateTime) handler."
           },
           "eventName": "SetDateTime"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "LMQ17z"
+            "id": "LMQ17z",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1401,14 +1454,16 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "8Pwzv9"
+            "id": "8Pwzv9",
+            "comment": "Triggers the OnEvent (SetDescription) handler."
           },
           "eventName": "SetDescription"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "DwjvfS"
+            "id": "DwjvfS",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1454,14 +1509,16 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "hBF1Tp"
+            "id": "hBF1Tp",
+            "comment": "Triggers the OnEvent (SetDuration) handler."
           },
           "eventName": "SetDuration"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "O4Z1oB"
+            "id": "O4Z1oB",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1495,7 +1552,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "nBimuO"
+            "id": "nBimuO",
+            "comment": "Triggers the OnEvent (SetOnlineMeeting) handler with the \"add\" action."
           },
           "eventName": "SetOnlineMeeting",
           "eventValue": {
@@ -1505,7 +1563,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "sHzyxn"
+            "id": "sHzyxn",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1539,7 +1598,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "dLCdSc"
+            "id": "dLCdSc",
+            "comment": "Triggers the OnEvent (SetLocation) handler with the \"remove\" action."
           },
           "eventName": "SetOnlineMeeting",
           "eventValue": {
@@ -1549,7 +1609,8 @@
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "fj5hxB"
+            "id": "fj5hxB",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1595,14 +1656,16 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "R40YIi"
+            "id": "R40YIi",
+            "comment": "Triggers the OnEvent (SetLocation) handler."
           },
           "eventName": "SetLocation"
         },
         {
           "$kind": "Microsoft.SetProperties",
           "$designer": {
-            "id": "bOwNOg"
+            "id": "bOwNOg",
+            "comment": "turn.interrupted indicates whether the conversation was interrupted. This is used in the OnEvent (CreateConfirm) trigger to modify the prompt text appropriately.\n\n$maxTurnCount is incremented here to allow prompt to be interrupted without unintentionally exceeding the prompt.turnCount before the user has finished responding."
           },
           "assignments": [
             {
@@ -1636,7 +1699,8 @@
         {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
-            "id": "1L5Yro"
+            "id": "1L5Yro",
+            "comment": "This property is used to configure the maxTurnCount property of prompts. When the max turn count is set to 1, the prompt will be skipped."
           },
           "property": "turn.skip",
           "value": "=true"
@@ -1662,7 +1726,8 @@
         {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
-            "id": "XsBGwQ"
+            "id": "XsBGwQ",
+            "comment": "Triggers the OnEvent (Cancel) handler."
           },
           "eventName": "Cancel"
         }
