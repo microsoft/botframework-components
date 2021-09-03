@@ -3,7 +3,8 @@
   "$designer": {
     "id": "1dAZlt",
     "name": "GetProfileDialog",
-    "description": ""
+    "description": "",
+    "comment": "Gets profile of the given user from the MS Graph User API."
   },
   "autoEndDialog": true,
   "defaultResultProperty": "dialog.result",
@@ -13,7 +14,8 @@
       "$designer": {
         "name": "BeginDialog",
         "description": "",
-        "id": "XToxGY"
+        "id": "XToxGY",
+        "comment": "Gets profile of the given user from the MS Graph User API."
       },
       "actions": [
         {
@@ -21,137 +23,69 @@
           "$designer": {
             "id": "FPmp8f"
           },
-          "name": "<%= botName %>.GetProfileDialog.BeginDialog",
+          "name": "GetProfileDialog.BeginDialog",
           "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Amg65J",
+            "comment": "This property is used to modify the end response based on whether the userId was provided initially or not. If it was provided on dialog launch, only the profile card is shown to reduce conversation noise."
+          },
+          "property": "$haveUserId",
+          "value": "=exists($userId)"
         },
         {
           "$kind": "Microsoft.BeginDialog",
           "$designer": {
-            "id": "IgPvkk"
+            "id": "KV9zcT",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
           },
           "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.IfCondition",
-          "$designer": {
-            "id": "rqPdz8"
-          },
-          "condition": "=not(exists($UserIdFound))",
-          "actions": [
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "YfiAYu"
-              },
-              "activityProcessed": true,
-              "dialog": "FindPersonDialog",
-              "resultProperty": "$UserIdFound",
-              "options": {
-                "nameEntity": "=$nameEntity"
-              }
-            },
-            {
-              "$kind": "Microsoft.BeginDialog",
-              "$designer": {
-                "id": "UDKkix"
-              },
-              "activityProcessed": true,
-              "dialog": "AuthenticationDialog"
-            },
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "m4XKv3"
-              },
-              "property": "$WasUserFoundSupplied",
-              "value": false
-            }
-          ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "9DAueZ"
-              },
-              "property": "$WasUserFoundSupplied",
-              "value": true
-            }
-          ]
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
+          "options": {
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
+          }
         },
         {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "hFpZL4"
           },
-          "condition": "=exists($UserIdFound)",
+          "condition": "=exists(turn.user)",
           "actions": [
             {
-              "$kind": "Microsoft.Graph.User.GetUserProfile",
+              "$kind": "Microsoft.BeginDialog",
               "$designer": {
-                "id": "ZW7CBi"
+                "id": "kPBvdA",
+                "comment": "Refreshes user token."
               },
-              "token": "=turn.token.token",
-              "userId": "=$UserIdFound",
-              "resultProperty": "turn.Result",
-              "propertiesToSelect": [
-                "id",
-                "displayName",
-                "mail",
-                "businessPhones",
-                "department",
-                "jobTitle",
-                "officeLocation"
-              ]
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
             },
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
               "$designer": {
-                "id": "CQDmFd"
+                "id": "CQDmFd",
+                "comment": "Since the profile photo is not included by default, an additional call is made to get the photo for the profile."
               },
-              "resultProperty": "turn.Result.Photo",
+              "resultProperty": "turn.user.photo",
               "token": "=turn.token.token",
-              "userId": "=$UserIdFound"
-            },
-            {
-              "$kind": "Microsoft.IfCondition",
-              "$designer": {
-                "id": "TXZ2C6"
-              },
-              "condition": "=$WasUserFoundSupplied == true",
-              "elseActions": [
-                {
-                  "$kind": "Microsoft.SendActivity",
-                  "$designer": {
-                    "id": "dTcyKk"
-                  },
-                  "activity": "${SendActivity_dTcyKk()}"
-                }
-              ]
+              "userId": "=turn.user.id"
             },
             {
               "$kind": "Microsoft.SendActivity",
               "$designer": {
-                "id": "ryFbw6"
+                "id": "ryFbw6",
+                "comment": "If the userId was not initially provided, a contextual message is shown.\n\nDisplays selected user profile in Profile Card."
               },
               "activity": "${SendActivity_ryFbw6()}"
             }
           ],
-          "elseActions": [
-            {
-              "$kind": "Microsoft.SendActivity",
-              "$designer": {
-                "id": "lcoztE"
-              },
-              "activity": "${SendActivity_lcoztE()}"
-            }
-          ]
-        },
-        {
-          "$kind": "Microsoft.EndDialog",
-          "$designer": {
-            "id": "XYzO24"
-          }
+          "elseActions": []
         }
       ]
     }
