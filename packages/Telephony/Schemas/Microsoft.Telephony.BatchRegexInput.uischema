@@ -1,0 +1,61 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
+  "form": {
+    "label": "Aggregate Input (Regex) Preview",
+    "subtitle": "Aggregate input until a regex matches the buffer.",
+    "order": [
+      "prompt",
+      "terminationConditionRegexPattern",
+      "property",
+      "allowInterruptions",
+      "alwaysPrompt",
+      "*"
+    ],
+    "properties": {
+      "terminationConditionRegexPattern": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "property": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "allowInterruptions": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "interruptionMask": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "alwaysPrompt": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      }
+    }
+  },
+  "menu": {
+    "label": "Aggregate Input (Regex) Preview",
+    "submenu": [ "Telephony" ]
+  },
+  "flow": {
+      "widget": "ActionCard",
+      "body": {
+          "widget": "LgWidget",
+          "field": "prompt"
+      },
+      "header": {
+          "widget": "ActionHeader",
+          "icon": "MessageBot",
+          "colors": {
+              "theme": "#EEEAF4",
+              "icon": "#5C2E91"
+          }
+      }
+  }
+}
