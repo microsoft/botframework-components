@@ -89,7 +89,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
         'botbuilder-ai-luis': '4.15.0-rc0.preview',
         'botbuilder-ai-qna': '4.15.0-rc0.preview',
         'botbuilder-dialogs-adaptive-runtime-integration-azure-functions':
-          '4.15.0-rc0.preview',
+            '4.15.0-rc0.preview',
       },
     };
 
