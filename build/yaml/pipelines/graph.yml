@@ -15,6 +15,7 @@ variables:
   Language: dotnet
   DeploymentRing: preview
   # DeploymentRingOverride: # set in ADO
+  NugetSecurityAnalysisWarningLevel: none
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: packages/Graph
