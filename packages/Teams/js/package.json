@@ -35,7 +35,7 @@
     "botbuilder-dialogs-adaptive": "~4.15.0-rc0.preview",
     "botbuilder-dialogs-adaptive-runtime-core": "~4.15.0-rc0.preview",
     "botbuilder-dialogs-declarative": "~4.15.0-rc0.preview",
-    "botbuilder-stdlib": "~4.14.1-internal",
+    "botbuilder-stdlib": "~4.15.0-rc0.internal",
     "botframework-connector": "~4.15.0-rc0",
     "lodash": "^4.17.21"
   },
@@ -50,7 +50,7 @@
     "botbuilder-dialogs-adaptive": "4.15.0-rc0.preview",
     "botbuilder-dialogs-adaptive-runtime-core": "4.15.0-rc0.preview",
     "botbuilder-dialogs-declarative": "4.15.0-rc0.preview",
-    "botbuilder-stdlib": "4.14.1-internal",: null,
+    "botbuilder-stdlib": "4.15.0-rc0.internal",
     "botframework-connector": "4.15.0-rc0",
     "eslint": "^7.30.0",
     "eslint-plugin-prettier": "latest",
