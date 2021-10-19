@@ -17,6 +17,7 @@ variables:
   Language: YOUR_COMPONENT_LANGUAGE # js or dotnet
   DeploymentRing: YOUR_DEPLOYMENT_RING # preview, rc, or stable
   # DeploymentRingOverride: # set in ADO
+  NugetSecurityAnalysisWarningLevel: warn # Workaround: Sets the warning level of injected nuget security analysis to raise a warning in logs and set status to green. Visit https://aka.ms/nugetmultifeed for more details.
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
   WorkingDirectory: YOUR_WORKING_DIRECTORY
