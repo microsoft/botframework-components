@@ -202,7 +202,6 @@ __metadata:
     botbuilder-dialogs-adaptive: 4.14.1-preview
     botbuilder-dialogs-adaptive-runtime-core: 4.14.1-preview
     botbuilder-dialogs-declarative: 4.14.1-preview
-    botbuilder-stdlib: 4.14.1-internal
     botframework-connector: 4.14.1
     eslint: ^7.30.0
     eslint-plugin-prettier: latest
@@ -216,7 +215,6 @@ __metadata:
     botbuilder-dialogs-adaptive: ~4.14.1-preview
     botbuilder-dialogs-adaptive-runtime-core: ~4.14.1-preview
     botbuilder-dialogs-declarative: ~4.14.1-preview
-    botbuilder-stdlib: ~4.14.1-internal
     botframework-connector: ~4.14.1
     lodash: ^4.17.21
   languageName: unknown
