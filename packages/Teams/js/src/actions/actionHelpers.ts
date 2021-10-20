@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ExpressionProperty } from 'adaptive-expressions';
 import { BotFrameworkAdapter } from 'botbuilder';
 import { DialogContext } from 'botbuilder-dialogs';
-import { Test, tests } from 'botbuilder-stdlib';
+import { ExpressionProperty } from 'adaptive-expressions';
 
 /**
  * Get the value of the string expression from the Dialog Context.
@@ -41,20 +40,18 @@ export type HasAuthMethods = Pick<
 >;
 
 /**
- * Test to assert val has required auth methods.
+ * Type guard to assert val has required auth methods.
  *
  * @param {any} val Usually context.adapter.
  * @returns {Assertion} Asserts that val has required auth methods.
  */
-export const testAdapterHasAuthMethods: Test<HasAuthMethods> = (
-  val: unknown
-): val is HasAuthMethods => {
+export function testAdapterHasAuthMethods(val: unknown): val is HasAuthMethods {
   return (
     val instanceof BotFrameworkAdapter ||
-    (tests.isFunc((val as BotFrameworkAdapter).getUserToken) &&
-      tests.isFunc((val as BotFrameworkAdapter).getSignInLink))
+    (typeof (val as BotFrameworkAdapter).getUserToken === 'function' &&
+      typeof (val as BotFrameworkAdapter).getSignInLink === 'function')
   );
-};
+}
 
 /**
  * This is similar to HasAuthMethods, but purely for testing since TestAdapter does not have
@@ -66,16 +63,16 @@ export type HasCreateConnectorClientMethod = Pick<
 >;
 
 /**
- * Test to assert val has required createConnectorClient method.
+ * Type guard to assert val has required createConnectorClient method.
  *
  * @param {any} val Usually context.adapter.
  * @returns {Assertion} Asserts that val has required createConnectorClient method.
  */
-export const testAdapterHasCreateConnectorClientMethod: Test<HasCreateConnectorClientMethod> = (
+export function testAdapterHasCreateConnectorClientMethod(
   val: unknown
-): val is HasCreateConnectorClientMethod => {
+): val is HasCreateConnectorClientMethod {
   return (
     val instanceof BotFrameworkAdapter ||
-    tests.isFunc((val as BotFrameworkAdapter).createConnectorClient)
+    typeof (val as BotFrameworkAdapter).createConnectorClient === 'function'
   );
-};
+}
