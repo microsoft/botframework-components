@@ -26,6 +26,8 @@ variables:
   InternalKeyVaultName: "bfcfnbotkeyvault$($env:RESOURCESUFFIX)"
   InternalResourceGroupName: $[coalesce(variables['RESOURCEGROUPNAME'], 'bfcfnshared')]
 
+  NugetSecurityAnalysisWarningLevel: warn # Workaround: Sets the warning level of injected nuget security analysis to raise a warning in logs and set status to green. Visit https://aka.ms/nugetmultifeed for more details.
+
 stages:
 - stage: Create_Resource_Group_Windows
   displayName: "Create Resource Group (Windows)"
