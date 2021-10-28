@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Microsoft.Bot.Components.Welcome</id>
-        <version>1.1.2</version>
+        <version>1.2.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <copyright>© Microsoft Corporation. All rights reserved.</copyright>
@@ -13,7 +13,7 @@
         <description>An Adaptive Dialog for greeting new and returning users on first interaction with your bot built on the Azure Bot Framework.</description>
         <tags>msbot-component msbot-content conversationalcore welcome preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.14.1" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.15.0-rc0" />
         </dependencies>
     </metadata>
 

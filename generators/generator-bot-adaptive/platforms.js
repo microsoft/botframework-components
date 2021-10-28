@@ -3,12 +3,12 @@
 
 const dotnet = {
   name: 'dotnet',
-  defaultSdkVersion: '4.14.1',
+  defaultSdkVersion: '4.15.0-rc0',
 };
 
 const js = {
   name: 'js',
-  defaultSdkVersion: '4.14.1-preview',
+  defaultSdkVersion: '4.15.0-rc0.preview',
 };
 
 module.exports = { dotnet, js };

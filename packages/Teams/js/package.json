@@ -2,7 +2,7 @@
   "name": "@microsoft/bot-components-teams",
   "author": "Microsoft Corp.",
   "description": "Rule system for the Microsoft BotBuilder adaptive dialog system, with integration specific to Microsoft Teams.",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "license": "MIT",
   "keywords": [
     "msbot-component",
@@ -29,6 +29,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "peerDependencies": {
+<<<<<<< HEAD
     "adaptive-expressions": "~4.14.1",
     "botbuilder": "~4.14.1",
     "botbuilder-dialogs": "~4.14.1",
@@ -36,6 +37,15 @@
     "botbuilder-dialogs-adaptive-runtime-core": "~4.14.1-preview",
     "botbuilder-dialogs-declarative": "~4.14.1-preview",
     "botframework-connector": "~4.14.1",
+=======
+    "adaptive-expressions": "~4.15.0-rc0",
+    "botbuilder": "~4.15.0-rc0",
+    "botbuilder-dialogs": "~4.15.0-rc0",
+    "botbuilder-dialogs-adaptive": "~4.15.0-rc0.preview",
+    "botbuilder-dialogs-adaptive-runtime-core": "~4.15.0-rc0.preview",
+    "botbuilder-dialogs-declarative": "~4.15.0-rc0.preview",
+    "botframework-connector": "~4.15.0-rc0",
+>>>>>>> 0c9fb56fcc2fa68130b9530d2f85b83543d98567
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -43,6 +53,7 @@
     "@types/lodash": "^4.14.168",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
+<<<<<<< HEAD
     "adaptive-expressions": "4.14.1",
     "botbuilder": "4.14.1",
     "botbuilder-dialogs": "4.14.1",
@@ -50,6 +61,15 @@
     "botbuilder-dialogs-adaptive-runtime-core": "4.14.1-preview",
     "botbuilder-dialogs-declarative": "4.14.1-preview",
     "botframework-connector": "4.14.1",
+=======
+    "adaptive-expressions": "4.15.0-rc0",
+    "botbuilder": "4.15.0-rc0",
+    "botbuilder-dialogs": "4.15.0-rc0",
+    "botbuilder-dialogs-adaptive": "4.15.0-rc0.preview",
+    "botbuilder-dialogs-adaptive-runtime-core": "4.15.0-rc0.preview",
+    "botbuilder-dialogs-declarative": "4.15.0-rc0.preview",
+    "botframework-connector": "4.15.0-rc0",
+>>>>>>> 0c9fb56fcc2fa68130b9530d2f85b83543d98567
     "eslint": "^7.30.0",
     "eslint-plugin-prettier": "latest",
     "lodash": "^4.17.21",
