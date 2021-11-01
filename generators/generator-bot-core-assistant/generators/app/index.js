@@ -16,7 +16,7 @@ const packageReferences = {
     },
   ],
   [platforms.js.name]: [
-    { name: '@microsoft/bot-components-helpandcancel', version: 'latest' },
+    { name: '@microsoft/bot-components-helpandcancel', version: 'rc' },
   ],
 };
 
