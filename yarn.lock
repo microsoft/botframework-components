@@ -409,20 +409,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-core-qna@workspace:generators/generator-bot-core-qna":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/generator-bot-core-qna@workspace:generators/generator-bot-core-qna"
-  dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0"
-    eslint: latest
-    eslint-config-prettier: latest
-    eslint-plugin-prettier: latest
-    prettier: latest
-    yeoman-generator: ^2.0.5
-    yeoman-test: ^1.9.1
-  languageName: unknown
-  linkType: soft
-
 "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
