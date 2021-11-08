@@ -307,10 +307,10 @@ __metadata:
   dependencies:
     "@microsoft/bot-components-teams": "workspace:packages/Teams/js"
     "@types/mocha": ^8.2.2
-    botbuilder: 4.15.0-rc2
-    botbuilder-dialogs-adaptive: 4.15.0-rc2.preview
-    botbuilder-dialogs-adaptive-testing: 4.15.0-rc2.preview
-    botframework-connector: 4.15.0-rc2
+    botbuilder: 4.15.0-rc3
+    botbuilder-dialogs-adaptive: 4.15.0-rc3.preview
+    botbuilder-dialogs-adaptive-testing: 4.15.0-rc3.preview
+    botframework-connector: 4.15.0-rc3
     eslint: ^7.30.0
     mocha: ^9.0.2
     nock: ^13.1.1
@@ -326,26 +326,26 @@ __metadata:
     "@types/lodash": ^4.14.168
     "@typescript-eslint/eslint-plugin": ^4.28.2
     "@typescript-eslint/parser": ^4.28.2
-    adaptive-expressions: 4.15.0-rc2
-    botbuilder: 4.15.0-rc2
-    botbuilder-dialogs: 4.15.0-rc2
-    botbuilder-dialogs-adaptive: 4.15.0-rc2.preview
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botbuilder-dialogs-declarative: 4.15.0-rc2.preview
-    botframework-connector: 4.15.0-rc2
+    adaptive-expressions: 4.15.0-rc3
+    botbuilder: 4.15.0-rc3
+    botbuilder-dialogs: 4.15.0-rc3
+    botbuilder-dialogs-adaptive: 4.15.0-rc3.preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botbuilder-dialogs-declarative: 4.15.0-rc3.preview
+    botframework-connector: 4.15.0-rc3
     eslint: ^7.30.0
     eslint-plugin-prettier: latest
     lodash: ^4.17.21
     rimraf: ^3.0.2
     typescript: ^4.0.5
   peerDependencies:
-    adaptive-expressions: ~4.15.0-rc2
-    botbuilder: ~4.15.0-rc2
-    botbuilder-dialogs: ~4.15.0-rc2
-    botbuilder-dialogs-adaptive: ~4.15.0-rc2.preview
-    botbuilder-dialogs-adaptive-runtime-core: ~4.15.0-rc2.preview
-    botbuilder-dialogs-declarative: ~4.15.0-rc2.preview
-    botframework-connector: ~4.15.0-rc2
+    adaptive-expressions: ~4.15.0-rc3
+    botbuilder: ~4.15.0-rc3
+    botbuilder-dialogs: ~4.15.0-rc3
+    botbuilder-dialogs-adaptive: ~4.15.0-rc3.preview
+    botbuilder-dialogs-adaptive-runtime-core: ~4.15.0-rc3.preview
+    botbuilder-dialogs-declarative: ~4.15.0-rc3.preview
+    botframework-connector: ~4.15.0-rc3
     lodash: ^4.17.21
   languageName: unknown
   linkType: soft
@@ -362,7 +362,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-adaptive@workspace:^1.2.0-rc1, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
+"@microsoft/generator-bot-adaptive@workspace:^1.2.0-rc2, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
@@ -385,7 +385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -399,7 +399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-language@workspace:generators/generator-bot-core-language"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -413,7 +413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -427,9 +427,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.2.0-rc1"
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.2.0-rc2"
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -440,11 +440,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-calendar@workspace:^1.2.0-rc1, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
+"@microsoft/generator-bot-enterprise-calendar@workspace:^1.2.0-rc2, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -454,11 +454,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-people@workspace:^1.2.0-rc1, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
+"@microsoft/generator-bot-enterprise-people@workspace:^1.2.0-rc2, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -1095,9 +1095,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adaptive-expressions@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "adaptive-expressions@npm:4.15.0-rc2"
+"adaptive-expressions@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "adaptive-expressions@npm:4.15.0-rc3"
   dependencies:
     "@microsoft/recognizers-text-data-types-timex-expression": 1.3.0
     "@types/atob-lite": ^2.0.0
@@ -1118,7 +1118,7 @@ __metadata:
     lru-cache: ^5.1.1
     uuid: ^8.3.2
     xpath: ^0.0.32
-  checksum: 5444c05e8f833c051b18b4e9f0948cdb13f372247f2ff735af6f9984b928f5afaa0a0a07c6054027e41f4d9df3ca3b22cfd44ccf4f7ef4b34bc4e6618266c6e0
+  checksum: d06b11b179e7507943eba4c3b4a89e85581853ecc6453b1ebc6983d1bd380dad8092cb1a995733168010dd49527833d324592cabd315323dc295a9ac121d8c3b
   languageName: node
   linkType: hard
 
@@ -1840,160 +1840,159 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-ai@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botbuilder-ai@npm:4.15.0-rc2"
+"botbuilder-ai@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botbuilder-ai@npm:4.15.0-rc3"
   dependencies:
     "@azure/cognitiveservices-luis-runtime": 2.0.0
     "@azure/ms-rest-js": 1.9.1
-    adaptive-expressions: 4.15.0-rc2
-    botbuilder-core: 4.15.0-rc2
-    botbuilder-dialogs: 4.15.0-rc2
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botbuilder-dialogs-declarative: 4.15.0-rc2.preview
+    adaptive-expressions: 4.15.0-rc3
+    botbuilder-core: 4.15.0-rc3
+    botbuilder-dialogs: 4.15.0-rc3
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botbuilder-dialogs-declarative: 4.15.0-rc3.preview
     lodash: ^4.17.21
     node-fetch: ^2.6.0
     url-parse: ^1.5.1
     zod: ~1.11.17
-  checksum: 47c13758741c76d225b5d0ec6449db8b64d01e73fb022a23b384cd9c108037dbc75c86e35dafd94c71eff2318af92bb1704de3a74dc50b6e62c58d28e962b955
+  checksum: 0be283358c0f8c4a71aeb0be6f7ea7ffe6c90100d935b2f2d4204a37515cb9003eedd91c0784b1b9adb1cd762f3dd1d7103a489b099b5b398a4b476ca867cf86
   languageName: node
   linkType: hard
 
-"botbuilder-core@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botbuilder-core@npm:4.15.0-rc2"
+"botbuilder-core@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botbuilder-core@npm:4.15.0-rc3"
   dependencies:
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botbuilder-stdlib: 4.15.0-rc2.internal
-    botframework-connector: 4.15.0-rc2
-    botframework-schema: 4.15.0-rc2
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botbuilder-stdlib: 4.15.0-rc3.internal
+    botframework-connector: 4.15.0-rc3
+    botframework-schema: 4.15.0-rc3
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 909da0c7b911a68e774d50d2d27dede1af20b7634e220a3ae5a825038913d8f8064ec0783a02afe41dca589fe6df30b8c42594aa5fef4c716451c92b6a9f996e
+  checksum: 74b8b9744d91b71f67064f7e3f0f089a9fd7372f9d020c15eee760515f466c0c66c183fd781aa7edc597948b290fb477775de5f4c3d6e197a5f46b8588a20a8f
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-runtime-core@npm:4.15.0-rc2.preview":
-  version: 4.15.0-rc2.preview
-  resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.15.0-rc2.preview"
+"botbuilder-dialogs-adaptive-runtime-core@npm:4.15.0-rc3.preview":
+  version: 4.15.0-rc3.preview
+  resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.15.0-rc3.preview"
   dependencies:
     dependency-graph: ^0.10.0
-  checksum: 2291e8e315e8bec9837831f2013c45550773b60ef10c922a77a47ef1fdb42d335070290063983e73770e680906b12c0e4617ddf28a11e8b470076424ab9ba6c5
+  checksum: c3e87c446f444f829162d7d0bcaa15a4c4aae78cc47b19cc7514df3901dd84e4faee6d6d689fbf1f3ea8b7905aad0b78cad1d0f55afd3baf2acc79f3c931afc7
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-testing@npm:4.15.0-rc2.preview":
-  version: 4.15.0-rc2.preview
-  resolution: "botbuilder-dialogs-adaptive-testing@npm:4.15.0-rc2.preview"
+"botbuilder-dialogs-adaptive-testing@npm:4.15.0-rc3.preview":
+  version: 4.15.0-rc3.preview
+  resolution: "botbuilder-dialogs-adaptive-testing@npm:4.15.0-rc3.preview"
   dependencies:
-    adaptive-expressions: 4.15.0-rc2
+    adaptive-expressions: 4.15.0-rc3
     bitwise: ^2.0.4
-    botbuilder-ai: 4.15.0-rc2
-    botbuilder-core: 4.15.0-rc2
-    botbuilder-dialogs: 4.15.0-rc2
-    botbuilder-dialogs-adaptive: 4.15.0-rc2.preview
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botbuilder-dialogs-declarative: 4.15.0-rc2.preview
-    botbuilder-stdlib: 4.15.0-rc2.internal
+    botbuilder-ai: 4.15.0-rc3
+    botbuilder-core: 4.15.0-rc3
+    botbuilder-dialogs: 4.15.0-rc3
+    botbuilder-dialogs-adaptive: 4.15.0-rc3.preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botbuilder-dialogs-declarative: 4.15.0-rc3.preview
+    botbuilder-stdlib: 4.15.0-rc3.internal
     murmurhash-js: ^1.0.0
     nock: ^11.9.1
     url-parse: ^1.5.1
     zod: ~1.11.17
-  checksum: fed45d1ed201f71647a1e7d8ea89575afcfa3dc11f54c8843c6b56833693093c0fe1f9efe3e27c62906c0f5feb83fcd2ee83edfc8cacf26fcfc267d9136cceea
+  checksum: ff0ee7b6ed7bad7878247188cfb5c60d5005a85d1d23bcc783609d8c1d6839217197e352c9c7a8770167965772372b1d68be6799f9b5701f043a942edbab3192
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive@npm:4.15.0-rc2.preview":
-  version: 4.15.0-rc2.preview
-  resolution: "botbuilder-dialogs-adaptive@npm:4.15.0-rc2.preview"
+"botbuilder-dialogs-adaptive@npm:4.15.0-rc3.preview":
+  version: 4.15.0-rc3.preview
+  resolution: "botbuilder-dialogs-adaptive@npm:4.15.0-rc3.preview"
   dependencies:
     "@microsoft/recognizers-text-suite": 1.1.4
-    adaptive-expressions: 4.15.0-rc2
-    botbuilder: 4.15.0-rc2
-    botbuilder-dialogs: 4.15.0-rc2
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botbuilder-dialogs-declarative: 4.15.0-rc2.preview
-    botbuilder-lg: 4.15.0-rc2
+    adaptive-expressions: 4.15.0-rc3
+    botbuilder: 4.15.0-rc3
+    botbuilder-dialogs: 4.15.0-rc3
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botbuilder-dialogs-declarative: 4.15.0-rc3.preview
+    botbuilder-lg: 4.15.0-rc3
     lodash: ^4.17.21
     node-fetch: ^2.6.0
-    uuid: ^8.3.2
-  checksum: f1102685d3e2457f3229ff569eedfe281df8ea6a439dc7d1603462e6a624242ad2028d2b1379166a89a0815d33e7fa4bd72191290d54bd1500721e643469ca25
+  checksum: 1886450efd7b1bb40c41610be3de662860c295048bedef6ebe4ff157f5c2baf17118220c6de319f86e2e6e5346241cc994edec760917aebcb6a571c5c194b7bc
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-declarative@npm:4.15.0-rc2.preview":
-  version: 4.15.0-rc2.preview
-  resolution: "botbuilder-dialogs-declarative@npm:4.15.0-rc2.preview"
+"botbuilder-dialogs-declarative@npm:4.15.0-rc3.preview":
+  version: 4.15.0-rc3.preview
+  resolution: "botbuilder-dialogs-declarative@npm:4.15.0-rc3.preview"
   dependencies:
-    botbuilder-core: 4.15.0-rc2
-    botbuilder-dialogs: 4.15.0-rc2
-    botbuilder-stdlib: 4.15.0-rc2.internal
+    botbuilder-core: 4.15.0-rc3
+    botbuilder-dialogs: 4.15.0-rc3
+    botbuilder-stdlib: 4.15.0-rc3.internal
     chokidar: ^3.4.0
     zod: ~1.11.17
-  checksum: ff3124a8c51040c736fbd0627560b6c4bc66789a4d29ad690dfe5e1370d4ea03e9a9dfea7d647b8a8334f2275db1b1ddb397e3eb7a41115834b2ca180c409fd4
+  checksum: 05df7ecf67e5a27f54292c03b042f8af32c8903b8ba3cbad9b79796649f3d1736e703d5ff1eff2eaaaa6369a37ca249ac692b46fe7643efd885902c781024676
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botbuilder-dialogs@npm:4.15.0-rc2"
+"botbuilder-dialogs@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botbuilder-dialogs@npm:4.15.0-rc3"
   dependencies:
     "@microsoft/recognizers-text-choice": 1.1.4
     "@microsoft/recognizers-text-date-time": 1.1.4
     "@microsoft/recognizers-text-number": 1.1.4
     "@microsoft/recognizers-text-suite": 1.1.4
-    botbuilder-core: 4.15.0-rc2
-    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc2.preview
-    botframework-connector: 4.15.0-rc2
+    botbuilder-core: 4.15.0-rc3
+    botbuilder-dialogs-adaptive-runtime-core: 4.15.0-rc3.preview
+    botframework-connector: 4.15.0-rc3
     globalize: ^1.4.2
     lodash: ^4.17.21
     zod: ~1.11.17
-  checksum: 443684d4f4b0d5916e51add653712acff960dc0ea50c9d63090f9f030e994e480d02f11b6fa3817c5830123a43ae4f8a0d1aecf3f092c6209efe58ec48e8b743
+  checksum: f14957ed4bb6d38960a39b28bc98f34e66236db46d3dc90b0a9e6b30cb903b90b41960f3d3efeefcb0ae2b96b541f944abea56ec6dde4125bbb822b936673f2d
   languageName: node
   linkType: hard
 
-"botbuilder-lg@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botbuilder-lg@npm:4.15.0-rc2"
+"botbuilder-lg@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botbuilder-lg@npm:4.15.0-rc3"
   dependencies:
-    adaptive-expressions: 4.15.0-rc2
+    adaptive-expressions: 4.15.0-rc3
     antlr4ts: 0.5.0-alpha.3
     lodash: ^4.17.19
     uuid: ^8.3.2
-  checksum: 3e6739daa5d3b00534d65d2b06456fcb28884adc1f6d36d88ccfbffc3e041a808aa63078e638a98a79ded8357c592433b46cff3bfdb3a1ddbba3b1a0a81a56e1
+  checksum: d234b0d21c8c533ed2aa02294ccdab012f37cd3644503b6c338d19bca40b8be2159d5ddd2810a4932890bafcf49a880d1b5eff2552599011eeb7ac1ca5e2ef92
   languageName: node
   linkType: hard
 
-"botbuilder-stdlib@npm:4.15.0-rc2.internal":
-  version: 4.15.0-rc2.internal
-  resolution: "botbuilder-stdlib@npm:4.15.0-rc2.internal"
-  checksum: 0190f85a68cc371ff1199cd9a180a63efe83b666ea375866c14de4567cdc2850f1922a4264c65c7f783776015840bc1db964c03880cdb2f9609e0c6c0847b6ea
+"botbuilder-stdlib@npm:4.15.0-rc3.internal":
+  version: 4.15.0-rc3.internal
+  resolution: "botbuilder-stdlib@npm:4.15.0-rc3.internal"
+  checksum: 115b82dd6de5e122e12a9a0a3f51296c179a6749c2f587f6db7b42745c11f5a3da763a30e8f5aa7f0beaddcc971d77d99395ba777c25813ebe0e01e6542b07cb
   languageName: node
   linkType: hard
 
-"botbuilder@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botbuilder@npm:4.15.0-rc2"
+"botbuilder@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botbuilder@npm:4.15.0-rc3"
   dependencies:
     "@azure/ms-rest-js": 1.9.1
     axios: ^0.21.2
-    botbuilder-core: 4.15.0-rc2
-    botbuilder-stdlib: 4.15.0-rc2.internal
-    botframework-connector: 4.15.0-rc2
-    botframework-streaming: 4.15.0-rc2
+    botbuilder-core: 4.15.0-rc3
+    botbuilder-stdlib: 4.15.0-rc3.internal
+    botframework-connector: 4.15.0-rc3
+    botframework-streaming: 4.15.0-rc3
     dayjs: ^1.10.3
     filenamify: ^4.1.0
     fs-extra: ^7.0.1
     htmlparser2: ^6.0.1
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 4f2ca84a96112770f5c147c123c368f3651dc0f299ec00839624f8cfbbe47914e94a384655ee91bdde4db348e4051815d8b9122e08981b621733fcac8d185e6c
+  checksum: 4c5d38b07fd9be1fd2078392674ea64a76575d6d96ee59803a21a073dc068155ad97e1a3afd766a979a6a07ff40503b94ae4dc12cd450ceaf4f81f0f58fb5e59
   languageName: node
   linkType: hard
 
-"botframework-connector@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botframework-connector@npm:4.15.0-rc2"
+"botframework-connector@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botframework-connector@npm:4.15.0-rc3"
   dependencies:
     "@azure/identity": 2.0.0-beta.6
     "@azure/ms-rest-js": 1.9.1
@@ -2002,35 +2001,35 @@ __metadata:
     adal-node: 0.2.3
     axios: ^0.21.2
     base64url: ^3.0.0
-    botbuilder-stdlib: 4.15.0-rc2.internal
-    botframework-schema: 4.15.0-rc2
+    botbuilder-stdlib: 4.15.0-rc3.internal
+    botframework-schema: 4.15.0-rc3
     cross-fetch: ^3.0.5
     jsonwebtoken: 8.0.1
     rsa-pem-from-mod-exp: ^0.8.4
     zod: ~1.11.17
-  checksum: ce15b91260d2791e83f1a70e5ea31889039d312f93787936a274e7025f9c17b0f87d3a02096dd3408c02edc7e827df4a87d81c29b6ab6e651ba035a355f6d6c3
+  checksum: 17c06ee6ea39f01ff4ed3602a4db538098c78494474327efa09c7438b720f1ecf8f45ad1498cb4fdbf592e8824fbb9a504584d7141f052ce1e83cbd51b906742
   languageName: node
   linkType: hard
 
-"botframework-schema@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botframework-schema@npm:4.15.0-rc2"
+"botframework-schema@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botframework-schema@npm:4.15.0-rc3"
   dependencies:
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 2685f4fb176f33de9e1a40a72fb216d8d5eab9d225b69e2088c3694d4b2c673db9d70c9568cd9931213ffdf230059178712f3839bb8344c076dc5f82108b1cbe
+  checksum: 27abc06aa14a21686cdd7fd8a83e77bad78eb8deca6e23de711def6d422e4d728dee7bf7a285a6c061e9344ce6a566514d8d2723423aab81931ddf05fff16a36
   languageName: node
   linkType: hard
 
-"botframework-streaming@npm:4.15.0-rc2":
-  version: 4.15.0-rc2
-  resolution: "botframework-streaming@npm:4.15.0-rc2"
+"botframework-streaming@npm:4.15.0-rc3":
+  version: 4.15.0-rc3
+  resolution: "botframework-streaming@npm:4.15.0-rc3"
   dependencies:
     "@types/node": ^10.17.27
     "@types/ws": ^6.0.3
     uuid: ^8.3.2
     ws: ^7.1.2
-  checksum: 5b4096079a724ba88ab48b92d00649081d74e8b8d2be32fbee47ce7948540c89c04173c6915b0c2c2bb464d797a828422ad3eb35ec255f1a303e9fd0f8195453
+  checksum: 74b1afd2edbec47daf708995c0b8b1a63b4d3f23807c839010fc54746059c2e869c442d429aed15dcc768468deafee62a66cba6bd971af52354d6a0a31db5b14
   languageName: node
   linkType: hard
 
