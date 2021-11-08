@@ -25,7 +25,7 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.2.0-rc1",
     "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.2.0",
     "@microsoft/generator-bot-enterprise-people": "workspace:^1.2.0",
     "uuid": "^8.3.2",
