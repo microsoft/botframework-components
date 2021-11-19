@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.15.0" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.15.0" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.15.0.preview" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.15.0-preview" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Declarative" Version="4.15.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
