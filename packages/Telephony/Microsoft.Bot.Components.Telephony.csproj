@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Telephony</PackageId>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Telephony.</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Telephony.</Summary>
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Telephony</PackageProjectUrl>
@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.15.0-rc0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.15.0" />
 
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
@@ -49,6 +49,8 @@
     <None Remove="Schemas\Microsoft.Telephony.PauseRecording.uischema" />
     <None Remove="Schemas\Microsoft.Telephony.ResumeRecording.schema" />
     <None Remove="Schemas\Microsoft.Telephony.ResumeRecording.uischema" />
+    <None Remove="Schemas\Microsoft.Telephony.TimeoutChoiceInput.schema" />
+    <None Remove="Schemas\Microsoft.Telephony.TimeoutChoiceInput.uischema" />
   </ItemGroup>
 
   <PropertyGroup>

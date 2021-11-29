@@ -25,6 +25,7 @@ namespace Microsoft.Bot.Components.Telephony
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchFixedLengthInput>(BatchFixedLengthInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchTerminationCharacterInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchRegexInput.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<TimeoutChoiceInput>(TimeoutChoiceInput.Kind));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/ui/v1.0/ui.schema",
   "form": {
-    "label": "Aggregate Input (Regex) Preview",
+    "label": "Aggregate Input (Regex) | Preview",
     "subtitle": "Aggregate input until a regex matches the buffer.",
     "order": [
       "prompt",
@@ -40,7 +40,7 @@
     }
   },
   "menu": {
-    "label": "Aggregate Input (Regex) Preview",
+    "label": "Aggregate Input (Regex) | Preview",
     "submenu": [ "Telephony" ]
   },
   "flow": {
