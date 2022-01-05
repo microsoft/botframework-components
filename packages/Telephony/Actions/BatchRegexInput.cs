@@ -18,17 +18,19 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// <summary>
     /// Aggregates input until it matches a regex pattern and then stores the result in an output property.
     /// </summary>
-    public abstract class RegexAggregatorInput : Dialog
+    public class BatchRegexInput : Dialog
     {
+        [JsonProperty("$kind")]
+        public const string Kind = "Microsoft.Telephony.BatchRegexInput";
         protected const string AggregationDialogMemory = "this.aggregation";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RegexAggregatorInput"/> class.
+        /// Initializes a new instance of the <see cref="BatchRegexInput"/> class.
         /// </summary>
         /// <param name="sourceFilePath">Optional, source file full path.</param>
         /// <param name="sourceLineNumber">Optional, line number in source file.</param>
         [JsonConstructor]
-        public RegexAggregatorInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public BatchRegexInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
         {
             // enable instances of this command as debug break point
