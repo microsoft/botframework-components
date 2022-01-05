@@ -14,13 +14,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
     /// <summary>
     /// Aggregates input until it matches a regex pattern and then stores the result in an output property.
     /// </summary>
-    public class BatchTerminationCharacterInput : RegexAggregatorInput
+    public class BatchTerminationCharacterInput : BatchRegexInput
     {
         /// <summary>
         /// Class identifier.
         /// </summary>
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Telephony.BatchTerminationCharacterInput";
+        public new const string Kind = "Microsoft.Telephony.BatchTerminationCharacterInput";
 
         private const string _dtmfCharacterRegex = @"^[\d#\*]+$";
         private const string _interruptionMaskRegex = @"^[\d]+$";

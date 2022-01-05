@@ -29,6 +29,12 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         }
 
         [Fact]
+        public async Task BatchInput_RegexHappyPath()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        [Fact]
         public async Task BatchInput_Termination_WithTangent_InterruptionEnabled()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
@@ -107,5 +113,47 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
+
+        [Fact]
+        public async Task BatchInput_Regex_WithTangent_InterruptionEnabled()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        [Fact]
+        public async Task BatchInput_Regex_WithTangent_InterruptionEnabled_WithReprompt()
+        {
+            await TestUtils.RunTestScript(
+                _resourceExplorerFixture.ResourceExplorer,
+                adapterChannel: Channels.Telephony,
+                configuration: new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>() { { "alwaysPrompt", "true" } })
+                    .Build());
+        }
+
+        [Fact]
+        public async Task BatchInput_Regex_WithTangent_InterruptionDisabled()
+        {
+            await TestUtils.RunTestScript(
+                _resourceExplorerFixture.ResourceExplorer,
+                adapterChannel: Channels.Telephony,
+                configuration: new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>() { { "allowInterruptions", "false" } })
+                    .Build());
+        }
+
+        [Fact]
+        public async Task BatchInput_Regex_WithTangent_InterruptionEnabled_EventInterrupt()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        [Fact]
+        public async Task BatchInput_Regex_InterruptionIgnoredForMaskedDigits()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+
     }
 }
