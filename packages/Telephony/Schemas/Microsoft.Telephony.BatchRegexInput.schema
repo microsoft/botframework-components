@@ -1,0 +1,65 @@
+﻿{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "(Preview) Regex Batch Input",
+  "description": "Prompts the user for multiple inputs that are aggregated until a regex matches the buffer.",
+  "type": "object",
+  "required": [
+    "terminationConditionRegexPattern",
+    "prompt",
+    "*"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "terminationConditionRegexPattern": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Regex Match Pattern",
+      "description": "When matched, the batch is completed.",
+      "examples": [
+        "^[\\d#\\*]+$"
+      ]
+    },
+    "property": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Property",
+      "description": "Property to assign the batch result to",
+      "examples": [
+        "conversation.BatchResult"
+      ]
+    },
+    "prompt": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Initial prompt",
+      "description": "Message to send to collect information.",
+      "examples": [
+        "Enter your four digit phone number."
+      ]
+    },
+    "allowInterruptions": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Allow Interruptions",
+      "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway.",
+      "default": false,
+      "examples": [
+        true,
+        "=user.xyz"
+      ]
+    },
+    "interruptionMask": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Regex Match Pattern",
+      "description": "Input that matches the specified pattern is not bubbled for interruption handling.",
+      "examples": [
+        "^[\\d]+$"
+      ]
+    },
+    "alwaysPrompt": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Always Prompt",
+      "description": "When true, if batch is interrupted, it will attempt to restart the batch rather than abandon it."
+    }
+  },
+  "$policies": {
+    "interactive": true
+  }
+}

@@ -96,6 +96,12 @@
     <None Update="Integration\RecordingTests\Recording_HappyPath.test.dialog">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Integration\TimeoutTests\Timeout_BaseScenario.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Integration\TimeoutTests\Timeout_HappyPath.test.dialog">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
