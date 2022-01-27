@@ -78,7 +78,7 @@ module.exports = class extends BaseGenerator {
 
   writing() {
     this._copyBotTemplateFiles({
-      path: ['**', '!(*.sln)'],
+      path: ['**', '!*.sln'],
       templateContext: {},
     });
 
