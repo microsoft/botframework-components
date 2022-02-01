@@ -481,8 +481,8 @@
                   "$designer": {
                     "id": "cHmZ4Y"
                   },
-                  "index": "$foreach.index",
-                  "value": "$foreach.value",
+                  "index": "$contactLoop.index",
+                  "value": "$contactLoop.value",
                   "itemsProperty": "$contacts",
                   "actions": [
                     {
@@ -492,7 +492,7 @@
                       },
                       "changeType": "push",
                       "itemsProperty": "$event.attendees",
-                      "value": "=$foreach.value"
+                      "value": "=$contactLoop.value"
                     }
                   ]
                 }
@@ -1315,7 +1315,8 @@
           "defaultValueResponse": "",
           "choiceOptions": {
             "includeNumbers": true,
-            "inlineOrMore": ", or "
+            "inlineOrMore": ", or ",
+            "inlineOr": " or "
           },
           "property": "$cancelConfirmed",
           "prompt": "${ConfirmInput_Prompt_br66dN()}"

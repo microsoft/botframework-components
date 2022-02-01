@@ -181,8 +181,8 @@
             "id": "DrAjqe",
             "comment": "Constructs the choice items to be shown in the ChoicePrompt. These settings allow the choice to be selected by the index or title property (configured in the dialog options) in addition to being selected via click."
           },
-          "index": "$foreach.index",
-          "value": "$foreach.value",
+          "index": "$pageItemLoop.index",
+          "value": "$pageItemLoop.value",
           "itemsProperty": "$pageItems",
           "actions": [
             {
@@ -191,8 +191,8 @@
                 "id": "kNUEEQ",
                 "comment": "The index property represents the user-facing index of each item, rather than the zero-based index used by default. "
               },
-              "property": "$pageItems[$foreach.index].index",
-              "value": "=$foreach.index + 1"
+              "property": "$pageItems[$pageItemLoop.index].index",
+              "value": "=$pageItemLoop.index + 1"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -201,7 +201,7 @@
                 "comment": "The actionTitle property is passed via dialog options and indicates a field in the choice object that should be used as a way of selecting the item. For example, a contact object with a name and email property, may set the actionTitle to name so the user can select by saying the name of the option."
               },
               "property": "$actionTitle",
-              "value": "=$pageItems[$foreach.index][$actionTitleProperty]"
+              "value": "=$pageItems[$pageItemLoop.index][$actionTitleProperty]"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -210,7 +210,7 @@
                 "comment": "Builds the choiceItem in the object format needed for the choice prompt. \n{ \"value\": \"<value>\", \"action\": { \"type\": \"postBack\", \"title\": \"<title>\" }}"
               },
               "property": "$choiceItem",
-              "value": "=json(concat('{ \"value\": \"', $pageItems[$foreach.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $actionTitle, '\" } }'))"
+              "value": "=json(concat('{ \"value\": \"', $pageItems[$pageItemLoop.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $actionTitle, '\" } }'))"
             },
             {
               "$kind": "Microsoft.EditArray",
