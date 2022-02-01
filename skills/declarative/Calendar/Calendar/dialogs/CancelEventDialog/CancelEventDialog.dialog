@@ -198,6 +198,5 @@
   ],
   "generator": "CancelEventDialog.lg",
   "recognizer": "CancelEventDialog.lu.qna",
-  "id": "CancelEventDialog",
-  "dialogs": []
+  "id": "CancelEventDialog"
 }
