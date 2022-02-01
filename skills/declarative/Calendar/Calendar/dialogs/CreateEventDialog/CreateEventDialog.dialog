@@ -238,8 +238,8 @@
                     "id": "276TzP",
                     "comment": "Add all contacts to the event attendees array."
                   },
-                  "index": "$foreach.index",
-                  "value": "$foreach.value",
+                  "index": "$contactsLoop.index",
+                  "value": "$contactsLoop.value",
                   "itemsProperty": "$contacts",
                   "actions": [
                     {
@@ -249,7 +249,7 @@
                       },
                       "changeType": "push",
                       "itemsProperty": "$event.attendees",
-                      "value": "=$foreach.value"
+                      "value": "=$contactsLoop.value"
                     }
                   ]
                 }
