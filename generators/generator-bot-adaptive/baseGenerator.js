@@ -62,7 +62,6 @@ module.exports = class extends Generator {
 
     const context = Object.assign({}, templateContext, { botName });
 
-    
     for (const filePath of this._selectTemplateFilePaths(...path)) {
       this.fs.copyTpl(
         this.templatePath(filePath),
