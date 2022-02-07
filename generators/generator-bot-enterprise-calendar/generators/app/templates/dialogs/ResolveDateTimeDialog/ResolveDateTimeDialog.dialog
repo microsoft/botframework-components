@@ -277,7 +277,7 @@
                   "activityProcessed": true,
                   "allowLoop": true,
                   "options": {
-                    "query": "=$selected"
+                    "query": "=$selected.value"
                   }
                 }
               ]
