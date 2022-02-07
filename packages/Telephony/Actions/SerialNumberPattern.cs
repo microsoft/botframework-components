@@ -53,7 +53,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <summary>
         /// Enum representing valid token type specified in pattern.
         /// </summary>
-        public enum Token 
+        public enum Token
         {
             /// <summary>
             /// Invalid token.
@@ -178,7 +178,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // Handle (One) = 1
             string restOfInput = InputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
-            if (firstToken != null)
+            if (!string.IsNullOrWhiteSpace(firstToken))
             {
                 string token = firstToken;
                 if (DigitWordReplacementsTable.ContainsKey(token))
@@ -199,7 +199,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // Handle (One) = 1
             string restOfInput = InputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
-            if (firstToken != null)
+            if (!string.IsNullOrWhiteSpace(firstToken))
             {
                 string token = firstToken;
                 if (DigitWordReplacementsTable.ContainsKey(token))
@@ -296,13 +296,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 var inputElement = InputString[inputIndex];
 
                 // Skip white space, period, comma, dash if not expected
-                if (inputElement == ' ' || inputElement == '.' || inputElement == ',' || 
+                if (inputElement == ' ' || inputElement == '.' || inputElement == ',' ||
                     (inputElement == '-' && elementType != Token.Dash))
                 {
                     inputIndex++;
                     continue;
                 }
-                
+
                 Debug.WriteLine($"Token at index {patternIndex} is {elementType}");
                 Debug.WriteLine($"Input at index {inputIndex} is {inputElement}");
 
@@ -332,7 +332,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                     isMatch = false;
                     break;
                 }
-                
+
                 inputIndex++;
             }
 
@@ -354,7 +354,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             {
                 results.Add(fixedUpString);
             }
-     
+
             return results.ToArray();
         }
 
@@ -459,7 +459,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 {
                     Console.WriteLine($"ERROR: Element index {inputIndex + 1} (character {currentInputChar}) is not digit (Pattern wants {elementType})");
                     result.IsNoMatch = true;
-                }            
+                }
             }
             else if (result.IsFixedUp)
             {
