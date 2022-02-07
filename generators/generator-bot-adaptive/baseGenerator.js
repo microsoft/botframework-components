@@ -57,7 +57,7 @@ module.exports = class extends Generator {
     );
   }
 
-  _copyBotTemplateFiles({ path = ['**', '*.*'], templateContext = {} } = {}) {
+  _copyBotTemplateFiles({ path = ['**'], templateContext = {} } = {}) {
     const { botName } = this.options;
 
     const context = Object.assign({}, templateContext, { botName });
@@ -71,7 +71,7 @@ module.exports = class extends Generator {
     }
   }
 
-  _selectTemplateFilePaths(...path) {
+  _selectTemplateFilePaths(path, exclusion = null) {
     // This function returns POSIX relative paths to template files that match
     // the specified path. For example, if the following template files existed:
     //
@@ -89,8 +89,12 @@ module.exports = class extends Generator {
     // (+1 for the trailing backslash that is not included in this.sourceRoot()).
     const beginIndex = normalize(this.sourceRoot()).length + 1;
 
+    let globbyParams = [normalize(this.templatePath(path))];
+    // only pass in the exclusion if it is not null
+    if (exclusion) globbyParams.push(exclusion);
+
     return globby
-      .sync(normalize(this.templatePath(...path)), {
+      .sync(globbyParams, {
         nodir: true,
       })
       .map((result) => result.slice(beginIndex));
