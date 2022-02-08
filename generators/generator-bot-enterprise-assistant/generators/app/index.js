@@ -36,7 +36,7 @@ module.exports = class extends BaseGenerator {
                     {
                         isPlugin: true,
                         name: 'Microsoft.Bot.Builder.AI.Orchestrator',
-                        version: '4.15.0',
+                        version: '4.15.2',
                     },
                 ],
                 modifyApplicationSettings: (appSettings) => {
