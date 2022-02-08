@@ -16,21 +16,21 @@ using Newtonsoft.Json;
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
     /// <summary>
-    /// Aggregates input until it matches a regex pattern and then stores the result in an output property.
+    /// Aggregates input until it matches a SerialNumberPattern and then stores the result in an output property.
     /// </summary>
-    public class BatchRegexInput : Dialog
+    public class SerialNumberInput : Dialog
     {
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Telephony.BatchRegexInput";
+        public const string Kind = "Microsoft.Telephony.SerialNumberInput";
         protected const string AggregationDialogMemory = "this.aggregation";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BatchRegexInput"/> class.
+        /// Initializes a new instance of the <see cref="SerialNumberInput"/> class.
         /// </summary>
         /// <param name="sourceFilePath">Optional, source file full path.</param>
         /// <param name="sourceLineNumber">Optional, line number in source file.</param>
         [JsonConstructor]
-        public BatchRegexInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public SerialNumberInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
         {
             // enable instances of this command as debug break point
@@ -47,10 +47,10 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public BoolExpression AllowInterruptions { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the regex pattern to use to decide when the dialog has aggregated the whole message.
+        /// Gets or sets the serial number pattern to use to decide when the dialog has aggregated the whole message.
         /// </summary>
-        [JsonProperty("terminationConditionRegexPattern")]
-        public StringExpression TerminationConditionRegexPattern { get; set; }
+        [JsonProperty("terminationConditionPattern")]
+        public SerialNumberPattern TerminationConditionPattern { get; set; }
 
         /// <summary>
         /// Gets or sets the property to assign the result to.
@@ -85,8 +85,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("interruptionMask")]
         public StringExpression InterruptionMask { get; set; }
 
-        /// <inheritdoc/>
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
         }
@@ -101,15 +100,12 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
             }
 
-            //Get value of termination string from expression
-            string regexPattern = this.TerminationConditionRegexPattern?.GetValue(dc.State);
-
             //append the message to the aggregation memory state
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
             existingAggregation += dc.Context.Activity.Text;
 
             //Is the current aggregated message the termination string?
-            if (Regex.Match(existingAggregation, regexPattern).Success)
+            if (TerminationConditionPattern.Inference(existingAggregation).Length == 1)
             {
                 //If so, save it to the output property and end the dialog
                 //Get property from expression
