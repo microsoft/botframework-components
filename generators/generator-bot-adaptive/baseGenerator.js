@@ -62,7 +62,6 @@ module.exports = class extends Generator {
 
     const context = Object.assign({}, templateContext, { botName });
 
-    
     for (const filePath of this._selectTemplateFilePaths(...path)) {
       this.fs.copyTpl(
         this.templatePath(filePath),
@@ -88,10 +87,9 @@ module.exports = class extends Generator {
     // only pass in the exclusion if it is not null
     if (exclusion) globbyParams.push(normalize(exclusion));
 
-    return globby
-      .sync(globbyParams, {
-        nodir: true,
-        cwd: normalize(this.templatePath()),
-      });
+    return globby.sync(globbyParams, {
+      nodir: true,
+      cwd: normalize(this.templatePath()),
+    });
   }
 };
