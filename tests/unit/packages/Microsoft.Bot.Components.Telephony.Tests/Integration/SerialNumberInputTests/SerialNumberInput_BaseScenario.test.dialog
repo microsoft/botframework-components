@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.AdaptiveDialog",
+  "id": "SerialNumberInput_BaseScenario.test",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.Telephony.SerialNumberInput",
+          "property": "conversation.DTMFResult",
+          "prompt": "Enter serial number number.",
+          "regexPattern": "([0-9a-zA-Z]{5})",
+          "allowInterruptions": "=coalesce(settings.allowInterruptions, true)",
+          "interruptionMask": "^[\\d]+$",
+          "alwaysPrompt": "=coalesce(settings.alwaysPrompt, false)"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "${coalesce(conversation.DTMFResult, 'empty')}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "HelpIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "On help intent handler"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "Event received"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "ZeroIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "On zero intent handler"
+        }
+      ]
+    }
+  ],
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "HelpIntent",
+        "pattern": "help"
+      },
+      {
+        "intent": "ZeroIntent",
+        "pattern": "0"
+      }
+    ]
+  }
+}

@@ -11,11 +11,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 {
     public class SerialNumberPattern
     {
-        private static readonly Dictionary<char, char> AlphabetReplacementsTable = new Dictionary<char, char> { };
-        private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>
+        private static readonly char[] GroupEndDelimiter = new char[] { ')' };
+        private static readonly Dictionary<char, char> AlphabetReplacementsTable = new Dictionary<char, char>
         {
-            { 'A', '8' }
+            { '8', 'A' }
         };
+
+        private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>();
 
         private static readonly Dictionary<string, char> DigitWordReplacementsTable = new Dictionary<string, char>
         {
@@ -42,10 +44,19 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
         }
 
-        public SerialNumberPattern()
+        public SerialNumberPattern(string regex)
         {
-            // TODO: Make/set groups from input regex
-            Groups = new ReadOnlyCollection<TextGroup>(new List<TextGroup>());
+            List<TextGroup> groups = new List<TextGroup>();
+            string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string regexGroup in regexGroups)
+            {
+                TextGroup group = new TextGroup($"{regexGroup})");
+                PatternLength += group.LengthInChars;
+                groups.Add(group);
+            }
+
+            Groups = groups.AsReadOnly();
         }
 
         /// <summary>
@@ -118,7 +129,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
         public int PatternLength { get; set; }
 
-        public Token PatternAt(int patternIndex)
+        public string InputString { get; private set; }
+
+        public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
             int cumulativeIndex = 0;
             int prevGroupCumulative = 0;
@@ -127,6 +140,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 cumulativeIndex += group.LengthInChars;
                 if (cumulativeIndex > patternIndex)
                 {
+                    invalidChars = group.InvalidChars;
                     if (group.AcceptsDigits && group.AcceptsAlphabet)
                     {
                         return Token.Both;
@@ -146,6 +160,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 prevGroupCumulative += group.LengthInChars;
             }
 
+            invalidChars = new HashSet<char>();
             return Token.Invalid;
         }
 
@@ -187,13 +202,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return DigitReplacementsTable.ContainsKey(ch);
         }
 
-        public char DigitFixup(string inputString, int inputIndex, ref int newOffset)
+        public char DigitFixup(int inputIndex, ref int newOffset)
         {
-            char ch = inputString[inputIndex];
+            char ch = InputString[inputIndex];
             char replacement = char.MinValue;
 
             // Handle (One) = 1
-            string restOfInput = inputString.Substring(inputIndex);
+            string restOfInput = InputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(firstToken))
             {
@@ -233,12 +248,12 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return AlphabetReplacementsTable.ContainsKey(ch) ? FixupType.AlphaMapping : FixupType.None;
         }
 
-        public char AlphabetFixup(string inputString, int inputIndex, ref int offset)
+        public char AlphabetFixup(int inputIndex, ref int offset)
         {
-            char ch = inputString[inputIndex];
-            string restOfInput = inputString.Substring(inputIndex);
+            char ch = InputString[inputIndex];
+            string restOfInput = InputString.Substring(inputIndex);
             offset = 1;
-            switch (DetectAlphabetFixup(inputString, inputIndex))
+            switch (DetectAlphabetFixup(InputString, inputIndex))
             {
                 case FixupType.None:
                     return ch;
@@ -267,6 +282,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         // Input:    katie 4
         public string[] Inference(string inputString)
         {
+            InputString = inputString;
+
             List<string> results = new List<string>();
             Console.WriteLine($"Original text      : '{inputString}'");
             Console.WriteLine($"Regular Expression : '{Regexp}'");
@@ -288,7 +305,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             // Initial Scan to see how many things to correct
             while (patternIndex < PatternLength && inputIndex < inputString.Length)
             {
-                var elementType = PatternAt(patternIndex);    // What type the pattern is expecting
+                HashSet<char> invalidChars;
+                var elementType = PatternAt(patternIndex, out invalidChars);    // What type the pattern is expecting
                 var inputElement = inputString[inputIndex];
 
                 // Skip white space, period, comma, dash if not expected
@@ -304,7 +322,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
                 patternIndex++;  // Bump to next element in pattern.
 
-                var inferResult = InferMatch(inputString, inputIndex, elementType);
+                var inferResult = InferMatch(inputIndex, elementType, invalidChars);
 
                 if (inferResult.IsAmbiguous)
                 {
@@ -354,10 +372,10 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return results.ToArray();
         }
 
-        private AmbiguousResult CheckAmbiguous(string inputString, ref int inputIndex)
+        private AmbiguousResult CheckAmbiguous(ref int inputIndex)
         {
             AmbiguousResult match = new AmbiguousResult();
-            char input = inputString[inputIndex];
+            char input = InputString[inputIndex];
             match.Ch = input;
 
             switch (input)
@@ -396,71 +414,83 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return result;
         }
 
-        private InferResult InferMatch(string inputString, int inputIndex, Token elementType)
+        private InferResult InferMatch(int inputIndex, Token elementType, HashSet<char> invalidChars)
         {
             InferResult result = new InferResult();
-            char currentInputChar = inputString[inputIndex];
+            char currentInputChar = InputString[inputIndex];
             result.Ch = currentInputChar;
 
             switch (elementType)
             {
                 case Token.Digit:
-                    TryFixupDigit(inputString, inputIndex, currentInputChar, elementType, result);
+                    TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Alpha:
-                    if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(inputString, inputIndex) == FixupType.None)
+                    if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(InputString, inputIndex) == FixupType.None)
                     {
-                        Console.WriteLine($"ERROR: Element index {inputIndex + 1} (character {currentInputChar}) is not alpha (Pattern wants {elementType})");
                         result.IsNoMatch = true;
                     }
                     else
                     {
                         int newOffset = 1;
                         result.IsFixedUp = true;
-                        result.Ch = AlphabetFixup(inputString, inputIndex, ref newOffset);
+                        char ch = AlphabetFixup(inputIndex, ref newOffset);
+                        if (invalidChars.Contains(ch))
+                        {
+                            result.IsFixedUp = false;
+                            result.IsNoMatch = true;
+                            return result;
+                        }
+
+                        result.Ch = ch;
                         result.NewOffset = newOffset;
                     }
 
                     break;
                 case Token.Both:
-                    AmbiguousResult ambiguousResult = CheckAmbiguous(inputString, ref inputIndex);
+                    AmbiguousResult ambiguousResult = CheckAmbiguous(ref inputIndex);
                     result.Ch = ambiguousResult.Ch;
                     if (ambiguousResult.IsAmbiguous)
                     {
                         result.IsAmbiguous = true;
-                        Console.WriteLine($"INFO: Element index {inputIndex + 1}(character {inputString[inputIndex]}) is ambiguous (Pattern wants {elementType})");
                     }
                     else
                     {
-                        TryFixupDigit(inputString, inputIndex, currentInputChar, elementType, result);
+                        TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     }
 
                     break;
                 default:
-                    Console.WriteLine("Error");
                     break;
             }
 
             return result;
         }
 
-        private void TryFixupDigit(string inputString, int inputIndex, char currentInputChar, Token elementType, InferResult result)
+        private void TryFixupDigit(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
         {
             int newOffset = 1;
-            result.IsFixedUp = DetectDigitFixup(inputString, inputIndex);
+            result.IsFixedUp = DetectDigitFixup(InputString, inputIndex);
 
             if (char.IsDigit(currentInputChar) == false && !result.IsFixedUp)
             {
                 if (elementType == Token.Digit)
                 {
-                    Console.WriteLine($"ERROR: Element index {inputIndex + 1} (character {currentInputChar}) is not digit (Pattern wants {elementType})");
                     result.IsNoMatch = true;
                 }
             }
             else if (result.IsFixedUp)
             {
-                result.Ch = DigitFixup(inputString, inputIndex, ref newOffset);
-                result.NewOffset = newOffset;
+                char ch = DigitFixup(inputIndex, ref newOffset);
+                if (invalidChars.Contains(ch))
+                {
+                    result.IsNoMatch = true;
+                }
+                else
+                {
+                    result.Ch = ch;
+                    result.NewOffset = newOffset;
+                }
             }
         }
 

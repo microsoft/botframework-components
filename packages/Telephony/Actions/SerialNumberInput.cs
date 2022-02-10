@@ -49,8 +49,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         /// <summary>
         /// Gets or sets the serial number pattern to use to decide when the dialog has aggregated the whole message.
         /// </summary>
-        [JsonProperty("terminationConditionPattern")]
-        public SerialNumberPattern TerminationConditionPattern { get; set; }
+        [JsonProperty("regexPattern")]
+        public StringExpression RegexPattern { get; set; }
 
         /// <summary>
         /// Gets or sets the property to assign the result to.
@@ -100,19 +100,74 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
             }
 
+            //Get value of termination string from expression
+            string regexPattern = this.RegexPattern?.GetValue(dc.State);
+            SerialNumberPattern snp = new SerialNumberPattern(regexPattern);
+
+            string[] choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
+            bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
+            if (isAmbiguousPrompt)
+            {
+                dc.State.SetValue("this.ambiguousChoices", null);
+                string choice = dc.Context.Activity.Text;
+                string result = string.Empty;
+                switch (choice)
+                {
+                    case "1":
+                        result = choices[0];
+                        break;
+                    case "2":
+                        result = choices[1];
+                        break;
+                    default:
+                        return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
+
+                if (snp.PatternLength == result.Length)
+                {
+                    //If so, save it to the output property and end the dialog
+                    //Get property from expression
+                    string property = this.Property?.GetValue(dc.State);
+                    dc.State.SetValue(property, result);
+                    return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    dc.State.SetValue(AggregationDialogMemory, result);
+                    string promptMsg = $"Please continue with next letter or digit.";
+                    await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
+            }
+            
             //append the message to the aggregation memory state
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
             existingAggregation += dc.Context.Activity.Text;
 
-            //Is the current aggregated message the termination string?
-            if (TerminationConditionPattern.Inference(existingAggregation).Length == 1)
-            {
-                //If so, save it to the output property and end the dialog
-                //Get property from expression
-                string property = this.Property?.GetValue(dc.State);
+            string[] results = snp.Inference(existingAggregation);
 
-                dc.State.SetValue(property, existingAggregation);
-                return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            //Is the current aggregated message the termination string?
+            if (results.Length == 1)
+            {
+                if (snp.PatternLength == results[0].Length)
+                {
+                    //If so, save it to the output property and end the dialog
+                    //Get property from expression
+                    string property = this.Property?.GetValue(dc.State);
+                    dc.State.SetValue(property, results[0]);
+                    return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
+            }
+            else if (results.Length >= 2)
+            {
+                dc.State.SetValue("this.ambiguousChoices", results);
+                string promptMsg = $"Say or type 1 for {results[0]} or 2 for {results[1]}";
+                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
             else
             {
