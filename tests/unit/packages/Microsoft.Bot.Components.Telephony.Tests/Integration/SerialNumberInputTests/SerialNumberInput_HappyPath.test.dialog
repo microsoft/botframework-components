@@ -56,7 +56,7 @@
       "$kind": "Microsoft.Test.AssertReplyActivity",
       "assertions": [
         "type == 'message'",
-        "text == '0F009L1213700A'"
+        "text == 'AF009'"
       ]
     }
   ]

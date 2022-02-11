@@ -44,8 +44,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
         }
 
-        public SerialNumberPattern(string regex)
+        public SerialNumberPattern(string regex, bool allowBatching = false)
         {
+            AllowBatching = allowBatching;
             List<TextGroup> groups = new List<TextGroup>();
             string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
@@ -130,6 +131,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public int PatternLength { get; set; }
 
         public string InputString { get; private set; }
+
+        public bool AllowBatching { get; set; }
 
         public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
@@ -285,13 +288,10 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             InputString = inputString;
 
             List<string> results = new List<string>();
-            Console.WriteLine($"Original text      : '{inputString}'");
-            Console.WriteLine($"Regular Expression : '{Regexp}'");
 
             // Trivial Length check - must be at least pattern length (most likely longer).
-            if (inputString.Length < PatternLength)
+            if (inputString.Length < PatternLength && !AllowBatching)
             {
-                Console.WriteLine($"Input string is too short!  Must be at least {PatternLength} characters/digits.");
                 return results.ToArray();
             }
 

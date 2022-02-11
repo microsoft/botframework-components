@@ -102,7 +102,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
             //Get value of termination string from expression
             string regexPattern = this.RegexPattern?.GetValue(dc.State);
-            SerialNumberPattern snp = new SerialNumberPattern(regexPattern);
+            SerialNumberPattern snp = new SerialNumberPattern(regexPattern, true);
 
             string[] choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
             bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
