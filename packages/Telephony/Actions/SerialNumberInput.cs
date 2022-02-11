@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Templates;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
@@ -77,6 +78,24 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public BoolExpression AlwaysPrompt { get; set; }
 
         /// <summary>
+        /// Gets or sets the ambiguous confirmation to send to the user.
+        /// </summary>
+        /// <value>
+        /// An activity template.
+        /// </value>
+        [JsonProperty("confirmationPrompt")]
+        public ITemplate<Activity> ConfirmationPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the continue prompt once user confirms ambiguous selection.
+        /// </summary>
+        /// <value>
+        /// An activity template.
+        /// </value>
+        [JsonProperty("continuePrompt")]
+        public ITemplate<Activity> ContinuePrompt { get; set; }
+
+        /// <summary>
         /// Gets or sets a regex describing input that should be flagged as handled and not bubble.
         /// </summary>
         /// <value>
@@ -134,8 +153,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 else
                 {
                     dc.State.SetValue(AggregationDialogMemory, result);
-                    string promptMsg = $"Please continue with next letter or digit.";
-                    await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                    await this.SendActivityMessageAsync(this.ContinuePrompt, dc, cancellationToken).ConfigureAwait(false);
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }
@@ -166,7 +184,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             else if (results.Length >= 2)
             {
                 dc.State.SetValue("this.ambiguousChoices", results);
-                string promptMsg = $"Say or type 1 for {results[0]} or 2 for {results[1]}";
+                string promptMsg = ((ActivityTemplate)this.ConfirmationPrompt).Template.Replace("{0}", results[0]).Replace("{1}", results[1]);
                 await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
@@ -231,9 +249,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
             }
 
-            ITemplate<Activity> template = this.Prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
-            IMessageActivity msg = await this.Prompt.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await this.SendActivityMessageAsync(this.Prompt, dc, cancellationToken).ConfigureAwait(false);
+            return new DialogTurnResult(DialogTurnStatus.Waiting);
+        }
 
+        private async Task SendActivityMessageAsync(ITemplate<Activity> prompt, DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            ITemplate<Activity> template = prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
+            IMessageActivity msg = await prompt.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
+            
             if (msg != null && string.IsNullOrEmpty(msg.InputHint))
             {
                 msg.InputHint = InputHints.ExpectingInput;
@@ -247,8 +271,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             TelemetryClient.TrackEvent("GeneratorResult", properties);
 
             await dc.Context.SendActivityAsync(msg, cancellationToken).ConfigureAwait(false);
-
-            return new DialogTurnResult(DialogTurnStatus.Waiting);
         }
     }
 }

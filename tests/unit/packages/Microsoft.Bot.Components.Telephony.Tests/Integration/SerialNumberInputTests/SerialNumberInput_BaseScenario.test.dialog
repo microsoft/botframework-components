@@ -10,6 +10,8 @@
           "$kind": "Microsoft.Telephony.SerialNumberInput",
           "property": "conversation.DTMFResult",
           "prompt": "Enter serial number number.",
+          "continuePrompt": "Please continue with next letter or digit.",
+          "confirmationPrompt": "Say or type 1 for {0} or 2 for {1}",
           "regexPattern": "([0-9a-zA-Z]{5})",
           "allowInterruptions": "=coalesce(settings.allowInterruptions, true)",
           "interruptionMask": "^[\\d]+$",
