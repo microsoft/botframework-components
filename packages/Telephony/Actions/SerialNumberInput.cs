@@ -159,6 +159,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
                 else
                 {
+                    dc.State.SetValue(AggregationDialogMemory, results[0]);
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }

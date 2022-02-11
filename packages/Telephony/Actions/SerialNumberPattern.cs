@@ -262,7 +262,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                     return ch;
                 case FixupType.AlphaMapping:
                     char replacement = AlphabetReplacementsTable[ch];
-                    Console.WriteLine($"Alphabetic Character {ch} was replaced by digit {replacement}");
                     return replacement;
                 case FixupType.AsIn:
                     AsInResult asInResult;
@@ -342,7 +341,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
                 if (inferResult.IsNoMatch)
                 {
-                    Console.WriteLine("ERROR: No match");
                     isMatch = false;
                     break;
                 }
