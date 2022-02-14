@@ -21,5 +21,17 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
+
+
+        [Fact]
+        public async Task SerialNumberInput_WithInterruption()
+        {
+            await TestUtils.RunTestScript(
+               _resourceExplorerFixture.ResourceExplorer,
+               adapterChannel: Channels.Telephony,
+               configuration: new ConfigurationBuilder()
+                   .AddInMemoryCollection(new Dictionary<string, string>() { { "alwaysPrompt", "true" } })
+                   .Build());
+        }
     }
  }
