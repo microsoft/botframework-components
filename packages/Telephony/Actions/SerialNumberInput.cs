@@ -10,27 +10,28 @@ using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Templates;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
     /// <summary>
-    /// Aggregates input until it matches a regex pattern and then stores the result in an output property.
+    /// Aggregates input until it matches a SerialNumberPattern and then stores the result in an output property.
     /// </summary>
-    public class BatchRegexInput : Dialog
+    public class SerialNumberInput : Dialog
     {
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Telephony.BatchRegexInput";
+        public const string Kind = "Microsoft.Telephony.SerialNumberInput";
         protected const string AggregationDialogMemory = "this.aggregation";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BatchRegexInput"/> class.
+        /// Initializes a new instance of the <see cref="SerialNumberInput"/> class.
         /// </summary>
         /// <param name="sourceFilePath">Optional, source file full path.</param>
         /// <param name="sourceLineNumber">Optional, line number in source file.</param>
         [JsonConstructor]
-        public BatchRegexInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public SerialNumberInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
         {
             // enable instances of this command as debug break point
@@ -47,10 +48,10 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public BoolExpression AllowInterruptions { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the regex pattern to use to decide when the dialog has aggregated the whole message.
+        /// Gets or sets the serial number pattern to use to decide when the dialog has aggregated the whole message.
         /// </summary>
-        [JsonProperty("terminationConditionRegexPattern")]
-        public StringExpression TerminationConditionRegexPattern { get; set; }
+        [JsonProperty("regexPattern")]
+        public StringExpression RegexPattern { get; set; }
 
         /// <summary>
         /// Gets or sets the property to assign the result to.
@@ -77,6 +78,24 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public BoolExpression AlwaysPrompt { get; set; }
 
         /// <summary>
+        /// Gets or sets the ambiguous confirmation to send to the user.
+        /// </summary>
+        /// <value>
+        /// An activity template.
+        /// </value>
+        [JsonProperty("confirmationPrompt")]
+        public ITemplate<Activity> ConfirmationPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the continue prompt once user confirms ambiguous selection.
+        /// </summary>
+        /// <value>
+        /// An activity template.
+        /// </value>
+        [JsonProperty("continuePrompt")]
+        public ITemplate<Activity> ContinuePrompt { get; set; }
+
+        /// <summary>
         /// Gets or sets a regex describing input that should be flagged as handled and not bubble.
         /// </summary>
         /// <value>
@@ -85,8 +104,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("interruptionMask")]
         public StringExpression InterruptionMask { get; set; }
 
-        /// <inheritdoc/>
-        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
         }
@@ -102,21 +120,73 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
 
             //Get value of termination string from expression
-            string regexPattern = this.TerminationConditionRegexPattern?.GetValue(dc.State);
+            string regexPattern = this.RegexPattern?.GetValue(dc.State);
+            SerialNumberPattern snp = new SerialNumberPattern(regexPattern, true);
 
+            string[] choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
+            bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
+            if (isAmbiguousPrompt)
+            {
+                dc.State.SetValue("this.ambiguousChoices", null);
+                string choice = dc.Context.Activity.Text;
+                string result = string.Empty;
+                switch (choice)
+                {
+                    case "1":
+                        result = choices[0];
+                        break;
+                    case "2":
+                        result = choices[1];
+                        break;
+                    default:
+                        return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
+
+                if (snp.PatternLength == result.Length)
+                {
+                    //If so, save it to the output property and end the dialog
+                    //Get property from expression
+                    string property = this.Property?.GetValue(dc.State);
+                    dc.State.SetValue(property, result);
+                    return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    dc.State.SetValue(AggregationDialogMemory, result);
+                    await this.SendActivityMessageAsync(this.ContinuePrompt, dc, cancellationToken).ConfigureAwait(false);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
+            }
+            
             //append the message to the aggregation memory state
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
             existingAggregation += dc.Context.Activity.Text;
 
-            //Is the current aggregated message the termination string?
-            if (Regex.Match(existingAggregation, regexPattern).Success)
-            {
-                //If so, save it to the output property and end the dialog
-                //Get property from expression
-                string property = this.Property?.GetValue(dc.State);
+            string[] results = snp.Inference(existingAggregation);
 
-                dc.State.SetValue(property, existingAggregation);
-                return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            //Is the current aggregated message the termination string?
+            if (results.Length == 1)
+            {
+                if (snp.PatternLength == results[0].Length)
+                {
+                    //If so, save it to the output property and end the dialog
+                    //Get property from expression
+                    string property = this.Property?.GetValue(dc.State);
+                    dc.State.SetValue(property, results[0]);
+                    return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    dc.State.SetValue(AggregationDialogMemory, results[0]);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
+            }
+            else if (results.Length >= 2)
+            {
+                dc.State.SetValue("this.ambiguousChoices", results);
+                string promptMsg = ((ActivityTemplate)this.ConfirmationPrompt).Template.Replace("{0}", results[0]).Replace("{1}", results[1]);
+                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
             else
             {
@@ -179,9 +249,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
             }
 
-            ITemplate<Activity> template = this.Prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
-            IMessageActivity msg = await this.Prompt.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await this.SendActivityMessageAsync(this.Prompt, dc, cancellationToken).ConfigureAwait(false);
+            return new DialogTurnResult(DialogTurnStatus.Waiting);
+        }
 
+        private async Task SendActivityMessageAsync(ITemplate<Activity> prompt, DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            ITemplate<Activity> template = prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
+            IMessageActivity msg = await prompt.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
+            
             if (msg != null && string.IsNullOrEmpty(msg.InputHint))
             {
                 msg.InputHint = InputHints.ExpectingInput;
@@ -195,8 +271,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             TelemetryClient.TrackEvent("GeneratorResult", properties);
 
             await dc.Context.SendActivityAsync(msg, cancellationToken).ConfigureAwait(false);
-
-            return new DialogTurnResult(DialogTurnStatus.Waiting);
         }
     }
 }
