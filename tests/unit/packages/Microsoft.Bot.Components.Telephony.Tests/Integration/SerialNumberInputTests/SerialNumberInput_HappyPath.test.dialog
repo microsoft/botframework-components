@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "SerialNumberInput_BaseScenario.test",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [ "user" ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter serial number number.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "8"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Say or type 1 for A or 2 for 8'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Please continue with next letter or digit.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "F"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "0"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "0"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "9"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'AF009'"
+      ]
+    }
+  ]
+}
