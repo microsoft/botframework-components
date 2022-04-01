@@ -8,7 +8,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.AdaptiveCards</PackageId>
     <PackageProjectUrl>https://github.com/microsoft/botframework-components/tree/main/packages/AdaptiveCards</PackageProjectUrl>
-    <VersionPrefix>1.1.2</VersionPrefix>
+    <VersionPrefix>1.2.1</VersionPrefix>
     <Description>Composer triggers and actions for working with Adaptive Cards.</Description>
     <Summary>Composer triggers and actions for working with Adaptive Cards.</Summary>
     <SignAssembly>true</SignAssembly>
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards.Templating" Version="1.2.1" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.14.1" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.15.2" />
   </ItemGroup>
 
   <ItemGroup>

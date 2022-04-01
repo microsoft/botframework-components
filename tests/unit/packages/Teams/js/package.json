@@ -9,10 +9,10 @@
   "dependencies": {
     "@microsoft/bot-components-teams": "workspace:packages/Teams/js",
     "@types/mocha": "^8.2.2",
-    "botbuilder": "4.14.1",
-    "botbuilder-dialogs-adaptive": "4.14.1-preview",
-    "botbuilder-dialogs-adaptive-testing": "4.14.1-preview",
-    "botframework-connector": "4.14.1",
+    "botbuilder": "4.15.0",
+    "botbuilder-dialogs-adaptive": "4.15.0-preview",
+    "botbuilder-dialogs-adaptive-testing": "4.15.0-preview",
+    "botframework-connector": "4.15.0",
     "mocha": "^9.0.2",
     "nock": "^13.1.1",
     "ts-node": "^10.0.0"

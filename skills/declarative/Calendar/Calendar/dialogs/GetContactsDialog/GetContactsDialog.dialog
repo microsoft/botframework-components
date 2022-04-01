@@ -198,8 +198,8 @@
               "$designer": {
                 "id": "dXVR1S"
               },
-              "index": "$foreach.index",
-              "value": "$foreach.value",
+              "index": "$emailLoop.index",
+              "value": "$emailLoop.value",
               "itemsProperty": "$emailArray",
               "actions": [
                 {
@@ -214,7 +214,7 @@
                     },
                     {
                       "property": "$contact.EmailAddress.Address",
-                      "value": "=$foreach.value"
+                      "value": "=$emailLoop.value"
                     }
                   ]
                 },
@@ -262,8 +262,8 @@
               "$designer": {
                 "id": "XtcbtM"
               },
-              "index": "$foreach.index",
-              "value": "$foreach.value",
+              "index": "$contactLoop.index",
+              "value": "$contactLoop.value",
               "itemsProperty": "$contactArray",
               "actions": [
                 {
@@ -272,7 +272,7 @@
                     "id": "ugiGp1"
                   },
                   "eventName": "LookupContacts",
-                  "eventValue": "=$foreach.value"
+                  "eventValue": "=$contactLoop.value"
                 }
               ]
             }
@@ -346,8 +346,8 @@
                 "id": "oEq2mP",
                 "comment": "Each contact in MS Graph can have multiple email addresses. This loop add each email address for each contact to an array for the user to select the correct user/address to add."
               },
-              "index": "$foreach.searchResultIndex",
-              "value": "$foreach.searchResultValue",
+              "index": "$searchResultLoop.index",
+              "value": "$searchResultLoop.Value",
               "itemsProperty": "$searchResults",
               "actions": [
                 {
@@ -355,9 +355,9 @@
                   "$designer": {
                     "id": "xqotYJ"
                   },
-                  "index": "$foreach.EmailAddressIndex",
-                  "value": "$foreach.EmailAddressValue",
-                  "itemsProperty": "$foreach.searchResultValue.EmailAddresses",
+                  "index": "$emailAddressLoop.index",
+                  "value": "$emailAddressLoop.Value",
+                  "itemsProperty": "$searchResultLoop.value.EmailAddresses",
                   "actions": [
                     {
                       "$kind": "Microsoft.SetProperties",
@@ -367,11 +367,11 @@
                       "assignments": [
                         {
                           "property": "$candidate.email",
-                          "value": "=$foreach.EmailAddressValue"
+                          "value": "=$emailAddressLoop.value"
                         },
                         {
                           "property": "$candidate.name",
-                          "value": "=$foreach.searchResultValue.Name"
+                          "value": "=$searchResultLoop.Value.Name"
                         }
                       ]
                     },
