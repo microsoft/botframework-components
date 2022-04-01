@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 'use strict';
 
-const {
-  BaseGenerator
-} = require('@microsoft/generator-bot-adaptive');
+const { BaseGenerator } = require('@microsoft/generator-bot-adaptive');
 
 module.exports = class extends BaseGenerator {
   initializing() {

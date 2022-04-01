@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 'use strict';
 
 const {
@@ -8,14 +9,15 @@ const {
 } = require('@microsoft/generator-bot-adaptive');
 
 const packageReferences = {
-  [platforms.dotnet.name]: [{
-    name: 'Microsoft.Bot.Components.HelpAndCancel',
-    version: '1.2.1',
-  }, ],
-  [platforms.js.name]: [{
-    name: '@microsoft/bot-components-helpandcancel',
-    version: 'latest'
-  }, ],
+  [platforms.dotnet.name]: [
+    {
+      name: 'Microsoft.Bot.Components.HelpAndCancel',
+      version: '1.2.1',
+    },
+  ],
+  [platforms.js.name]: [
+    { name: '@microsoft/bot-components-helpandcancel', version: 'latest' },
+  ],
 };
 
 module.exports = class extends BaseGenerator {

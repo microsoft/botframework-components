@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 'use strict';
 
 const {
@@ -7,9 +8,7 @@ const {
   integrations,
 } = require('@microsoft/generator-bot-adaptive');
 
-const {
-  v4: uuidv4
-} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = class extends BaseGenerator {
   initializing() {
@@ -33,11 +32,13 @@ module.exports = class extends BaseGenerator {
         dotnetSettings: {
           includeSolutionFile: false,
         },
-        packageReferences: [{
-          isPlugin: true,
-          name: 'Microsoft.Bot.Builder.AI.Orchestrator',
-          version: '4.15.2',
-        }, ],
+        packageReferences: [
+          {
+            isPlugin: true,
+            name: 'Microsoft.Bot.Builder.AI.Orchestrator',
+            version: '4.15.2',
+          },
+        ],
         modifyApplicationSettings: (appSettings) => {
           Object.assign(appSettings, {
             skillHostEndpoint: 'http://localhost:3980/api/skills',
@@ -85,10 +86,7 @@ module.exports = class extends BaseGenerator {
   }
 
   _copyDotnetSolutionFile() {
-    const {
-      botName,
-      integration
-    } = this.options;
+    const { botName, integration } = this.options;
 
     const botProjectGuid = uuidv4().toUpperCase();
     const calendarProjectGuid = uuidv4().toUpperCase();
@@ -98,11 +96,12 @@ module.exports = class extends BaseGenerator {
     const projectType = {
       [integrations.functions]: 'FAE04EC0-301F-11D3-BF4B-00C04F79EFBC',
       [integrations.webapp]: '9A19103F-16F7-4668-BE54-9A1E7A4F7556',
-    } [integration];
+    }[integration];
 
     this.fs.copyTpl(
       this.templatePath('botName.sln'),
-      this.destinationPath(`${botName}.sln`), {
+      this.destinationPath(`${botName}.sln`),
+      {
         botName,
         botProjectGuid,
         calendarProjectGuid,
