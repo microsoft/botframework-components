@@ -134,7 +134,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return userTokenClient.GetUserTokenAsync(dc.Context.Activity.From?.Id, connectionName, dc.Context.Activity.ChannelId, state, cancellationToken);
             }
 
-            if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
+            if (!(dc.Context.Adapter is UserTokenClient tokenProvider))
             {
                 throw new InvalidOperationException($"Auth is not supported by the current adapter");
             }

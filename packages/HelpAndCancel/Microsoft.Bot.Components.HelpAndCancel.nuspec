@@ -13,7 +13,7 @@
         <description>Contains Adaptive Dialog assets to support Help and Cancel conversational flows in a bot built on the Azure Bot Framework.</description>
         <tags>msbot-component msbot-content conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.15.2" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.16.0-rc0" />
         </dependencies>
     </metadata>
 
