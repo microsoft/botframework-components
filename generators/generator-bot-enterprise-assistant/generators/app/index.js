@@ -76,11 +76,11 @@ module.exports = class extends BaseGenerator {
         );
     }
 
-  writing() {
-    this._copyBotTemplateFiles({
-      path: ['**', '!**/*.sln'],
-      templateContext: {},
-    });
+    writing() {
+        this._copyBotTemplateFiles({
+            path: ['**', '!**/*.sln'],
+            templateContext: {},
+        });
 
         this._copyDotnetSolutionFile();
     }
