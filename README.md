@@ -8,7 +8,7 @@ You'll primarily use components through [**Bot Framework Composer**](https://git
 
 ## Creating your own components
 
-You can also create your own packages and templates for use from Composer. We document creating components [here](https://docs.microsoft.com/composer/concept-packages). You can also check out [our samples](https://github.com/microsoft/BotBuilder-Samples/tree/main/composer_samples).
+You can also create your own packages and templates for use from Composer. We document creating components [here](https://docs.microsoft.com/composer/concept-packages). You can also check out [our samples](https://github.com/microsoft/BotBuilder-Samples/tree/main/composer-samples).
 
 ## Index of Content
 
