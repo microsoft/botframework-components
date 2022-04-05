@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Builder.Teams;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Authentication;
@@ -122,27 +123,16 @@ namespace Microsoft.Bot.Components.Teams.Actions
 
             Tuple<ConversationReference, string> result;
 
-            // Check for legacy adapter
-            if (dc.Context.Adapter is BotFrameworkAdapter)
-            {
-                // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
-                var credentials = dc.Context.TurnState.Get<IConnectorClient>()?.Credentials as MicrosoftAppCredentials;
-                if (credentials == null)
-                {
-                    throw new InvalidOperationException($"Missing credentials as {nameof(MicrosoftAppCredentials)} in {nameof(IConnectorClient)} from TurnState");
-                }
-
-                // The result comes back as a tuple, which is used to set the two properties (if present).
-                result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
-            } 
-            else if (dc.Context.Adapter is CloudAdapterBase)
+            if (dc.Context.Adapter is CloudAdapterBase)
             {
                 // Retrieve the bot appid from TurnState's ClaimsIdentity
                 string appId;
                 if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
                 {
                     // Apparently 'version' is sometimes empty, which will result in no id returned from GetAppIdFromClaims
-                    appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
+                    // TODO: Replace with new method
+                    //appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
+                    appId = string.Empty;
                     if (string.IsNullOrEmpty(appId))
                     {
                         appId = botIdentity.Claims.FirstOrDefault(claim => claim.Type == AuthenticationConstants.AudienceClaim)?.Value;

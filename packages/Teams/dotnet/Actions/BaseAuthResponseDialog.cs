@@ -134,22 +134,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return userTokenClient.GetUserTokenAsync(dc.Context.Activity.From?.Id, connectionName, dc.Context.Activity.ChannelId, state, cancellationToken);
             }
 
-            if (!(dc.Context.Adapter is UserTokenClient tokenProvider))
-            {
-                throw new InvalidOperationException($"Auth is not supported by the current adapter");
-            }
-            
-            string magicCode = null;
-            if (!string.IsNullOrEmpty(state))
-            {
-                if (int.TryParse(state, out var parsed))
-                {
-                    magicCode = parsed.ToString(CultureInfo.InvariantCulture);
-                }
-            }
-
-            // TODO: SSO and skills token exchange
-            return tokenProvider.GetUserTokenAsync(dc.Context, connectionName, magicCode, cancellationToken: cancellationToken);
+            throw new InvalidOperationException($"Auth is not supported by the current adapter");
         }
 
         private async Task<Activity> CreateOAuthInvokeResponseActivityAsync(DialogContext dc, string title, string connectionName, CancellationToken cancellationToken)
@@ -161,14 +146,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return CreateOAuthInvokeResponseActivity(dc, title, signInResource.SignInLink);
             }
 
-            if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
-            {
-                throw new InvalidOperationException($"Auth is not supported by the current adapter");
-            }
-
-            // Retrieve the OAuth Sign in Link to use in the Suggested Action auth link result.
-            var signInLink = await tokenProvider.GetOauthSignInLinkAsync(dc.Context, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-            return CreateOAuthInvokeResponseActivity(dc, title, signInLink);
+            throw new InvalidOperationException($"Auth is not supported by the current adapter");
         }
 
         private Activity CreateOAuthInvokeResponseActivity(DialogContext dc, string title, string signInUrl)
