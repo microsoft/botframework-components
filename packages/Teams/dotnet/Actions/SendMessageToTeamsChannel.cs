@@ -123,16 +123,28 @@ namespace Microsoft.Bot.Components.Teams.Actions
 
             Tuple<ConversationReference, string> result;
 
-            if (dc.Context.Adapter is CloudAdapterBase)
+            // Check for legacy adapter
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (dc.Context.Adapter is BotFrameworkAdapter)
+            {
+                // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
+                var credentials = dc.Context.TurnState.Get<IConnectorClient>()?.Credentials as MicrosoftAppCredentials;
+                if (credentials == null)
+                {
+                    throw new InvalidOperationException($"Missing credentials as {nameof(MicrosoftAppCredentials)} in {nameof(IConnectorClient)} from TurnState");
+                }
+
+                // The result comes back as a tuple, which is used to set the two properties (if present).
+                result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else if (dc.Context.Adapter is CloudAdapterBase)
             {
                 // Retrieve the bot appid from TurnState's ClaimsIdentity
                 string appId;
                 if (dc.Context.TurnState.Get<ClaimsIdentity>(BotAdapter.BotIdentityKey) is ClaimsIdentity botIdentity)
                 {
                     // Apparently 'version' is sometimes empty, which will result in no id returned from GetAppIdFromClaims
-                    // TODO: Replace with new method
-                    //appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
-                    appId = string.Empty;
+                    appId = JwtTokenValidation.GetAppIdFromClaims(botIdentity.Claims);
                     if (string.IsNullOrEmpty(appId))
                     {
                         appId = botIdentity.Claims.FirstOrDefault(claim => claim.Type == AuthenticationConstants.AudienceClaim)?.Value;
@@ -155,6 +167,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
             {
                 throw new InvalidOperationException($"The adapter does not support {nameof(SendMessageToTeamsChannel)}.");
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (ConversationReferenceProperty != null)
             {

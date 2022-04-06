@@ -134,7 +134,24 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return userTokenClient.GetUserTokenAsync(dc.Context.Activity.From?.Id, connectionName, dc.Context.Activity.ChannelId, state, cancellationToken);
             }
 
-            throw new InvalidOperationException($"Auth is not supported by the current adapter");
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
+            {
+                throw new InvalidOperationException($"Auth is not supported by the current adapter");
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            string magicCode = null;
+            if (!string.IsNullOrEmpty(state))
+            {
+                if (int.TryParse(state, out var parsed))
+                {
+                    magicCode = parsed.ToString(CultureInfo.InvariantCulture);
+                }
+            }
+
+            // TODO: SSO and skills token exchange
+            return tokenProvider.GetUserTokenAsync(dc.Context, connectionName, magicCode, cancellationToken: cancellationToken);
         }
 
         private async Task<Activity> CreateOAuthInvokeResponseActivityAsync(DialogContext dc, string title, string connectionName, CancellationToken cancellationToken)
@@ -146,7 +163,16 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return CreateOAuthInvokeResponseActivity(dc, title, signInResource.SignInLink);
             }
 
-            throw new InvalidOperationException($"Auth is not supported by the current adapter");
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
+            {
+                throw new InvalidOperationException($"Auth is not supported by the current adapter");
+            }
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            // Retrieve the OAuth Sign in Link to use in the Suggested Action auth link result.
+            var signInLink = await tokenProvider.GetOauthSignInLinkAsync(dc.Context, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return CreateOAuthInvokeResponseActivity(dc, title, signInLink);
         }
 
         private Activity CreateOAuthInvokeResponseActivity(DialogContext dc, string title, string signInUrl)
