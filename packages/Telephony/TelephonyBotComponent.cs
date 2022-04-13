@@ -6,6 +6,7 @@ namespace Microsoft.Bot.Components.Telephony
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
     using Microsoft.Bot.Components.Telephony.Actions;
+    using Microsoft.Bot.Schema;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,10 @@ namespace Microsoft.Bot.Components.Telephony
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             // Conditionals
+            var middleware = new Middleware.SetSpeakMiddleware();
+            services.AddSingleton<IMiddleware>(middleware);
+            middleware.addEventReceiver(ActivityTypes.EndOfConversation, TimeoutInput.RemoveTimers);
+
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<CallTransfer>(CallTransfer.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<PauseRecording>(PauseRecording.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<ResumeRecording>(ResumeRecording.Kind));
@@ -26,6 +31,7 @@ namespace Microsoft.Bot.Components.Telephony
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchTerminationCharacterInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchRegexInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<TimeoutChoiceInput>(TimeoutChoiceInput.Kind));
+            services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<TimeoutTextInput>(TimeoutTextInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<SerialNumberInput>(SerialNumberInput.Kind));
         }
     }

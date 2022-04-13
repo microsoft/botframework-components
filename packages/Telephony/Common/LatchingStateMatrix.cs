@@ -27,6 +27,19 @@ namespace Microsoft.Bot.Components.Telephony.Common
             }
         }
 
+        public void ForceComplete(string id)
+        {
+            (SemaphoreSlim semaphore, _) = perStateIndexLatching[id];
+            try
+            {
+                perStateIndexLatching[id] = (semaphore, StateStatus.Completed);
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
         public async Task<StateStatus> GetStatusForIdAsync(string id)
         {
             (SemaphoreSlim semaphore, _) = perStateIndexLatching[id];
@@ -44,7 +57,7 @@ namespace Microsoft.Bot.Components.Telephony.Common
             }
         }
 
-        public async Task RunForStatusAsync(string id, StateStatus status, Func<Task> action)
+        public async Task<T> RunForStatusAsync<T>(string id, StateStatus status, Func<Task<T>> matchedAction, Func<Task<T>> notMatchedAction)
         {
             (SemaphoreSlim semaphore, _) = perStateIndexLatching[id];
             try
@@ -54,9 +67,8 @@ namespace Microsoft.Bot.Components.Telephony.Common
                 //retrieve status again, since we got it wrong the first time XD
                 (_, StateStatus updatedStatus) = perStateIndexLatching[id];
                 if (updatedStatus == status)
-                {
-                    await action().ConfigureAwait(false);
-                }
+                    return await matchedAction().ConfigureAwait(false);
+                else return await notMatchedAction().ConfigureAwait(false);
             }
             finally
             {
