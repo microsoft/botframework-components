@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Graph</PackageId>
-    <VersionPrefix>1.2.1</VersionPrefix>
+    <VersionPrefix>1.3.0</VersionPrefix>
     <Description>Custom actions for the MS Graph API for Bot Framework bots.</Description>
     <Summary>A set of custom actions for working with the Microsoft Graph API from Bot Framework Composer.</Summary>
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Graph</PackageProjectUrl>
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="0.39.0-preview" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.15.2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.16.0" />
 
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
