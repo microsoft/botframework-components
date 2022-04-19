@@ -8,7 +8,7 @@ const dotnet = {
 
 const js = {
   name: 'js',
-  defaultSdkVersion: '4.15.0-preview',
+  defaultSdkVersion: '4.16.0-preview',
 };
 
 module.exports = { dotnet, js };
