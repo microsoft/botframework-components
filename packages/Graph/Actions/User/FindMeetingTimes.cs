@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -80,8 +81,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
             {
                 if (timeSlot.Confidence >= 1)
                 {
-                    var start = DateTime.Parse(timeSlot.MeetingTimeSlot.Start.DateTime);
-                    var end = DateTime.Parse(timeSlot.MeetingTimeSlot.End.DateTime);
+                    var start = DateTime.Parse(timeSlot.MeetingTimeSlot.Start.DateTime, CultureInfo.InvariantCulture);
+                    var end = DateTime.Parse(timeSlot.MeetingTimeSlot.End.DateTime, CultureInfo.InvariantCulture);
                     results.Add(new CalendarSkillTimeSlotModel()
                     {
                         Start = TimeZoneInfo.ConvertTimeFromUtc(start, timeZone),

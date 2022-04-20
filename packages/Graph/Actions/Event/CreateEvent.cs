@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -68,12 +69,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
                 },
                 Start = new DateTimeTimeZone()
                 {
-                    DateTime = DateTime.Parse(eventToCreateProperty.Start.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.Start.DateTime, CultureInfo.InvariantCulture).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
                 End = new DateTimeTimeZone()
                 {
-                    DateTime = DateTime.Parse(eventToCreateProperty.End.DateTime).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    DateTime = DateTime.Parse(eventToCreateProperty.End.DateTime, CultureInfo.InvariantCulture).ToString("yyyy-MM-ddTHH:mm:ss"),
                     TimeZone = timeZoneProperty,
                 },
                 Attendees = eventToCreateProperty.Attendees,
