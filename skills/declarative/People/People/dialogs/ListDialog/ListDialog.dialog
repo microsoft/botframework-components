@@ -252,8 +252,8 @@
             "id": "DrAjqe",
             "comment": "Constructs the choice items to be shown in the ChoicePrompt. These settings allow the choice to be selected by the index or title property (configured in the dialog options) in addition to being selected via click."
           },
-          "index": "turn.foreach.index",
-          "value": "turn.foreach.value",
+          "index": "turn.itemsList.index",
+          "value": "turn.itemsList.value",
           "itemsProperty": "turn.pageItems",
           "actions": [
             {
@@ -262,8 +262,8 @@
                 "id": "kNUEEQ",
                 "comment": "The index property represents the user-facing index of each item, rather than the zero-based index used by default. "
               },
-              "property": "turn.pageItems[turn.foreach.index].index",
-              "value": "=turn.foreach.index + 1"
+              "property": "turn.pageItems[turn.itemsList.index].index",
+              "value": "=turn.itemsList.index + 1"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -272,7 +272,7 @@
                 "comment": "The actionTitle property is passed via dialog options and indicates a field in the choice object that should be used as a way of selecting the item. For example, a contact object with a name and email property, may set the actionTitle to name so the user can select by saying the name of the option."
               },
               "property": "turn.actionTitle",
-              "value": "=turn.pageItems[turn.foreach.index][$actionTitleProperty]"
+              "value": "=turn.pageItems[turn.itemsList.index][$actionTitleProperty]"
             },
             {
               "$kind": "Microsoft.SetProperty",
@@ -281,7 +281,7 @@
                 "comment": "Builds the choiceItem in the object format needed for the choice prompt. \n{ \"value\": \"<value>\", \"action\": { \"type\": \"postBack\", \"title\": \"<title>\" }}"
               },
               "property": "turn.choiceItem",
-              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.foreach.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
+              "value": "=json(concat('{ \"value\": \"', turn.pageItems[turn.itemsList.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', turn.actionTitle, '\" } }'))"
             },
             {
               "$kind": "Microsoft.EditArray",

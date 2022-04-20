@@ -178,8 +178,8 @@
             "id": "SAgsvz",
             "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
-          "index": "turn.foreach.index",
-          "value": "turn.foreach.value",
+          "index": "turn.reportsList.index",
+          "value": "turn.reportsList.value",
           "itemsProperty": "turn.items",
           "actions": [
             {
@@ -187,8 +187,8 @@
               "$designer": {
                 "id": "uCR1y8"
               },
-              "resultProperty": "turn.items[turn.foreach.index].photo",
-              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.items[turn.reportsList.index].photo",
+              "userId": "=turn.reportsList.value.Id",
               "token": "=turn.token.token"
             }
           ]
