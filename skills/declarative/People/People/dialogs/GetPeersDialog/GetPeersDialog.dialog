@@ -178,8 +178,8 @@
             "id": "3NzFtD",
             "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
-          "index": "turn.foreach.index",
-          "value": "turn.foreach.value",
+          "index": "turn.peersList.index",
+          "value": "turn.peersList.value",
           "actions": [
             {
               "$kind": "Microsoft.Graph.Photo.GetPhoto",
@@ -187,8 +187,8 @@
                 "id": "VsikRa"
               },
               "token": "=turn.token.token",
-              "userId": "=turn.foreach.value.id",
-              "resultProperty": "turn.items[turn.foreach.index].photo"
+              "userId": "=turn.peersList.value.id",
+              "resultProperty": "turn.items[turn.peersList.index].photo"
             }
           ],
           "itemsProperty": "turn.items"

@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Components.Graph.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Microsoft.Graph;
     using Newtonsoft.Json;
@@ -19,8 +20,8 @@ namespace Microsoft.Bot.Components.Graph.Models
 
         public CalendarSkillEventModel(Event ev, DateTime currentDateTime, int index = 0, string userEmail = null)
         {
-            var start = DateTime.Parse(ev.Start.DateTime);
-            var end = DateTime.Parse(ev.End.DateTime);
+            var start = DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture);
+            var end = DateTime.Parse(ev.End.DateTime, CultureInfo.InvariantCulture);
             var duration = end.Subtract(start);
             var isCurrentEvent = false;
 

@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Runtime.CompilerServices;
     using System.Threading;
     using System.Threading.Tasks;
@@ -59,8 +60,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
 
             Event ev = await client.Me.Events[(string)parameters["EventId"]].Request().GetAsync(cancellationToken).ConfigureAwait(false);
 
-            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
-            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
+            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture), timeZone);
+            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime, CultureInfo.InvariantCulture), timeZone);
 
             ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);

@@ -205,8 +205,8 @@
             "id": "BlACeB",
             "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
-          "index": "turn.foreach.index",
-          "value": "turn.foreach.value",
+          "index": "turn.userList.index",
+          "value": "turn.userList.value",
           "itemsProperty": "turn.items",
           "actions": [
             {
@@ -216,8 +216,8 @@
                 "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
               },
               "token": "=turn.token.token",
-              "userId": "=turn.foreach.value.id",
-              "resultProperty": "turn.items[turn.foreach.index].photo"
+              "userId": "=turn.userList.value.id",
+              "resultProperty": "turn.items[turn.userList.index].photo"
             }
           ]
         }

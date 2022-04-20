@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -86,7 +87,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
                 groupedEvents.Add(new
                 {
                     date = dt,
-                    events = eventsProperty.Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime).Date == dt.Date).ToArray(),
+                    events = eventsProperty.Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture).Date == dt.Date).ToArray(),
                 });
             }
 
