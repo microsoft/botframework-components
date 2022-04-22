@@ -27,21 +27,6 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "TqcvPH",
-            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "qS8hYn",

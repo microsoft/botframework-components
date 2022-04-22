@@ -621,7 +621,8 @@
           "$designer": {
             "id": "9rna0m"
           },
-          "name": "ListDialog.OnUnknownIntent"
+          "name": "ListDialog.OnUnknownIntent",
+          "value": "=null"
         },
         {
           "$kind": "Microsoft.EmitEvent",
