@@ -1,0 +1,77 @@
+# UpdateEvent
+- change my next event
+- change the details of my meeting titled {@subject=design workshop}
+- change the {@subject=issue triage} on {@date=wednesday}
+- change the meeting
+- change the meeting with {@contact=cynthia} and {@contact=test@email.com}
+- make a change to my {@subject=dentist appointment} meeting
+- make a change to my event {@date=this weekend}
+- make a change to my event with {@contact=me@myemail.edu} and {@contact=you@test.net}
+- make a change to the meeting with {@contact=charlotte} and {@contact=greg}
+- make an update to my meeting {@date=next week}
+- modify my event with {@contact=chris}, {@contact=isaac}, and {@contact=youngjae} {@date=this weekend}
+- modify my meeting with {@contact=chris} {@date=today} with a subject of {@subject=dentist appointment}
+- modify my meeting with {@contact=susan} with a subject of {@subject=team meeting}
+- modify the next meeting
+- update {@contact=greg}'s meeting on {@date=thursday}
+- update meeting titled {@subject=calendar test meeting}
+- update my event
+- update my event with {@contact=chris}
+- update the {@subject=all-hands} meeting details
+- update the event titled {@subject=user feedback discussion} {@date=this week}
+- update the {@subject=team lunch} on {@date=march 14, 2021}
+
+@ intent UpdateEvent usesFeatures Update,Event,Location,Titled
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

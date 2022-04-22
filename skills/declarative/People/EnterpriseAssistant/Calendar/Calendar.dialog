@@ -1,0 +1,1878 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "name": "Calendar",
+    "description": "",
+    "id": "sJt0wA"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "comment": "This trigger sends greeting messages when users are added to the conversation."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "vd6Jx9"
+          },
+          "name": "Calendar.Greeting",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "25rJrE",
+            "comment": "If the conversation is in MS Teams and is a group conversation, send a card to launch a personal chat with each user who clicks the action. Otherwise, send a welcome message."
+          },
+          "condition": "=turn.activity.channelId == 'msteams' && turn.activity.conversation.conversationType != 'personal'",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "NeTAU8",
+                "comment": "This project requires the user to be authenticated in order to access their Microsoft Graph calendar and user profile."
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lqvfia",
+                "name": "Send a response"
+              },
+              "activity": "${SendActivity_lqvfia()}"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "DGXXhL"
+              },
+              "activity": "${SendActivity_DGXXhL()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "rYHpxb",
+        "name": "OnIntent (Cancel)",
+        "comment": "Shows a cancel message and cancels all active dialogs. If another dialog is interrupted, it will be cancelled.\n\n The Condition prevents this trigger from firing unless the utterance score exceed 0.8. "
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "t7QY3g"
+          },
+          "name": "Calendar.Cancel",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "klrCg4"
+          },
+          "activity": "${SendActivity_klrCg4()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "1gxbbD"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "70AczX",
+        "name": "OnIntent (Help)",
+        "comment": "Shows a help message. If another dialog is interrupted, it will be resumed after the message is shown.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.8."
+      },
+      "intent": "Help",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "aYNWwl"
+          },
+          "name": "Calendar.Help",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "AlS4sI"
+          },
+          "activity": "${SendActivity_AlS4sI()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "mI9k6Z",
+        "name": "OnIntent (Logout)",
+        "comment": "Signs the user out and sends a message. If a dialog was interrupted, it will be resumed, but the user may be prompted to log in again.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.8. "
+      },
+      "intent": "Logout",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "CmEecM"
+          },
+          "name": "Calendar.Logout",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SignOutUser",
+          "$designer": {
+            "id": "anTaur"
+          },
+          "connectionName": "=settings.oauthConnectionName",
+          "userId": "=user.id"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IrC8MR"
+          },
+          "activity": "${SendActivity_IrC8MR()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.8"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yG4sCr",
+        "name": "OnIntent (CreateEvent)",
+        "comment": "Creates new calendar events.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "CreateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "n5PmvA"
+          },
+          "name": "Calendar.CreateEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "SSALaq",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "oD8szu",
+            "comment": "This action launches the CreateEventDialog and passes the dialog.options state object through the Options property to make the extracted entities available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "CreateEventDialog",
+          "options": {
+            "options": "=$options"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "HatKBy",
+        "name": "OnIntent (GetEvents)",
+        "comment": "Displays lists of events, either as a list card or schedule card depending on the entities provided.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "GetEvents",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "5AbqaU"
+          },
+          "name": "Calendar.GetEvents",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "LGO9Pv",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "bF66kR",
+            "comment": "This action launches the ShowEventsDialog and passes the dialog.options state object through the Options property to make the extracted entities available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "ShowEventsDialog",
+          "options": {
+            "options": "=$options"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "qSbfg2",
+        "name": "OnIntent (GetEventAttendees)",
+        "comment": "Looks up an event from the GetEventsDialog and then displays the event detail card for the meeting (including the attendees).\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances."
+      },
+      "intent": "GetEventAttendees",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Ecgy1o"
+          },
+          "name": "Calendar.GetEventAttendees",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "lgKQMZ",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "u5LsWm",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "yQDiuY",
+            "comment": "If the \"next\" ordinal entity was provided by the user, set $next property to true."
+          },
+          "property": "$next",
+          "value": "=$ordinal.relativeTo == 'current'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "UKSMPm",
+            "comment": "Shows a text response (based on when the event appears in the schedule) and event detail card for the selected event."
+          },
+          "activity": "${SendActivity_UKSMPm()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Iqk2tV",
+        "name": "OnIntent (GetEventLocation)",
+        "comment": "Looks up an event from the GetEventsDialog and then displays the event detail card for the meeting (including the location).\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "GetEventLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zCKzhA"
+          },
+          "name": "Calendar.GetEventLocation",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "7cegzi",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "AZCY2M",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "KsRnzh",
+            "comment": "If the \"next\" ordinal entity was provided by the user, set $next property to true."
+          },
+          "property": "$next",
+          "value": "=$ordinal.relativeTo == 'current'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "x7EkgW",
+            "comment": "Shows a text response (based on when the event appears in the schedule) and event detail card for the selected event."
+          },
+          "activity": "${SendActivity_x7EkgW()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "TErDXM",
+        "name": "OnIntent (GetEventDateTime)",
+        "comment": "Launches the ShowEventsDialog to search for and display events (including dat and time).\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances."
+      },
+      "intent": "GetEventDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zFgN9j"
+          },
+          "name": "Calendar.GetEventDateTime",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "Ax3cHN",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "0veVBB",
+            "comment": "This action launches the ShowEventsDialog and passes the dialog.options state object through the Options property to make the extracted entities available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "ShowEventsDialog",
+          "options": {
+            "options": "=$options"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "ajpe3a",
+        "name": "OnIntent (GetAvailabilityFirst)",
+        "comment": "Shows users their first event on any given day. \n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "GetAvailabilityFirst",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "fxyOZM"
+          },
+          "name": "Calendar.GetAvailabilityFirst",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "lzThvt",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "rsg9n8",
+            "comment": "If a start date was not provided."
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "wxfA8N",
+                "comment": "Set $options.start to current datetime."
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "=not(exists($options.start))"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "A8ffcM",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object to search and return a list of matching events."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options"
+          },
+          "resultProperty": "$events"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "YAJvpF",
+            "comment": "Shows a text response (based on when the event appears in the schedule) and event detail card for the first event."
+          },
+          "activity": "${SendActivity_YAJvpF()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "e6MuTA",
+        "name": "OnIntent (GetAvailabilityLast)",
+        "comment": "Shows users their last event on any given day. \n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "GetAvailabilityLast",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rP8Uw1"
+          },
+          "name": "Calendar.GetAvailabilityLast",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "YEmMof",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VxCYVO",
+            "comment": "If a start date was not provided."
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "0FHA3C",
+                "comment": "Set $options.start to current datetime."
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "=not(exists($options.start))"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3kUN98",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object to search and return a list of matching events."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options"
+          },
+          "resultProperty": "$events"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "IdPxbc",
+            "comment": "Shows a text response (based on when the event appears in the schedule) and event detail card for the last event."
+          },
+          "activity": "${SendActivity_IdPxbc()}"
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "CltGex",
+        "name": "OnIntent (GetAvailabilityBreaks)",
+        "comment": "Searches for events, then calls the Find Available Times action to identify breaks, and displays an actionable card with the results.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances."
+      },
+      "intent": "GetAvailabilityBreaks",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "yGFlO4"
+          },
+          "name": "Calendar.GetAvailabilityBreaks",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "cT8jOU",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "v97tES",
+            "comment": "If a start date was not provided."
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "TKz0HS",
+                "comment": "Set $options.start to current datetime."
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "=not(exists($options.start))"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "bedKqO",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object to search and return a list of matching events."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options"
+          },
+          "resultProperty": "$events"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.Helpers.FindAvailableTimes",
+          "$designer": {
+            "id": "Cb07qI",
+            "comment": "Returns a list of combined events and open time slots."
+          },
+          "resultProperty": "$availabilityList",
+          "events": "=$events",
+          "start": "=coalesce($options.start, convertFromUTC(utcNow(), user.workingHours.timeZone.name))",
+          "workingHourStart": "=user.workingHours.startTime",
+          "workingHourEnd": "=user.workingHours.endTime"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ijHFYq",
+            "comment": "If no events were found."
+          },
+          "condition": "=count($availabilityList) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "QqvaSr",
+                "comment": "Shows the availability card."
+              },
+              "activity": "${SendActivity_QqvaSr()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "WlmO9l"
+              },
+              "activity": "${SendActivity_WlmO9l()}"
+            }
+          ]
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "XdLVa6",
+        "name": "OnIntent (CancelEvent)",
+        "comment": "Cancels a specific event based on the extracted entities. \n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "CancelEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ZOOVNb"
+          },
+          "name": "Calendar.CancelEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "jAnczx",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "mxt6RN",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "xe6XTm",
+            "comment": "This action launches the CancelEventDialog and passes the selected event in dialog options to make it available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "CancelEventDialog",
+          "options": {
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "42Ah6w",
+        "name": "OnIntent (RespondAccept)",
+        "comment": "Accepts an event invitation.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "RespondAccept",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "L0jE2J"
+          },
+          "name": "Calendar.RespondAccept",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "1SW0z9",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "7y4YVo",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ag2PW1",
+            "comment": "This action launches the RespondToEventDialog and passes the response type and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='accepted'",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "EiLwP1",
+        "name": "OnIntent (RespondDecline)",
+        "comment": "Declines an event invitation.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "RespondDecline",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ZtBmaG"
+          },
+          "name": "Calendar.RespondDecline",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "47NgDe",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "R2Qul2",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "f8zk9j",
+            "comment": "This action launches the RespondToEventDialog and passes the response type and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='declined'",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "twZb5p",
+        "name": "OnIntent (RespondTentativelyAccept)",
+        "comment": "Tentatively accepts an event invitation.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "RespondTentativelyAccept",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "APO98A"
+          },
+          "name": "Calendar.RespondTentativelyAccept",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "FcEKEy",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "J3h0m5",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "0niigP",
+            "comment": "This action launches the RespondToEventDialog and passes the response type and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "RespondToEventDialog",
+          "options": {
+            "response": "='tentativelyAccepted'",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "48qkfh",
+        "name": "OnIntent (UpdateEvent)",
+        "comment": "Updates an event when no update properties have been provided in the user's utternace.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "UpdateEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "qYAELL"
+          },
+          "name": "Calendar.UpdateEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "r9ehrl",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "vfNGvE",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Ay1N1B",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "z90pOz",
+        "name": "OnIntent (LaunchChat)"
+      },
+      "intent": "LaunchChat",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "OIka7e",
+            "comment": "This trigger sends a welcome message to a user from a group chat in a personal chat window. "
+          },
+          "activity": "${SendActivity_OIka7e()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "jNhIrI",
+            "comment": "This action cleans up the remaining group conversation for the user after they start a personal chat."
+          },
+          "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "sQnial",
+        "name": "OnIntent (SetAttendeesAdd)",
+        "comment": "Adds attendees to an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetAttendeesAdd",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "GTJ2DW"
+          },
+          "name": "Calendar.SetAttendeesAdd",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "QSGqxa",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3LDDfO",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "dwMTAM",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "attendees"
+            },
+            {
+              "property": "$options.updateAction",
+              "value": "add"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.newContactArray"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "HayvUy",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pf3pIS",
+        "name": "OnIntent (SetAttendeesRemove)",
+        "comment": "Removes attendees from an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetAttendeesRemove",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "V96xTJ"
+          },
+          "name": "Calendar.SetAttendeesRemove",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "RyVAAF",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6oJkrQ",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "DCQfYO",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "attendees"
+            },
+            {
+              "property": "$options.updateAction",
+              "value": "remove"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.currentContactArray"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "hr8JyA",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "2X46Z2",
+        "name": "OnIntent (SetDateTime)",
+        "comment": "Updates the date and/or time of an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rGia1Q"
+          },
+          "name": "Calendar.SetDateTime",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "VLHumD",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "etUeNh",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "DWCcXP",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "datetime"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.newDate"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PrLUrX",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "kbgpOL",
+        "name": "OnIntent (SetDescription)",
+        "comment": "Updates the description of an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetDescription",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "cgtrSW"
+          },
+          "name": "Calendar.SetDescription",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "OH3bn2",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "W3MerJ",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "5FjD7P",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "description"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "IY8ISQ",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "B642oU",
+        "name": "OnIntent (SetDuration)",
+        "comment": "Updates the duration of an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetDuration",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6nP9Jr"
+          },
+          "name": "Calendar.SetDuration",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "iIefFB",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "i9hL2l",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "ASrX2S",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "duration"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.duration"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9Uruze",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "CAwKFy",
+        "name": "OnIntent (SetLocation)",
+        "comment": "Updates the location of an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetLocation",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ZuIvv3"
+          },
+          "name": "Calendar.SetLocation",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "EzgEgY",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9to0Tg",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "x5UHxV",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "location"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.location"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "v8W2ZF",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "umGoKZ",
+        "name": "OnIntent (SetOnlineMeetingAdd)",
+        "comment": "Adds an online meeting link to an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetOnlineMeetingAdd",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ARGOTh"
+          },
+          "name": "Calendar.SetOnlineMeetingAdd",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "K8UMQ5",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fbyOgf",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "7UAwuX",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "onlineMeeting"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=true"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Q0zeTG",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "a9nzcf",
+        "name": "OnIntent (SetOnlineMeetingRemove)",
+        "comment": "Removes an online meeting link from an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetOnlineMeetingRemove",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "X20Zd9"
+          },
+          "name": "Calendar.SetOnlineMeetingRemove",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "TpTc6h",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "4tNSAB",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "ctjClr",
+            "comment": "The updateProperty indicates which property of the event should change and the updateValue is the new value."
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "onlineMeeting"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=false"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "pfUqxK",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "e8JbM6",
+        "name": "OnIntent (SetTitle)",
+        "comment": "Updates the title of an existing event through the UpdateDialog.\n\nThe Condition prevents this trigger from firing unless the utterance score exceed 0.1 in order to prevent interruptions for low score utterances. "
+      },
+      "intent": "SetTitle",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "7ADziF"
+          },
+          "name": "Calendar.SetTitle",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "XugdqM",
+            "comment": "This event launches the OnEvent (SetOptions) trigger which extracts user entities into the dialog.options state object, logs the user in, and sets any remaining default values."
+          },
+          "eventName": "SetOptions"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "QOk2Kr",
+            "comment": "Launches the GetEventsDialog with the extracted entities in the dialog.options object and doSelection set to true to search for and select a single event."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "options": {
+            "options": "=$options",
+            "doSelection": "=true"
+          },
+          "resultProperty": "$event"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GDc4WO"
+          },
+          "assignments": [
+            {
+              "property": "$options.updateProperty",
+              "value": "title"
+            },
+            {
+              "property": "$options.updateValue",
+              "value": "=$options.newSubject"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "9O6G3G",
+            "comment": "This action launches the UpdateEventDialog and passes the dialog.options object and selected event through the Options property to make them available to the next dialog. \n\nActivity Processed is set to true, to prevent the recognizer on the child dialog from running on the current activity."
+          },
+          "activityProcessed": true,
+          "dialog": "UpdateEventDialog",
+          "options": {
+            "options": "=$options",
+            "event": "=$event"
+          }
+        }
+      ],
+      "condition": "=turn.recognized.score > 0.1"
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "C0Qlte",
+        "name": "OnIntent (Unknown)"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "6cuuag"
+          },
+          "name": "Calendar.UnknownIntent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ceaMpz"
+          },
+          "condition": "=turn.activity.recipient.role == \"skill\"",
+          "actions": [
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "wPwj7Y"
+              },
+              "value": false
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "UA2sps"
+              },
+              "activity": "${SendActivity_UA2sps()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "YzvkvP",
+        "name": "OnEvent (SetOptions)",
+        "comment": "This event trigger performs set up steps that are shared by many triggers. "
+      },
+      "event": "SetOptions",
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "aKQPI1",
+            "comment": "Extracts entities and stores them in dialog state for later use. This prevents entities from being lost if the user's authentication takes more than one turn."
+          },
+          "assignments": [
+            {
+              "property": "$query",
+              "value": "=coalesce(turn.activity.value.dateTime, turn.activity.text)"
+            },
+            {
+              "value": "=turn.activity.value.eventId",
+              "property": "$options.eventId"
+            },
+            {
+              "property": "$options.subject",
+              "value": "=coalesce(@currentSubject, @subject)"
+            },
+            {
+              "property": "$options.contactArray",
+              "value": "=if(exists(@@contact) && exists(@@personName), unique(union(@@contact, @@personName)), @@contact)"
+            },
+            {
+              "property": "$options.emailArray",
+              "value": "=@@email"
+            },
+            {
+              "property": "$options.location",
+              "value": "=@location"
+            },
+            {
+              "property": "$options.ordinal",
+              "value": "=@ordinalV2"
+            },
+            {
+              "property": "$options.currentSubject",
+              "value": "=@currentSubject"
+            },
+            {
+              "property": "$options.newSubject",
+              "value": "=@newSubject"
+            },
+            {
+              "property": "$options.currentContactArray",
+              "value": "=@@currentContact"
+            },
+            {
+              "property": "$options.newContactArray",
+              "value": "=@@newContact"
+            },
+            {
+              "property": "$options.currentDate",
+              "value": "=@currentDate"
+            },
+            {
+              "property": "$options.newDate",
+              "value": "=@newDate"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "PlewWy",
+            "comment": "Logs in a user and gets their MS Graph user profile."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "wFyxFc",
+            "comment": "Recognizes datetime types and disambiguates if needed (i.e. 3AM or 3PM). Accepts the user's query and a minDate to prevent disambiguation options in the past."
+          },
+          "activityProcessed": true,
+          "dialog": "ResolveDateTimeDialog",
+          "options": {
+            "query": "=$query",
+            "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+          },
+          "resultProperty": "turn.dateTime"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Ra5sQD",
+            "comment": "If the \"next\" ordinal was detected in a datetime entity, set ordinal entity to null to prevent confusion."
+          },
+          "condition": "=contains(turn.dateTime.text, 'next') && ($options.ordinal.offset == 1 && $options.ordinal.relativeTo == 'current')",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "6LKW0L"
+              },
+              "property": "$options.ordinal",
+              "value": "=null"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "U0hSI8",
+            "comment": "If a date or time was detected, set state properties for later use."
+          },
+          "condition": "=contains(turn.dateTime.type, \"date\") || contains(turn.dateTime.type, \"time\")",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ArqMn7"
+              },
+              "assignments": [
+                {
+                  "property": "$options.dateTime",
+                  "value": "=turn.dateTime"
+                },
+                {
+                  "property": "$options.start",
+                  "value": "=coalesce(turn.dateTime.start, turn.dateTime.value)"
+                },
+                {
+                  "property": "$options.end",
+                  "value": "=turn.dateTime.end"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "7mDmi7",
+            "comment": "If the duration entity was present in the user's query, resolve the value and convert to minutes."
+          },
+          "condition": "=exists(@duration)",
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "bp5lw2"
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=@duration"
+              },
+              "resultProperty": "turn.duration"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Im26fU"
+              },
+              "property": "$options.duration",
+              "value": "=coalesce(int(turn.duration.value) / 60, null)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnError",
+      "$designer": {
+        "id": "Z3bvh7",
+        "name": "OnError"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "U65idk"
+          },
+          "name": "Calendar.OnError",
+          "value": "=turn.dialogEvent.value"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "MFU6ug",
+            "comment": "Provided different error handling depending on channel."
+          },
+          "condition": "turn.activity.channelId",
+          "cases": [
+            {
+              "value": "test",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "G7Rfej",
+                    "comment": "Prints out full error message for unit testing channel."
+                  },
+                  "activity": "${SendActivity_G7Rfej()}"
+                }
+              ]
+            },
+            {
+              "value": "emulator",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TraceActivity",
+                  "$designer": {
+                    "id": "3oPM0a",
+                    "comment": "Emits trace with error message for emulator channel."
+                  },
+                  "value": "=turn.dialogEvent.value",
+                  "name": "Error Trace"
+                }
+              ]
+            }
+          ],
+          "default": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "mWnyUh"
+              },
+              "activity": "${SendActivity_mWnyUh()}"
+            }
+          ]
+        }
+      ],
+      "runOnce": true
+    }
+  ],
+  "generator": "Calendar.lg",
+  "recognizer": "Calendar.lu.qna",
+  "id": "Calendar"
+}

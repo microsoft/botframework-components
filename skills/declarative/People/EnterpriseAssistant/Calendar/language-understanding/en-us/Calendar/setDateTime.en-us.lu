@@ -1,0 +1,87 @@
+# SetDateTime
+- change my event from {@currentDate=tomorrow} to {@newDate=saturday}
+- change my event with {@contact=chris} from {@currentDate=sunday} to {@newDate=wednesday}
+- change my meeting from {@currentDate=wednesday at 1} to {@newDate=thursday at 4}
+- change my meeting with {@contact=elaine} to {@newDate=next week}
+- change my meeting with {@contact=scott} and {@contact=quirine} on {@currentDate=thursday at 11am} to {@newDate=saturday}
+- change my {@subject=team meeting} event to {@newDate=tomorrow at noon}
+- change the date
+- change the date and time of my next meeting to {@newDate=thursday at 11am}
+- change the date of my event with {@contact=gary} on {@currentDate=monday} named {@subject=lunch} to {@newDate=next month}
+- change the date of the {@subject=breakfast} event from {@currentDate=tomorrow} to {@newDate=tuesday}
+- change the date of the meeting to {@newDate=wednesday}
+- change the date of the meeting with {@contact=morgan} from {@currentDate=next month} to {@newDate=this weekend}
+- change the meeting with {@contact=lucy}, {@contact=edward}, and {@contact=elinor} to start at {@newDate=3pm on wednesday}
+- change the time
+- change the time of my meeting to {@newDate=6pm}
+- change to {@newDate=2 am}
+- make {@currentDate=tomorrows} friday meeting {@currentDate=at 2} {@newDate=30 minutes later}
+- move my meeting from {@currentDate=3pm} to {@newDate=5pm}
+- move my meeting on {@currentDate=tuesday} to {@newDate=next week}
+- move my meeting with {@contact=darren} to {@newDate=this tuesday}
+- move my meeting with {@contact=thomas} to {@newDate=tomorrow at 5}
+- move tomorrows physical therapy meeting to {@newDate=noon}
+- no, change it to {@newDate=tuesday}
+- no, set the meeting time to {@newDate=3:30}
+- reschedule my event with {@contact=you@test.net}, {@contact=quirine}, and {@contact=rebecca} with a subject of {@subject=team meeting} from {@currentDate=thursday at 11am} to {@newDate=this weekend}
+- reschedule the event about {@subject=hair appointment} with {@contact=lauren}, {@contact=cynthia}, and {@contact=rebecca} from {@currentDate=thursday} to {@newDate=wednesday}
+- update my meeting to start at {@newDate=noon on saturday}
+- update my meeting with {@contact=elaine} to {@newDate=monday at 2}
+- update my meeting with {@contact=tyler} from {@currentDate=3pm} to {@newDate=5pm}
+- yes, but can you change the time
+- yes, but change it to {@date=monday at 3:30pm}
+
+@ intent SetDateTime usesFeatures Update,Event,Location,Titled
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

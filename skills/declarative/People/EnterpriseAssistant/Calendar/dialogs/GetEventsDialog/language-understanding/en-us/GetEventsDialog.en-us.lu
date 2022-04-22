@@ -1,0 +1,91 @@
+> Common intents
+[Cancel](cancel.en-us.lu)
+
+# TextInput_Response_Fej6Ub
+- {@date=3:30}
+- {@date=4:30pm}
+- attendees {@contact=william} and {@contact=patrick}
+- {@contact=bill robinson} and {@contact=moira michelson}
+- date of {@date=monday at 9am}
+- {@subject=design session}
+- {@date=january 3rd}
+- {@contact=julie}
+- {@contact=marcie} and {@contact=jack}
+- {@contact=mary cheng}, {@contact=theodore lee}, and {@contact=alia hazem}
+- my second meeting {@date=today}
+- {@date=next wednesday}
+- {@date=next week}
+- {@date=noon today}
+- {@subject=project review}
+- {@subject=project review} on {@date=thursday}
+- {@contact=sally}'s meeting {@date=friday morning}
+- {@subject=team status reports}
+- the {@subject=best practices meeting} with {@contact=nora} and {@contact=beckett}
+- the {@subject=design review} on {@date=tuesday at 11am}
+- the event with {@contact=test@email.com}
+- the one on monday
+- the one on tuesday
+- the one this {@date=afternoon}
+- the one titled {@subject=cui editorial}
+- the one titled {@subject=lunch}
+- the one with {@contact=elaine} next week
+- the third one
+- the title {@subject=therapist's appointment}
+- the {@subject=vet appointment}
+- title {@subject=calendar test meeting}
+- {@date=today at 5}
+- {@date=tomorrow}
+- {@date=wednesday at 3pm}
+- with {@contact=allan}
+- with {@contact=allan} and {@contact=alex}
+- with the subject of {@subject=dermatologist's appointment}
+- the {@subject=hair appointment}
+
+# None
+- what color is the sky
+- create a new meeting with {@contact=thomas}
+- book a meeting with a title of {@subject=weekly review}
+- book time on {@date=tuesday} at {@location=red robin}
+- can you set up a time for me to meet with {@contact=ryan} about the {@subject=project status}
+- create a meeting with {@contact=thomas}
+- create an event with {@contact=beth} in {@location=the cafeteria}
+- i need to talk to {@contact=isaiah} about the {@subject=merger} on {@date=friday}
+- make a meeting with {@contact=em} in {@location=building 4}
+- new event named {@subject=standup} in {@location=city center}
+- new event on {@date=wednesday} with {@contact=gary}, {@contact=gary}, and {@contact=hyunjin} about {@subject=content review}
+- accept the meeting with {@contact=juliet}
+- decline the meeting on {@date=tuesday at 5pm}
+- update the {@subject=standup} meeting
+- cancel the one with {@contact=marianne}
+- what is your name
+- how old are you
+- where are you from
+- when am i available
+- blah blah blah
+- when do i have breaks {@date=tomorrow}
+- am i available at {@date=5PM}
+
+> # Entity definitions
+
+@ ml contact usesFeatures email,personName
+
+@ ml date
+
+@ ml subject
+
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+
+@ prebuilt ordinalV2
+
+@ prebuilt personName
+
+
+> # Phrase list definitions
+
+
+> # List entities
+
+> # RegEx entities

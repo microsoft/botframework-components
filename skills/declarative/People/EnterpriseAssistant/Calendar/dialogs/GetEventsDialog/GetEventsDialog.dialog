@@ -1,0 +1,694 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "tMMCfJ",
+    "name": "GetEventsDialog",
+    "comment": "Retrieves events from the MS Graph Calendar API. It can return either an array of search results or a specific event if the event Id parameter is provided."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "comment": "Retrieves events from the MS Graph Calendar API. It can return either an array of search results or a specific event if the event Id parameter is provided.\n\nIt is incremented in the OnEvent (NoEventsFound) handler.",
+        "id": "UnSYCl"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "SapBYc"
+          },
+          "name": "GetEventsDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "mi47ko",
+            "comment": "This property is used to indicate the number of turns the user has spent in this dialog. It is set in dialog state so that it can persist even when the dialog is repeated. \n\nIt is incremented in the OnEvent (NoEventsFound) handler."
+          },
+          "property": "$turnCount",
+          "value": "=coalesce($turnCount, 1)"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "WnfDMU",
+            "comment": "Triggers the OnEvent (SetParameters) handler. This step collects any parameters for looking up the event from the user including: subject, attendees, date and/or time, or location. All parameters are optional."
+          },
+          "eventName": "SetParameters"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "80CHa6",
+            "comment": "If the eventId was passed as a dialog option, then perform an event lookup rather than a search. This is typically triggered by selecting an event from a list of search results. "
+          },
+          "condition": "=$parameters.eventId != null",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "IgNZGN",
+                "comment": "Triggers the OnEvent (GetEventById) handler. Performs an event search based on the parameters provided by the user."
+              },
+              "eventName": "GetEvents"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "A4djYr",
+                "comment": "Triggers the OnEvent (GetEventById) handler. Looks up an event by its unique Id in the MS Graph Calendar API."
+              },
+              "eventName": "GetEventById"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "isyBmx",
+            "comment": "The $doSelection property indicates whether to return a list of events, or to require the user to select a specific event in order to continue. When showing a schedule, or search results, $doSelection should be false. If performing an event update or event cancellation, $doSelection should be true."
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "1Zhz3U"
+              },
+              "condition": "=count($events) > 0",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "Mw6r42",
+                    "comment": "Triggers the OnEvent (NoEventsFound) handler."
+                  },
+                  "eventName": "NoEventsFound"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "7dJElW",
+                    "comment": "Triggers the OnEvent (SelectEvent) handler. Calls the ListDialog with the results so the user can select one."
+                  },
+                  "eventName": "SelectEvent"
+                }
+              ]
+            }
+          ],
+          "elseActions": [],
+          "condition": "$doSelection"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "BbEPfj",
+            "comment": "Ends the dialog and returns either the $selectedEvent or $events, whichever has a value."
+          },
+          "value": "=coalesce($selectedEvent, $events)"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "mv3Nxl",
+        "name": "OnEvent (SetParameters)"
+      },
+      "event": "SetParameters",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zNOogP"
+          },
+          "name": "GetEventsDialog.OnEvent_GetParameters",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "FT8qfi",
+            "comment": "Saves any dialog options into parameters scope."
+          },
+          "assignments": [
+            {
+              "property": "$parameters.eventId",
+              "value": "=$options.eventId"
+            },
+            {
+              "property": "$parameters.start",
+              "value": "=$options.start"
+            },
+            {
+              "property": "$parameters.end",
+              "value": "=$options.end"
+            },
+            {
+              "property": "$parameters.subject",
+              "value": "=coalesce($options.subject, @subject, $options.queryText)"
+            },
+            {
+              "property": "$parameters.attendees",
+              "value": "=coalesce($options.contactArray, @@contact)"
+            },
+            {
+              "property": "$parameters.location",
+              "value": "=coalesce($options.location, @location)"
+            },
+            {
+              "property": "$parameters.ordinal",
+              "value": "=coalesce($options.ordinal, @ordinal)"
+            },
+            {
+              "property": "$parameters.dateTimeType",
+              "value": "=$options.dateTime.type"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1cNXeh",
+            "comment": "If no parameters were provided."
+          },
+          "condition": "=count(where(flatten($parameters), p, exists(p))) == 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "Fej6Ub",
+                "comment": "Prompts users to provide any search parameters. After the prompt is answered, the dialog is repeated so that a search can be performed with those parameters. If no events were found, the prompt will be repeated and the turnCount will have been incremented so the \"I couldn't find a match.\" message will be displayed."
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": "=#Cancel.score > 0.5 || exists(turn.activity.value.intent)",
+              "prompt": "${TextInput_Prompt_Fej6Ub()}",
+              "property": "$query"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "aR3uwW",
+                "comment": "Date time recognition is run on the user's query to extract any datetime entities."
+              },
+              "activityProcessed": true,
+              "dialog": "ResolveDateTimeDialog",
+              "options": {
+                "query": "=$query",
+                "minDate": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+              },
+              "resultProperty": "$dateTime"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "TrtTaO"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=coalesce($dateTime.start, $dateTime.value)"
+                },
+                {
+                  "property": "$options.end",
+                  "value": "=$dateTime.end"
+                },
+                {
+                  "property": "$options.dateTime",
+                  "value": "=$dateTime"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "nfaMkj",
+                "comment": "If no entities were detected in the query, the plain text will be stored to perform the search."
+              },
+              "condition": "=not(exists(@@contact)) && not(exists(@@email)) && not(exists(@subject)) && not(exists($options.start)) && not(exists($options.end))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "KVhPIl"
+                  },
+                  "property": " $options.queryText",
+                  "value": "=$query"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "DHf1li",
+                "comment": "Repeats this dialog with the collected parameters."
+              },
+              "activityProcessed": false,
+              "options": {
+                "options": "=$options",
+                "doSelection": "=$doSelection",
+                "turnCount": "=$turnCount"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "YB34jG",
+            "comment": "If no date time parameters were provided, sets the start parameter to the current time and the end parameters to current time + 14 days."
+          },
+          "condition": "=not(exists($parameters.start))",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "u7sI8P"
+              },
+              "assignments": [
+                {
+                  "property": "$parameters.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                },
+                {
+                  "property": "$parameters.end",
+                  "value": "=convertFromUTC(addDays(utcNow(), 14), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "mq7tmE",
+        "name": "OnEvent (GetEventById)"
+      },
+      "event": "GetEventById",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "4B53c5"
+          },
+          "name": "GetEventsDialog.OnEvent_GetEventById",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "u8Bei9",
+            "comment": "Refreshes user token."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEventById",
+          "$designer": {
+            "id": "HWwB5X",
+            "comment": "Gets a specific event object by its unique ID in MS Graph."
+          },
+          "resultProperty": "$event",
+          "token": "=turn.token.token",
+          "eventId": "=$parameters.eventId",
+          "timeZone": "=user.workingHours.timeZone.name"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "F2utcg",
+            "comment": "Adds the single event to the array of results (this simplifies the logic of the calling dialog)."
+          },
+          "property": "$events",
+          "value": "=createArray($event)"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Pcm8X1",
+        "name": "OnEvent (GetEvents)"
+      },
+      "event": "GetEvents",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "nhPi8u"
+          },
+          "name": "GetEventsDialog.OnEvent_GetEvents",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "WHqskX",
+            "comment": "Refreshes user token."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.GetEvents",
+          "$designer": {
+            "id": "4jD1d5",
+            "comment": "Performs a search for events based on the provided datetimes."
+          },
+          "resultProperty": "$events",
+          "token": "=turn.token.token",
+          "end": "=$parameters.end",
+          "timeZone": "=user.workingHours.timeZone.name",
+          "dateTimeType": "=coalesce($parameters.dateTimeType, \"date\")",
+          "start": "=$parameters.start",
+          "futureEventsOnly": "=coalesce($futureOnly, true)",
+          "userEmail": "=turn.user.profile.mail",
+          "maxResults": "=25"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.Helpers.FilterEvents",
+          "$designer": {
+            "id": "uI3CaY",
+            "comment": "Filters a list of events based on the provided parameters. "
+          },
+          "resultProperty": "$events",
+          "events": "=$events",
+          "title": "=$parameters.subject",
+          "location": "=$parameters.location",
+          "attendees": "=$parameters.attendees",
+          "ordinal": "=$parameters.ordinal"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "nSQ5Jd",
+        "name": "OnEvent (SelectEvent)"
+      },
+      "event": "SelectEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jbwa3R"
+          },
+          "name": "GetEventsDialog.OnEvent_SelectEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "KmSBRT",
+            "comment": "If there is only one event in the array, automatically selects that event."
+          },
+          "condition": "=count($events) == 1",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "S1FCQO",
+                "comment": "List options for event selection."
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$events"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "index"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "EventListPrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": {
+                    "icon": "EventListIconUrl",
+                    "title": "EventListTitle",
+                    "item": "EventListItem",
+                    "actions": "EventListActions",
+                    "initialPrompt": "EventListPrompt",
+                    "showMorePrompt": "EventListShowMorePrompt",
+                    "skipResponse": "EventListSkipResponse",
+                    "defaultValueResponse": "EventListDefaultValueResponse"
+                  }
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=true"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "n9iNhj",
+                "comment": "Shows list of events and prompts user to select one to continue."
+              },
+              "activityProcessed": true,
+              "dialog": "ListDialog",
+              "options": "=$listOptions",
+              "resultProperty": "$selectedEvent"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QAnsVO",
+                "comment": "If the user did not select an event, emits a Cancel dialog event which is caught by the OnEvent (Cancel) handler."
+              },
+              "condition": "=$selectedEvent == null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "x4SpLm"
+                  },
+                  "eventName": "Cancel"
+                }
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "pKLiz9"
+              },
+              "assignments": [
+                {
+                  "property": "$selectedEvent",
+                  "value": "= $events[0]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "nK6QHr",
+        "name": "OnEvent (NoEventsFound)"
+      },
+      "event": "NoEventsFound",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "axiPsu"
+          },
+          "name": "GetEventsDialog.OnEvent_NoEventsFound",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DM5U3G",
+            "comment": "While the turnCount is still < 2, meaning the search has not failed more than twice, repeat the dialog. Otherwise, triggers the OnEvent (GetEventsFailed) handler."
+          },
+          "condition": "=$turnCount < 2",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "dwLUet"
+              },
+              "property": "$turnCount",
+              "value": "=$turnCount + 1"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "sZzBDM"
+              },
+              "activityProcessed": true,
+              "options": {
+                "turnCount": "=$turnCount",
+                "doSelection": "=$doSelection"
+              },
+              "allowLoop": true
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "pWMAUd"
+              },
+              "eventName": "GetEventsFailed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "gyqxhV",
+        "name": "OnEvent (GetEventsFailed)"
+      },
+      "event": "GetEventsFailed",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "eKetEB"
+          },
+          "name": "GetEvents.OnNoResultsEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.ConfirmInput",
+          "$designer": {
+            "id": "Xro1Q8"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": true,
+          "allowInterruptions": false,
+          "prompt": "${ConfirmInput_Prompt_Xro1Q8()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "property": "turn.getSchedule"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "DG1RAS"
+          },
+          "condition": "=turn.getSchedule",
+          "actions": [
+            {
+              "$kind": "Microsoft.DeleteProperty",
+              "$designer": {
+                "id": "CQH4Gd"
+              },
+              "property": "$options"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "Ib7GQW"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name, 'yyyy-MM-dd')"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "LASVmZ"
+              },
+              "activityProcessed": true,
+              "options": {
+                "options": "=$options",
+                "doSelection": "=$doSelection"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.CancelAllDialogs",
+              "$designer": {
+                "id": "IkvtZ1"
+              },
+              "activityProcessed": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lxR3u1",
+        "name": "OnEvent (Cancel)"
+      },
+      "event": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "qyvf70"
+          },
+          "activity": "${SendActivity_qyvf70()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "eBStwi"
+          },
+          "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "J8OA5a",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "mrBR6n"
+          },
+          "eventName": "Cancel"
+        }
+      ]
+    }
+  ],
+  "generator": "GetEventsDialog.lg",
+  "id": "GetEventsDialog",
+  "recognizer": "GetEventsDialog.lu.qna"
+}

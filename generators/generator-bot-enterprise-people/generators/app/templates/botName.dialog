@@ -476,7 +476,8 @@
           "dialog": "GetProfileDialog",
           "options": {
             "contactName": "=$contactName",
-            "userId": "=$userId"
+            "userId": "=$userId",
+            "showProfileCardOnly": "=false"
           }
         }
       ]
@@ -595,6 +596,21 @@
               "value": "=coalesce(turn.activity.value.userId, if(not(exists($contactName)), turn.currentUser.id, null))"
             }
           ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "Xudasu",
+            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
+          },
+          "activityProcessed": true,
+          "dialog": "GetUserDialog",
+          "resultProperty": "turn.user",
+          "options": {
+            "userId": "=$userId",
+            "contactName": "=$contactName",
+            "doSelection": "=true"
+          }
         }
       ]
     },

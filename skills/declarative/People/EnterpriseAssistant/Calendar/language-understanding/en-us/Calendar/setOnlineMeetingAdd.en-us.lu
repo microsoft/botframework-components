@@ -1,0 +1,82 @@
+# SetOnlineMeetingAdd
+- add a phone number to the next meeting
+- add a teams call to my meeting with {@contact=benedict} on {@date=november 5th}
+- add a teams link to my {@subject=editorial meeting} meeting
+- add a teams link to my event on {@date=friday}
+- add a teams link to my event on {@date=tuesday} with {@contact=tyler}
+- add a teams link to my next meeting
+- add a teams link to the {@subject=content review} event {@date=tomorrow} with {@contact=elaine}
+- add a teams link to the meeting with {@contact=test@email.com}, {@contact=chris}, and {@contact=you@test.net}
+- add a teams link to the next event
+- add {@contact=elaine} to my meeting with {@contact=tom}
+- add {@contact=elaine} to the meeting with {@contact=tyler}
+- include a call number on the {@subject=project review} meeting {@date=next week}
+- include a link
+- include a link to my meeting {@date=this weekend} with {@contact=quirine}, {@contact=morgan}, and {@contact=susan}
+- include a link to the meeting
+- include teams to my {@subject=hair appointment} meeting on {@date=tuesday} with {@contact=chris} and {@contact=test@email.com}
+- include teams to the event with {@contact=elaine}
+- include teams to the {@subject=standup} meeting on {@date=tuesday}
+- make it a teams meeting
+- make the meeting with {@contact=scott} and {@contact=quirine} a teams meeting
+- make the {@subject=standup} a virtual meeting {@date=today}
+- make this an online meeting
+- no, add a meeting link too
+- no, I want this to me a teams meeting
+- yes, and add teams
+- yes, but add a link as well
+
+@ intent SetOnlineMeetingAdd usesFeatures Update,Event,Location,Add,Titled
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

@@ -1,0 +1,934 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "UrfxdD",
+    "name": "ResolveDateTimeDialog",
+    "comment": "Recognizes datetime entities from an utterance and disambiguates results."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "comment": "Recognizes datetime entities from an utterance and disambiguates results.",
+        "id": "42clMH"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "OwPzzJ"
+          },
+          "name": "ResolveDateTimeDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "kxvYi4",
+            "comment": "Extracts dialog options. \n\nQuery is the string to run recognition against and defaults to either the dialog option $query or the text of the last activity.\n\nExpected type is the expected datetime resolution type (e.g. date, datetime, time, datetimerange, daterange, timerange, duration)\n\nMinDate is the minimum date to accept. This prevents showing disambiguation for resolutions older than then minimum date."
+          },
+          "assignments": [
+            {
+              "property": "$query",
+              "value": "=coalesce($query, turn.activity.text, '')"
+            },
+            {
+              "property": "$expectedType",
+              "value": "=coalesce($expectedType, null)"
+            },
+            {
+              "property": "$minDate",
+              "value": "=coalesce($minDate, null)"
+            },
+            {
+              "property": "$maxDate",
+              "value": "=coalesce($maxDate, null)"
+            },
+            {
+              "property": "$minTime",
+              "value": "=coalesce($minTime, null)"
+            },
+            {
+              "property": "$maxTime",
+              "value": "=coalesce($maxTime, null)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.Helpers.RecognizeDateTime",
+          "$designer": {
+            "id": "SZKf8v",
+            "comment": "Recognizes date time types from the provided query and converts all times into the user's time zone."
+          },
+          "query": "=$query",
+          "resultProperty": "$recognitionResults",
+          "timeZone": "=user.workingHours.timeZone.name"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ksIN1t"
+          },
+          "index": "$recognitionResultsLoop.index",
+          "value": "$recognitionResultsLoop.value",
+          "itemsProperty": "$recognitionResults",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "vwdsTV",
+                "comment": "Skips any recognized values of type \"datetimeV2.set\" beause it can caused unexpected behavior."
+              },
+              "condition": "=toLower($recognitionResultsLoop.value.text) == \"my day\" || $recognitionResultsLoop.value.typeName == \"datetimeV2.set\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.ContinueLoop",
+                  "$designer": {
+                    "id": "fGXsPA"
+                  }
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "0FTMUN",
+                "comment": "Extracts the type of resolution."
+              },
+              "property": "$resolvedType",
+              "value": "=$recognitionResultsLoop.value.Resolution.values[0].type"
+            },
+            {
+              "$kind": "Microsoft.Foreach",
+              "$designer": {
+                "id": "et2uFP"
+              },
+              "index": "$resolutionValuesLoop.index",
+              "value": "$resolutionValuesLoop.value",
+              "itemsProperty": "$recognitionResultsLoop.value.Resolution.values",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "ATOu0j",
+                    "comment": "Extracts resolution text into simpler state property."
+                  },
+                  "assignments": [
+                    {
+                      "property": "$recognitionResultsLoop.value.Resolution.values[$resolutionValuesLoop.index].text",
+                      "value": "=$recognitionResultsLoop.value.text"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "QvhQlR",
+                "comment": "Triggers OnEvent (CheckExpectedType_) handler which validates against provided dialog option."
+              },
+              "eventName": "CheckExpectedType"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "wUbrlv",
+                "comment": "If only one value was resolved."
+              },
+              "condition": "=count($recognitionResultsLoop.value.Resolution.values) == 1",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cPoVPR",
+                    "comment": "Returns resolved value to calling dialog."
+                  },
+                  "property": "$datetimeResolution",
+                  "value": "=$recognitionResultsLoop.value.Resolution.values[0]"
+                },
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "4Hbqwg"
+                  },
+                  "value": "=$datetimeResolution"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SwitchCondition",
+                  "$designer": {
+                    "id": "v3P9w2"
+                  },
+                  "cases": [
+                    {
+                      "value": "date",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "NqrxcU",
+                            "comment": "Prompts to diambiguate date values."
+                          },
+                          "eventName": "RefineDate",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetime",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "MOsZUP",
+                            "comment": "Prompts to diambiguate datetime values."
+                          },
+                          "eventName": "RefineDateTime",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "time",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "0RrVbm",
+                            "comment": "Prompts to diambiguate time values."
+                          },
+                          "eventName": "RefineTime",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "daterange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "iBRM3d",
+                            "comment": "Prompts to diambiguate date range values."
+                          },
+                          "eventName": "RefineDateRange",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "datetimerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "vfve3B",
+                            "comment": "Prompts to diambiguate date time range values."
+                          },
+                          "eventName": "RefineDateTimeRange",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    },
+                    {
+                      "value": "timerange",
+                      "actions": [
+                        {
+                          "$kind": "Microsoft.EmitEvent",
+                          "$designer": {
+                            "id": "xpEzrS",
+                            "comment": "Prompts to diambiguate time range values."
+                          },
+                          "eventName": "RefineTimeRange",
+                          "eventValue": "=$recognitionResultsLoop.value.Resolution.values"
+                        }
+                      ]
+                    }
+                  ],
+                  "condition": "$resolvedType",
+                  "default": [
+                    {
+                      "$kind": "Microsoft.SendActivity",
+                      "$designer": {
+                        "id": "JrfC1C",
+                        "comment": "If the date time provided is not configured, dialog is ended. "
+                      },
+                      "activity": "${SendActivity_JrfC1C()}"
+                    },
+                    {
+                      "$kind": "Microsoft.EndDialog",
+                      "$designer": {
+                        "id": "SsC8fk"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.RepeatDialog",
+                  "$designer": {
+                    "id": "Ejtr7m",
+                    "comment": "Repeats this dialog with the specified value. This allows the dialog to narrow down the results. "
+                  },
+                  "activityProcessed": true,
+                  "allowLoop": true,
+                  "options": {
+                    "query": "=$selected.value"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "FxD36G",
+        "name": "OnEvent (RefineDate)"
+      },
+      "event": "RefineDate",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "8IOu4o"
+          },
+          "name": "ResolveDateTimeDialog.RefineDate",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "a43OOw",
+            "comment": "Removes any options that do not pass validation against the $minDate option."
+          },
+          "index": "$dateLoop.index",
+          "value": "$dateLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "IQInq1"
+              },
+              "condition": "=$minDate != null && ticks(formatDateTime($dateLoop.value.value)) < ticks(formatDateTime(date($minDate)))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "GLkygU"
+                  },
+                  "property": "$dateLoop.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OlWE0O"
+                  },
+                  "property": "$dateLoop.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "Xv3qc4"
+              },
+              "condition": "=$dateLoop.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uYrpos",
+                    "comment": "Formats the value into a readable format."
+                  },
+                  "property": "$formattedOption",
+                  "value": "=formatDateTime($dateLoop.value.value, \"dddd, MMMM d, yyyy\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "z4uPIw"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "$choices",
+                  "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Kxsxdt"
+          },
+          "condition": "=$choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "rxH6X0",
+                "comment": "If there is only one value."
+              },
+              "condition": "=count($choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "xntS1t",
+                    "comment": "Prompts user to select between the date options."
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=$choices",
+                  "property": "$selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  },
+                  "prompt": "${ChoiceInput_Prompt_xntS1t()}"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "cTs1XM",
+                    "comment": "Default to single option."
+                  },
+                  "property": "$selected",
+                  "value": "=$choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "22HYzp",
+                "comment": "If the date does not meet the minimum requirement, defaults to the minimum date."
+              },
+              "activity": "${SendActivity_22HYzp()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "uNlLNa"
+              },
+              "property": "$selected",
+              "value": "=formatDateTime(date($minDate), \"dddd, MMMM d, yyyy\")"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lwY2oA",
+        "name": "OnEvent (RefineDateTime)"
+      },
+      "event": "RefineDateTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "gXLQ6f"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTime",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "b2a4gT",
+            "comment": "Removes any options that do not pass validation against the $minDate option."
+          },
+          "index": "$datetimeLoop.index",
+          "value": "$datetimeLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "4nSPCc"
+              },
+              "condition": "=$minDate != null && ticks(formatDateTime($datetimeLoop.value.value)) < ticks(formatDateTime($minDate))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "DQfu8f"
+                  },
+                  "property": "$datetimeLoop.skip",
+                  "value": "=true"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "OifsS5"
+                  },
+                  "property": "$datetimeLoop.skip",
+                  "value": "=false"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "bYsQ7q"
+              },
+              "condition": "=$datetimeLoop.skip != true",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "uCS9Ou",
+                    "comment": "Formats the value into a readable format."
+                  },
+                  "property": "$formattedOption",
+                  "value": "=formatDateTime($datetimeLoop.value.value, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+                },
+                {
+                  "$kind": "Microsoft.EditArray",
+                  "$designer": {
+                    "id": "FbjTHk"
+                  },
+                  "changeType": "push",
+                  "itemsProperty": "$choices",
+                  "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "OqJa6A"
+          },
+          "condition": "=$choices != null",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "QhjFD1",
+                "comment": "If there is only one value."
+              },
+              "condition": "=count($choices) == 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.ChoiceInput",
+                  "$designer": {
+                    "id": "RSIYeJ",
+                    "comment": "Prompts user to select between the date time options."
+                  },
+                  "defaultLocale": "en-us",
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": false,
+                  "prompt": "${ChoiceInput_Prompt_RSIYeJ()}",
+                  "choiceOptions": {
+                    "includeNumbers": true,
+                    "inlineOrMore": ", or ",
+                    "inlineOr": " or ",
+                    "inlineSeparator": ", "
+                  },
+                  "choices": "=$choices",
+                  "property": "$selected",
+                  "style": "heroCard",
+                  "recognizerOptions": {
+                    "recognizeOrdinals": true
+                  }
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "0uAZcl"
+                  },
+                  "property": "$selected",
+                  "value": "=$choices[0]"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "9oQtz5"
+              },
+              "activity": "${SendActivity_9oQtz5()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "awh8Ju"
+              },
+              "property": "$selected",
+              "value": "=formatDateTime($minDate, \"dddd, MMMM d, yyyy 'at' h:mm tt\")"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "wRCfhj",
+        "name": "OnEvent (RefineTime)"
+      },
+      "event": "RefineTime",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "IhxIE6"
+          },
+          "name": "ResolveDateTimeDialog.RefineTime",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "UtKCFb"
+          },
+          "index": "$timeLoop.index",
+          "value": "$timeLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MmvPBY",
+                "comment": "Formats the value into a readable format."
+              },
+              "property": "$formattedOption",
+              "value": "=formatDateTime($timeLoop.value.value, \"h:mm tt\")"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "S0x2ix"
+              },
+              "changeType": "push",
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "yHRsbS",
+            "comment": "Prompts user to select between the time options."
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_yHRsbS()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=$choices",
+          "property": "$selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "KD16nD",
+        "name": "OnEvent (RefineDateRange)"
+      },
+      "event": "RefineDateRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "okdggz"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateRange",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "ZAwl4T"
+          },
+          "index": "$dateRangeLoop.index",
+          "value": "$dateRangeLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "PaDCIS",
+                "comment": "Formats the value into a readable format."
+              },
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($dateRangeLoop.value.start, \"dddd, MMMM d, yyyy\"), ' - ', formatDateTime($dateRangeLoop.value.end, \"dddd, MMMM d, yyyy\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "8kl6M0"
+              },
+              "changeType": "push",
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "kbCCbs",
+            "comment": "Prompts user to select between the date range options."
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_kbCCbs()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=$choices",
+          "property": "$selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "RnNzoa",
+        "name": "OnEvent (RefineDateTimeRange)"
+      },
+      "event": "RefineDateTimeRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "v5ijYF"
+          },
+          "name": "ResolveDateTimeDialog.RefineDateTimeRange",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "Mjqbll"
+          },
+          "index": "$datetimeRangeLoop.index",
+          "value": "$datetimeRangeLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "xDRpmj",
+                "comment": "Formats the value into a readable format."
+              },
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($datetimeRangeLoop.value.start, \"dddd, MMMM d, yyyy 'at' h:mm tt\"), ' - ', formatDateTime($datetimeRangeLoop.value.end, \"dddd, MMMM d, yyyy 'at' h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "tHzvQU"
+              },
+              "changeType": "push",
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "QkdpPG",
+            "comment": "Prompts user to select between the date time range options."
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_QkdpPG()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=$choices",
+          "property": "$selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "EMQruo",
+        "name": "OnEvent (RefineTimeRange)"
+      },
+      "event": "RefineTimeRange",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "rV7e9v"
+          },
+          "name": "ResolveDateTimeDialog.RefineTimeRange",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "3eMz8z"
+          },
+          "index": "$timeRangeLoop.index",
+          "value": "$timeRangeLoop.value",
+          "itemsProperty": "turn.dialogEvent.Value",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ifIblU",
+                "comment": "Formats the value into a readable format."
+              },
+              "property": "$formattedOption",
+              "value": "=concat(formatDateTime($timeRangeLoop.value.start, \"h:mm tt\"), ' - ', formatDateTime($timeRangeLoop.value.end, \"h:mm tt\"))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "oSvcIN"
+              },
+              "changeType": "push",
+              "itemsProperty": "$choices",
+              "value": "=json(concat('{ \"value\": \"', $formattedOption, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $formattedOption, '\", \"value\": \"', $formattedOption,'\" } }'))"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "pO5zQk",
+            "comment": "Prompts user to select between the time range options."
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_pO5zQk()}",
+          "choiceOptions": {
+            "includeNumbers": true,
+            "inlineOrMore": ", or ",
+            "inlineOr": " or ",
+            "inlineSeparator": ", "
+          },
+          "choices": "=$choices",
+          "property": "$selected",
+          "style": "heroCard"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "ClNq3i",
+        "name": "OnEvent (CheckExpectedType)"
+      },
+      "event": "CheckExpectedType",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "VXcLqd",
+            "comment": "Validates that the expected type from dialog options is present."
+          },
+          "condition": "=exists($expectedType) && $resolvedType != $expectedType",
+          "actions": [
+            {
+              "$kind": "Microsoft.TextInput",
+              "$designer": {
+                "id": "g2RoUz",
+                "name": "Prompt for textn a diffe",
+                "comment": "Prompts user to retry if the required type is not present."
+              },
+              "disabled": false,
+              "maxTurnCount": 3,
+              "alwaysPrompt": false,
+              "allowInterruptions": false,
+              "prompt": "${TextInput_Prompt_g2RoUz()}",
+              "unrecognizedPrompt": "",
+              "invalidPrompt": "",
+              "defaultValueResponse": "",
+              "property": "$query"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "hoOdR8",
+                "comment": "Repeats dialog with the new query."
+              },
+              "activityProcessed": true,
+              "options": {
+                "query": "=$query",
+                "expectedType": "=$expectedType",
+                "minDate": "=$minDate",
+                "maxDate": "=$maxDate",
+                "minTime": "$minTime",
+                "maxTime": "$maxTime"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ResolveDateTimeDialog.lg",
+  "id": "ResolveDateTimeDialog",
+  "recognizer": "ResolveDateTimeDialog.lu.qna"
+}

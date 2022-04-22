@@ -1,0 +1,77 @@
+# GetAvailabilityLast
+- how long is my last meeting
+- last meeting {@date=today}
+- tell me my last meeting
+- tell me my last meeting next {@date=wednesday}
+- tell me when i'll be done with meetings
+- tell me when my day ends
+- tell me when my day ends on {@date=wednesday}
+- what is my last meeting on {@date=friday}
+- what time can i go home
+- what time can i go home {@date=tomorrow}
+- what time does my day end
+- what time does my last meeting end
+- what time is my day over {@date=tomorrow}
+- when am i done
+- when am i done for the day
+- when am i done for the day this {@date=monday}
+- when am i finished
+- when am i finished {@date=today}
+- when does my day end
+- when is my day over
+- when is my day over on {@date=friday}
+
+@ intent GetAvailabilityLast usesFeatures Event,Show
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

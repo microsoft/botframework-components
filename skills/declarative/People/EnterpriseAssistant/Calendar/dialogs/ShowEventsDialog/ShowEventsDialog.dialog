@@ -1,0 +1,303 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "4ImDL3",
+    "name": "ShowEventsDialog",
+    "comment": "Displays events as a schedule, a list of search results, or individually."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "comment": "Displays events as a schedule, a list of search results, or individually.",
+        "id": "ApwwL4"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "ojtPG0"
+          },
+          "name": "ShowEventsDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "cCCF58",
+            "comment": "Triggers the OnEvent (SetDefaults) handler. Sets default values based on provided dialog options."
+          },
+          "eventName": "SetDefaults"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "lJZRDn",
+            "comment": "Gets the list of events based on the provided dialog options."
+          },
+          "activityProcessed": true,
+          "dialog": "GetEventsDialog",
+          "resultProperty": "$events",
+          "options": {
+            "options": "=$options"
+          }
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "N33MKt",
+            "comment": "If the event ID has been provided, show the single event, otherwise show the list of events."
+          },
+          "elseActions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "AawADt"
+              },
+              "eventName": "ShowResults"
+            }
+          ],
+          "condition": "=exists($options.eventId)",
+          "actions": [
+            {
+              "$kind": "Microsoft.EmitEvent",
+              "$designer": {
+                "id": "rC7iMb"
+              },
+              "eventName": "ShowEvent",
+              "eventValue": "=$events"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Crp07R",
+        "name": "OnEvent (SetDefaults)"
+      },
+      "event": "SetDefaults",
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "MUHCqr"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "2RQn2O"
+              },
+              "assignments": [
+                {
+                  "property": "$options.start",
+                  "value": "=convertFromUTC(utcNow(), user.workingHours.timeZone.name)"
+                }
+              ]
+            }
+          ],
+          "condition": "=count(where(flatten($options), o, exists(o))) == 0"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "3cnBsr"
+          },
+          "condition": "=ticksToDays(dateTimeDiff(formatDateTime($options.end), formatDateTime($options.start))) > 2",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "ZDxmgI"
+              },
+              "condition": "=not(exists($options.subject)) && not(exists($options.contactArray)) && not(exists($options.emailArray)) && not(exists($options.ordinal))",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "VWXoGf"
+                  },
+                  "property": "$tooManyEvents",
+                  "value": "=true"
+                },
+                {
+                  "$kind": "Microsoft.DeleteProperty",
+                  "$designer": {
+                    "id": "APDVdr"
+                  },
+                  "property": "$options.end"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "PIPYJh",
+        "name": "OnEvent (ShowResults)"
+      },
+      "event": "ShowResults",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "PtMYK2"
+          },
+          "name": "ShowEventsDialog.OnEvent_ShowResults",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Xad3Vv",
+            "comment": "If we have any parameters beyond the event date, shows the event list as a list of search results, otherwise, if we have only the date parameters, shows the results in a schedule card view."
+          },
+          "condition": "=exists($options.subject) || exists($options.contactArray) || exists($options.emailArray) || exists($options.location) || exists($options.ordinal)",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "JGLah7"
+              },
+              "condition": "=count($events) > 1",
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "05H5om"
+                  },
+                  "eventName": "ShowEvent"
+                }
+              ],
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperties",
+                  "$designer": {
+                    "id": "JtGV26",
+                    "comment": "Sets options for event list."
+                  },
+                  "assignments": [
+                    {
+                      "property": "$listOptions.items",
+                      "value": "=$events"
+                    },
+                    {
+                      "property": "$listOptions.actionTitleProperty",
+                      "value": "index"
+                    },
+                    {
+                      "property": "$listOptions.activePrompt",
+                      "value": "EventDisplayListPrompt"
+                    },
+                    {
+                      "property": "$listOptions.templates",
+                      "value": {
+                        "icon": "EventListIconUrl",
+                        "title": "EventListTitle",
+                        "item": "EventDisplayListItem",
+                        "actions": "EventListActions",
+                        "initialPrompt": "EventChoiceListPrompt",
+                        "showMorePrompt": "EventListShowMorePrompt",
+                        "skipResponse": "EventListSkipResponse",
+                        "defaultValueResponse": "EventListDefaultValueResponse"
+                      }
+                    },
+                    {
+                      "property": "$listOptions.doSelection",
+                      "value": "=false"
+                    }
+                  ]
+                },
+                {
+                  "$kind": "Microsoft.BeginDialog",
+                  "$designer": {
+                    "id": "rHW2BB",
+                    "comment": "Displays list of events. $doSelection is false, so the user is not required to choose a specific event to continue."
+                  },
+                  "activityProcessed": true,
+                  "dialog": "ListDialog",
+                  "options": "=$listOptions"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.Graph.Calendar.Helpers.GroupEventsByDate",
+              "$designer": {
+                "id": "CHMoK5",
+                "comment": "Groups events by date for display in the schedule card carousel."
+              },
+              "resultProperty": "$groupedEvents ",
+              "events": "=$events",
+              "start": "=$options.start",
+              "end": "=$options.end"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "8wch3m"
+              },
+              "activity": "${SendActivity_8wch3m()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "Dj14rv",
+        "name": "OnEvent (ShowEvent)"
+      },
+      "event": "ShowEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "uyCvgr"
+          },
+          "name": "ShowEventsDialog.OnEvent_ShowEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "cLApQW"
+          },
+          "condition": "=count($events) > 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "q9P05a",
+                "comment": "Shows the first (and only) event in the $events array."
+              },
+              "activity": "${SendActivity_q9P05a()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "Poa1KS"
+              },
+              "activity": "${SendActivity_Poa1KS()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "ShowEventsDialog.lg",
+  "recognizer": "ShowEventsDialog.lu.qna",
+  "id": "ShowEventsDialog"
+}

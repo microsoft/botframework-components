@@ -1,0 +1,59 @@
+[Icons](icons.en-us.lg)
+[Functions](functions.en-us.lg)
+[Cards](cards.en-us.lg)
+[Actions](actions.en-us.lg)
+
+# WelcomeUser()
+- IF: ${turn.user.profile.displayName != null}
+    - Hi ${turn.user.profile.displayName} 🖐, ${IntroMessage()}
+- ELSE: 
+    - Hi there 🖐, ${IntroMessage()}
+
+# IntroMessage()
+- I can help you out with calendar related questions and tasks.
+- I'm ready to help you with your schedule and upcoming events.
+- I’m here to help you make the most of your day and get things done quickly.
+
+# HelpMessage()
+- I can help you out with calendar questions. You can ask: **What's on my calendar today?** or **Create a new event**.
+- I can help you with calendar requests. Try saying: **Create a new meeting** or **What's on my calendar tomorrow?**.
+- I'm here to help with your Calendar. Get started with **When is my next meeting?** or **Create a new meeting**.
+
+# HelpActions()
+- ```
+{
+    "type": "ActionSet",
+    "actions": [
+        ${CreateEventAction()},
+        ${GetEventsAction(startOfDay(TimeZoneNow()))}
+    ]
+}
+```
+
+# GeneralErrorMessage()
+- I'm not sure I understand. Can you please try again?
+- Oops, looks like I'm stuck. Can you try to ask me in a different way?
+- Looks like I'm all mixed up. Let's try asking again, but maybe rephrase your request?
+
+# CancelMessage()
+- OK, no problem.
+- Sure. I'll cancel.
+- OK, I will stop.
+- Got it, I'll stop here.
+
+# CancelConfirmPrompt()
+- Are you sure you want to cancel? Your progress will be lost.
+
+# CancelApproved()
+- OK, I'll cancel this.
+- Sure. I'll cancel.
+- OK, I will stop.
+- Got it, I'll stop here.
+
+# CancelRejected()
+- Let's keep going.
+- All right, let's continue.
+
+# ErrorMessage()
+- Hmm. I still can't find the event you're looking for. Want to hear about your meetings today instead?
+- Something seems to be going wrong. I can tell you more about your meetings today if you like?

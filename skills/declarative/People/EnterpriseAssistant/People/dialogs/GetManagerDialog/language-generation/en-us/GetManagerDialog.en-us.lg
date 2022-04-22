@@ -1,0 +1,17 @@
+[Common](common.en-us.lg)
+
+# SendActivity_tSW5bL_text()
+- The manager of **${turn.user.displayName}** is:
+
+# SendActivity_tSW5bL()
+[Activity
+    Text = ${SendActivity_tSW5bL_text()}
+]
+
+# SendActivity_zynwoz_text()
+- **${turn.user.displayName}** does not have a manager.
+
+# SendActivity_zynwoz()
+[Activity
+    Text = ${SendActivity_zynwoz_text()}
+]

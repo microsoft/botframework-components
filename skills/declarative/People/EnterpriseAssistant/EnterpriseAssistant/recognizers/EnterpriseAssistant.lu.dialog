@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.MultiLanguageRecognizer",
+  "id": "ORCHESTRATOR_EnterpriseAssistant",
+  "recognizers": {
+    "en-us": "EnterpriseAssistant.en-us.lu",
+    "": "EnterpriseAssistant.en-us.lu"
+  }
+}

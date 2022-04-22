@@ -1,0 +1,320 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "WRF5mG",
+    "name": "RespondToEventDialog",
+    "comment": "Updates a user's response (accepted/declined/tentative) to a meeting invite."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "comment": "Updates a user's response (accepted/declined/tentative) to a meeting invite.",
+        "id": "hFpXgd"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Y9c7T3"
+          },
+          "name": "RespondToEventDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "T4tAUA",
+            "comment": "The dialog accepts a $response property to be passed through dialog options."
+          },
+          "condition": "$response",
+          "cases": [
+            {
+              "value": "accepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "ez9uAo",
+                    "comment": "Triggers the OnEvent (AcceptEvent) handler."
+                  },
+                  "eventName": "AcceptEvent"
+                }
+              ]
+            },
+            {
+              "value": "declined",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "hdHXOC",
+                    "comment": "Triggers the OnEvent (DeclineEvent) handler."
+                  },
+                  "eventName": "DeclineEvent"
+                }
+              ]
+            },
+            {
+              "value": "tentativelyAccepted",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EmitEvent",
+                  "$designer": {
+                    "id": "kvD2EI",
+                    "comment": "Triggers the OnEvent (TentativelyAccept) handler."
+                  },
+                  "eventName": "TentativelyAcceptEvent"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "kiO9rd",
+        "name": "OnEvent (AcceptEvent)"
+      },
+      "event": "AcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "Jo6ZBU"
+          },
+          "name": "RespondToEventDialog.OnEvent_AcceptEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "Jhz67U",
+            "comment": "If the user is the organizer of the event, they cannot accept it. They are shown a message and the dialog is ended."
+          },
+          "condition": "=$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "lP8j1y"
+              },
+              "activity": "${SendActivity_lP8j1y()}"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "OAx8M6"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "r6bf1q",
+            "comment": "Refreshes user token."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.AcceptEvent",
+          "$designer": {
+            "id": "2F9RxQ",
+            "comment": "Updates the user's response to 'accepted' for the provided event."
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "Xs8DT3",
+            "comment": "Updates the event response in state so the card UI will be updated."
+          },
+          "property": "$event.Response",
+          "value": "='accepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "P5pp9f"
+          },
+          "activity": "${SendActivity_P5pp9f()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "JA2lhL",
+        "name": "OnEvent (DeclineEvent)"
+      },
+      "event": "DeclineEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "YIqJpN"
+          },
+          "name": "RespondToEventDialog.OnEvent_DeclineEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "0I6DX5",
+            "comment": "If the user is the organizer of the event, they cannot decline it. They are redirected to the CancelEventDialog instead."
+          },
+          "condition": "=$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "uJzLWh"
+              },
+              "activity": "${SendActivity_uJzLWh()}"
+            },
+            {
+              "$kind": "Microsoft.ReplaceDialog",
+              "$designer": {
+                "id": "4a6c2o"
+              },
+              "activityProcessed": true,
+              "dialog": "CancelEventDialog",
+              "options": {
+                "event": "=$event"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "8wZGwZ",
+            "comment": "Refreshes user token."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.DeclineEvent",
+          "$designer": {
+            "id": "w2IgGa",
+            "comment": "Updates the user's response to 'declined' for the provided event."
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "yzE1s5",
+            "comment": "Updates the event response in state so the card UI will be updated."
+          },
+          "property": "$event.Response",
+          "value": "='declined'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "3DZbbg"
+          },
+          "activity": "${SendActivity_3DZbbg()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "5YtnVP",
+        "name": "OnEvent (TentativelyAcceptEvent)"
+      },
+      "event": "TentativelyAcceptEvent",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "KDXKf8"
+          },
+          "name": "RespondToEventDialog.OnEvent_TentativelyAcceptEvent",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "1elpcm",
+            "comment": "If the user is the organizer of the event, they cannot tentatively accept it. They are redirected to the UpdateEventDialog instead."
+          },
+          "condition": "=$event.isOrganizer",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "yKi3OO"
+              },
+              "activity": "${SendActivity_yKi3OO()}"
+            },
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "vnG3uj"
+              },
+              "activityProcessed": true,
+              "dialog": "UpdateEventDialog",
+              "options": {
+                "options.eventId": "=$event.Id"
+              }
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MIElov",
+            "comment": "Refreshes user token."
+          },
+          "activityProcessed": true,
+          "dialog": "AuthenticationDialog"
+        },
+        {
+          "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+          "$designer": {
+            "id": "baSSxn",
+            "comment": "Updates the user's response to 'tentativelyAccepted' for the provided event."
+          },
+          "resultProperty": "$result",
+          "token": "=turn.token.token",
+          "eventId": "=$event.Id"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "C0GtDY",
+            "comment": "Updates the event response in state so the card UI will be updated."
+          },
+          "property": "$event.Response",
+          "value": "='tentativelyAccepted'"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "S2mcC8"
+          },
+          "activity": "${SendActivity_S2mcC8()}"
+        }
+      ]
+    }
+  ],
+  "generator": "RespondToEventDialog.lg",
+  "recognizer": "RespondToEventDialog.lu.qna",
+  "id": "RespondToEventDialog"
+}

@@ -1,0 +1,65 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "VOwPpB",
+    "name": "AuthenticationDialog",
+    "description": "Dialog for getting OAuth token to make calls to rest of the services APIs",
+    "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "f5A0hE",
+        "comment": "Authenticates user through Azure AD and accesses their MS Graph user profile to capture their name."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "V4SpTN"
+          },
+          "name": "People.AuthenticationDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.OAuthInput",
+          "$designer": {
+            "id": "IQuSlw"
+          },
+          "timeout": 900000,
+          "maxTurnCount": 3,
+          "allowInterruptions": true,
+          "connectionName": "=settings.oauthConnectionName",
+          "title": "Sign in",
+          "text": "Please sign in with your Microsoft account to access your organization's user directory.",
+          "property": "turn.token"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "11A1dz"
+          },
+          "condition": "=not(exists(turn.currentUser))",
+          "actions": [
+            {
+              "$kind": "Microsoft.Graph.User.GetProfile",
+              "$designer": {
+                "id": "sc6hO3"
+              },
+              "token": "=turn.token.token",
+              "resultProperty": "turn.currentUser"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "AuthenticationDialog.lg",
+  "recognizer": "AuthenticationDialog.lu.qna",
+  "id": "AuthenticationDialog"
+}

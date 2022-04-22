@@ -1,0 +1,543 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "okSVaK",
+    "name": "ListDialog",
+    "comment": "Generic list dialog for displaying, navigating, and selecting from lists of items."
+  },
+  "autoEndDialog": false,
+  "defaultResultProperty": "$result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "id": "yvK44P"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "i6ahnZ"
+          },
+          "name": "ListDialog.BeginDialog",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "np0nny",
+            "comment": "This property controls whether the list of options will require the user to choose one, or whether the options will be displayed only. It is set to false by default."
+          },
+          "property": "$doSelection",
+          "value": "=coalesce($doSelection, false)"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "VSEs71",
+            "comment": "This property is used to indicate the number of turns the user has spent in this dialog. It is set in dialog state so that it can persist even when the dialog is repeated. \n\nIt is incremented in the OnIntent (Next) and OnIntent (Previous) handlers."
+          },
+          "value": "=coalesce($turnCount, 1)",
+          "property": "$turnCount"
+        },
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "4dyLBN",
+            "comment": "Triggers the OnEvent (GetChoices) handler which sets up the various properties needed to set up the list (pageIndex, itemIndex, choices array, etc)."
+          },
+          "eventName": "GetChoices"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "NbCgE7",
+            "comment": "The $doSelection property should be sent in dialog options to indicate whether the list is a choice prompt or a message response. The choice prompt requires the user to choose an option, while the message response shows the list and does not require a response. "
+          },
+          "condition": "=$doSelection",
+          "actions": [
+            {
+              "$kind": "Microsoft.ChoiceInput",
+              "$designer": {
+                "id": "VygDK3",
+                "comment": "Prompts the user to select from the list of choices. \n\nThe Bot response uses the $turnCount property to show a different message for the first turn of the conversation compared to subsequent turns (for example, after the user navigates to a different page).\n\nThe Property will hold the index of the selected item which will be used to extract the correct item from the choices array.\n\nAllow Interruptions is configured to only allow the following intents with a score > 0.8: Next, Previous, Skip, and Cancel."
+              },
+              "defaultLocale": "en-us",
+              "disabled": false,
+              "property": "$selectedIndex",
+              "recognizerOptions": {
+                "recognizeOrdinals": true,
+                "recognizeNumbers": true,
+                "noAction": false,
+                "noValue": false
+              },
+              "choices": "=$choices",
+              "style": "none",
+              "alwaysPrompt": false,
+              "allowInterruptions": "=(exists(#Next) || exists(#Previous) || exists(#Skip) || exists(#Cancel)) && turn.recognized.score > 0.8",
+              "defaultValue": "=null",
+              "maxTurnCount": "=3",
+              "defaultValueResponse": "${ChoiceInput_DefaultValueResponse_VygDK3()}",
+              "prompt": "${ChoiceInput_Prompt_VygDK3()}",
+              "choiceOptions": {
+                "includeNumbers": true,
+                "inlineOrMore": ", or ",
+                "inlineOr": " or ",
+                "inlineSeparator": ", "
+              }
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "lIowZt"
+              },
+              "condition": "=$selectedIndex != null",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "aUZ2FY",
+                    "comment": "Extracts the object from the items list matching the selected index."
+                  },
+                  "property": "$selection",
+                  "value": "=$pageItems[int($selectedIndex) - 1]"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "d0ve0h",
+                "comment": "Returns the selected item to the calling dialog."
+              },
+              "value": "=$selection"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "HOESBs",
+                "comment": "Displays a list of results. \n\nThe Bot response uses the $turnCount property to show a different message for the first turn of the conversation compared to subsequent turns (for example, after the user navigates to a different page)."
+              },
+              "activity": "${SendActivity_HOESBs()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnDialogEvent",
+      "$designer": {
+        "id": "lGWY0z",
+        "name": "OnEvent (GetChoices)"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "zER0mA"
+          },
+          "name": "ListDialog.OnEvent_GetChoices",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "DX1wQt",
+            "comment": "List navigation properties:\n\n$pageSize indicates how many items will be displayed on each page of the list.\n\n$pageIndex indicates which page of results is currently being displayed.\n\n$itemIndex ...\n\n$startIndex indicates the index of the item to be shown at the top of the current page. By default, this is calculated by multiplying the current $pageIndex by the $pageSize.\n\n$pageItems indicates the subarray of items from the overall list that are displayed in the current page.\n\n$pageCount indicates the overall number of pages required to show the full list of items. This is calculated by dividing the number of items by the pageSize (with an extra page for any remaining items).\n\n$turnCount indicates how many turns the user has spent in this dialog. This is used to modify the Bot response appropriately for subsequent turns."
+          },
+          "assignments": [
+            {
+              "property": "$pageSize",
+              "value": "=coalesce($pageSize, 5)"
+            },
+            {
+              "property": "$pageIndex",
+              "value": "=coalesce($pageIndex, 0)"
+            },
+            {
+              "property": "$itemIndex",
+              "value": "=coalesce($itemIndex, 0)"
+            },
+            {
+              "property": "$startIndex",
+              "value": "=coalesce($pageindex * $pageSize, 0)"
+            },
+            {
+              "property": "$pageItems",
+              "value": "=subArray($items, $startIndex, min($startIndex + $pageSize, count($items)))"
+            },
+            {
+              "property": "$pageCount",
+              "value": "=if(count($items) % $pageSize == 0, count($items) / $pageSize, round(count($items) / $pageSize) + 1)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "DrAjqe",
+            "comment": "Constructs the choice items to be shown in the ChoicePrompt. These settings allow the choice to be selected by the index or title property (configured in the dialog options) in addition to being selected via click."
+          },
+          "index": "$pageItemLoop.index",
+          "value": "$pageItemLoop.value",
+          "itemsProperty": "$pageItems",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "kNUEEQ",
+                "comment": "The index property represents the user-facing index of each item, rather than the zero-based index used by default. "
+              },
+              "property": "$pageItems[$pageItemLoop.index].index",
+              "value": "=$pageItemLoop.index + 1"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Q0pcWI",
+                "comment": "The actionTitle property is passed via dialog options and indicates a field in the choice object that should be used as a way of selecting the item. For example, a contact object with a name and email property, may set the actionTitle to name so the user can select by saying the name of the option."
+              },
+              "property": "$actionTitle",
+              "value": "=$pageItems[$pageItemLoop.index][$actionTitleProperty]"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "Ho4bLH",
+                "comment": "Builds the choiceItem in the object format needed for the choice prompt. \n{ \"value\": \"<value>\", \"action\": { \"type\": \"postBack\", \"title\": \"<title>\" }}"
+              },
+              "property": "$choiceItem",
+              "value": "=json(concat('{ \"value\": \"', $pageItems[$pageItemLoop.index].index, '\", \"action\": { \"type\": \"postBack\", \"title\": \"', $actionTitle, '\" } }'))"
+            },
+            {
+              "$kind": "Microsoft.EditArray",
+              "$designer": {
+                "id": "L4FUUg"
+              },
+              "changeType": "push",
+              "itemsProperty": "$choices",
+              "value": "=$choiceItem"
+            }
+          ]
+        }
+      ],
+      "event": "GetChoices"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pjLWu0",
+        "name": "OnIntent (Next)"
+      },
+      "intent": "Next",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "jJCAos"
+          },
+          "name": "ListDialog.OnIntent_Next",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "GaeG8U",
+            "comment": "Increments the pageIndex so that when the next set of choices are loaded, the page will be incremented appropriately."
+          },
+          "assignments": [
+            {
+              "property": "$pageIndex",
+              "value": "=$pageIndex + 1"
+            },
+            {
+              "property": "$itemIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "P1awzy",
+            "comment": "If the list is not at the last page."
+          },
+          "condition": "=$pageIndex * $pageSize <  count($items)",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "loGUG2",
+                "comment": "Updates the list options with new pageIndex."
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$items"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "=$actionTitleProperty"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "=$activePrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": "=$templates"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": "=$additionalOptions"
+                },
+                {
+                  "property": "$listOptions.pageIndex",
+                  "value": "=$pageIndex"
+                },
+                {
+                  "property": "$listOptions.turnCount",
+                  "value": "=$turnCount + 1"
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "w9anuY",
+                "comment": "Restarts the dialog with the new list options."
+              },
+              "activityProcessed": true,
+              "options": "=$listOptions"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "lepsYO",
+                "comment": "Reset the pageIndex."
+              },
+              "property": "$pageIndex",
+              "value": "= $pageIndex - 1"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "D6gEbV"
+              },
+              "activity": "${SendActivity_D6gEbV()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "nAbozX",
+        "name": "OnIntent (Previous)"
+      },
+      "intent": "Previous",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "wNTV7x"
+          },
+          "name": "ListDialog.OnIntent_Previous",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SetProperties",
+          "$designer": {
+            "id": "9QoATl",
+            "comment": "Decrements the pageIndex so that when the next set of choices are loaded, the page will be incremented appropriately."
+          },
+          "assignments": [
+            {
+              "property": "$pageIndex",
+              "value": "=$pageIndex - 1"
+            },
+            {
+              "property": "$itemIndex",
+              "value": "=0"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "UVQphx",
+            "comment": "If the list is not at the first page."
+          },
+          "condition": "=$pageIndex >= 0",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "wV2hXD",
+                "comment": "Updates the list options with new pageIndex."
+              },
+              "assignments": [
+                {
+                  "property": "$listOptions.items",
+                  "value": "=$items"
+                },
+                {
+                  "property": "$listOptions.actionTitleProperty",
+                  "value": "=$actionTitleProperty"
+                },
+                {
+                  "property": "$listOptions.activePrompt",
+                  "value": "=$activePrompt"
+                },
+                {
+                  "property": "$listOptions.templates",
+                  "value": "=$templates"
+                },
+                {
+                  "property": "$listOptions.additionalOptions",
+                  "value": "=$additionalOptions"
+                },
+                {
+                  "property": "$listOptions.pageIndex",
+                  "value": "=$pageIndex"
+                },
+                {
+                  "value": "=$turnCount + 1",
+                  "property": "$listOptions.turnCount"
+                },
+                {
+                  "property": "$listOptions.doSelection",
+                  "value": "=$doSelection"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "WfLoxa",
+                "comment": "Restarts the dialog with the new list options."
+              },
+              "activityProcessed": true,
+              "options": "=$listOptions"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "MgUdSM",
+                "comment": "Resets the pageIndex."
+              },
+              "property": "$pageIndex",
+              "value": " =0"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "2LMTaY"
+              },
+              "activity": "${SendActivity_2LMTaY()}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "gVH1hA",
+        "name": "OnIntent (Skip)"
+      },
+      "intent": "Skip",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "73c90n"
+          },
+          "name": "ListDialog.OnIntent_Skip",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "BDsmtE",
+            "comment": "Shows skipResponse from the list options."
+          },
+          "activity": "${SendActivity_BDsmtE()}"
+        },
+        {
+          "$kind": "Microsoft.EndDialog",
+          "$designer": {
+            "id": "piQ9tu",
+            "comment": "Ends this dialog and returns null."
+          },
+          "value": "=null"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "DogtGR",
+        "name": "OnIntent (Cancel)"
+      },
+      "intent": "Cancel",
+      "actions": [
+        {
+          "$kind": "Microsoft.TraceActivity",
+          "$designer": {
+            "id": "pzG3IA"
+          },
+          "name": "ListDialog.OnIntent_Cancel",
+          "value": "=null"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "nRdr1W"
+          },
+          "activity": "${SendActivity_nRdr1W()}"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs",
+          "$designer": {
+            "id": "rKJlTu"
+          },
+          "activityProcessed": true
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "bw2bVM",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.EmitEvent",
+          "$designer": {
+            "id": "QEpfNj",
+            "comment": "If the dialog has been launched with $doSelection set to false, the list card will be displayed and the dialog will not automatically end to allow the user to say \"next\" or \"previous\" to navigate between the pages. If in that mode, the user says an unknown utterance that no dialog in the stack can handle, the message will land here and should bubble the unknownIntent event back to the parent."
+          },
+          "eventName": "unknownIntent",
+          "bubbleEvent": true
+        }
+      ]
+    }
+  ],
+  "generator": "ListDialog.lg",
+  "recognizer": "ListDialog.lu.qna",
+  "id": "ListDialog"
+}

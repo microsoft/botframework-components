@@ -1,0 +1,28 @@
+> !# @Namespace = functions
+> !# @Exports = TimeZoneNow
+
+# Pluralize(count, singular, plural) 
+- IF: ${ count == 1 }
+    - ${ singular }
+- ELSE:
+ - ${ plural }
+
+ # TimeZoneNow()
+ - ${formatDateTime(convertFromUTC(utcNow(), user.workingHours.timeZone.name))}
+
+# FormatDate(date)
+- IF: ${date(formatDateTime(date)) == date(convertFromUTC(utcNow(), user.workingHours.timeZone.name))}
+    - today, ${formatDateTime(date, 'MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+- ELSEIF: ${date(formatDateTime(date)) == date(addDays(convertFromUTC(utcNow(), user.workingHours.timeZone.name), 1))}
+    - tomorrow, ${formatDateTime(date, 'MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+- ELSE:
+    - ${formatDateTime(date, 'dddd, MMMM ')}${addOrdinal(dayOfMonth(formatDateTime(date)))}
+
+# FormatTime(time)
+- ${formatDateTime(time, 'h:mm tt')}
+
+# FormatTimeRange(start, end)
+- ${formatDateTime(start, 'h:mm')} - ${formatDateTime(end, 'h:mm tt')}
+
+# CapitalizeFirstLetter(string)
+- ${toUpper(substring(string, 0, 1))}${substring(string, 1, length(string) - 1)}

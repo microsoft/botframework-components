@@ -1,0 +1,80 @@
+# SetTitle
+- change the subject
+- change the subject of the meeting with {@contact=youngjae} and {@contact=elaine} to {@newSubject=standup}
+- change the subject to {@newSubject=family vacation}
+- change the title from {@currentSubject=standup} to {@newSubject=sprint planning}
+- change the title of my next meeting to {@newSubject=editorial meeting}
+- change the title of the {@currentSubject=daily standup} meeting to {@newSubject=daily status update}
+- change the title of the event {@date=this week} with {@contact=you@test.net}, {@contact=scott}, and {@contact=john}
+- change the title of the meeting with {@contact=test@email.com} and {@contact=youngjae} from {@currentSubject=content review} to {@newSubject=dentist appointment}
+- make the title {@newSubject=daily commute}
+- rename my meeting {@date=next month} named {@currentSubject=hair appointment}
+- rename the event from {@currentSubject=editorial meeting} to {@newSubject=project sync}
+- set the title of my event with {@contact=morgan} {@date=tomorrow} from {@currentSubject=weekly review} to {@newSubject=happy hour}
+- set the title of the {@subject=content review} meeting
+- set the title of the event
+- set the title of the event to {@newSubject=team meeting}
+- set the title to {@newSubject=daily health check-in}
+- update the subject of the meeting {@date=next week}
+- update the subject of the meeting with {@contact=lauren} and {@contact=jose} to {@newSubject=happy hour}
+- update the subject of the next event to {@newSubject=standup}
+- update the title of my meeting with {@contact=isaac}, {@contact=cynthia}, and {@contact=youngjae}
+- no, change the title please
+- no i want the title to be {@newSubject=podcast recording}
+- yes but change the title to be {@newSubject=design meeting}
+- yes except the title is wrong
+
+@ intent SetTitle usesFeatures Update,Event,Location,Titled
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

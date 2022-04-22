@@ -1,0 +1,20 @@
+{
+  "EnterpriseAssistant.en-us": {
+    "rootDialog": true,
+    "triggers": {
+      "BotTour": [
+        "BotTourDialog.en-us"
+      ],
+      "Cancel": "",
+      "Feedback": [
+        "FeedbackDialog.en-us"
+      ],
+      "Help": "",
+      "": [
+        "ChitchatDialog.en-us"
+      ],
+      "Calendar": "",
+      "People": ""
+    }
+  }
+}

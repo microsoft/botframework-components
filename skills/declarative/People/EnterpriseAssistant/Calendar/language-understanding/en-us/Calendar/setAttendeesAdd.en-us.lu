@@ -1,0 +1,100 @@
+# SetAttendeesAdd
+- add an attendee
+- add attendees to my meeting on {@date=friday}
+- add {@newContact=chris}, {@newContact=me@myemail.edu}, and {@newContact=rebecca}
+- add {@newContact=jose} to my next meeting
+- add more recipients to the meeting with {@contact=roberta}
+- add people
+- add {@newContact=phoebe} to my meeting with {@contact=lauren} at {@date=5 pm}
+- add {@newContact=samantha} to my {@date=5pm today}
+- add {@newContact=test@email.com} to the meeting with {@contact=gary} and {@contact=hyunjin}
+- add {@newContact=thomas} and {@newContact=ryan}
+- can you add {@newContact=robyn}, {@newContact=luther}, and {@newContact=clark} to my meeting on {@date=august 7, 2021}
+- can you change the attendee to {@newContact=lauren}
+- change attendees
+- forward my meeting on {@date=thursday} to {@newContact=youngjae}
+- forward the next event to {@newContact=scott}
+- forward the {@subject=status review} to {@newContact=sara}, {@newContact=rob}, {@newContact=martin}, and {@newContact=melissa}
+- forward this to {@newContact=john}
+- forward to {@newContact=chris} and {@newContact=me@myemail.edu}
+- forward to more people
+- forward to {@newContact=scott}
+- include {@newContact=john}, {@newContact=jacob}, and {@newContact=amy}
+- include {@newContact=lauren} and {@newContact=pooja}
+- include {@newContact=quirine}
+- invite {@newContact=elaine} and {@newContact=morgan}
+- invite {@newContact=em} to the meeting named {@subject=content review} with {@contact=cynthia} and {@contact=gary}
+- invite {@newContact=jose}
+- invite {@newContact=me@myemail.edu} to the event {@date=this week} with {@contact=cynthia}
+- invite more people
+- invite some others to {@contact=ryan}'s meeting on {@date=october} {@date=12th}
+- invite someone else
+- invite {@newContact=test@email.com} to the event with {@contact=you@test.net}, {@contact=jose}, and {@contact=gary} on {@date=thursday} with a subject of {@subject=team meeting}
+- no, add elaine to this too
+- no, add {@newContact=sarah}
+- no, i want to add {@newContact=richard} to this
+- no, invite {@newContact=michelle}
+- please add {@newContact=qiong} to the meeting
+- send my {@subject=breakfast} event to {@newContact=gary}
+- send my event titled {@subject=1:1} to {@newContact=chris}
+- send the meeting to {@newContact=morgan}
+- send this to more people
+- send to {@newContact=youngjae}, {@newContact=lauren}, and {@newContact=margaret}
+- sure, but send it to {@newContact=thomas} and {@newContact=xi}
+- yes, but add {@newContact=darren} too
+- yes, but i need to add {@newContact=ryan}
+
+@ intent SetAttendeesAdd usesFeatures Update,Event,Location,Add,Titled
+
+> # PREBUILT Entity definitions
+
+@ prebuilt email
+@ prebuilt geographyV2
+@ prebuilt ordinalV2
+@ prebuilt personName
+
+> # Entity definitions
+
+@ ml contact hasRoles currentContact,newContact usesFeatures email,personName
+@ ml date hasRoles currentDate,newDate
+@ ml duration
+@ ml location usesFeatures geographyV2
+@ ml subject hasRoles newSubject,currentSubject
+
+> # Phrase list definitions
+
+@ phraselist Create(interchangeable) disabledForAllModels = 
+	- create,schedule,book,new,set up,find time
+
+@ phraselist Update(interchangeable) disabledForAllModels = 
+	- modify,change,update,edit,move,set
+
+@ phraselist Event(interchangeable) disabledForAllModels = 
+	- meeting,time,appointment,conference,discussion,meetings,events,appointments,session,reservation,sync,presentation
+
+@ phraselist Attending(interchangeable) disabledForAllModels = 
+	- coming,joining,attending,participating in,going to
+
+@ phraselist Location(interchangeable) disabledForAllModels = 
+	- location,room,city
+
+@ phraselist Add(interchangeable) disabledForAllModels = 
+	- add,include,invite
+
+@ phraselist Remove(interchangeable) disabledForAllModels = 
+	- remove,uninvite,don't add,don't include,un-invite
+
+@ phraselist Titled(interchangeable) disabledForAllModels = 
+	- titled,named,called,with a title of,with a name of,with a subject of,with the name,with the subject,with the title
+
+@ phraselist Decline(interchangeable) disabledForAllModels =
+	- decline,respond no,say no,don't accept,can't make,won't make,won't attend,can't attend
+
+@ phraselist Accept(interchangeable) disabledForAllModels =
+	- accept,respond yes,say yes,can make,will make,can attend,will attend,will be at
+
+@ phraselist Tentative(interchangeable) disabledForAllModels =
+	- tentative,respond maybe,might make,might attend
+
+@ phraselist Show(interchangeable) disabledForAllModels = 
+	- show,list,find,get,read,lookup,what is,what's,whats,what

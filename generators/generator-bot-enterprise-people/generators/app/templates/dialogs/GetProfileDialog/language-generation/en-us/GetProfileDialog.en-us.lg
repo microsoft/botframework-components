@@ -10,8 +10,7 @@
 ]
 
 # FoundUserText()
-- IF: ${not($haveUserId)}
-    - Here is what I found for **${turn.user.displayName}**:
-- ELSE: 
-    -
-    
+- ```IF: ${not($showProfileCardOnly)}
+    \- Here is what I found for **${turn.user.displayName}**:```
+- ```ELSE: 
+    \-```

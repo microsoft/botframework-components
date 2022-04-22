@@ -1,0 +1,149 @@
+[Common](common.en-us.lg)
+[Actions](actions.en-us.lg)
+[Icons](icons.en-us.lg)
+[Cards](cards.en-us.lg)
+
+# UserListPrompt()
+- IF: ${count(turn.items) > 1}
+    - ${MultipleResultFound()}
+- ELSE:
+    - ${SingleResultFound()}
+
+# SingleResultFound()
+- SWITCH: ${$additionalOptions.scenario}
+- CASE: ${"Collaborators"}
+    - I found 1 colleague that collaborates with **${$additionalOptions.userName}**.
+- CASE: ${"Peers"}
+    - I found 1 colleague that shares the same manager as **${$additionalOptions.userName}**.
+- CASE: ${"DirectReports"}
+    - I found 1 colleague that reports to **${$additionalOptions.userName}**.
+- DEFAULT:
+    - I found one result:
+
+# MultipleResultFound()
+- SWITCH: ${$additionalOptions.scenario}
+- CASE: ${"Collaborators"}
+    - I found ${count(turn.items)} colleagues that collaborate with **${$additionalOptions.userName}**.
+- CASE: ${"Peers"}
+    - There are ${count(turn.items)} colleagues that share the same manager as **${$additionalOptions.userName}**.
+- CASE: ${"DirectReports"}
+    - There are ${count(turn.items)} people that report to **${$additionalOptions.userName}**.
+- CASE: ${"PersonSearch"}
+    - I found multiple matches for **${$additionalOptions.userName}**. Please pick one:
+- DEFAULT:
+    - I found multiple results:
+
+# NoItemsFound
+- SWITCH: ${$additionalOptions.scenario}
+- CASE: ${"Collaborators"}
+    - **${$additionalOptions.userName}** does not have any collaborators.
+- CASE: ${"Peers"}
+    - **${$additionalOptions.userName}** does not have any peers.
+- CASE: ${"DirectReports"}
+    - **${$additionalOptions.userName}** does not have any direct reports.
+- CASE: ${"PersonSearch"}
+    - Sorry, I couldn't find anyone named **${titleCase($additionalOptions.userName)}** in your organization. Please try again.
+- DEFAULT:
+    - I didn't find any results.
+
+# UserListShowMorePrompt()
+- How about these options?
+
+# UserListSkipResponse()
+- Sure. Let's move on.
+
+# UserListDefaultValueResponse()
+- OK, let's move on.
+
+# UserListTitle()
+- SWITCH: ${$additionalOptions.Scenario}
+- CASE: ${"Collaborators"}
+    - Collaborators
+- CASE: ${"Peers"}
+    - Peers
+- CASE: ${"DirectReports"}
+    - Team
+- DEFAULT:
+    - Colleagues
+
+# SelectUsersAction(item)
+- IF: ${ dialog.doSelection }    
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": 
+        {
+            "skillId": "${SkillId()}",
+            "value" : "${item.index}",
+            "msteams": {
+                "type": "messageBack",
+                "value": "${item.index}",
+                "text": "${item.displayName}"
+            }
+        }
+    }
+    ```
+- ELSE:
+    - ```
+    {
+        "type": "Action.Submit",
+        "title": "selectOption",
+        "data": {
+            "skillId": "${SkillId()}",
+            "intent": "GetProfile",
+            "userId": "${item.id}",
+            "msteams": {
+                "type": "messageBack"
+            }
+        }
+    }
+    ```
+
+# UserListItem(item)
+- ```
+{
+    "type": "Container",
+    "separator": true,
+    "spacing": "Small",
+    "selectAction": ${SelectUsersAction(item)},
+    "items": [
+        {
+            "type": "ColumnSet",
+            "spacing": "Small",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": 10,
+                    "items": [
+                        {
+                            "type": "Image",
+                            "url": "${ContactImageIconUrl(item.Photo)}",
+                            "style": "Person",
+                            "size": "${IconSizeSmall()}",
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": 90,
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "text": "${item.displayName}",
+                            "wrap": true,
+                            "weight": "Bolder"
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "${coalesce(item.jobTitle, item.department, "")}",
+                            "wrap": true,
+                            "spacing": "None"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```

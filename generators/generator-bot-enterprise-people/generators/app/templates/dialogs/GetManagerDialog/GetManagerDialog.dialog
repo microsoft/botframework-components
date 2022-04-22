@@ -27,21 +27,6 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "ansVmG",
-            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "6XS1Gu"
@@ -112,7 +97,8 @@
                   "activityProcessed": true,
                   "dialog": "GetProfileDialog",
                   "options": {
-                    "userId": "=turn.manager.id"
+                    "userId": "=turn.manager.id",
+                    "showProfileCardOnly": "=true"
                   }
                 }
               ]
