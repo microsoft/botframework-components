@@ -76,14 +76,6 @@
               ]
             },
             {
-              "$kind": "Microsoft.SetProperty",
-              "$designer": {
-                "id": "IuTIX8"
-              },
-              "property": "dialog.items",
-              "value": "=turn.items"
-            },
-            {
               "$kind": "Microsoft.ChoiceInput",
               "$designer": {
                 "id": "VygDK3",
@@ -177,6 +169,14 @@
           "value": "=null"
         },
         {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "wZQHiW"
+          },
+          "property": "turn.items",
+          "value": "=dialog.items"
+        },
+        {
           "$kind": "Microsoft.EmitEvent",
           "$designer": {
             "id": "aVXgYo",
@@ -192,6 +192,14 @@
           },
           "property": "turn.items",
           "value": "=getProperty($itemsProperty)"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "EuKh4L"
+          },
+          "property": "dialog.items",
+          "value": "=turn.items"
         },
         {
           "$kind": "Microsoft.IfCondition",
