@@ -431,7 +431,7 @@
                     {
                       "property": "$listOptions.additionalOptions",
                       "value": {
-                        "contactName": "=titleCase(turn.dialogEvent.value)"
+                        "contactName": "=titleCase($nameProperty)"
                       }
                     },
                     {
