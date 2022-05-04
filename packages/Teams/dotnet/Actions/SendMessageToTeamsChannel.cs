@@ -123,6 +123,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
             Tuple<ConversationReference, string> result;
 
             // Check for legacy adapter
+#pragma warning disable CS0618 // Type or member is obsolete
             if (dc.Context.Adapter is BotFrameworkAdapter)
             {
                 // TeamsInfo.SendMessageToTeamsChannelAsync requires AppCredentials
@@ -134,7 +135,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
 
                 // The result comes back as a tuple, which is used to set the two properties (if present).
                 result = await TeamsInfo.SendMessageToTeamsChannelAsync(dc.Context, activity, teamsChannelId, credentials, cancellationToken: cancellationToken).ConfigureAwait(false);
-            } 
+            }
             else if (dc.Context.Adapter is CloudAdapterBase)
             {
                 // Retrieve the bot appid from TurnState's ClaimsIdentity
@@ -165,6 +166,7 @@ namespace Microsoft.Bot.Components.Teams.Actions
             {
                 throw new InvalidOperationException($"The adapter does not support {nameof(SendMessageToTeamsChannel)}.");
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (ConversationReferenceProperty != null)
             {

@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Component.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -170,12 +171,12 @@ namespace Microsoft.Bot.Component.Graph.Actions
             // Filter results by datetime if dateTimeType is a specific datetime
             if (dateTimeTypeProperty != null && dateTimeTypeProperty.Contains("time"))
             {
-                parsedEvents = parsedEvents.Where(r => DateTime.Parse(r.Start.DateTime) == startProperty).ToList();
+                parsedEvents = parsedEvents.Where(r => DateTime.Parse(r.Start.DateTime, CultureInfo.InvariantCulture) == startProperty).ToList();
             }
 
             parsedEvents = parsedEvents
-                .Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime).Date >= startProperty.Value.Date)
-                .OrderBy(ev => DateTime.Parse(ev.Start.DateTime).Date)
+                .Where(ev => ev.IsAllDay == false && DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture).Date >= startProperty.Value.Date)
+                .OrderBy(ev => DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture).Date)
                 .Take(maxResults)
                 .ToList();
 
@@ -205,8 +206,8 @@ namespace Microsoft.Bot.Component.Graph.Actions
         private CalendarSkillEventModel ParseEvent(Event ev, TimeZoneInfo timeZone, int index, string userEmail)
         {
             var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
-            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime), timeZone);
-            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime), timeZone);
+            var startTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.Start.DateTime, CultureInfo.InvariantCulture), timeZone);
+            var endTZ = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(ev.End.DateTime, CultureInfo.InvariantCulture), timeZone);
 
             ev.Start = DateTimeTimeZone.FromDateTime(startTZ, timeZone);
             ev.End = DateTimeTimeZone.FromDateTime(endTZ, timeZone);

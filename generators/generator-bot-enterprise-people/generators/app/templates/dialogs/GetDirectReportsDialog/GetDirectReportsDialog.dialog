@@ -27,21 +27,6 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "ZYPAvm",
-            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
           "$kind": "Microsoft.SetProperty",
           "$designer": {
             "id": "pmfkqy",
@@ -178,8 +163,8 @@
             "id": "SAgsvz",
             "comment": "Since the profile photo is not included by default, additional calls are made to get the photo for each profile."
           },
-          "index": "turn.foreach.index",
-          "value": "turn.foreach.value",
+          "index": "turn.reportsList.index",
+          "value": "turn.reportsList.value",
           "itemsProperty": "turn.items",
           "actions": [
             {
@@ -187,8 +172,8 @@
               "$designer": {
                 "id": "uCR1y8"
               },
-              "resultProperty": "turn.items[turn.foreach.index].photo",
-              "userId": "=turn.foreach.value.Id",
+              "resultProperty": "turn.items[turn.reportsList.index].photo",
+              "userId": "=turn.reportsList.value.Id",
               "token": "=turn.token.token"
             }
           ]

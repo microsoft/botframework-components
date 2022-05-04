@@ -10,8 +10,7 @@
 ]
 
 # FoundUserText()
-- IF: ${not($haveUserId)}
+- IF: ${not($showProfileCardOnly)}
     - Here is what I found for **${turn.user.displayName}**:
 - ELSE: 
     -
-    
