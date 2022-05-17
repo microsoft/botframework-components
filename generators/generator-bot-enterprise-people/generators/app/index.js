@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 'use strict';
 
 const { BaseGenerator } = require('@microsoft/generator-bot-adaptive');
@@ -16,7 +15,7 @@ module.exports = class extends BaseGenerator {
           {
             isPlugin: true,
             name: 'Microsoft.Bot.Components.Graph',
-            version: '1.1.2',
+            version: '1.3.0',
           },
         ],
         modifyApplicationSettings: (appSettings) => {

@@ -27,30 +27,6 @@
           "value": "=null"
         },
         {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "Amg65J",
-            "comment": "This property is used to modify the end response based on whether the userId was provided initially or not. If it was provided on dialog launch, only the profile card is shown to reduce conversation noise."
-          },
-          "property": "$haveUserId",
-          "value": "=exists($userId)"
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "KV9zcT",
-            "comment": "Looks up user based on $userId or $contactName and prompts user to select an option."
-          },
-          "activityProcessed": true,
-          "dialog": "GetUserDialog",
-          "resultProperty": "turn.user",
-          "options": {
-            "userId": "=$userId",
-            "contactName": "=$contactName",
-            "doSelection": "=true"
-          }
-        },
-        {
           "$kind": "Microsoft.IfCondition",
           "$designer": {
             "id": "hFpZL4"

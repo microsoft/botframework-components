@@ -134,11 +134,13 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return userTokenClient.GetUserTokenAsync(dc.Context.Activity.From?.Id, connectionName, dc.Context.Activity.ChannelId, state, cancellationToken);
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
             {
                 throw new InvalidOperationException($"Auth is not supported by the current adapter");
             }
-            
+#pragma warning restore CS0618 // Type or member is obsolete
+
             string magicCode = null;
             if (!string.IsNullOrEmpty(state))
             {
@@ -161,10 +163,12 @@ namespace Microsoft.Bot.Components.Teams.Actions
                 return CreateOAuthInvokeResponseActivity(dc, title, signInResource.SignInLink);
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!(dc.Context.Adapter is IExtendedUserTokenProvider tokenProvider))
             {
                 throw new InvalidOperationException($"Auth is not supported by the current adapter");
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Retrieve the OAuth Sign in Link to use in the Suggested Action auth link result.
             var signInLink = await tokenProvider.GetOauthSignInLinkAsync(dc.Context, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);

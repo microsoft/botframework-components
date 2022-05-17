@@ -5,6 +5,7 @@ namespace Microsoft.Bot.Components.Graph.Actions
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading;
@@ -87,8 +88,8 @@ namespace Microsoft.Bot.Components.Graph.Actions
             {
                 foreach (var item in events)
                 {
-                    var evStart = DateTime.Parse(item.Start.DateTime);
-                    var evEnd = DateTime.Parse(item.End.DateTime);
+                    var evStart = DateTime.Parse(item.Start.DateTime, CultureInfo.InvariantCulture);
+                    var evEnd = DateTime.Parse(item.End.DateTime, CultureInfo.InvariantCulture);
 
                     if (events.IndexOf(item) == 0)
                     {

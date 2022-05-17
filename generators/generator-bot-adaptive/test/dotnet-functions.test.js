@@ -125,7 +125,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
       {
         botName,
         packageReferences: '',
-        sdkVersion: '4.14.1',
+        sdkVersion: '4.16.0',
       }
     );
 
