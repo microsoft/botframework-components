@@ -74,99 +74,103 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 return Dialog.EndOfTurn;
 
 
+            //if we aren't already complete, go ahead and timeout
             return await convState.timersState.RunForStatusAsync(timerId, StateStatus.Running, async () =>
             {
-                var activity = dc.Context.Activity;
+            //-----------------------------Body---------------
+            var activity = dc.Context.Activity;
 
-                //we have to manage our timer somehow.
-                //For starters, complete our existing timer.
+            //we have to manage our timer somehow.
+            //For starters, complete our existing timer.
 
 
-                //Handle case where we timed out 
-                var interrupted = dc.State.GetValue<bool>(TurnPath.Interrupted, () => false);
-                if (!interrupted && activity.Type != ActivityTypes.Message && activity.Name == ActivityEventNames.ContinueConversation)
+            //Handle case where we timed out 
+            var interrupted = dc.State.GetValue<bool>(TurnPath.Interrupted, () => false);
+            if (!interrupted && activity.Type != ActivityTypes.Message && activity.Name == ActivityEventNames.ContinueConversation)
+            {
+                string calledTimerId = "";
+                //if there is no matched conversation (could be removed by endOfConversations, or there is no called timer (shouldn't happen) or
+                //the last called Timer is not the same as activity's timer, then don't continue 
+                if (!convState.triggeredTimers.TryDequeue(out calledTimerId) || calledTimerId != timerId)
                 {
-                    string calledTimerId = "";
-                    //if there is no matched conversation (could be removed by endOfConversations, or there is no called timer (shouldn't happen) or
-                    //the last called Timer is not the same as activity's timer, then don't continue 
-                    if (!convState.triggeredTimers.TryDequeue(out calledTimerId) || calledTimerId != timerId)
+                    dc.Services.Get<IBotTelemetryClient>().TrackEvent("Abort Timer routine", new Dictionary<string, string>
                     {
-                        dc.Services.Get<IBotTelemetryClient>().TrackEvent("Abort Timer routine",
-                            new Dictionary<string, string> { { "timerId", calledTimerId } });
-                        return Dialog.EndOfTurn;
-                    }
-
-
-                //    dc.Services.Get<IBotTelemetryClient>().TrackEvent("Continue Timer", new Dictionary<string, string>
-                //{
-                //    {"timerId", timerId}
-                //});
-
-                    //stop any more incoming event for this activity 
-                    convState.timersState.ForceComplete(timerId);
-
-                    //Set max turns so that we evaluate the default when we visit the inputdialog.
-                    var oldValue = inputActivity.MaxTurnCount;
-                    inputActivity.MaxTurnCount = 1;
-
-                    //We need to set interrupted here or it will discard the continueconversation event...
-                    DialogTurnResult result;
-                    try
-                    {
-                        dc.State.SetValue(ITimeoutInput.SilenceDetected, true);
-                        dc.State.SetValue(TurnPath.Interrupted, true);
-                        result = await continueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
-                    }
-                    finally
-                    {
-                        inputActivity.MaxTurnCount = oldValue;
-                    }
-
-                    return result;
+                        {"timerId", calledTimerId}
+                    });
+                    return Dialog.EndOfTurn;
                 }
 
-                //continue for any other events
 
-                //stop any more incoming event for this activity 
-                convState.timersState.ForceComplete(timerId);
-
-                //check if it is user input
-                if (activity.Type == ActivityTypes.Message)
-                {
-                    dc.Services.Get<IBotTelemetryClient>().TrackEvent("User Continue", new Dictionary<string, string>
+                dc.Services.Get<IBotTelemetryClient>().TrackEvent("Continue Timer", new Dictionary<string, string>
                 {
                     {"timerId", timerId}
                 });
 
-                    //Begin dirty hack to start a timer for the reprompt
+                //stop any more incoming event for this activity 
+                convState.timersState.ForceComplete(timerId);
 
-                    //If our input was not valid, restart the timer.
-                    dc.State.SetValue(valueProperty, dc.Context.Activity.Text); //OnRecognizeInput assumes this was already set earlier on in the dialog. We will set it and then unset it to simulate passing an argument to a function... :D
+                //Set max turns so that we evaluate the default when we visit the inputdialog.
+                var oldValue = inputActivity.MaxTurnCount;
+                inputActivity.MaxTurnCount = 1;
 
-                    if (await onRecognizeInputAsync(dc, cancellationToken).ConfigureAwait(false) != InputState.Valid)
-                    {
-                        var turnCount = dc.State.GetValue<int>(turnCountProperty, () => 0);
-                        if (turnCount < inputActivity.MaxTurnCount?.GetValue(dc.State))
-                        {
-                            //We are cheating to force this recognition here. Maybe not good?
-
-                            //Known bug: Sometimes invalid input gets accepted anyway(due to max turns and defaulting rules), this will start a continuation for a thing it shouldn't.
-                            //Sure do wish EndDialog was available to the adaptive stack.
-
-                            timerId = inputActivity.CreateTimerForConversation(dc, cancellationToken);
-                            await convState.timersState.StartAsync(timerId).ConfigureAwait(false);
-                        }
-                    }
-
-                    //Clear our the input property after recognition since it will happen again later :D
-                    dc.State.SetValue(valueProperty, null);
-
-
-                    //End dirty hack
+                //We need to set interrupted here or it will discard the continueconversation event...
+                DialogTurnResult result;
+                try
+                {
+                    dc.State.SetValue(ITimeoutInput.SilenceDetected, true);
+                    dc.State.SetValue(TurnPath.Interrupted, true);
+                    result = await continueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
+                finally
+                {
+                    inputActivity.MaxTurnCount = oldValue;
                 }
 
-                return await continueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
-            },
+                return result;
+            }
+
+            //continue for any other events
+
+            //stop any more incoming event for this activity 
+            convState.timersState.ForceComplete(timerId);
+
+            //check if it is user input
+            if (activity.Type == ActivityTypes.Message)
+            {
+                dc.Services.Get<IBotTelemetryClient>().TrackEvent("User Continue", new Dictionary<string, string>
+                {
+                    {"timerId", timerId}
+                });
+
+                //Begin dirty hack to start a timer for the reprompt
+
+                //If our input was not valid, restart the timer.
+                dc.State.SetValue(valueProperty, dc.Context.Activity.Text); //OnRecognizeInput assumes this was already set earlier on in the dialog. We will set it and then unset it to simulate passing an argument to a function... :D
+
+                if (await onRecognizeInputAsync(dc, cancellationToken).ConfigureAwait(false) != InputState.Valid)
+                {
+                    var turnCount = dc.State.GetValue<int>(turnCountProperty, () => 0);
+                    if (turnCount < inputActivity.MaxTurnCount?.GetValue(dc.State))
+                    {
+                        //We are cheating to force this recognition here. Maybe not good?
+
+                        //Known bug: Sometimes invalid input gets accepted anyway(due to max turns and defaulting rules), this will start a continuation for a thing it shouldn't.
+                        //Sure do wish EndDialog was available to the adaptive stack.
+
+                        timerId = inputActivity.CreateTimerForConversation(dc, cancellationToken);
+                        await convState.timersState.StartAsync(timerId).ConfigureAwait(false);
+                    }
+                }
+
+                //Clear our the input property after recognition since it will happen again later :D
+                dc.State.SetValue(valueProperty, null);
+
+
+                //End dirty hack
+            }
+
+            return await continueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+        },
         () =>
         {
             dc.Services.Get<IBotTelemetryClient>().TrackEvent("Stop the routine", new Dictionary<string, string>
