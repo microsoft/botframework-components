@@ -20,7 +20,7 @@
 
   <ItemGroup>
     
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.15.2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.16.0" />
     
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
@@ -54,10 +54,6 @@
     <None Remove="Schemas\Microsoft.Telephony.TimeoutChoiceInput.uischema" />
 	  <None Remove="Schemas\Microsoft.Telephony.TimeoutTextInput.schema" />
 	  <None Remove="Schemas\Microsoft.Telephony.TimeoutTextInput.uischema" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\botbuilder-dotnet\libraries\Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime\Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
