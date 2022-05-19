@@ -15,7 +15,7 @@ namespace Microsoft.Bot.Components.Telephony.Middleware
     /// <summary>
     /// The middleware that handles all outgoing messages
     /// </summary>
-    public class SetSpeakMiddleware : IMiddleware
+    public class ContextReceiverMiddleware : IMiddleware
     {
 
         public delegate void EventReceiverHandler(ITurnContext turnContext);
@@ -24,7 +24,7 @@ namespace Microsoft.Bot.Components.Telephony.Middleware
         /// <summary>
         /// Initializes a new SetSpeakMiddleware class
         /// </summary>
-        public SetSpeakMiddleware()
+        public ContextReceiverMiddleware()
         {
             _receivers = new Dictionary<string, List<EventReceiverHandler>>();
         }

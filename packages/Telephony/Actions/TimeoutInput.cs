@@ -28,9 +28,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
         private static ConcurrentDictionary<string, (ConcurrentQueue<string> triggeredTimers, IStateMatrix timersState)> conversationStateMatrix = new ConcurrentDictionary<string, (ConcurrentQueue<string> triggeredTimers, IStateMatrix timersState)>();
 
-        public static async Task<DialogTurnResult> BeginDialogAsync<K>(K inputActivity, DialogContext dc,
+        public static async Task<DialogTurnResult> BeginDialogAsync<T>(T inputActivity, DialogContext dc,
             Func<DialogContext, object, CancellationToken, Task<DialogTurnResult>> baseClassCall,
-            object options = null, CancellationToken cancellationToken = default(CancellationToken)) where K : InputDialog, ITimeoutInput
+            object options = null, CancellationToken cancellationToken = default(CancellationToken)) where T : InputDialog, ITimeoutInput
         {
             if (options is CancellationToken)
             {
@@ -79,10 +79,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             {
             //-----------------------------Body---------------
             var activity = dc.Context.Activity;
-
-            //we have to manage our timer somehow.
-            //For starters, complete our existing timer.
-
 
             //Handle case where we timed out 
             var interrupted = dc.State.GetValue<bool>(TurnPath.Interrupted, () => false);

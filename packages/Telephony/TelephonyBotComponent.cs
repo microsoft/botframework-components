@@ -19,7 +19,7 @@ namespace Microsoft.Bot.Components.Telephony
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             // Conditionals
-            var middleware = new Middleware.SetSpeakMiddleware();
+            var middleware = new Middleware.ContextReceiverMiddleware();
             services.AddSingleton<IMiddleware>(middleware);
             middleware.addEventReceiver(ActivityTypes.EndOfConversation, TimeoutInput.RemoveTimers);
 

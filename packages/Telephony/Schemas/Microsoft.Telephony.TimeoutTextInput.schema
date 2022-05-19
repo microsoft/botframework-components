@@ -2,8 +2,8 @@
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": [ "implements(Microsoft.IDialog)", "extends(Microsoft.InputDialog)" ],
   "type": "object",
-  "title": "(Preview)1 text input dialog with silence detection",
-  "description": "getting arbitrary text and detecting silence in case of no entry",
+  "title": "Text input dialog with silence detection",
+  "description": "Collection information - Ask for a word or sentence.",
   "properties": {
     "timeOutInMilliseconds": {
       "$ref": "schema:#/definitions/integerExpression",
