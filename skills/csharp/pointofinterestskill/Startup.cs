@@ -54,7 +54,9 @@ namespace PointOfInterestSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.MaxDepth = 128;
+            });
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>

@@ -56,7 +56,9 @@ namespace RestaurantBooking
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.MaxDepth = 128;
+            });
 
             // Configure channel provider
             services.AddSingleton<IChannelProvider, ConfigurationChannelProvider>();
