@@ -417,7 +417,7 @@ namespace ITSMSkill.Services.ServiceNow
 
             public string Serialize(object obj)
             {
-                return JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                return JsonConvert.SerializeObject(obj, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, MaxDepth = null });
             }
         }
     }

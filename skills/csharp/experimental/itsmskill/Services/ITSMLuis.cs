@@ -71,7 +71,7 @@ namespace Luis
             var app = JsonConvert.DeserializeObject<ITSMLuis>(
                 JsonConvert.SerializeObject(
                     result,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Error = OnError }
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, MaxDepth = null, Error = OnError }
                 )
             );
             Text = app.Text;

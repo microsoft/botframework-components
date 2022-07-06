@@ -62,7 +62,9 @@ namespace ITSMSkill
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure MVC
-            services.AddControllers().AddNewtonsoftJson(); ;
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.MaxDepth = null;
+            });
 
             // Configure server options
             services.Configure<KestrelServerOptions>(options =>

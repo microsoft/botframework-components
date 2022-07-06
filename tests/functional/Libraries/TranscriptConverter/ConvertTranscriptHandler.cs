@@ -60,7 +60,8 @@ namespace TranscriptConverter
                 Formatting.Indented,
                 new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MaxDepth = null
                 });
 
             using var streamWriter = new StreamWriter(Path.GetFullPath(targetScript));

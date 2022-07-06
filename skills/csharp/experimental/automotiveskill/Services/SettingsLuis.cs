@@ -52,7 +52,7 @@ namespace Luis
 
         public void Convert(dynamic result)
         {
-            var app = JsonConvert.DeserializeObject<SettingsLuis>(JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            var app = JsonConvert.DeserializeObject<SettingsLuis>(JsonConvert.SerializeObject(result, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, MaxDepth = null }));
             Text = app.Text;
             AlteredText = app.AlteredText;
             Intents = app.Intents;

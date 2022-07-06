@@ -107,7 +107,8 @@ namespace TranscriptConverter
                 Formatting.None,
                 new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MaxDepth = null
                 });
 
             var token = JToken.Parse(json);
