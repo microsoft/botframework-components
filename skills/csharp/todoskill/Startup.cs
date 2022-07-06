@@ -50,7 +50,7 @@ namespace ToDoSkill
         {
             // Configure MVC
             services.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.MaxDepth = 128;
+                options.SerializerSettings.MaxDepth = null;
             });
 
             // Configure channel provider
