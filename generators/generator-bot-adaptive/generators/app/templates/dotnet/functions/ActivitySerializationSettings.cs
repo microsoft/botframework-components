@@ -8,7 +8,8 @@ namespace <%= botName %>
     {
         internal static readonly JsonSerializerSettings Default = new JsonSerializerSettings
         {
-            NullValueHandling = NullValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore, 
+            MaxDepth = null,
             Formatting = Formatting.Indented,
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,

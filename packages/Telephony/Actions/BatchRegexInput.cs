@@ -190,7 +190,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             var properties = new Dictionary<string, string>()
                 {
                     { "template", JsonConvert.SerializeObject(template) },
-                    { "result", msg == null ? string.Empty : JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) },
+                    { "result", msg == null ? string.Empty : JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, MaxDepth = null }) },
                 };
             TelemetryClient.TrackEvent("GeneratorResult", properties);
 
