@@ -51,7 +51,7 @@ namespace CalendarSkill
         {
             // Configure MVC
             services.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.MaxDepth = null;
+                options.SerializerSettings.MaxDepth = 128;
             });
 
             // Configure server options

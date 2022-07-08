@@ -21,7 +21,7 @@ namespace People
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.MaxDepth = null;
+                options.SerializerSettings.MaxDepth = 128;
             });
             services.AddBotRuntime(Configuration);
         }
