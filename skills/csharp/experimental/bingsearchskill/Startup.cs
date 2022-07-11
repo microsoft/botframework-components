@@ -47,7 +47,7 @@ namespace BingSearchSkill
         {
             // Configure MVC
             services.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.MaxDepth = 128;
+                options.SerializerSettings.MaxDepth = HttpHelper.BotMessageSerializerSettings.MaxDepth;
             });
 
             // Configure server options
