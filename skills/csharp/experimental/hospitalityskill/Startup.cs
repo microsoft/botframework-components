@@ -48,7 +48,7 @@ namespace HospitalitySkill
         {
             // Configure MVC
             services.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.MaxDepth = null;
+                options.SerializerSettings.MaxDepth = HttpHelper.BotMessageSerializerSettings.MaxDepth;
             });
 
             // Configure server options
