@@ -362,7 +362,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-adaptive@workspace:^1.3.0, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
+"@microsoft/generator-bot-adaptive@workspace:^1.4.0, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
@@ -385,7 +385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -399,7 +399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-language@workspace:generators/generator-bot-core-language"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -413,7 +413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -427,9 +427,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.3.0"
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.4.0"
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -440,11 +440,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-calendar@workspace:^1.3.0, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
+"@microsoft/generator-bot-enterprise-calendar@workspace:^1.4.0, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -454,11 +454,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-people@workspace:^1.3.0, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
+"@microsoft/generator-bot-enterprise-people@workspace:^1.4.0, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.3.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -1118,7 +1118,7 @@ __metadata:
     lru-cache: ^5.1.1
     uuid: ^8.3.2
     xpath: ^0.0.32
-  checksum: 4a26692a77b0b64388c0307302647ac31a6b69af2f45e4258c540ab767f5c10c73f6999bf5c1fa3c2330c8db11b34d5c82d470cf2098b00014acc1190613e581
+  checksum: 870cd8e0128e8a4093424a97b03fa0556bccb03f6d62a926f823fbdd693d18ac85a6f81b534a846dc50ca9c50f05fa9ced78e064b090d794a740fdaea0c02283
   languageName: node
   linkType: hard
 
@@ -1862,7 +1862,7 @@ __metadata:
     node-fetch: ^2.6.7
     url-parse: ^1.5.9
     zod: ~1.11.17
-  checksum: 063a06f8954d9f5380121f845f436c28fa8f745652cd713599df127ead4347452fbe7295e62522ed26441eb1960e5e79efe8bd54ddf24d50f3b7e2f94be1574c
+  checksum: 5debf8c748d8a1e930a9bc5819b8ee35f5a80ac704cc10deec8440dde180b6139527d28946f83802b4a6a9ec3f42b14a7a382b084aeb6504226932f1aed99b71
   languageName: node
   linkType: hard
 
@@ -1876,7 +1876,7 @@ __metadata:
     botframework-schema: 4.17.0
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 5c71ef67ad22bce3a9ef87b00f6fdf4f0a23bb096c95ebca5166277636400db9a6418c6f739f583e4b6bd6853d2161cfa2a894ca53d4d7c5e00772d429651500
+  checksum: 35d4ee38a4573dc5e07909866d9a9a76c36dd34308c3c90144268899b967eb7834de4929fd5acea69e8159e58c0f1df2d1f77a99b7244cb6fe1ee2d632106253
   languageName: node
   linkType: hard
 
@@ -1885,7 +1885,7 @@ __metadata:
   resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.17.0-preview"
   dependencies:
     dependency-graph: ^0.10.0
-  checksum: eaac65e243cadb0f2cbaee68de995bcf4b96b71fb220019dc3fcc80f73dd863d6648a87b5fd6cc0255f56ae47ad59782cd2ea1a1cb6d35b4cbb72c64a4c817cf
+  checksum: ef064da2fcf3e45221393d12293190e547c86d54167188e95068929f66ffb7698e499e379b1dea674b054fa29ee547d586155eb7fe1a05544eae6ee095de5e28
   languageName: node
   linkType: hard
 
@@ -1906,7 +1906,7 @@ __metadata:
     nock: ^11.9.1
     url-parse: ^1.5.9
     zod: ~1.11.17
-  checksum: 3056bd3b28a91237c8fa9da34d2918c07a1a69491b49f754a213002914875d1e00bf2a5a585f7647ea6b8d066d940f77221a575f2081f5a4feb786f0f869dad5
+  checksum: 97627d104a30a8dbbf4d13600229ac505f705858311f890887ab23e92dba11120f4a197f61babc4146e7baccfc59b79655b92c9837a802abeb0b18f0b11df2c7
   languageName: node
   linkType: hard
 
@@ -1927,7 +1927,7 @@ __metadata:
     botframework-connector: 4.17.0
     lodash: ^4.17.21
     node-fetch: ^2.6.7
-  checksum: 40456dc7d6c495f5e5ba80658ceaa7f06e9d9ae9088e8ad52af779a378936471cf5ea670bfdcd382a2e8b0e0670560246cecd0a5c7f7602c81abb9ea08786e2c
+  checksum: 67163c451f8067778820d4ecb73669ca9f2de625f5a567da529ebe4fd3fe231eccfee9a9d5d955715674144307c65e737d75100e85eb52448db5f2da53b5f5aa
   languageName: node
   linkType: hard
 
@@ -1939,7 +1939,7 @@ __metadata:
     botbuilder-stdlib: 4.17.0-internal
     chokidar: ^3.4.0
     zod: ~1.11.17
-  checksum: 785fe960dd59bb79645d052e434172335f8393520fbdac3b9b698d2ecef283f6fd86fff27a5e5cf70067f2d37475d63a10ea17a8063a4a876197e0cd118fc7a1
+  checksum: 8195ba1086cb7a3b12fd896663dc5a59b12e669ef53fd6610e44b528166e2cbbc3af507f3d9121bc96d3a44fb0696d6d5fb61b9ecbadb80ede4369dc762415d0
   languageName: node
   linkType: hard
 
@@ -1957,7 +1957,7 @@ __metadata:
     globalize: ^1.4.2
     lodash: ^4.17.21
     zod: ~1.11.17
-  checksum: ff5844de9d202bf3edb4d2a5dabd5d4c5cfee5d4e3b0e11b90fefe0ecf9278479bbc596a0c0996b0d4751b3c69de0b085333ba1853ffd01608e9080d4c8c23a0
+  checksum: 317c247802cd4fe4aa6302ea9011fb5c21412fe04d3ea7368bc650ccfd205c39257924420f1117580dfc026e383e9fcbabcc45f9900f3e4365c88a594cdb4788
   languageName: node
   linkType: hard
 
@@ -1969,14 +1969,14 @@ __metadata:
     antlr4ts: 0.5.0-alpha.3
     lodash: ^4.17.19
     uuid: ^8.3.2
-  checksum: ab52bbfd22530a2b14d6ac071bd8a9acff1a03773529d7504bbc137fa8202fac57d609ef3ae1a9def0177fdada30f45ef57f25ccb253a61d5a2f7df2f7161026
+  checksum: 58ec24d1e8438560ac37b0053f7f1889249421c25a72d2fe9116d5d5d9979ca50bb7708040830e4e2a7d33cb4d24e43e56005ccb0a1d4ace9bfdc5e5108ddb09
   languageName: node
   linkType: hard
 
 "botbuilder-stdlib@npm:4.17.0-internal":
   version: 4.17.0-internal
   resolution: "botbuilder-stdlib@npm:4.17.0-internal"
-  checksum: 14c84d641c006ec10159223d098591c4ba0523755b51f71367960432b7be44887fd15a4325f4b1dd44c667b5b112dc4b0aa829dee681be8312fa14392824b92b
+  checksum: 8c3905cddcbb96141030ba911a124e93df57c81502ceb0a0a4045b0097ec6cca332fbcaab2009993001135bedf615bbc413ed139c44e96391c842bea695d6819
   languageName: node
   linkType: hard
 
@@ -1996,7 +1996,7 @@ __metadata:
     htmlparser2: ^6.0.1
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 27207d4ac082af277b526586fb0fafdc62835d87a66281e38a7bdfca49dd10164be724a8cf07d7281b2058bc56ee80dac9b82208ab8e63a32771b9c589788d40
+  checksum: 90efed510ecc3d62890d5da04630d417e6488b9e9705e22c73a01a07de52a9a208e802c4d38dc6f651596d5bde794380c52a65272d16f7cb813239e568d72424
   languageName: node
   linkType: hard
 
@@ -2017,7 +2017,7 @@ __metadata:
     jsonwebtoken: 8.0.1
     rsa-pem-from-mod-exp: ^0.8.4
     zod: ~1.11.17
-  checksum: 944432a05d7b2faa87ac923c6a9d3170b38562b7dd360d740ba27d0fbed9406a8b36ee6f2cfda0b644fda794d8bc1bbfebdfd66e929c5d4575f37e9c4dac5cfb
+  checksum: 87a3417f53a94c06dba3f3754537aba4831733cc49576ef62580440918fb5aceb5ec1270c0f3652d2f1c63814eac8fc1cf8843c942859a71db025ba41e04787a
   languageName: node
   linkType: hard
 
@@ -2027,7 +2027,7 @@ __metadata:
   dependencies:
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 9fe7541fc8090483571b260ebe615c3796ded9f8509081644d43f258ea5991389cee0677517482ff2eb5ad69136ba74c749a84c9febbb296b5afb53b4c991db1
+  checksum: 34a710e27fa817f02beaa97a9f59cb5f8d4b575af0c58bd08ab3042f906927c5bb926a2bc30836978404e89f05b7bf84d0a6691bfea7756fabd2decb385c6263
   languageName: node
   linkType: hard
 
@@ -2039,7 +2039,7 @@ __metadata:
     "@types/ws": ^6.0.3
     uuid: ^8.3.2
     ws: ^7.1.2
-  checksum: 54bcae911ef55df0520eb2fc86191df9482e5ec0b44191b9c9a476001980b58045e95c1c461dad45ae6f89e3ff694cfbf0d3b1aeb7431246e3c6fce36a2e69b3
+  checksum: 0a6ba578511dcb1363a70472fb3c4c7e3a2045e8c8ad27a409e9ce3f073812851f622caf8db9b4217e09c3682871530151193cbef49a2a33d67339441787aa27
   languageName: node
   linkType: hard
 
