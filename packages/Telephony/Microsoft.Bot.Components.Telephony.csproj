@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,6 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.16.0" />
 
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
@@ -51,12 +52,16 @@
     <None Remove="Schemas\Microsoft.Telephony.ResumeRecording.uischema" />
     <None Remove="Schemas\Microsoft.Telephony.TimeoutChoiceInput.schema" />
     <None Remove="Schemas\Microsoft.Telephony.TimeoutChoiceInput.uischema" />
+	<None Remove="Schemas\Microsoft.Telephony.TimeoutTextInput.schema" />
+	<None Remove="Schemas\Microsoft.Telephony.TimeoutTextInput.uischema" />
   </ItemGroup>
 
   <PropertyGroup>
     <!-- Disable warning for SA0001 "XML comment analysis is disabled due to project configuration" which is not true -->
     <!-- Disable warning for SA1649 "file name should match first type name" due to use of generics -->
     <NoWarn>$(NoWarn),SA0001,SA1649</NoWarn>
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
 
 </Project>

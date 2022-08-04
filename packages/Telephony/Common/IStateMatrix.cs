@@ -24,9 +24,10 @@ namespace Microsoft.Bot.Components.Telephony.Common
         Task<StateStatus> GetStatusForIdAsync(string id);
 
         Task CompleteAsync(string id);
+        void ForceComplete(string id);
 
         Task StartAsync(string id);
 
-        Task RunForStatusAsync(string id, StateStatus status, Func<Task> action);
+        Task<T> RunForStatusAsync<T>(string id, StateStatus status, Func<Task<T>> matchedAction, Func<Task<T>> notMatchedAction);
     }
 }

@@ -16,10 +16,10 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
-    public class TimeoutChoiceInput : ChoiceInput, ITimeoutInput
+    public class TimeoutTextInput : TextInput, ITimeoutInput
     {
         [JsonProperty("$kind")]
-        public new const string Kind = "Microsoft.Telephony.TimeoutChoiceInput";
+        public new const string Kind = "Microsoft.Telephony.TimeoutTextInput";
 
         /// <summary>
         /// Gets or sets a value indicating how long to wait for before timing out and using the default value.
@@ -28,7 +28,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public IntExpression TimeOutInMilliseconds { get; set; }
 
         [JsonConstructor]
-        public TimeoutChoiceInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+        public TimeoutTextInput([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
             : base()
         {
             // enable instances of this command as debug break point
@@ -45,9 +45,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await TimeoutInput.ContinueDialogAsync(this, dc, VALUE_PROPERTY, TURN_COUNT_PROPERTY,
-                OnRecognizeInputAsync,
-                base.ContinueDialogAsync,
-                cancellationToken);
+                 OnRecognizeInputAsync,
+                 base.ContinueDialogAsync,
+                 cancellationToken);
         }
 
     }

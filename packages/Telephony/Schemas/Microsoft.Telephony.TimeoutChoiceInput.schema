@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": [ "implements(Microsoft.IDialog)", "extends(Microsoft.InputDialog)" ],
-  "title": "(Preview) Choice input dialog with silence detection",
+  "title": "Choice input dialog with silence detection",
   "description": "Collect information - Pick from a list of choices",
   "type": "object",
   "properties": {
