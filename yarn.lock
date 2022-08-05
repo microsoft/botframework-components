@@ -362,7 +362,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-adaptive@workspace:^1.4.0, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
+"@microsoft/generator-bot-adaptive@workspace:^1.4.1, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
@@ -385,7 +385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -399,7 +399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-language@workspace:generators/generator-bot-core-language"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -413,7 +413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -427,9 +427,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.4.0"
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.4.1"
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -440,11 +440,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-calendar@workspace:^1.4.0, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
+"@microsoft/generator-bot-enterprise-calendar@workspace:^1.4.1, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -454,11 +454,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-people@workspace:^1.4.0, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
+"@microsoft/generator-bot-enterprise-people@workspace:^1.4.1, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.0"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
