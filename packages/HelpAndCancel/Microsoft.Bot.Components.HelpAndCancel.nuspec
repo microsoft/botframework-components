@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Microsoft.Bot.Components.HelpAndCancel</id>
-        <version>1.3.0</version>
+        <version>1.4.0</version>
         <authors>Microsoft</authors>
         <owners>Microsoft</owners>
         <copyright>© Microsoft Corporation. All rights reserved.</copyright>
@@ -13,7 +13,7 @@
         <description>Contains Adaptive Dialog assets to support Help and Cancel conversational flows in a bot built on the Azure Bot Framework.</description>
         <tags>msbot-component msbot-content conversationalcore helpintent cancelintent preview</tags>
         <dependencies>
-            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.16.0" />
+            <dependency id="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" version="4.17.1" />
         </dependencies>
     </metadata>
 
