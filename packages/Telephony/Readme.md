@@ -1,6 +1,6 @@
 # Microsoft.Bot.Components.Telephony
 
-The Microsoft.Bot.Components.Telephon package contains pre-built actions for building bots with Telephony capabilities. Install the package using [Bot Framework Composer](https://docs.microsoft.com/composer) to add telephony specific actions to your bot. Here are the actions supported:
+The Microsoft.Bot.Components.Telephony package contains pre-built actions for building bots with Telephony capabilities. Install the package using [Bot Framework Composer](https://docs.microsoft.com/composer) to add telephony specific actions to your bot. Here are the actions supported:
 
 - [Call Transfer](#Call-Transfer)
 - [Call Recording](#Call-Recording)
