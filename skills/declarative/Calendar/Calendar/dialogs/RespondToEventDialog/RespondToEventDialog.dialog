@@ -271,45 +271,49 @@
               "activityProcessed": true,
               "dialog": "UpdateEventDialog",
               "options": {
-                "options.eventId": "=$event.Id"
+                "options": "=$options",
+                "event": "=$event"
               }
             }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "MIElov",
+                "comment": "Refreshes user token."
+              },
+              "activityProcessed": true,
+              "dialog": "AuthenticationDialog"
+            },
+            {
+              "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
+              "$designer": {
+                "id": "baSSxn",
+                "comment": "Updates the user's response to 'tentativelyAccepted' for the provided event."
+              },
+              "resultProperty": "$result",
+              "token": "=turn.token.token",
+              "eventId": "=$event.Id"
+              "event": "=$event"
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "C0GtDY",
+                "comment": "Updates the event response in state so the card UI will be updated."
+              },
+              "property": "$event.Response",
+              "value": "='tentativelyAccepted'"
+            },
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "S2mcC8"
+              },
+              "activity": "${SendActivity_S2mcC8()}"
+            }
           ]
-        },
-        {
-          "$kind": "Microsoft.BeginDialog",
-          "$designer": {
-            "id": "MIElov",
-            "comment": "Refreshes user token."
-          },
-          "activityProcessed": true,
-          "dialog": "AuthenticationDialog"
-        },
-        {
-          "$kind": "Microsoft.Graph.Calendar.TentativelyAcceptEvent",
-          "$designer": {
-            "id": "baSSxn",
-            "comment": "Updates the user's response to 'tentativelyAccepted' for the provided event."
-          },
-          "resultProperty": "$result",
-          "token": "=turn.token.token",
-          "eventId": "=$event.Id"
-        },
-        {
-          "$kind": "Microsoft.SetProperty",
-          "$designer": {
-            "id": "C0GtDY",
-            "comment": "Updates the event response in state so the card UI will be updated."
-          },
-          "property": "$event.Response",
-          "value": "='tentativelyAccepted'"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "S2mcC8"
-          },
-          "activity": "${SendActivity_S2mcC8()}"
         }
       ]
     }
