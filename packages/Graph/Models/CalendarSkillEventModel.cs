@@ -52,6 +52,7 @@ namespace Microsoft.Bot.Components.Graph.Models
             this.Response = ev.ResponseStatus.Response;
             this.Organizer = ev.Organizer;
             this.WebLink = ev.WebLink;
+            this.ResponseRequested = ev.ResponseRequested;
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "index", Required = Required.Default)]
@@ -113,5 +114,8 @@ namespace Microsoft.Bot.Components.Graph.Models
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "webLink", Required = Required.Default)]
         public string WebLink { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "responseRequested", Required = Required.Default)]
+        public bool? ResponseRequested { get; set; }
     }
 }
