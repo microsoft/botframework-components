@@ -47,13 +47,13 @@
             "id": "80CHa6",
             "comment": "If the eventId was passed as a dialog option, then perform an event lookup rather than a search. This is typically triggered by selecting an event from a list of search results. "
           },
-          "condition": "=$parameters.eventId != null",
+          "condition": "=not(empty($parameters.eventId))",
           "elseActions": [
             {
               "$kind": "Microsoft.EmitEvent",
               "$designer": {
                 "id": "IgNZGN",
-                "comment": "Triggers the OnEvent (GetEventById) handler. Performs an event search based on the parameters provided by the user."
+                "comment": "Triggers the OnEvent (GetEvents) handler. Performs an event search based on the parameters provided by the user."
               },
               "eventName": "GetEvents"
             }
