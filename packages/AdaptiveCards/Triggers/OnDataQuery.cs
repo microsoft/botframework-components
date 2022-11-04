@@ -61,8 +61,7 @@ namespace Microsoft.Bot.Components.AdaptiveCards
             // Filter to only invoked Action.Execute activities
             var expression = Expression.AndExpression(
                 base.CreateExpression(),
-                Expression.Parse($"{TurnPath.Activity}.name == 'adaptiveCard/action'"),
-                Expression.Parse($"{TurnPath.Activity}.value.action.type == 'Data.Query'"));
+                Expression.Parse($"{TurnPath.Activity}.name == 'application/search'"));
 
             // Add optional verb constraint
             if (!string.IsNullOrEmpty(this.Dataset))
