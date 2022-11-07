@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
@@ -26,22 +24,22 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
 
             // get character ranges
-            int start = regex.IndexOf('[');
-            int end = regex.IndexOf(']');
+            var start = regex.IndexOf('[');
+            var end = regex.IndexOf(']');
             if ((start < 0) || (end < 0) || (end < (start + 2)))
             {
                 throw new ArgumentException("Invalid regular expression");
             }
 
-            string ranges = regex.Substring(start + 1, end - start - 1);
+            var ranges = regex.Substring(start + 1, end - start - 1);
             if (ranges.IndexOf("0-9", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                this.AcceptsDigits = true;
+                AcceptsDigits = true;
             }
 
             if (ranges.IndexOf("A-Z", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                this.AcceptsAlphabet = true;
+                AcceptsAlphabet = true;
             }
 
             // check for exclusion set
@@ -49,8 +47,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             int endExclude = regex.IndexOf(']', end + 1);
             if ((start > 0) && (endExclude > 0) && (endExclude >= (start + 2)))
             {
-                string invalid = regex.Substring(start + 1, endExclude - start - 1);
-                this.InvalidChars = new HashSet<char>(invalid.ToCharArray());
+                var invalid = regex.Substring(start + 1, endExclude - start - 1);
+                InvalidChars = new HashSet<char>(invalid.ToCharArray());
             }
 
             // get length
@@ -61,8 +59,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 throw new ArgumentException("Invalid regular expression");
             }
 
-            string length = regex.Substring(start + 1, end - start - 1);
-            this.LengthInChars = short.Parse(length, CultureInfo.InvariantCulture);
+            var length = regex.Substring(start + 1, end - start - 1);
+            LengthInChars = short.Parse(length, CultureInfo.InvariantCulture);
         }
 
         public bool AcceptsAlphabet { get; set; } = false;
@@ -99,8 +97,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
         public string GenerateGroupExampleText()
         {
-            string seed = string.Empty;
-            Random rnd = new Random();
+            var seed = string.Empty;
+            var rnd = new Random();
             if (AcceptsAlphabet)
             {
                 seed += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

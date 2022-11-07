@@ -35,7 +35,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             : base()
         {
             // enable instances of this command as debug break point
-            this.RegisterSourceLocation(sourceFilePath, sourceLineNumber);
+            RegisterSourceLocation(sourceFilePath, sourceLineNumber);
         }
 
         /// <summary>
@@ -113,23 +113,23 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
             //Check if we were interrupted. If we were, follow our logic for when we get interrupted.
-            bool wasInterrupted = dc.State.GetValue(TurnPath.Interrupted, () => false);
+            var wasInterrupted = dc.State.GetValue(TurnPath.Interrupted, () => false);
             if (wasInterrupted)
             {
                 return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
             }
 
             //Get value of termination string from expression
-            string regexPattern = this.RegexPattern?.GetValue(dc.State);
-            SerialNumberPattern snp = new SerialNumberPattern(regexPattern, true);
+            var regexPattern = RegexPattern?.GetValue(dc.State);
+            var snp = new SerialNumberPattern(regexPattern, true);
 
-            string[] choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
-            bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
+            var choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
+            var isAmbiguousPrompt = choices != null && choices.Length >= 2;
             if (isAmbiguousPrompt)
             {
                 dc.State.SetValue("this.ambiguousChoices", null);
-                string choice = dc.Context.Activity.Text;
-                string result = string.Empty;
+                var choice = dc.Context.Activity.Text;
+                var result = string.Empty;
                 switch (choice)
                 {
                     case "1":
@@ -146,14 +146,14 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 {
                     //If so, save it to the output property and end the dialog
                     //Get property from expression
-                    string property = this.Property?.GetValue(dc.State);
+                    var property = Property?.GetValue(dc.State);
                     dc.State.SetValue(property, result);
                     return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     dc.State.SetValue(AggregationDialogMemory, result);
-                    await this.SendActivityMessageAsync(this.ContinuePrompt, dc, cancellationToken).ConfigureAwait(false);
+                    await SendActivityMessageAsync(ContinuePrompt, dc, cancellationToken).ConfigureAwait(false);
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }
@@ -162,7 +162,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
             existingAggregation += dc.Context.Activity.Text;
 
-            string[] results = snp.Inference(existingAggregation);
+            var results = snp.Inference(existingAggregation);
 
             //Is the current aggregated message the termination string?
             if (results.Length == 1)
@@ -171,7 +171,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 {
                     //If so, save it to the output property and end the dialog
                     //Get property from expression
-                    string property = this.Property?.GetValue(dc.State);
+                    var property = Property?.GetValue(dc.State);
                     dc.State.SetValue(property, results[0]);
                     return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
@@ -184,7 +184,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             else if (results.Length >= 2)
             {
                 dc.State.SetValue("this.ambiguousChoices", results);
-                string promptMsg = ((ActivityTemplate)this.ConfirmationPrompt).Template.Replace("{0}", results[0]).Replace("{1}", results[1]);
+                var promptMsg = ((ActivityTemplate)ConfirmationPrompt).Template.Replace("{0}", results[0]).Replace("{1}", results[1]);
                 await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
@@ -202,7 +202,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             if (e.Name == DialogEvents.ActivityReceived && dc.Context.Activity.Type == ActivityTypes.Message)
             {
                 //Get interruption mask pattern from expression
-                string regexPattern = this.InterruptionMask?.GetValue(dc.State);
+                var regexPattern = InterruptionMask?.GetValue(dc.State);
 
                 // Return true( already handled ) if input matches our regex interruption mask
                 if (!string.IsNullOrEmpty(regexPattern) && Regex.Match(dc.Context.Activity.Text, regexPattern).Success)
@@ -215,9 +215,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
                 // Should we allow interruptions
                 var canInterrupt = true;
-                if (this.AllowInterruptions != null)
+                if (AllowInterruptions != null)
                 {
-                    var (allowInterruptions, error) = this.AllowInterruptions.TryGetValue(dc.State);
+                    var (allowInterruptions, error) = AllowInterruptions.TryGetValue(dc.State);
                     canInterrupt = error == null && allowInterruptions;
                 }
 
@@ -228,13 +228,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return false;
         }
 
-        private async Task<DialogTurnResult> PromptUserAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<DialogTurnResult> PromptUserAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
             //Do we already have a value stored? This would happen in the interruption case, a case in which we are looping over ourselves, or maybe we had a fatal error and had to restart the dialog tree
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
             if (!string.IsNullOrEmpty(existingAggregation))
             {
-                var alwaysPrompt = this.AlwaysPrompt?.GetValue(dc.State) ?? false;
+                var alwaysPrompt = AlwaysPrompt?.GetValue(dc.State) ?? false;
 
                 //Are we set to always prompt?
                 if (alwaysPrompt)
@@ -249,13 +249,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
             }
 
-            await this.SendActivityMessageAsync(this.Prompt, dc, cancellationToken).ConfigureAwait(false);
+            await SendActivityMessageAsync(Prompt, dc, cancellationToken).ConfigureAwait(false);
             return new DialogTurnResult(DialogTurnStatus.Waiting);
         }
 
-        private async Task SendActivityMessageAsync(ITemplate<Activity> prompt, DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task SendActivityMessageAsync(ITemplate<Activity> prompt, DialogContext dc, CancellationToken cancellationToken = default)
         {
-            ITemplate<Activity> template = prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
+            var template = prompt ?? throw new InvalidOperationException($"InputDialog is missing Prompt.");
             IMessageActivity msg = await prompt.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
             
             if (msg != null && string.IsNullOrEmpty(msg.InputHint))
