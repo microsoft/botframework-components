@@ -6,6 +6,7 @@ namespace Microsoft.Bot.Components.Telephony
     using Microsoft.Bot.Builder;
     using Microsoft.Bot.Builder.Dialogs.Declarative;
     using Microsoft.Bot.Components.Telephony.Actions;
+    using Microsoft.Bot.Components.Telephony.Common;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +28,7 @@ namespace Microsoft.Bot.Components.Telephony
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<BatchTerminationCharacterInput>(BatchRegexInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<TimeoutChoiceInput>(TimeoutChoiceInput.Kind));
             services.AddSingleton<DeclarativeType>(sp => new DeclarativeType<SerialNumberInput>(SerialNumberInput.Kind));
-			services.AddSingleton<IBot, BotWithLookup>();
+            services.AddSingleton<IBot, BotWithLookup>();
         }
     }
 }
