@@ -391,7 +391,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         private AsInResult FindAsInFixup(string input)
         {
             var result = new AsInResult();
-            var delimiters = { ' ', ',', '.', '/', '-' };
+            var delimiters = new char[] { ' ', ',', '.', '/', '-' };
             var tokens = input.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             if (tokens.Length > 3 && tokens[0].Length == 1)
