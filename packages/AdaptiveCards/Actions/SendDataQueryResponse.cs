@@ -47,16 +47,26 @@ namespace Microsoft.Bot.Components.AdaptiveCards
                 return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
-            if (dc.Context.Activity.Type != ActivityTypes.Invoke || dc.Context.Activity.Name != "adaptiveCard/action")
+            if (dc.Context.Activity.Type != ActivityTypes.Invoke || dc.Context.Activity.Name != "application/search")
             {
-                throw new Exception($"{this.Id}: should only be called in repsonse to 'invoke' activities with a name of 'adaptiveCard/action'.");
+                throw new Exception($"{this.Id}: should only be called in response to 'invoke' activities with a name of 'application/search'.");
             }
 
             // Get results
-            var results = Results?.GetValue(dc.State);
+            var searchResponseData = new
+            {
+                type = "application/vnd.microsoft.search.searchResponse",
+                value = new
+                {
+                    results = Results?.GetValue(dc.State)
+                }
+            };
+
+            var jsonString = JsonConvert.SerializeObject(searchResponseData);
+            JObject jsonData = JObject.Parse(jsonString);
 
             // Send invoke response
-            var activity = new Activity(type: ActivityTypesEx.InvokeResponse, value: new InvokeResponse() { Status = 200, Body = results });
+            var activity = new Activity(type: ActivityTypesEx.InvokeResponse, value: new InvokeResponse() { Status = 200, Body = jsonData });
             await dc.Context.SendActivityAsync(activity, cancellationToken).ConfigureAwait(false);
 
             return await dc.EndDialogAsync(null, cancellationToken).ConfigureAwait(false);
