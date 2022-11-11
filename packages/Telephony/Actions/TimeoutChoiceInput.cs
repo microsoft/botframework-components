@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Input;
 using Microsoft.Bot.Components.Telephony.Common;
-using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
@@ -115,30 +112,23 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             BotAdapter adapter = dc.Context.Adapter;
             var identity = dc.Context.TurnState.Get<ClaimsIdentity>("BotIdentity");
 
-            var appId = identity?.Claims?.FirstOrDefault(c => c.Type == AuthenticationConstants.AudienceClaim)?.Value;
             ConversationReference conversationReference = dc.Context.Activity.GetConversationReference();
             int timeout = TimeOutInMilliseconds.GetValue(dc.State);
+
+            var audience = dc.Context.TurnState.Get<string>(BotAdapter.OAuthScopeKey);
 
             //Question remaining to be answered: Will this task get garbage collected? If so, we need to maintain a handle for it.
             Task.Run(async () =>
             {
                 await Task.Delay(timeout).ConfigureAwait(false);
-                string msAppId = appId;
-
-                // If the channel is the Emulator, and authentication is not in use,
-                // the AppId will be null.  We generate a random AppId for this case only.
-                // This is not required for production, since the AppId will have a value.
-                if (string.IsNullOrEmpty(msAppId))
-                {
-                    msAppId = Guid.NewGuid().ToString(); //if no AppId, use a random Guid
-                }
 
                 //if we aren't already complete, go ahead and timeout
                 await stateMatrix.RunForStatusAsync(timerId, StateStatus.Running, async () =>
                 {
                     await adapter.ContinueConversationAsync(
-                        msAppId,
+                        identity,
                         conversationReference,
+                        audience,
                         BotWithLookup.OnTurn, //Leverage dirty hack to achieve Bot lookup from component
                         cancellationToken).ConfigureAwait(false);
                 }).ConfigureAwait(false);
