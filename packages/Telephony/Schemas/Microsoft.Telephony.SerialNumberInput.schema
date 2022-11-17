@@ -5,7 +5,7 @@
   "description": "Prompts the user for multiple inputs that are aggregated until a specified number of alphanumeric characters are reached.",
   "type": "object",
   "required": [
-    "regexPattern,
+    "regexPattern",
     "prompt",
     "*"
   ],
