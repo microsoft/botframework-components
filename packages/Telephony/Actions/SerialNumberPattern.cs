@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -396,7 +395,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
             if (tokens.Length > 3 && tokens[0].Length == 1)
             {
-                char proposedChar = '*';
+                var proposedChar = '*';
                 if (tokens[1].ToLowerInvariant() == "as" && tokens[2].ToLowerInvariant() == "in")
                 {
                     proposedChar = tokens[3][0];

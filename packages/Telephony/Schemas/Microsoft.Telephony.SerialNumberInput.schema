@@ -5,18 +5,40 @@
   "description": "Prompts the user for multiple inputs that are aggregated until a specified number of alphanumeric characters are reached.",
   "type": "object",
   "required": [
-    "regexPattern",
+    "acceptAlphabet",
+    "acceptNumbers",
+    "batchLength",
     "prompt",
     "*"
   ],
   "additionalProperties": false,
   "properties": {
-    "regexPattern": {
-      "$ref": "schema:#/definitions/stringExpression",
-      "title": "Regex Match Pattern",
-      "description": "When matched, the batch is completed.",
+    "acceptAlphabet": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Accept Alphabet",
+      "description": "Accepts alphabet while aggregating inputs.",
+      "default": true,
       "examples": [
-        "([a-zA-Z]{2})([0-9a-zA-Z]{5})"
+        false,
+        "=dialog.acceptAlphabet"
+      ]
+    },
+    "acceptNumbers": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Accept Numbers",
+      "description": "Accepts numbers while aggregating inputs.",
+      "default": true,
+      "examples": [
+        false,
+        "=dialog.acceptNumbers"
+      ]
+    },
+    "batchLength": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Batch Length",
+      "description": "The number of characters to aggregate before returning the result.",
+      "examples": [
+        "4"
       ]
     },
     "property": {

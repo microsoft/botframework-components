@@ -36,7 +36,8 @@ namespace Microsoft.Bot.Components.Telephony.Tests
 
         public static IEnumerable<object[]> PatternLengthData => new List<object[]>
         {
-            new object[] { "([0-9]{6})", 6 }
+            new object[] { "([0-9]{6})", 6 },
+            new object[] { "([0-9]{3})([0-9]{6})", 9 }
         };
     }
 }

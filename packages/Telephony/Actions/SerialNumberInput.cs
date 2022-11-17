@@ -48,10 +48,28 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         public BoolExpression AllowInterruptions { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the serial number pattern to use to decide when the dialog has aggregated the whole message.
+        /// Gets or sets if SerialNumberInput should accept alphabet characters. 
         /// </summary>
-        [JsonProperty("regexPattern")]
-        public StringExpression RegexPattern { get; set; }
+        /// <value>
+        /// Bool or expression which evalutes to bool.
+        /// </value>
+        [JsonProperty("acceptAlphabet")]
+        public BoolExpression AcceptAlphabet { get; set; }
+
+        /// <summary>
+        /// Gets or sets if SerialNumberInput should accept numbers. 
+        /// </summary>
+        /// <value>
+        /// Bool or expression which evalutes to bool.
+        /// </value>
+        [JsonProperty("acceptNumbers")]
+        public BoolExpression AcceptNumbers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum amount of characters collected before storing the value and ending the dialog.
+        /// </summary>
+        [JsonProperty("batchLength")]
+        public NumberExpression BatchLength { get; set; }
 
         /// <summary>
         /// Gets or sets the property to assign the result to.
@@ -120,9 +138,13 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
 
             //Get value of termination string from expression
-            var regexPattern = RegexPattern?.GetValue(dc.State);
-            var snp = new SerialNumberPattern(regexPattern, true);
+            var batchLength = BatchLength.GetValue(dc.State);
+            var acceptAlphabet = AcceptAlphabet.GetValue(dc.State);
+            var acceptNumbers = AcceptNumbers.GetValue(dc.State);
 
+            // TODO: Delete placeholder regex pattern once we remove SerialNumberPattern.
+            var regexPattern = $"([{(acceptAlphabet ? "a-zA-Z" : string.Empty)}{(acceptNumbers ? "0-9" : string.Empty)}]{{{batchLength}}})";
+            var snp = new SerialNumberPattern(regexPattern, true);
             var choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
             var isAmbiguousPrompt = choices != null && choices.Length >= 2;
             if (isAmbiguousPrompt)
@@ -142,7 +164,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                         return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
                 }
 
-                if (snp.PatternLength == result.Length)
+                if (batchLength == result.Length)
                 {
                     //If so, save it to the output property and end the dialog
                     //Get property from expression
@@ -157,19 +179,44 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }
-            
-            //append the message to the aggregation memory state
+
+            //If input is longer than pattern length and wasn't handled as an interruption, silently disregard input.
+            var userInput = dc.Context.Activity.Text;
+
+            if (userInput.Length > batchLength)
+            {
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
+            }
+
+            //Append the message to the aggregation memory state and check if its length is longer than batch length.
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
-            existingAggregation += dc.Context.Activity.Text;
+
+            //Example happy path: PatternLength is 5, AcceptsAlphabet and AcceptsDigits
+            //If user says "A", "B", "C", "1", "22", do not update state as "ABC122" is invalid. Wait for them to provide valid input.
+            if ((existingAggregation + userInput).Length > batchLength)
+            {
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
+            }
+
+            //TODO: Turn counter? How long is someone in this node?
+            //  Scenarios:
+            //  1) User keeps providing an incorrect serial number (i.e., the aggregated inputs are too long)
+            //  2) User keeps saying "Cancel" on an node configured to be uninterruptable
+            //
+            //  For 1) "Sorry, the provided serial number was ..." + ("Would you like to try again?" || "Would you like to speak to an agent?")
+            //  For 2) When talking to a bot, the user shouldn't enter a stuck state. After a certain number of C1-configurable attempts, the bot should let the user "escape".
+
+            //append the message to the aggregation memory state
+            existingAggregation += userInput;
 
             var results = snp.Inference(existingAggregation);
 
             //Is the current aggregated message the termination string?
             if (results.Length == 1)
             {
+                //If we have a result and its length matches the batch length, set the match on Property and end the dialog.
                 if (snp.PatternLength == results[0].Length)
                 {
-                    //If so, save it to the output property and end the dialog
                     //Get property from expression
                     var property = Property?.GetValue(dc.State);
                     dc.State.SetValue(property, results[0]);
@@ -177,6 +224,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
                 else
                 {
+                    //Otherwise update the aggregated inputs and wait for the next input.
                     dc.State.SetValue(AggregationDialogMemory, results[0]);
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
@@ -190,8 +238,6 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
             else
             {
-                //else, save the updated aggregation and end the turn
-                dc.State.SetValue(AggregationDialogMemory, existingAggregation);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
         }

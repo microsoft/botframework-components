@@ -22,7 +22,6 @@ namespace Microsoft.Bot.Components.Telephony.Tests
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
         }
 
-
         [Fact]
         public async Task SerialNumberInput_WithInterruption()
         {
@@ -33,5 +32,39 @@ namespace Microsoft.Bot.Components.Telephony.Tests
                    .AddInMemoryCollection(new Dictionary<string, string>() { { "alwaysPrompt", "true" } })
                    .Build());
         }
+
+        [Fact]
+        public async Task SerialNumberInput_DisregardsInputsLongerThanBatchLength()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        [Fact]
+        public async Task SerialNumberInput_DisregardAggregationWithInputIfLongerThanBatchLength()
+        {
+            await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        [Fact]
+        public async Task SerialNumberInput_IgnoresAlphabetWhenConfigured()
+        {
+            await TestUtils.RunTestScript(
+               _resourceExplorerFixture.ResourceExplorer,
+               adapterChannel: Channels.Telephony,
+               configuration: new ConfigurationBuilder()
+                   .AddInMemoryCollection(new Dictionary<string, string>() { { "acceptAlphabet", "false" } })
+                   .Build());
+        }
+
+        [Fact]
+        public async Task SerialNumberInput_IgnoresNumbersWhenConfigured()
+        {
+            await TestUtils.RunTestScript(
+               _resourceExplorerFixture.ResourceExplorer,
+               adapterChannel: Channels.Telephony,
+               configuration: new ConfigurationBuilder()
+                   .AddInMemoryCollection(new Dictionary<string, string>() { { "acceptNumbers", "false" } })
+                   .Build());
+        }
     }
- }
+}
