@@ -1,5 +1,10 @@
 # @microsoft/generator-bot-core-assistant [![NPM version](https://badge.fury.io/js/%40microsoft%2Fgenerator-bot-core-assistant.svg)](https://www.npmjs.com/package/@microsoft/generator-bot-core-assistant)
 
+**Important**: The QnA Maker service will retire on the 31st of March, 2025. A newer version of the question and answering capability is now available as part of Azure Cognitive Service for Language.
+For question-and-answer capabilities within the Cognitive Services, see _question answering_. Starting 1st October, 2022 you won’t be able to create new QnA Maker resources.
+
+**This template is being provided for support of existing customers.  New users should refrain from using this template for a new bot.**
+
 A bot with Azure Language Understanding (LUIS) and common trigger phrases used to direct the conversation flow and help customers accomplish basic tasks.
 
 ### Recommended use

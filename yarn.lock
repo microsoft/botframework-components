@@ -308,8 +308,8 @@ __metadata:
     "@microsoft/bot-components-teams": "workspace:packages/Teams/js"
     "@types/mocha": ^8.2.2
     botbuilder: 4.17.0
-    botbuilder-dialogs-adaptive: 4.17.0-preview
-    botbuilder-dialogs-adaptive-testing: 4.17.0-preview
+    botbuilder-dialogs-adaptive: 4.18.0-preview
+    botbuilder-dialogs-adaptive-testing: 4.18.0-preview
     botframework-connector: 4.17.0
     eslint: ^7.30.0
     mocha: ^9.0.2
@@ -329,9 +329,9 @@ __metadata:
     adaptive-expressions: 4.17.0
     botbuilder: 4.17.0
     botbuilder-dialogs: 4.17.0
-    botbuilder-dialogs-adaptive: 4.17.0-preview
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
-    botbuilder-dialogs-declarative: 4.17.0-preview
+    botbuilder-dialogs-adaptive: 4.18.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
+    botbuilder-dialogs-declarative: 4.18.0-preview
     botframework-connector: 4.17.0
     eslint: ^7.30.0
     eslint-plugin-prettier: latest
@@ -342,9 +342,9 @@ __metadata:
     adaptive-expressions: ~4.17.0
     botbuilder: ~4.17.0
     botbuilder-dialogs: ~4.17.0
-    botbuilder-dialogs-adaptive: ~4.17.0-preview
-    botbuilder-dialogs-adaptive-runtime-core: ~4.17.0-preview
-    botbuilder-dialogs-declarative: ~4.17.0-preview
+    botbuilder-dialogs-adaptive: ~4.18.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: ~4.18.0-preview
+    botbuilder-dialogs-declarative: ~4.18.0-preview
     botframework-connector: ~4.17.0
     lodash: ^4.17.21
   languageName: unknown
@@ -362,7 +362,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-adaptive@workspace:^1.4.1, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
+"@microsoft/generator-bot-adaptive@workspace:^1.4.2, @microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
@@ -385,7 +385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-assistant@workspace:generators/generator-bot-core-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -399,7 +399,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-core-language@workspace:generators/generator-bot-core-language"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -413,7 +413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-empty@workspace:generators/generator-bot-empty"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -427,9 +427,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-assistant@workspace:generators/generator-bot-enterprise-assistant"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
-    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.4.1"
-    "@microsoft/generator-bot-enterprise-people": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
+    "@microsoft/generator-bot-enterprise-calendar": "workspace:^1.4.2"
+    "@microsoft/generator-bot-enterprise-people": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -440,11 +440,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-calendar@workspace:^1.4.1, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
+"@microsoft/generator-bot-enterprise-calendar@workspace:^1.4.2, @microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-calendar@workspace:generators/generator-bot-enterprise-calendar"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -454,11 +454,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@microsoft/generator-bot-enterprise-people@workspace:^1.4.1, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
+"@microsoft/generator-bot-enterprise-people@workspace:^1.4.2, @microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people":
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-enterprise-people@workspace:generators/generator-bot-enterprise-people"
   dependencies:
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1"
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2"
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -1856,8 +1856,8 @@ __metadata:
     "@azure/cognitiveservices-luis-runtime": 2.0.0
     "@azure/ms-rest-js": 1.9.1
     adaptive-expressions: 4.17.0
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
-    botbuilder-dialogs-declarative: 4.17.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
+    botbuilder-dialogs-declarative: 4.18.0-preview
     lodash: ^4.17.21
     node-fetch: ^2.6.7
     url-parse: ^1.5.9
@@ -1870,7 +1870,7 @@ __metadata:
   version: 4.17.0
   resolution: "botbuilder-core@npm:4.17.0"
   dependencies:
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
     botbuilder-stdlib: 4.17.0-internal
     botframework-connector: 4.17.0
     botframework-schema: 4.17.0
@@ -1880,27 +1880,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-runtime-core@npm:4.17.0-preview":
-  version: 4.17.0-preview
-  resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.17.0-preview"
+"botbuilder-dialogs-adaptive-runtime-core@npm:4.18.0-preview":
+  version: 4.18.0-preview
+  resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.18.0-preview"
   dependencies:
     dependency-graph: ^0.10.0
   checksum: ef064da2fcf3e45221393d12293190e547c86d54167188e95068929f66ffb7698e499e379b1dea674b054fa29ee547d586155eb7fe1a05544eae6ee095de5e28
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive-testing@npm:4.17.0-preview":
-  version: 4.17.0-preview
-  resolution: "botbuilder-dialogs-adaptive-testing@npm:4.17.0-preview"
+"botbuilder-dialogs-adaptive-testing@npm:4.18.0-preview":
+  version: 4.18.0-preview
+  resolution: "botbuilder-dialogs-adaptive-testing@npm:4.18.0-preview"
   dependencies:
     adaptive-expressions: 4.17.0
     bitwise: ^2.0.4
     botbuilder-ai: 4.17.0
     botbuilder-core: 4.17.0
     botbuilder-dialogs: 4.17.0
-    botbuilder-dialogs-adaptive: 4.17.0-preview
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
-    botbuilder-dialogs-declarative: 4.17.0-preview
+    botbuilder-dialogs-adaptive: 4.18.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
+    botbuilder-dialogs-declarative: 4.18.0-preview
     botbuilder-stdlib: 4.17.0-internal
     murmurhash-js: ^1.0.0
     nock: ^11.9.1
@@ -1910,9 +1910,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-adaptive@npm:4.17.0-preview":
-  version: 4.17.0-preview
-  resolution: "botbuilder-dialogs-adaptive@npm:4.17.0-preview"
+"botbuilder-dialogs-adaptive@npm:4.18.0-preview":
+  version: 4.18.0-preview
+  resolution: "botbuilder-dialogs-adaptive@npm:4.18.0-preview"
   dependencies:
     "@microsoft/recognizers-text": ~1.1.4
     "@microsoft/recognizers-text-choice": ~1.1.4
@@ -1921,8 +1921,8 @@ __metadata:
     "@microsoft/recognizers-text-number-with-unit": ~1.1.4
     "@microsoft/recognizers-text-sequence": ~1.1.4
     "@microsoft/recognizers-text-suite": 1.1.4
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
-    botbuilder-dialogs-declarative: 4.17.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
+    botbuilder-dialogs-declarative: 4.18.0-preview
     botbuilder-lg: 4.17.0
     botframework-connector: 4.17.0
     lodash: ^4.17.21
@@ -1931,9 +1931,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"botbuilder-dialogs-declarative@npm:4.17.0-preview":
-  version: 4.17.0-preview
-  resolution: "botbuilder-dialogs-declarative@npm:4.17.0-preview"
+"botbuilder-dialogs-declarative@npm:4.18.0-preview":
+  version: 4.18.0-preview
+  resolution: "botbuilder-dialogs-declarative@npm:4.18.0-preview"
   dependencies:
     botbuilder-dialogs: 4.17.0
     botbuilder-stdlib: 4.17.0-internal
@@ -1952,7 +1952,7 @@ __metadata:
     "@microsoft/recognizers-text-number": 1.1.4
     "@microsoft/recognizers-text-suite": 1.1.4
     botbuilder-core: 4.17.0
-    botbuilder-dialogs-adaptive-runtime-core: 4.17.0-preview
+    botbuilder-dialogs-adaptive-runtime-core: 4.18.0-preview
     botframework-connector: 4.17.0
     globalize: ^1.4.2
     lodash: ^4.17.21

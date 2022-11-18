@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/generator-bot-empty",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Yeoman generator for creating an empty bot built on the Azure Bot Framework.",
   "keywords": [
     "microsoft",
@@ -26,7 +26,7 @@
     "lint": "eslint -c ../../.eslintrc.json ."
   },
   "dependencies": {
-    "@microsoft/generator-bot-adaptive": "workspace:^1.4.1",
+    "@microsoft/generator-bot-adaptive": "workspace:^1.4.2",
     "yeoman-generator": "^2.0.5",
     "yeoman-test": "^1.9.1"
   },
