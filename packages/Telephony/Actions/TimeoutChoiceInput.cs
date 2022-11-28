@@ -64,7 +64,10 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             if (!interrupted && activity.Type != ActivityTypes.Message && activity.Name == ActivityEventNames.ContinueConversation)
             {
                 //Set max turns so that we evaluate the default when we visit the inputdialog.
-                MaxTurnCount = 1;
+                if (MaxTurnCount != null)
+                {
+                    dc.State.SetValue(TURN_COUNT_PROPERTY, this.MaxTurnCount.GetValue(dc.State) + 1);
+                }
 
                 //We need to set interrupted here or it will discard the continueconversation event...
                 dc.State.SetValue(TurnPath.Interrupted, true);
