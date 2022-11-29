@@ -71,7 +71,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
                 //We need to set interrupted here or it will discard the continueconversation event...
                 dc.State.SetValue(TurnPath.Interrupted, true);
-                return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+                return await ContinueTimeoutChoiceInputDialogAsync(dc, cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -107,6 +107,11 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 //End dirty hack
             }
 
+            return await ContinueTimeoutChoiceInputDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        {
             return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
         }
 
