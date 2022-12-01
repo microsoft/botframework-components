@@ -197,7 +197,7 @@ module.exports = class extends BaseGenerator {
             appSettings.runtime.command = `func start --script-root ${path.join(
               'bin',
               'Debug',
-              'netcoreapp3.1'
+              'net6.0'
             )}`;
             break;
           default:
