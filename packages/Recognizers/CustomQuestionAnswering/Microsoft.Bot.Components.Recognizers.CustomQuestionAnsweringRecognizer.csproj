@@ -5,13 +5,16 @@
 		<Nullable>enable</Nullable>
 		<PackageTags>msbot-component;msbot-recognizer;composer;botframework;botbuilder</PackageTags>
 		<Version>1.0.0</Version>
-		<PackageLicenseUrl>https://github.com/BotBuilderCommunity/botbuilder-community-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+		<Title>Question Answering Recognizer</Title>
+		<Description>This library implements .NET support for Composer with Custom Question Answering.</Description>
+		<Summary>This library implements .NET support for Composer with Custom Question Answering.</Summary>
 		<PackageProjectUrl>https://github.com/botframework-components/tree/main/packages/Recognizers/CustomQuestionAnswering</PackageProjectUrl>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+		<DelaySign>true</DelaySign>
 		<Copyright>Microsoft 2022</Copyright>
-		<RepositoryUrl>https://github.com/BotBuilderCommunity/botbuilder-community-dotnet/blob/develop/libraries/Bot.Builder.Community.Recognizers.QuestionAnsweringRecognizer/</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Title>Question Answering Recognizer</Title>
 		<Authors>Microsoft</Authors>
 		<PackageId>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</PackageId>
 		<AssemblyName>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</AssemblyName>
