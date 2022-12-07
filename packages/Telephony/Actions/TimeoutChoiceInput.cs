@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading;
@@ -64,11 +67,14 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             if (!interrupted && activity.Type != ActivityTypes.Message && activity.Name == ActivityEventNames.ContinueConversation)
             {
                 //Set max turns so that we evaluate the default when we visit the inputdialog.
-                MaxTurnCount = 1;
+                if (MaxTurnCount != null)
+                {
+                    dc.State.SetValue(TURN_COUNT_PROPERTY, this.MaxTurnCount.GetValue(dc.State) + 1);
+                }
 
                 //We need to set interrupted here or it will discard the continueconversation event...
                 dc.State.SetValue(TurnPath.Interrupted, true);
-                return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+                return await ContinueTimeoutChoiceInputDialogAsync(dc, cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -104,6 +110,11 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 //End dirty hack
             }
 
+            return await ContinueTimeoutChoiceInputDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
+        {
             return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
         }
 
