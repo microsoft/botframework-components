@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Graph", "Graph\Microsoft.Bot.Components.Graph.csproj", "{415A7327-9FA1-4354-8104-5900A8882582}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Teams", "Teams\dotnet\Microsoft.Bot.Components.Teams.csproj", "{FD29CBA6-C18F-498B-9F00-A3C34C1BEC5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Bot.Components.Telephony", "Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer", "Recognizers\CustomQuestionAnswering\Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer.csproj", "{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
