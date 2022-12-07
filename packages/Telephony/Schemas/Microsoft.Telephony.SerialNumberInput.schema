@@ -67,6 +67,15 @@
         "=user.xyz"
       ]
     },
+    "unexpectedInputsUntilInterruptionsAreAllowed": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Unexpected Inputs Until Interruptions are Allowed",
+      "description": "The number non-matching inputs until interruptions are allowed (when Allow Interruptions is false). Defaults to 2.",
+      "default": 2,
+      "examples": [
+        "2"
+      ]
+    },
     "interruptionMask": {
       "$ref": "schema:#/definitions/stringExpression",
       "title": "Regex Match Pattern",

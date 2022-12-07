@@ -9,8 +9,9 @@
       "acceptNumbers",
       "batchLength",
       "property",
-      "allowInterruptions",
       "alwaysPrompt",
+      "allowInterruptions",
+      "unexpectedInputsUntilInterruptionsAreAllowed",
       "*"
     ],
     "properties": {
@@ -45,6 +46,11 @@
         ]
       },
       "alwaysPrompt": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "unexpectedInputsUntilInterruptionsAreAllowed": {
         "intellisenseScopes": [
           "variable-scopes"
         ]

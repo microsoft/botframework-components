@@ -24,6 +24,9 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Telephony.SerialNumberInput";
         protected const string AggregationDialogMemory = "this.aggregation";
+        private const string AmbiguousChoicesMemory = "this.ambiguousChoices";
+        private const int MaxAmbiguousChoices = 2;
+        private const string UnexpectedInputCountMemory = "this.unexpectedInputCount";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SerialNumberInput"/> class.
@@ -122,6 +125,19 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("interruptionMask")]
         public StringExpression InterruptionMask { get; set; }
 
+        /// <summary>
+        /// Gets or sets the number non-matching inputs until interruptions are allowed (when <see cref="AllowInterruptions">AllowInterruptions</see> is <c>false</c>).
+        /// </summary>
+        /// <remarks>
+        /// After the number of unexpected inputs reaches the configured number, all future inputs in the dialog instance will be processed while allowing interruptions.
+        /// <br/><br/>E.g. BatchLength is 5, AllowInterruptions is false and UnexpectedInputsUntilInterruptionsAreAllowed is 2.
+        /// <br/>When a user says "cancel" three times, the third "cancel" will be handled as an interruption.
+        /// <br/><br/>If <see cref="AllowInterruptions">AllowInterruptions</see> is <c>true</c>, <see cref="UnexpectedInputsUntilInterruptionsAreAllowed">UnexpectedInputsUntilInterruptionsAreAllowed</see> is ignored.
+        /// <br/><br/>Zero or negative numbers for <see cref="UnexpectedInputsUntilInterruptionsAreAllowed">UnexpectedInputsUntilInterruptionsAreAllowed</see> are ignored and the default of <c>2</c> is used.
+        /// </remarks>
+        [JsonProperty("unexpectedInputsUntilInterruptionsAreAllowed")]
+        public NumberExpression UnexpectedInputsUntilInterruptionsAreAllowed { get; set; } = 2;
+
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default)
         {
             return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
@@ -141,15 +157,16 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             var batchLength = BatchLength.GetValue(dc.State);
             var acceptAlphabet = AcceptAlphabet.GetValue(dc.State);
             var acceptNumbers = AcceptNumbers.GetValue(dc.State);
+            var unexpectedInputCount = dc.State.GetValue(UnexpectedInputCountMemory, () => 0);
 
             // TODO: Delete placeholder regex pattern once we remove SerialNumberPattern.
             var regexPattern = $"([{(acceptAlphabet ? "a-zA-Z" : string.Empty)}{(acceptNumbers ? "0-9" : string.Empty)}]{{{batchLength}}})";
             var snp = new SerialNumberPattern(regexPattern, true);
-            var choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
-            var isAmbiguousPrompt = choices != null && choices.Length >= 2;
+            var choices = dc.State.GetValue<string[]>(AmbiguousChoicesMemory);
+            var isAmbiguousPrompt = choices != null && choices.Length >= MaxAmbiguousChoices;
             if (isAmbiguousPrompt)
             {
-                dc.State.SetValue("this.ambiguousChoices", null);
+                dc.State.SetValue(AmbiguousChoicesMemory, null);
                 var choice = dc.Context.Activity.Text;
                 var result = string.Empty;
                 switch (choice)
@@ -180,31 +197,21 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 }
             }
 
-            //If input is longer than pattern length and wasn't handled as an interruption, silently disregard input.
             var userInput = dc.Context.Activity.Text;
-
-            if (userInput.Length > batchLength)
-            {
-                return new DialogTurnResult(DialogTurnStatus.Waiting);
-            }
-
-            //Append the message to the aggregation memory state and check if its length is longer than batch length.
             var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
 
-            //Example happy path: PatternLength is 5, AcceptsAlphabet and AcceptsDigits
-            //If user says "A", "B", "C", "1", "22", do not update state as "ABC122" is invalid. Wait for them to provide valid input.
-            if ((existingAggregation + userInput).Length > batchLength)
+            // Disregard input and increment the unexpectedInputCount if: 
+            // 1. userInput is longer than pattern length and wasn't handled as an interruption, silently disregard input
+            // 2. Or if existingAggregation appended with userInput is longer than batch length
+            if (userInput.Length > batchLength || (existingAggregation + userInput).Length > batchLength)
             {
+                // UnexpectedInputCount is compared against UnexpectedInputsUntilInterruptionsAreAllowed in OnPreBubbleEventAsync().
+                // When UnexpectedInputCount == UnexpectedInputsUntilInterruptionsAreAllowed, all inputs that don't lead to the
+                // successful completion of this node are treated as potential interruptions and bubbled to this node's parent dialog.
+                unexpectedInputCount += 1;
+                dc.State.SetValue(UnexpectedInputCountMemory, unexpectedInputCount);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
-
-            //TODO: Turn counter? How long is someone in this node?
-            //  Scenarios:
-            //  1) User keeps providing an incorrect serial number (i.e., the aggregated inputs are too long)
-            //  2) User keeps saying "Cancel" on an node configured to be uninterruptable
-            //
-            //  For 1) "Sorry, the provided serial number was ..." + ("Would you like to try again?" || "Would you like to speak to an agent?")
-            //  For 2) When talking to a bot, the user shouldn't enter a stuck state. After a certain number of C1-configurable attempts, the bot should let the user "escape".
 
             //append the message to the aggregation memory state
             existingAggregation += userInput;
@@ -231,13 +238,16 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
             else if (results.Length >= 2)
             {
-                dc.State.SetValue("this.ambiguousChoices", results);
+                dc.State.SetValue(AmbiguousChoicesMemory, results);
                 var promptMsg = ((ActivityTemplate)ConfirmationPrompt).Template.Replace("{0}", results[0]).Replace("{1}", results[1]);
                 await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
             else
             {
+                // Inputs that don't lead to successful completion of this node increment unexpectedInputCount.
+                unexpectedInputCount += 1;
+                dc.State.SetValue(UnexpectedInputCountMemory, unexpectedInputCount);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
         }
@@ -247,11 +257,26 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         {
             if (e.Name == DialogEvents.ActivityReceived && dc.Context.Activity.Type == ActivityTypes.Message)
             {
+                // When UnexpectedInputsUntilInterruptionsAreAllowed is configured, if too many unexpected inputs are received,
+                // ignore a "false" allowInterruptions and any interruptionMask.
+                var handleInputAsPotentialInterruption = false;
+                if (UnexpectedInputsUntilInterruptionsAreAllowed != null)
+                {
+                    var allowedUnexpectedInputs = UnexpectedInputsUntilInterruptionsAreAllowed.GetValue(dc.State);
+                    if (allowedUnexpectedInputs < 1)
+                    {
+                        allowedUnexpectedInputs = 2;
+                    }
+
+                    var unexpectedInputCount = dc.State.GetValue(UnexpectedInputCountMemory, () => 0);
+                    handleInputAsPotentialInterruption = unexpectedInputCount == allowedUnexpectedInputs;
+                }
+
                 //Get interruption mask pattern from expression
-                var regexPattern = InterruptionMask?.GetValue(dc.State);
+                var interruptionMaskRegexPattern = InterruptionMask?.GetValue(dc.State);
 
                 // Return true( already handled ) if input matches our regex interruption mask
-                if (!string.IsNullOrEmpty(regexPattern) && Regex.Match(dc.Context.Activity.Text, regexPattern).Success)
+                if (!handleInputAsPotentialInterruption && !string.IsNullOrEmpty(interruptionMaskRegexPattern) && Regex.Match(dc.Context.Activity.Text, interruptionMaskRegexPattern).Success)
                 {
                     return true;
                 }
@@ -259,9 +284,19 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 // Ask parent to perform recognition
                 await dc.Parent.EmitEventAsync(AdaptiveEvents.RecognizeUtterance, value: dc.Context.Activity, bubble: false, cancellationToken: cancellationToken).ConfigureAwait(false);
 
+                // Perform length checks similar to ContinueDialogAsync().
+                // Except return false when handleInputAsPotentialInterruption is true and the current userInput doesn't lead to a successful node completion.
+                var batchLength = BatchLength.GetValue(dc.State);
+                var userInput = dc.Context.Activity.Text;
+                var existingAggregation = dc.State.GetValue(AggregationDialogMemory, () => string.Empty);
+                if (handleInputAsPotentialInterruption && (userInput.Length > batchLength || (existingAggregation + userInput).Length > batchLength))
+                {
+                    return false;
+                }
+
                 // Should we allow interruptions
                 var canInterrupt = true;
-                if (AllowInterruptions != null)
+                if (!handleInputAsPotentialInterruption && AllowInterruptions != null)
                 {
                     var (allowInterruptions, error) = AllowInterruptions.TryGetValue(dc.State);
                     canInterrupt = error == null && allowInterruptions;

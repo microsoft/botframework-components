@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../tests.schema",
+  "$kind": "Microsoft.Test.Script",
+  "dialog": "SerialNumberInput_BaseScenario.test",
+  "script": [
+    {
+      "$kind": "Microsoft.Test.UserConversationUpdate",
+      "membersAdded": [ "user" ]
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Enter serial number number.'"
+      ]
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "A"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "B"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "C"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "1"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "cancel"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "cancel"
+    },
+    {
+      "$kind": "Microsoft.Test.UserSays",
+      "text": "cancel"
+    },
+    {
+      "$kind": "Microsoft.Test.AssertReplyActivity",
+      "assertions": [
+        "type == 'message'",
+        "text == 'Cancelling all dialogs'"
+      ]
+    }
+  ]
+}

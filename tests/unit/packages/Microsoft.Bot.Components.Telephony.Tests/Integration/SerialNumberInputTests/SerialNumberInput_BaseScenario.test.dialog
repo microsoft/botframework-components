@@ -27,6 +27,29 @@
     },
     {
       "$kind": "Microsoft.OnIntent",
+      "intent": "SerialNumberIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.Telephony.SerialNumberInput",
+          "property": "conversation.DTMFResult",
+          "prompt": "Enter serial number number.",
+          "continuePrompt": "Please continue with next letter or digit.",
+          "confirmationPrompt": "Say or type 1 for {0} or 2 for {1}",
+          "acceptAlphabet": "=coalesce(settings.acceptAlphabet, true)",
+          "acceptNumbers": "=coalesce(settings.acceptNumbers, true)",
+          "batchLength": 5,
+          "allowInterruptions": "=coalesce(settings.allowInterruptions, true)",
+          "interruptionMask": "^[\\d]+$",
+          "alwaysPrompt": "=coalesce(settings.alwaysPrompt, false)"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "${coalesce(conversation.DTMFResult, 'empty')}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
       "intent": "HelpIntent",
       "actions": [
         {
@@ -53,6 +76,19 @@
           "activity": "On zero intent handler"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "intent": "CancelIntent",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "activity": "Cancelling all dialogs"
+        },
+        {
+          "$kind": "Microsoft.CancelAllDialogs"
+        }
+      ]
     }
   ],
   "recognizer": {
@@ -65,6 +101,14 @@
       {
         "intent": "ZeroIntent",
         "pattern": "0"
+      },
+      {
+        "intent": "CancelIntent",
+        "pattern": "cancel"
+      },
+      {
+        "intent": "SerialNumberIntent",
+        "pattern": "serialnumber"
       }
     ]
   }
