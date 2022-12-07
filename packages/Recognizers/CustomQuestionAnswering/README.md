@@ -14,7 +14,7 @@ If using the Question Answering recognizer, use the following definition
 
 ```
 {
- "$kind": "Microsoft.Bot.Components.Recognizers",
+ "$kind": "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer",
   "hostname": "<your endpoint, including https://>",
   "projectName": "<your project name>",
   "endpointKey": "<your endpoint key>"
