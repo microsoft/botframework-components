@@ -2,21 +2,43 @@
   "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
   "$role": "implements(Microsoft.IDialog)",
   "title": "(Preview) Serial Number Input",
-  "description": "Prompts the user for multiple inputs that are aggregated until a regex matches the buffer.",
+  "description": "Prompts the user for multiple inputs that are aggregated until a specified number of alphanumeric characters are reached.",
   "type": "object",
   "required": [
-    "regexPattern",
+    "acceptAlphabet",
+    "acceptNumbers",
+    "batchLength",
     "prompt",
     "*"
   ],
   "additionalProperties": false,
   "properties": {
-    "regexPattern": {
-      "$ref": "schema:#/definitions/stringExpression",
-      "title": "Regex Match Pattern",
-      "description": "When matched, the batch is completed.",
+    "acceptAlphabet": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Accept Alphabet",
+      "description": "Accepts alphabet while aggregating inputs.",
+      "default": true,
       "examples": [
-        "([a-zA-Z]{2})([0-9a-zA-Z]{5})"
+        false,
+        "=dialog.acceptAlphabet"
+      ]
+    },
+    "acceptNumbers": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Accept Numbers",
+      "description": "Accepts numbers while aggregating inputs.",
+      "default": true,
+      "examples": [
+        false,
+        "=dialog.acceptNumbers"
+      ]
+    },
+    "batchLength": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Batch Length",
+      "description": "The number of characters to aggregate before returning the result.",
+      "examples": [
+        "4"
       ]
     },
     "property": {
@@ -24,7 +46,7 @@
       "title": "Property",
       "description": "Property to assign the batch result to",
       "examples": [
-        "conversation.BatchResult"
+        "dialog.SerialNumberResult"
       ]
     },
     "prompt": {
@@ -32,7 +54,7 @@
       "title": "Initial prompt",
       "description": "Message to send to collect information.",
       "examples": [
-        "Enter your serial number."
+        "Please provide your seven character alphanumeric serial number."
       ]
     },
     "allowInterruptions": {
@@ -43,6 +65,15 @@
       "examples": [
         true,
         "=user.xyz"
+      ]
+    },
+    "unexpectedInputsUntilInterruptionsAreAllowed": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Unexpected Inputs Until Interruptions are Allowed",
+      "description": "The number non-matching inputs until interruptions are allowed (when Allow Interruptions is false). Defaults to 2.",
+      "default": 2,
+      "examples": [
+        "2"
       ]
     },
     "interruptionMask": {
