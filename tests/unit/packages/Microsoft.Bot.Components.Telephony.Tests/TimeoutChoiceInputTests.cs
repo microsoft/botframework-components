@@ -1,4 +1,7 @@
-﻿using Microsoft.Bot.Builder.Dialogs;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Components.Telephony.Actions;
 using Microsoft.Bot.Schema;
@@ -18,14 +21,14 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         public async Task TimeoutChoiceInput_TurnCountIsCorrectlyUpdated()
         {
             // Setup
-            Mock<ITurnContext> mockTurnContext = new Mock<ITurnContext>();
+            var mockTurnContext = new Mock<ITurnContext>();
             mockTurnContext
                 .SetupGet(ctx => ctx.Activity)
-                .Returns(new Activity() { Type = ActivityTypes.Event, Name = ActivityEventNames.ContinueConversation });
+                .Returns(new Activity { Type = ActivityTypes.Event, Name = ActivityEventNames.ContinueConversation });
 
-            DialogStateManagerConfiguration configuration = new DialogStateManagerConfiguration()
+            var configuration = new DialogStateManagerConfiguration
             {
-                MemoryScopes = new System.Collections.Generic.List<MemoryScope>(){ new ThisMemoryScope(), new TurnMemoryScope() }
+                MemoryScopes = new List<MemoryScope>{ new ThisMemoryScope(), new TurnMemoryScope() }
             };
 
             var turnState = new TurnContextStateCollection();
@@ -35,15 +38,15 @@ namespace Microsoft.Bot.Components.Telephony.Tests
                 .SetupGet(ctx => ctx.TurnState)
                 .Returns(turnState);
 
-            DialogContext dc = new DialogContext(new DialogSet(), mockTurnContext.Object, new DialogState());
+            var dc = new DialogContext(new DialogSet(), mockTurnContext.Object, new DialogState());
             var stateDictionary = new Dictionary<string, object>();
             stateDictionary["turnCount"] = 0;
             stateDictionary["interrupted"] = false;
-            dc.Stack.Add(new DialogInstance() { Id = "TimeoutTest", State = stateDictionary });
+            dc.Stack.Add(new DialogInstance { Id = "TimeoutTest", State = stateDictionary });
 
             dc.State.SetValue("this.turnCount", 0);
 
-            TimeoutChoiceInputTestHelper timeoutChoiceInput = new TimeoutChoiceInputTestHelper();
+            var timeoutChoiceInput = new TimeoutChoiceInputTestHelper();
             timeoutChoiceInput.MaxTurnCount = new AdaptiveExpressions.Properties.IntExpression(3);
 
             // Act
@@ -58,7 +61,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         {
             public TimeoutChoiceInputTestHelper(): base() { }
 
-            protected override Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+            protected override Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
             {
                 return Task.FromResult(new DialogTurnResult(DialogTurnStatus.Complete));
             }

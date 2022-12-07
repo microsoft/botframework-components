@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading;
@@ -110,7 +113,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             return await ContinueTimeoutChoiceInputDialogAsync(dc, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual async Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
+        protected virtual async Task<DialogTurnResult> ContinueTimeoutChoiceInputDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
             return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
         }
