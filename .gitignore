@@ -404,3 +404,4 @@ package-lock.json
 
 # Ignore test bots
 testing/*
+/packages/.vs
