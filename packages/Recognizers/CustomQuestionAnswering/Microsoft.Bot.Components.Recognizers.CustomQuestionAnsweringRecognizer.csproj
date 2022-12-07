@@ -18,8 +18,6 @@
 		<AssemblyOriginatorKeyFile>..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
 		<DelaySign>true</DelaySign>
 		<Copyright>Microsoft 2022</Copyright>
-		<IncludeSymbols>True</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Authors>Microsoft</Authors>
 		<PackageId>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</PackageId>
 		<AssemblyName>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</AssemblyName>
