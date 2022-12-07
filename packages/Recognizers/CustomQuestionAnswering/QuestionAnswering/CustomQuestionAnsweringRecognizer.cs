@@ -25,7 +25,7 @@ namespace Microsoft.Bot.Components.Recognizers
         /// The declarative type for this recognizer.
         /// </summary>
         [JsonProperty("$kind")]
-        public const string Kind = "Microsoft.Bot.Components.Recognizers";
+        public const string Kind = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer";
 
         /// <summary>
         /// Key used when adding the intent to the <see cref="RecognizerResult"/> intents collection.

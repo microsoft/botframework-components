@@ -7,14 +7,14 @@
 		<Version>1.0.0</Version>
 		<PackageLicenseUrl>https://github.com/BotBuilderCommunity/botbuilder-community-dotnet/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/BotBuilderCommunity/botbuilder-community-dotnet/tree/master/libraries/Bot.Builder.Community.Recognizers.QuestionAnsweringRecognizer/</PackageProjectUrl>
-		<Copyright>Bot Builder Community 2022</Copyright>
+		<Copyright>Microsoft 2022</Copyright>
 		<RepositoryUrl>https://github.com/BotBuilderCommunity/botbuilder-community-dotnet/blob/develop/libraries/Bot.Builder.Community.Recognizers.QuestionAnsweringRecognizer/</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>Question Answering Recognizer</Title>
-		<Authors>BotBuilderCommunity</Authors>
-		<PackageId>Bot.Builder.Community.Recognizers.CustomQuestionAnsweringRecognizer</PackageId>
-		<AssemblyName>Bot.Builder.Community.Recognizers.CustomQuestionAnsweringRecognizer</AssemblyName>
+		<Authors>Microsoft</Authors>
+		<PackageId>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</PackageId>
+		<AssemblyName>Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>
