@@ -1,18 +1,29 @@
 # Custom Question Answering Recognizer 
 
 ## Summary
-This recognizer helps you add a custom recognizer to a Bot Composer empty bot in order to use [Azure Question Answering](https://azure.microsoft.com/en-us/products/cognitive-services/question-answering/) (instead of using QnA Maker).
+This recognizer helps you add a custom recognizer to an empty bot built with Bot Framework Composer in order to use [Azure Custom Question Answering](https://azure.microsoft.com/en-us/products/cognitive-services/question-answering/) in place of the now deprecated QnA Maker.
 
-## Quickstart
-1. Install the [package](https://www.nuget.org/packages/Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer) to your Composer project.
-2. Change the root dialog's recognizer type to custom.
-4. Update the settings in the custom recognizer with the hostname, project name and your keys.
-3. Use custom intent triggers or the built in QnAIntent trigger as usual in the root dialog.
-
-## Settings
-If using the Question Answering recognizer, use the following definition
+## Installation
+In order to enable the Custom Question Answering recognizer, you must first install the [recognizer package](https://www.nuget.org/packages/Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer) from NuGet in your Composer project. 
 
 ```
+Note: This package is currently only available for C# bots.
+```
+
+1. Create a new Composer bot using the `Empty Bot` template.
+
+2. Open the Package Manager in Composer.
+
+3. Search for `CustomQuestionAnsweringRecognizer` and install the package.
+
+## Configuration
+To enable the Custom Question Answering recognizer, complete the following steps:
+
+1. Select `Custom` as your root dialog's recognizer type. 
+
+2. Paste the following JSON into the custom recognizer configuration window:
+
+```json
 {
  "$kind": "Microsoft.CustomQuestionAnsweringRecognizer",
   "hostname": "<your endpoint, including https://>",
@@ -20,9 +31,17 @@ If using the Question Answering recognizer, use the following definition
   "endpointKey": "<your endpoint key>"
 }
 ```
+3. Update the `hostname`, `projectName`, and `endpointKey` fields with the values from your Custom Question Answering service.
 
-Because the Question Answering recognizer is a modified version of the existing QnAMaker recognizer, the workflow elements (such as multi turn) work the same. In addition the same QnAMaker events and telemetry are written out to the logs.
+    - The hostname and endpoint key can be found in the `Keys & Endpoint` blade in the menus for your Azure Language Service in the Azure Portal
+    - The project name can be found in your `Language Studio`
+
+Ensure that you have selected the correct values for each field. Using the wrong values can lead to errors when running the bot.
+
+## Usage
+Once you have configured question and answer pairs in your Custom Question Answering project, custom intent triggers and the QnA intent triggers should function as normal.
+
+Since the Custom Question Answering recognizer is a modified version of the existing QnAMaker recognizer, the workflow elements (such as multi turn) work the same. In addition the same QnAMaker events and telemetry are written out to the logs.
 
 ## Limitations
-
-* Composer does not integrate natively with Question Answering, so managing the question/answer pairs must be done in the language studio portal instead of Composer.
+Please remember that Composer does not integrate natively with Question Answering, so managing question and answer pairs **must** be done in the Language Studio portal instead of Composer.
