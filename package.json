@@ -11,5 +11,9 @@
   ],
   "scripts": {
     "lint": "yarn workspaces foreach run lint"
+  },
+  "resolutions": {
+    "adal-node": "0.2.4",
+    "@xmldom/xmldom": "0.8.6"
   }
 }

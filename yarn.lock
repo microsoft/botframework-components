@@ -993,10 +993,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:^0.7.0, @xmldom/xmldom@npm:^0.7.4":
-  version: 0.7.5
-  resolution: "@xmldom/xmldom@npm:0.7.5"
-  checksum: a885524bbf0cad5e2f0c70679df4be0e09e290c0382030bd0f61787a6ddf21ff30f5efc24ea6059977188958da61e61599b77f5b837326ecffa42c912677c3d1
+"@xmldom/xmldom@npm:0.8.6":
+  version: 0.8.6
+  resolution: "@xmldom/xmldom@npm:0.8.6"
+  checksum: 61c0e11ee5864eee1444a41f1ee741710f8c6c9dedc2f750893c3f7aaae6fe8671b8445ccaff7df1a280745ffcc7e1717ec210da2a854dc4d771f3690a8c10df
   languageName: node
   linkType: hard
 
@@ -1118,7 +1118,7 @@ __metadata:
     lru-cache: ^5.1.1
     uuid: ^8.3.2
     xpath: ^0.0.32
-  checksum: 870cd8e0128e8a4093424a97b03fa0556bccb03f6d62a926f823fbdd693d18ac85a6f81b534a846dc50ca9c50f05fa9ced78e064b090d794a740fdaea0c02283
+  checksum: 755ac826e82bf0027fdcaece1476b46f9c372c10a48ea765ce5f5c63aa24c3ad9a962de83eac67907ed85f3ae8964830c7503832c6df0a3b924fa0fd980a4cdf
   languageName: node
   linkType: hard
 
@@ -1862,7 +1862,7 @@ __metadata:
     node-fetch: ^2.6.7
     url-parse: ^1.5.9
     zod: ~1.11.17
-  checksum: 5debf8c748d8a1e930a9bc5819b8ee35f5a80ac704cc10deec8440dde180b6139527d28946f83802b4a6a9ec3f42b14a7a382b084aeb6504226932f1aed99b71
+  checksum: 0b0061d2a24f95a6c69cf8fd1dc7f94ab420a8271c6effa31f3573b177c65e092eb57d74ea696cf6f16500ecfd30350f701d7971a37e51a48907b036e8cd5664
   languageName: node
   linkType: hard
 
@@ -1876,7 +1876,7 @@ __metadata:
     botframework-schema: 4.18.0
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 35d4ee38a4573dc5e07909866d9a9a76c36dd34308c3c90144268899b967eb7834de4929fd5acea69e8159e58c0f1df2d1f77a99b7244cb6fe1ee2d632106253
+  checksum: cdca2813e2d8474e16f773ed444369df4c957b650ffd5e0f63eabd19ed15fbf8604d49ccb2abcb459fcec1431f30040764b5130749d30d5cc7029069f751f89c
   languageName: node
   linkType: hard
 
@@ -1885,7 +1885,7 @@ __metadata:
   resolution: "botbuilder-dialogs-adaptive-runtime-core@npm:4.18.0-preview"
   dependencies:
     dependency-graph: ^0.10.0
-  checksum: ef064da2fcf3e45221393d12293190e547c86d54167188e95068929f66ffb7698e499e379b1dea674b054fa29ee547d586155eb7fe1a05544eae6ee095de5e28
+  checksum: c710df6581b8e5aab26c78124f8c7985e508517ab2cc02b89bf3ff6f650b316a706ce8345dd670529108415ed3f154902b78cb876aa7f89bd27b027b71dfa5c1
   languageName: node
   linkType: hard
 
@@ -1906,7 +1906,7 @@ __metadata:
     nock: ^11.9.1
     url-parse: ^1.5.9
     zod: ~1.11.17
-  checksum: 97627d104a30a8dbbf4d13600229ac505f705858311f890887ab23e92dba11120f4a197f61babc4146e7baccfc59b79655b92c9837a802abeb0b18f0b11df2c7
+  checksum: ff7fa1dac7eb2c9e12236c8e7ef588132518177754cc4a72f0b4f638e35dc0913f21b59290f84cf24955f6b6966dce4de446281bad54a762e3f7be39d7fb6898
   languageName: node
   linkType: hard
 
@@ -1927,7 +1927,7 @@ __metadata:
     botframework-connector: 4.18.0
     lodash: ^4.17.21
     node-fetch: ^2.6.7
-  checksum: 67163c451f8067778820d4ecb73669ca9f2de625f5a567da529ebe4fd3fe231eccfee9a9d5d955715674144307c65e737d75100e85eb52448db5f2da53b5f5aa
+  checksum: 79507cfee1093ab6f3cb233026451b3ceb289cbcd9802c288fc914e179012b119520f12026b3b9869b38ae4f7769c92d7b00ec87fac50a215f6656b31d055754
   languageName: node
   linkType: hard
 
@@ -1939,7 +1939,7 @@ __metadata:
     botbuilder-stdlib: 4.18.0-internal
     chokidar: ^3.4.0
     zod: ~1.11.17
-  checksum: 8195ba1086cb7a3b12fd896663dc5a59b12e669ef53fd6610e44b528166e2cbbc3af507f3d9121bc96d3a44fb0696d6d5fb61b9ecbadb80ede4369dc762415d0
+  checksum: bac4f044ca4410ba2dec2b53a895bd0804f156359fb65365b7f5fef187ba7f74eaeb7ef4d9f84241536a7c3ac80c2c81acc4b5c0f5b6519803474f131037b982
   languageName: node
   linkType: hard
 
@@ -1957,7 +1957,7 @@ __metadata:
     globalize: ^1.4.2
     lodash: ^4.17.21
     zod: ~1.11.17
-  checksum: 317c247802cd4fe4aa6302ea9011fb5c21412fe04d3ea7368bc650ccfd205c39257924420f1117580dfc026e383e9fcbabcc45f9900f3e4365c88a594cdb4788
+  checksum: a4b1192e73828ea48cc5a59e45b9a9b0790624b53f7a09e6bfdbc30b73a1f7407bf38ae7347dbe942773c10d4dfe883ade2576c827da42854cd407c2c59418d1
   languageName: node
   linkType: hard
 
@@ -1969,14 +1969,14 @@ __metadata:
     antlr4ts: 0.5.0-alpha.3
     lodash: ^4.17.19
     uuid: ^8.3.2
-  checksum: 58ec24d1e8438560ac37b0053f7f1889249421c25a72d2fe9116d5d5d9979ca50bb7708040830e4e2a7d33cb4d24e43e56005ccb0a1d4ace9bfdc5e5108ddb09
+  checksum: 3e0fba142ffcf0872dc7b4eb42654a3a81fdc7b6e1764cd862d10303215ff539991dfc0d4a7f85a952003c0eedc2ff96e626c34c87c2e24c0dcc04f812e277b6
   languageName: node
   linkType: hard
 
 "botbuilder-stdlib@npm:4.18.0-internal":
   version: 4.18.0-internal
   resolution: "botbuilder-stdlib@npm:4.18.0-internal"
-  checksum: 8c3905cddcbb96141030ba911a124e93df57c81502ceb0a0a4045b0097ec6cca332fbcaab2009993001135bedf615bbc413ed139c44e96391c842bea695d6819
+  checksum: 675aa51372a6ffea3166fe22a77858218a993c7e0f64516994887a1e80a0bd22c833e7cc43424e3439cc7f045008aa99180d32e08ffac9e9c6fc83eaae25db93
   languageName: node
   linkType: hard
 
@@ -1996,7 +1996,7 @@ __metadata:
     htmlparser2: ^6.0.1
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 90efed510ecc3d62890d5da04630d417e6488b9e9705e22c73a01a07de52a9a208e802c4d38dc6f651596d5bde794380c52a65272d16f7cb813239e568d72424
+  checksum: 8e886190bab31d679c4cdf2c5cb50895aa01ccddecbbacfeb469480b3abfd478d95796f808a3f4d1d0d4187723e8f9805c3802fecb45d9b8f33481ddb643e2b9
   languageName: node
   linkType: hard
 
@@ -2017,7 +2017,7 @@ __metadata:
     jsonwebtoken: 8.0.1
     rsa-pem-from-mod-exp: ^0.8.4
     zod: ~1.11.17
-  checksum: 87a3417f53a94c06dba3f3754537aba4831733cc49576ef62580440918fb5aceb5ec1270c0f3652d2f1c63814eac8fc1cf8843c942859a71db025ba41e04787a
+  checksum: cddcf93ad3d229006a8049aa865fdd1ac0f9f628a1f9bd4d7d8d1f35401dab610bddb8bfe9de932bcfb53abd33bef38975d65807986b0f793388acd62d2d6b44
   languageName: node
   linkType: hard
 
@@ -2027,7 +2027,7 @@ __metadata:
   dependencies:
     uuid: ^8.3.2
     zod: ~1.11.17
-  checksum: 34a710e27fa817f02beaa97a9f59cb5f8d4b575af0c58bd08ab3042f906927c5bb926a2bc30836978404e89f05b7bf84d0a6691bfea7756fabd2decb385c6263
+  checksum: 0c9cca33f68178a0ff0898998a1e1c1fb6a30b7d7d883cdfb216289871d17e6e8b45b56f3e7faa8b0fe61cc4c8a1d848d039fa12f7fa1b91acf6df321a17eb34
   languageName: node
   linkType: hard
 
@@ -2039,7 +2039,7 @@ __metadata:
     "@types/ws": ^6.0.3
     uuid: ^8.3.2
     ws: ^7.1.2
-  checksum: 0a6ba578511dcb1363a70472fb3c4c7e3a2045e8c8ad27a409e9ce3f073812851f622caf8db9b4217e09c3682871530151193cbef49a2a33d67339441787aa27
+  checksum: 2134455240dadd5c75e093c00cd84177a3cc0ff3a8254e9bb3630229ed5e4a6944554ba1a5933b077dc0d05b0a77130a103f1921d786ee707190544f924366bd
   languageName: node
   linkType: hard
 
