@@ -23,7 +23,7 @@ If you need to create your own templates, you can use this generator as a base, 
 
 ### From the command-line
 
-This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions.md).
 
 ## License
 
