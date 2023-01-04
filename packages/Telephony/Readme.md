@@ -6,6 +6,12 @@ The Microsoft.Bot.Components.Telephony package contains pre-built actions for bu
 - [Call Recording](#Call-Recording)
 - [Aggregate DTMF Input](#Aggregate-DTMF-Input-(n))
 
+## **Tutorials and Frequently Asked Questions**
+The listed links below contain information on Telephony-related scenarios such as extending a Power Virtual Agent bot with DTMF support and configuring a bot to ignore certain types of input while waiting for a user's response. 
+
+- [Using Bot Framework Composer skills to extend Power Virtual Agents Telephony Capabilities](./UsingComposerToBuildPVAVoiceSkills.md)
+- [Telephony FAQ](./FAQ.md)
+
 ## **Call Transfer**
 Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Learn more at [Telephony Advanced Features - Call Transfer](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md).
 
@@ -153,10 +159,6 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
-
-
-## Learn more
-Learn more about [creating bots with telephony capabilities](https://github.com/microsoft/botframework-telephony).
 
 ## Feedback and issues
 If you encounter any issues with this package, or would like to share any feedback please open an Issue in our [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
