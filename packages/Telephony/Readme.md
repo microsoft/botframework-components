@@ -15,6 +15,7 @@ The listed links below contain information on Telephony-related scenarios such a
 
 - [Using Bot Framework Composer skills to extend Power Virtual Agents Telephony Capabilities](./UsingComposerToBuildPVAVoiceSkills.md)
 - [Telephony FAQ](./FAQ.md)
+- [Aggregating alphanumeric inputs with SerialNumberInput (PREVIEW)](./Preview-SerialNumberInput.md)
 
 ## **Call Transfer**
 Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Learn more at [Telephony Advanced Features - Call Transfer](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md).
