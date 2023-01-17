@@ -1,10 +1,21 @@
 # Microsoft.Bot.Components.Telephony
 
-The Microsoft.Bot.Components.Telephony package contains pre-built actions for building bots with Telephony capabilities. Install the package using [Bot Framework Composer](https://docs.microsoft.com/composer) to add telephony specific actions to your bot. Here are the actions supported:
+The Microsoft.Bot.Components.Telephony package contains pre-built actions for building bots with Telephony capabilities. Install the package using [Bot Framework Composer](https://docs.microsoft.com/composer) to add telephony specific actions to your bot.
 
-- [Call Transfer](#Call-Transfer)
-- [Call Recording](#Call-Recording)
-- [Aggregate DTMF Input](#Aggregate-DTMF-Input-(n))
+## Table of Contents
+- [Tutorials and Frequently Asked Questions](#tutorials-and-frequently-asked-questions)
+  - [Call Transfer](#Call-Transfer)
+  - [Call Recording](#Call-Recording)
+  - [Aggregate DTMF Input](#Aggregate-DTMF-Input-(n))
+- [Changelog](#changelog)
+- [Feedback and Issues](#feedback-and-issues)
+
+## **Tutorials and Frequently Asked Questions**
+The listed links below contain information on Telephony-related scenarios such as extending a Power Virtual Agent bot with DTMF support and configuring a bot to ignore certain types of input while waiting for a user's response. 
+
+- [Using Bot Framework Composer skills to extend Power Virtual Agents Telephony Capabilities](./UsingComposerToBuildPVAVoiceSkills.md)
+- [Telephony FAQ](./FAQ.md)
+- [Aggregating alphanumeric inputs with SerialNumberInput (PREVIEW)](./Preview-SerialNumberInput.md)
 
 ## **Call Transfer**
 Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Learn more at [Telephony Advanced Features - Call Transfer](https://github.com/microsoft/botframework-telephony/blob/main/TransferCallOut.md).
@@ -154,9 +165,20 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
 
+## Changelog
 
-## Learn more
-Learn more about [creating bots with telephony capabilities](https://github.com/microsoft/botframework-telephony).
+### Unreleased Changes
+- fix: Component Governance security vulnerability for System.Drawing.Common 4.7.0 [#1435](https://github.com/microsoft/botframework-components/pull/1435)
+- fix: Update the current turn count instead of MaxTurnCount in TimeoutChoiceInput [#1394](https://github.com/microsoft/botframework-components/pull/1394)
+- fix: Fix aggregation bug in SerialNumberInput and update its configurable properties [#1389](https://github.com/microsoft/botframework-components/pull/1389)
+- feat: CQA recognizers [#1405](https://github.com/microsoft/botframework-components/pull/1405)
 
-## Feedback and issues
+### 1.4.1 (2022-11-14)
+- fix: Register BotWithLookup to fix ArgumentNullException for OnTurn [#1382](https://github.com/microsoft/botframework-components/pull/1382)
+
+### 1.4.0 (2022-08-04)
+- bump: SDK version to `4.17.0` [#1364](https://github.com/microsoft/botframework-components/pull/1364)
+- fix: set controller Newtonsoft MaxDepth to null [#1358](https://github.com/microsoft/botframework-components/pull/1358)
+
+## Feedback and Issues
 If you encounter any issues with this package, or would like to share any feedback please open an Issue in our [GitHub repository](https://github.com/microsoft/botframework-components/issues/new/choose).
