@@ -90,7 +90,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
           command: `func start --script-root ${path.join(
             'bin',
             'Debug',
-            'netcoreapp3.1'
+            'net6.0'
           )}`,
           key: `adaptive-runtime-${platform}-${integration}`,
         },
