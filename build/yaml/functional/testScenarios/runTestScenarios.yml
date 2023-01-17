@@ -31,7 +31,7 @@ variables:
   NugetSecurityAnalysisWarningLevel: warn # Workaround: Sets the warning level of injected nuget security analysis to raise a warning in logs and set status to green. Visit https://aka.ms/nugetmultifeed for more details.
 
 pool:
-  vmImage: "windows-2019"
+  vmImage: "windows-2022"
 
 stages:
   - stage: "Download_Variables"

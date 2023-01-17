@@ -66,8 +66,9 @@
             "[concat('Microsoft.Web/Sites/', parameters('botName'))]"
           ],
           "properties": {
-            "FUNCTIONS_EXTENSION_VERSION": "~3",
+            "FUNCTIONS_EXTENSION_VERSION": "~4",
             "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+            "netFrameworkVersion": "v6.0",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[if(empty(parameters('appInsightsName')), '', reference(resourceId(parameters('appServicePlanResourceGroup'),'Microsoft.Insights/components', parameters('appInsightsName')), '2015-05-01', 'Full').properties.InstrumentationKey)]",
             "MicrosoftAppId": "[parameters('appId')]",
             "MicrosoftAppPassword": "[parameters('appSecret')]"
