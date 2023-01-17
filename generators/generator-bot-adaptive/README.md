@@ -19,11 +19,11 @@ This template contains scaffold code for publishing your bot to either Azure Fun
 
 ### Creating your own templates
 
-If you need to create your own templates, you can use this generator as a base, and extend it to meet your needs with [Yeoman generator composition](https://yeoman.io/authoring/composability.html). Learn more about creating your own templates in [our documentation](https://aka.ms/bf-create-templates).
+If you need to create your own templates, you can use this generator as a base, and extend it to meet your needs with [Yeoman generator composition](https://yeoman.io/authoring/composability.html).
 
 ### From the command-line
 
-This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions).
+This template can also be installed from the [command line](https://github.com/microsoft/botframework-components/blob/main/generators/command-line-instructions.md).
 
 ## License
 

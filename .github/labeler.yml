@@ -42,3 +42,7 @@
 
 "Area: Packages: Welcome":
  - packages/Welcome/**/*
+
+"Area: Packages: CQA":
+ - packages/Recognizers/CustomQuestionAnswering/**/*
+ 
