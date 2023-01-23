@@ -7527,10 +7527,10 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.15.1, moment@npm:^2.24.0":
-  version: 2.29.1
-  resolution: "moment@npm:2.29.1"
-  checksum: 86729013febf7160de5b93da69273dd304d674b0224f9544b3abd09a87671ddd2cdd57598261ce57588910d63747ffd5590965e83c790d8bf327083c0e0a06e0
+"moment@npm:^2.29.4":
+  version: 2.29.4
+  resolution: "moment@npm:2.29.4"
+  checksum: 5aa949ddcfc8dee4984123410cc0cd504caa6ef691bd191a527a1de67529895dcc8a8342cd67fb1953ae87172ea701bb957cea6d30abf0677ca9c62e834a5b5a
   languageName: node
   linkType: hard
 
