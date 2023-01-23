@@ -7330,10 +7330,10 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.1.1, minimist@npm:^1.2.0, minimist@npm:^1.2.5":
-  version: 1.2.5
-  resolution: "minimist@npm:1.2.5"
-  checksum: b77b8590147a4e217ff34266236bc39de23b52e6e33054076991ff674c7397a1380a7bde11111916f16f003a94aaa7e4f3d92595a32189644ff607fabc65a5b6
+"minimist@npm:^1.2.7":
+  version: 1.2.7
+  resolution: "minimist@npm:1.2.7"
+  checksum: 16e2fda9eaded0629c4928518ee172a2749d5feece07588e56df37eaba08fff859d0d1f0925b0462c4299a8784b36fd035851acc5007a5f8c1939a98da27a1c3
   languageName: node
   linkType: hard
 
