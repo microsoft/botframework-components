@@ -9449,16 +9449,16 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"shelljs@npm:^0.8.0, shelljs@npm:^0.8.4":
-  version: 0.8.4
-  resolution: "shelljs@npm:0.8.4"
+"shelljs@npm:^0.8.5":
+  version: 0.8.5
+  resolution: "shelljs@npm:0.8.5"
   dependencies:
     glob: ^7.0.0
     interpret: ^1.0.0
     rechoir: ^0.6.2
   bin:
     shjs: bin/shjs
-  checksum: bdf68e3c2a8a6d191dde3be2800bfcfd688c126344ccaf6cf7024cdaf824d0d3523b8e514cd52264f739cbabd2b0569637dd5a8183377347225af918e03ff5dc
+  checksum: 6ab7ecababcfcaced2131df582378d0a234cfc7336b041616986c76e8bf7877855359f4481e78f041b21a2d610b3920ce156473b4de2bc88e8039eb3278affba
   languageName: node
   linkType: hard
 
