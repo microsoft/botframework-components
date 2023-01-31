@@ -377,7 +377,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
-    ejs: ^3.1.6
+    ejs: ^3.1.7
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
@@ -1531,6 +1531,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"async@npm:^3.2.3":
+  version: 3.2.4
+  resolution: "async@npm:3.2.4"
+  checksum: 0b6cc550522408998c6b5d998aff60048c43faa139f403232435c984d65a1c7cf135be45692820c90f8c2aec662b768ab8897c71983726302033a3e9e57eb023
+  languageName: node
+  linkType: hard
+
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -2385,6 +2392,16 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: f860285b419f9e925c2db0f45ffa88aa8794c14b80cc5d01ff30930bcfc384996606362706f0829cf557f6d36152a5fb2d227ad63c4bc90e2ec9e9dbed4a3c07
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^4.0.2":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: e3901b97d953991712bf0b941d586175be7ca5da56a97d25187e07453c6b26cae0ac8d9c7aa9e87e7c5c986fff870771b3a8e2705b3becda868829e2e12c2a65
   languageName: node
   linkType: hard
 
@@ -3263,6 +3280,17 @@ __metadata:
   bin:
     ejs: ./bin/cli.js
   checksum: cb77a9368e50c7b11cb8d64c911397a7bf8f9f6d155474bc64154fd1d0ccf896de28a01d5e6ce135470ede038ca7dc02a83b8c0a904277eaef605cce4ab46dfb
+  languageName: node
+  linkType: hard
+
+"ejs@npm:^3.1.7":
+  version: 3.1.8
+  resolution: "ejs@npm:3.1.8"
+  dependencies:
+    jake: ^10.8.5
+  bin:
+    ejs: bin/cli.js
+  checksum: cf68281191f0639d9679dad3f772330d834e79af2a37a72a2799585eb44fa59df9bd3de7ae027e5bd15c39a851b6dd481aefda8c7ffea19a02979c7810ce0cd1
   languageName: node
   linkType: hard
 
@@ -5905,6 +5933,20 @@ fsevents@^1.2.3:
   bin:
     jake: ./bin/cli.js
   checksum: c60d3f491ce59bba09b8a2ee351122eb6dd19a6826347de5ec4e94ddee5c5e70e14120c14ce6fc2efa360d0db12d7a28a1044d7aa084414dd695ce154fb87d9e
+  languageName: node
+  linkType: hard
+
+"jake@npm:^10.8.5":
+  version: 10.8.5
+  resolution: "jake@npm:10.8.5"
+  dependencies:
+    async: ^3.2.3
+    chalk: ^4.0.2
+    filelist: ^1.0.1
+    minimatch: ^3.0.4
+  bin:
+    jake: ./bin/cli.js
+  checksum: 56789974742986d0a837e929ee89236a049d2ab22a2c9861e4bd009f222dee98fa0e2f79a894853c371299d8696b6d03dc3e148dfa6d28921918ef18a9b44ef8
   languageName: node
   linkType: hard
 
