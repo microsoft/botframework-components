@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer", "Recognizers\CustomQuestionAnswering\Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer.csproj", "{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer", "Recognizers\CustomQuestionAnswering\dotnet\Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer.csproj", "{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
