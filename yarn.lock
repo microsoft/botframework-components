@@ -6467,10 +6467,10 @@ fsevents@^1.2.3:
   languageName: node
   linkType: hard
 
-"json-schema@npm:0.2.3":
-  version: 0.2.3
-  resolution: "json-schema@npm:0.2.3"
-  checksum: d382ea841f0af5cf6ae3b63043c6ddbd144086de52342b5dd32d8966872dce1e0ed280f6b27c5fba97e50cf8640f27b593e039cb95df365718ada03ef0feb9f2
+"json-schema@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "json-schema@npm:0.4.0"
+  checksum: e13c202bbd04c5bdc1b7e90596d973551777f426f77537d5d9249dce31b4b2196cf511bc18213811333d677ab47770a90ac6e42e038edd99b7af0c1dd13626a6
   languageName: node
   linkType: hard
 
