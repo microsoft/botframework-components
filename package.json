@@ -15,13 +15,16 @@
   "resolutions": {
     "adal-node": "0.2.4",
     "axios": "1.2.1",
-    "async": "2.6.4",
+    "async@2": "^2.6.4",
+    "async@3": "^3.2.4",
     "cross-fetch": "3.1.5",
     "node-fetch": "2.6.7",
     "tar": "6.1.13",
     "@azure/identity": "3.1.2",
     "@azure/ms-rest-js": "2.6.4",
     "@xmldom/xmldom": "0.8.6",
-    "minimist": "^1.2.7"
+    "minimist": "^1.2.7",
+    "qs": "^6.5.3",
+    "shelljs": "^0.8.5"
   }
 }
