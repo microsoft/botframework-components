@@ -2305,7 +2305,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^2.1.4, async@npm:^2.6.0, async@npm:^2.6.2, async@npm:^2.6.3":
+"async@npm:^2.6.3":
   version: 2.6.4
   resolution: "async@npm:2.6.4"
   dependencies:
@@ -7664,13 +7664,6 @@ fsevents@^1.2.7:
     _mocha: bin/_mocha
     mocha: bin/mocha
   checksum: 305d820f2e7237f54c2c034198978c1ef7c0cf99ddf0c511c8e65e0d7cd00a2b87f7826dc91afa080473152159c1402f419f18d67f831dc55ebc84710ee97823
-  languageName: node
-  linkType: hard
-
-"moment@npm:^2.29.4":
-  version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: 5aa949ddcfc8dee4984123410cc0cd504caa6ef691bd191a527a1de67529895dcc8a8342cd67fb1953ae87172ea701bb957cea6d30abf0677ca9c62e834a5b5a
   languageName: node
   linkType: hard
 
