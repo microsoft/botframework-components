@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Telephony</PackageId>
-    <VersionPrefix>1.4.2-rc1</VersionPrefix>
+    <VersionPrefix>1.4.2</VersionPrefix>
     <Description>This library implements .NET support for adaptive dialogs with Telephony.</Description>
     <Summary>This library implements .NET support for adaptive dialogs with Telephony.</Summary>
     <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Telephony</PackageProjectUrl>
