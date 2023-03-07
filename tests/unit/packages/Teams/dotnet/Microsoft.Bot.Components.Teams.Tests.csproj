@@ -4,7 +4,7 @@
     <TargetFramework Condition="'$(BuildTarget)' == 'netcoreapp21'">netcoreapp2.1</TargetFramework>
     <TargetFramework Condition="'$(BuildTarget)' == 'netcoreapp31'">netcoreapp3.1</TargetFramework>
     <TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
-    <TargetFrameworks Condition="'$(BuildTarget)' == ''">netcoreapp2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(BuildTarget)' == ''">netcoreapp3.1;net6.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <Configurations>Debug;Release</Configurations>
     <LangVersion>latest</LangVersion>
