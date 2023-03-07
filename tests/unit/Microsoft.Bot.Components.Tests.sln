@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "..\..\packages\Telephony\Microsoft.Bot.Components.Telephony.csproj", "{BDA3A62A-8762-44EA-A417-5DC01D26AAF9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "recognizers", "recognizers", "{8B40F510-CD8F-4D29-8995-1473C8786ED7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CLURecognizer.Tests.Unit", "packages\Recognizers\dotnet\Microsoft.Bot.Components.Recognizers.CLURecognizer.Tests.Unit.csproj", "{23DC8C05-C03C-4566-9408-65D0D8A86A23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CLURecognizer", "..\..\packages\Recognizers\ConversationLanguageUnderstanding\dotnet\Microsoft.Bot.Components.Recognizers.CLURecognizer.csproj", "{BC2D9F76-1EBF-4BC4-A39F-EE6D988369A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +73,10 @@ Global
 		{23DC8C05-C03C-4566-9408-65D0D8A86A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23DC8C05-C03C-4566-9408-65D0D8A86A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23DC8C05-C03C-4566-9408-65D0D8A86A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC2D9F76-1EBF-4BC4-A39F-EE6D988369A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC2D9F76-1EBF-4BC4-A39F-EE6D988369A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC2D9F76-1EBF-4BC4-A39F-EE6D988369A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC2D9F76-1EBF-4BC4-A39F-EE6D988369A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,8 +90,6 @@ Global
 		{47F3E043-D5E7-42E3-8B18-DF64A9F2FC1C} = {73825711-6685-48E2-BFA2-3FCDECE1A0FD}
 		{485E9D0F-6534-475D-8400-31BFF633EDE0} = {47F3E043-D5E7-42E3-8B18-DF64A9F2FC1C}
 		{BDA3A62A-8762-44EA-A417-5DC01D26AAF9} = {47F3E043-D5E7-42E3-8B18-DF64A9F2FC1C}
-		{8B40F510-CD8F-4D29-8995-1473C8786ED7} = {73825711-6685-48E2-BFA2-3FCDECE1A0FD}
-		{23DC8C05-C03C-4566-9408-65D0D8A86A23} = {8B40F510-CD8F-4D29-8995-1473C8786ED7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D0FB02B-704A-44E0-AECA-A4FDF6F805C5}
