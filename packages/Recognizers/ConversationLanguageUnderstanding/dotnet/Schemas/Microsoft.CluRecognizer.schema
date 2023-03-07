@@ -32,7 +32,7 @@
             "description": "The endpoint key for your CLU service."
         },
         "includeAPIResults": {
-            "$ref": "schema:#/definitions/boolExpression",
+            "$ref": "schema:#/definitions/booleanExpression",
             "title": "Include CLU API results",
             "description": "Optional gets or sets a value indicating whether CLU API results should be included in the RecognizerResult returned. If null, then defaults to false."
         },
