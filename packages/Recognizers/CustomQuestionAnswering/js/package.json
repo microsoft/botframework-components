@@ -1,0 +1,58 @@
+{
+    "name": "custom-question-answering-recognizer",
+    "version": "1.0.0",
+    "author": "Microsoft Corp.",
+    "description": "This library implements node.js support for Composer with Custom Question Answering.",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/microsoft/botframework-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/microsoft/botframework-components/issues"
+    },
+    "scripts": {
+        "build": "tsc -b",
+        "clean": "rimraf lib tsconfig.tsbuildinfo",
+        "lint": "eslint . --ext .js,.ts"
+    },
+    "keywords": [
+        "msbot-component",
+        "msbot-recognizer",
+        "botframework",
+        "botbuilder"
+    ],
+    "files": [
+        "schemas",
+        "lib",
+        "src"
+    ],
+    "main": "lib/index.js",
+    "dependencies": {
+        "adaptive-expressions": "~4.19.2",
+        "botbuilder": "~4.19.2",
+        "botbuilder-ai": "~4.19.2",
+        "botbuilder-dialogs": "~4.19.2",
+        "botbuilder-dialogs-adaptive-runtime": "~4.19.2-preview",
+        "botbuilder-dialogs-adaptive-runtime-core": "~4.19.2-preview",
+        "botbuilder-dialogs-adaptive-runtime-integration-express": "~4.19.2-preview"
+    },
+    "devDependencies": {
+        "@tsconfig/recommended": "^1.0.1",
+        "@types/lodash": "^4.14.168",
+        "@typescript-eslint/eslint-plugin": "^4.28.2",
+        "@typescript-eslint/parser": "^4.28.2",
+        "adaptive-expressions": "4.19.2",
+        "botbuilder": "4.19.2",
+        "botbuilder-dialogs": "4.19.2",
+        "botbuilder-dialogs-adaptive": "4.19.2-preview",
+        "botbuilder-dialogs-adaptive-runtime-core": "4.19.2-preview",
+        "botbuilder-dialogs-declarative": "4.19.2-preview",
+        "botframework-connector": "4.19.2",
+        "eslint": "^7.30.0",
+        "eslint-plugin-prettier": "latest",
+        "lodash": "^4.17.21",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.0.5"
+    }
+}

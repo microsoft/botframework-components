@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Telephony", "Telephony\Microsoft.Bot.Components.Telephony.csproj", "{A854B5EC-3A34-4D1F-8080-F0846DEDF63F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer", "Recognizers\CustomQuestionAnswering\Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer.csproj", "{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer", "Recognizers\CustomQuestionAnswering\dotnet\Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer.csproj", "{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CLURecognizer", "Recognizers\ConversationLanguageUnderstanding\dotnet\Microsoft.Bot.Components.Recognizers.CLURecognizer.csproj", "{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ADC36EF-8926-4E3A-A385-A0BCA71D51A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

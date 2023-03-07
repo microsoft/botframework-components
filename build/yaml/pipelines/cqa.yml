@@ -18,4 +18,4 @@ variables:
   NugetSecurityAnalysisWarningLevel: warn # Workaround: Sets the warning level of injected nuget security analysis to raise a warning in logs and set status to green. Visit https://aka.ms/nugetmultifeed for more details.
   # PublishPackageArtifacts: # set in ADO
   # ReleaseCandidateNumber: # set in ADO
-  WorkingDirectory: packages/Recognizers/CustomQuestionAnswering
+  WorkingDirectory: packages/Recognizers/CustomQuestionAnswering/dotnet

@@ -4,7 +4,7 @@
 This recognizer helps you add a custom recognizer to an empty bot built with Bot Framework Composer in order to use [Azure Custom Question Answering](https://azure.microsoft.com/en-us/products/cognitive-services/question-answering/) in place of the now deprecated QnA Maker.
 
 ## Installation
-In order to enable the Custom Question Answering recognizer, you must first install the [recognizer package](https://www.nuget.org/packages/Microsoft.Bot.Components.Recognizers.CustomQuestionAnsweringRecognizer) from NuGet in your Composer project. 
+Once you've installed the package using [Bot Framework Composer](https://docs.microsoft.com/composer), you can add our actions and triggers to your bot.
 
 ```
 Note: This package is currently only available for C# bots.
