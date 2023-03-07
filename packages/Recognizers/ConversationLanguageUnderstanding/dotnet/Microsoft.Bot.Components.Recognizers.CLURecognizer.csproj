@@ -14,7 +14,7 @@
     <Title>Conversation Language Understanding Recognizer</Title>
     <Description>This library implements .NET support for Composer with Conversation Language Understanding.</Description>
     <Summary>This library implements .NET support for Composer with Conversation Language Understanding.</Summary>
-    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Recognizers/ConversationLanguageUnderstanding</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Microsoft/botframework-components/tree/main/packages/Recognizers/ConversationLanguageUnderstanding/dotnet</PackageProjectUrl>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>true</DelaySign>
