@@ -28,15 +28,16 @@
     "normalize-path": "^3.0.0",
     "runtypes": "~5.1.0",
     "uuid": "^8.3.1",
-    "yeoman-generator": "^2.0.5"
+    "yeoman-generator": "^5.7.0"
   },
   "devDependencies": {
-    "ejs": "^3.1.7",
+    "ejs": "^3.1.8",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-plugin-prettier": "latest",
     "mocha": "^8.3.2",
     "prettier": "latest",
+    "yeoman-environment": "^3.3.0",
     "yeoman-test": "^6.0.0"
   }
 }

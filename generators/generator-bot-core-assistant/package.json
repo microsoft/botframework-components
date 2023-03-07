@@ -25,8 +25,8 @@
   },
   "dependencies": {
     "@microsoft/generator-bot-adaptive": "workspace:^1.4.3",
-    "yeoman-generator": "^2.0.5",
-    "yeoman-test": "^1.9.1"
+    "yeoman-generator": "^5.7.0",
+    "yeoman-test": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "latest",
