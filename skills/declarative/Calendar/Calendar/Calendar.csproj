@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.19.1" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.19.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\packages\Graph\Microsoft.Bot.Components.Graph.csproj" />
