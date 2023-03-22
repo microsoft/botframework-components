@@ -313,7 +313,7 @@ namespace Microsoft.Bot.Components.Recognizers.CLURecognizer.CLU
         /// <summary>
         /// Invoked prior to a CluResult being logged.
         /// </summary>
-        /// <param name="recognizerResult">The Luis Results for the call.</param>
+        /// <param name="recognizerResult">The CLU results for the call.</param>
         /// <param name="turnContext">Context object containing information for a single turn of conversation with a user.</param>
         /// <param name="telemetryProperties">Additional properties to be logged to telemetry with the CluResult event.</param>
         /// <param name="telemetryMetrics">Additional metrics to be logged to telemetry with the CluResult event.</param>

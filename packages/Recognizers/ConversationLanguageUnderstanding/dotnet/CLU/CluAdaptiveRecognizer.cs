@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
 using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Components.Recognizers.CLURecognizer;
 using Microsoft.Bot.Components.Recognizers.CLURecognizer.CLU;
@@ -156,7 +155,7 @@ namespace Microsoft.Bot.Components.Recognizers
 
             if (!string.IsNullOrWhiteSpace(entities))
             {
-                properties.Add(LuisTelemetryConstants.EntitiesProperty, entities!);
+                properties.Add(CluConstants.Telemetry.EntitiesProperty, entities!);
             }
 
             // Use the LogPersonalInformation flag to toggle logging PII data, text is a common example

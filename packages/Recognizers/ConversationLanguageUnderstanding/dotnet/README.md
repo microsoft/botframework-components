@@ -29,8 +29,7 @@ To enable the Conversation Language Understanding recognizer, complete the follo
   "projectName": "<your project name>",
   "endpoint": "<your endpoint, including https://>",
   "endpointKey": "<your endpoint key>",
-  "deploymentName": "<your deployment name>",
-  "includeAPIResults": true
+  "deploymentName": "<your deployment name>"
 }
 ```
 3. Update the `projectName`, `endpoint`, `endpointKey`, and `deploymentName` fields with the values from your Conversation Language Understanding service.
