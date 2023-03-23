@@ -18,6 +18,8 @@
     "async@2": "^2.6.4",
     "async@3": "^3.2.4",
     "cross-fetch": "3.1.5",
+    "ejs": "3.1.8",
+    "glob-parent": "5.1.2",
     "node-fetch": "2.6.7",
     "tar": "6.1.13",
     "@azure/identity": "3.1.2",
