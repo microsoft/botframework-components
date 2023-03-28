@@ -26,6 +26,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Telephony.BatchRegexInput";
         protected const string AggregationDialogMemory = "this.aggregation";
+        private const string TimerId = "this.TimerId";
         private static IStateMatrix stateMatrix = new LatchingStateMatrix();
 
         /// <summary>
@@ -153,16 +154,15 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             {
                 //If we didn't timeout then we have to manage our timer somehow.
                 //For starters, complete our existing timer.
-                var timerId = dc.State.GetValue<string>("this.TimerId");
+                string timerId = dc.State.GetValue<string>(TimerId);
 
-                //Should never happen but if it does, it shouldn't be fatal.
                 if (timerId != null)
                 {
                     await stateMatrix.CompleteAsync(timerId).ConfigureAwait(false);
-                }
 
-                // Restart the timeout timer
-                await InitTimeoutTimerAsync(dc, cancellationToken).ConfigureAwait(false);
+                    // Restart the timeout timer
+                    await InitTimeoutTimerAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
 
                 //else, save the updated aggregation and end the turn
                 dc.State.SetValue(AggregationDialogMemory, existingAggregation);
@@ -269,8 +269,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
         private void CreateTimerForConversation(DialogContext dc, int timeout, string timerId, CancellationToken cancellationToken)
         {
-            BotAdapter adapter = dc.Context.Adapter;
-            ConversationReference conversationReference = dc.Context.Activity.GetConversationReference();
+            var adapter = dc.Context.Adapter;
+            var conversationReference = dc.Context.Activity.GetConversationReference();
             var identity = dc.Context.TurnState.Get<ClaimsIdentity>("BotIdentity");
             var audience = dc.Context.TurnState.Get<string>(BotAdapter.OAuthScopeKey);
 
@@ -301,7 +301,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
                 var timerId = Guid.NewGuid().ToString();
                 CreateTimerForConversation(dc, timeout, timerId, cancellationToken);
                 await stateMatrix.StartAsync(timerId).ConfigureAwait(false);
-                dc.State.SetValue("this.TimerId", timerId);
+                dc.State.SetValue(TimerId, timerId);
             }
         }
     }

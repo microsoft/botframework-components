@@ -120,8 +120,8 @@ The Stop Recording action stops recording of the conversation. Note that it is n
 ## **Aggregate DTMF Input (n)**
 Prompts the user for multiple inputs that are aggregated until a specified character length is met or exceeded.
 Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
-A timeout timer will be initialized when the dialog begins or when the user sent a response that has not meet or exceed the batch length.
-When the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
+When the Timeout parameter is set an integer greater than 0, a timer will be set whenever the Aggreate DTMF Input(n) node begins. This timer will be reset whenever the user responds to the bot, until the expected batch length is met.
+In case the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
 
 #### Parameters
 * Batch Length
@@ -149,8 +149,8 @@ When the timeout is reached, the dialog will end and if the Default Value is set
 ## **Aggregate DTMF Input (#)**
 Prompts the user for multiple inputs that are aggregated until the termination string is received.
 Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
-A timeout timer will be initialized when the dialog begins or when the user sent a response without including the termination character.
-When the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
+When the Timeout parameter is set an integer greater than 0, a timer will be set whenever the Aggreate DTMF Input(n) node begins. This timer will be reset whenever the user responds to the bot, until the expected batch length is met.
+In case the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
 
 #### Parameters
 * Termination Character
