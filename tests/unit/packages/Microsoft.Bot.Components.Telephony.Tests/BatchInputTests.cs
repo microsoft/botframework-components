@@ -90,28 +90,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
             var mockDefaultValue = "test value";
             var mockActivityText = "activity text";
             var mockTurnContext = new Mock<ITurnContext>();
-            var configuration = new DialogStateManagerConfiguration
-            {
-                MemoryScopes = new List<MemoryScope> { new ThisMemoryScope(), new TurnMemoryScope() }
-            };
-
-            var turnState = new TurnContextStateCollection();
-            turnState.Add(configuration);
-
-            mockTurnContext
-                .SetupGet(ctx => ctx.Activity)
-                .Returns(new Activity { Type = ActivityTypes.Event, Name = ActivityEventNames.ContinueConversation });
-
-            mockTurnContext
-                .Setup(ctx => ctx.SendActivityAsync(It.IsAny<Activity>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new ResourceResponse()));
-
-            mockTurnContext
-                .SetupGet(ctx => ctx.TurnState)
-                .Returns(turnState);
-
-            var dc = new DialogContext(new DialogSet(), mockTurnContext.Object, new DialogState());
-            dc.Stack.Add(new DialogInstance { Id = "BatchTerminationCharacter" });
+            var dc = GetDialogContext(mockTurnContext);
 
             var batchFixedLengthInput = new BatchTerminationCharacterInput();
             batchFixedLengthInput.Property = "turn.result";
@@ -174,28 +153,7 @@ namespace Microsoft.Bot.Components.Telephony.Tests
             var mockDefaultValue = "test value";
             var mockActivityText = "activity text";
             var mockTurnContext = new Mock<ITurnContext>();
-            var configuration = new DialogStateManagerConfiguration
-            {
-                MemoryScopes = new List<MemoryScope> { new ThisMemoryScope(), new TurnMemoryScope() }
-            };
-
-            var turnState = new TurnContextStateCollection();
-            turnState.Add(configuration);
-
-            mockTurnContext
-                .SetupGet(ctx => ctx.Activity)
-                .Returns(new Activity { Type = ActivityTypes.Event, Name = ActivityEventNames.ContinueConversation });
-
-            mockTurnContext
-                .Setup(ctx => ctx.SendActivityAsync(It.IsAny<Activity>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new ResourceResponse()));
-            
-            mockTurnContext
-                .SetupGet(ctx => ctx.TurnState)
-                .Returns(turnState);
-            
-            var dc = new DialogContext(new DialogSet(), mockTurnContext.Object, new DialogState());
-            dc.Stack.Add(new DialogInstance { Id = "BatchFixedLength" });
+            var dc = GetDialogContext(mockTurnContext);
 
             var batchFixedLengthInput = new BatchFixedLengthInput();
             batchFixedLengthInput.Property = "turn.result";
@@ -249,6 +207,34 @@ namespace Microsoft.Bot.Components.Telephony.Tests
         public async Task BatchInput_Regex_InterruptionIgnoredForMaskedDigits()
         {
             await TestUtils.RunTestScript(_resourceExplorerFixture.ResourceExplorer, adapterChannel: Channels.Telephony);
+        }
+
+        private DialogContext GetDialogContext(Mock<ITurnContext> turnContext)
+        {
+            var configuration = new DialogStateManagerConfiguration
+            {
+                MemoryScopes = new List<MemoryScope> { new ThisMemoryScope(), new TurnMemoryScope() }
+            };
+
+            var turnState = new TurnContextStateCollection();
+            turnState.Add(configuration);
+
+            turnContext
+                .SetupGet(ctx => ctx.Activity)
+                .Returns(new Activity { Type = ActivityTypes.Event, Name = ActivityEventNames.ContinueConversation });
+
+            turnContext
+                .Setup(ctx => ctx.SendActivityAsync(It.IsAny<Activity>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new ResourceResponse()));
+
+            turnContext
+                .SetupGet(ctx => ctx.TurnState)
+                .Returns(turnState);
+
+            var dc = new DialogContext(new DialogSet(), turnContext.Object, new DialogState());
+            dc.Stack.Add(new DialogInstance { Id = "DialogInstanceId" });
+            
+            return dc;
         }
     }
 }
