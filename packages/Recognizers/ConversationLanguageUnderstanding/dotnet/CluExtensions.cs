@@ -22,7 +22,7 @@ namespace Microsoft.Bot.Components.Recognizers.CLURecognizer
                         NormalizedValue(category),
                         new IntentScore
                         {
-                            Score = confidenceScore == null ? 0.0 : double.Parse(confidenceScore, CultureInfo.InvariantCulture),
+                            Score = confidenceScore == null ? 0.0 : double.Parse(confidenceScore, CultureInfo.CurrentCulture),
                         });
                 }
             }
