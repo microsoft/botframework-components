@@ -1,0 +1,21 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "../../../.eslintrc.json",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": ["lib"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

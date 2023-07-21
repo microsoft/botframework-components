@@ -1,0 +1,49 @@
+{
+  "name": "@microsoft/bot-components-clu-recognizer",
+  "author": "Microsoft Corp.",
+  "description": "Rule system for the Microsoft BotBuilder adaptive dialog system, with integration specific to Microsoft Teams.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "msbot-component",
+    "msbot-action",
+    "msbot-trigger"
+  ],
+  "bugs": {
+    "url": "https://github.com/microsoft/botframework-components/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/botframework-components.git"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "lint": "eslint . --ext .js,.ts"
+  },
+  "files": [
+    "lib",
+    "schemas",
+    "src"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "adaptive-expressions": "4.19.3",
+    "botbuilder": "4.19.3",
+    "botbuilder-dialogs": "4.19.3",
+    "botbuilder-dialogs-adaptive-runtime-core": "4.19.3-preview",
+    "botbuilder-dialogs-declarative": "4.19.3-preview",
+    "botframework-connector": "4.19.3",
+    "eslint": "^7.30.0",
+    "eslint-plugin-prettier": "latest",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@azure/ms-rest-js": "^2.7.0"
+  }
+}
