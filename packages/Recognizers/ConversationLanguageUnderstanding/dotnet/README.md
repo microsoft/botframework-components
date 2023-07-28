@@ -6,10 +6,6 @@ This recognizer helps you add a custom recognizer to an empty bot built with Bot
 ## Installation
 In order to enable the CLU recognizer, you must first install the [CLU recognizer package](https://www.nuget.org/packages/Microsoft.Bot.Components.Recognizers.CLURecognizer) from NuGet in your Composer project. 
 
-```
-Note: This package is currently only available for C# bots.
-```
-
 1. Create a new Composer bot using the `Empty Bot` template.
 
 2. Open the Package Manager in Composer.

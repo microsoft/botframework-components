@@ -13,7 +13,15 @@ import {
 } from './cluRecognizerOptionsBase';
 import { CluExtensions } from './cluExtensions';
 
+/**
+ * Options for CluRecognizerOptions.
+ */
 export class CluRecognizerOptions extends CluRecognizerOptionsBase {
+  /**
+   * Initializes a new instance of the CluRecognizerOptions class.
+   * @param application The CLU application to use to recognize text.
+   * @param fields The fields to load to the base class.
+   */
   constructor(
     application: CluApplication,
     fields?: CluRecognizerOptionsBaseFields
@@ -21,14 +29,23 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
     super(application, fields);
   }
 
+  /**
+   * @inheritdoc
+   */
   recognize(
     utterance: string,
     httpClient: HttpClient
   ): Promise<RecognizerResult>;
+  /**
+   * @inheritdoc
+   */
   recognize(
     turnContext: TurnContext,
     httpClient: HttpClient
   ): Promise<RecognizerResult>;
+  /**
+   * @inheritdoc
+   */
   recognize(
     dialogContext: DialogContext,
     activity: Activity,
@@ -112,7 +129,13 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
       [CluConstants.RequestOptions.SubscriptionKeyHeaderName]: this.application
         .endpointKey,
     });
-    const resource = new WebResource(uri.href, 'POST', JSON.stringify(body), {}, headers);
+    const resource = new WebResource(
+      uri.href,
+      'POST',
+      JSON.stringify(body),
+      {},
+      headers
+    );
     const response = await httpClient.sendRequest(resource);
 
     return response.parsedBody;

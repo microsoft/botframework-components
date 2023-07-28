@@ -10,8 +10,11 @@ import { CluRecognizerOptions } from '../cluRecognizerOptions';
 import { CluApplication } from '../cluApplication';
 import { DefaultHttpClientFactory } from '../defaultHttpClientFactory';
 
+/**
+ * @inheritdoc
+ * A CLU based implementation of the Recognizer class.
+ */
 export class CluAdaptiveRecognizer extends Recognizer {
-  public static readonly $kind: string = 'Microsoft.CluRecognizer';
   private _projectName: StringExpression = new StringExpression();
   private _endpoint: StringExpression = new StringExpression();
   private _endpointKey: StringExpression = new StringExpression();
@@ -27,62 +30,106 @@ export class CluAdaptiveRecognizer extends Recognizer {
     CluConstants.RequestOptions.ApiVersion
   );
 
+  /**
+   * The declarative type for this recognizer.
+   */
+  public static readonly $kind: string = 'Microsoft.CluRecognizer';
+
+  /**
+   * Gets or sets the projectName of your Conversation Language Understanding service.
+   * @returns The project name of your Conversation Language Understanding service.
+   */
   get projectName() {
-    return this._projectName.value;
+    return this._projectName.expressionText;
   }
   set projectName(value: string) {
     this._projectName = new StringExpression(value);
   }
 
+  /**
+   * Gets or sets the endpoint for your Conversation Language Understanding service.
+   * @returns The endpoint of your Conversation Language Understanding service.
+   */
   get endpoint() {
-    return this._endpoint.value;
+    return this._endpoint.expressionText;
   }
   set endpoint(value: string) {
     this._endpoint = new StringExpression(value);
   }
 
+  /**
+   * Gets or sets the endpointKey for your Conversation Language Understanding service.
+   * @returns The endpoint key for your Conversation Language Understanding service.
+   */
   get endpointKey() {
-    return this._endpointKey.value;
+    return this._endpointKey.expressionText;
   }
   set endpointKey(value: string) {
     this._endpointKey = new StringExpression(value);
   }
 
+  /**
+   * Gets or sets the deploymentName for your Conversation Language Understanding service.
+   * @returns The deployment name for your Conversation Language Understanding service.
+   */
   get deploymentName() {
-    return this._deploymentName.value;
+    return this._deploymentName.expressionText;
   }
   set deploymentName(value: string) {
     this._deploymentName = new StringExpression(value);
   }
 
+  /**
+   * Gets or sets the flag to determine if personal information should be logged in telemetry.
+   * @returns The flag to indicate in personal information should be logged in telemetry.
+   */
   get logPersonalInformation() {
-    return this._logPersonalInformation.value;
+    return this._logPersonalInformation.expressionText;
   }
-  set logPersonalInformation(value: boolean) {
+  set logPersonalInformation(value: string | boolean) {
     this._logPersonalInformation = new BoolExpression(value);
   }
 
+  /**
+   * Gets or sets a value indicating whether API results should be included.
+   *
+   * This is mainly useful for testing or getting access to CLU features not yet in the SDK.
+   * @returns True to include API results.
+   */
   get includeAPIResults() {
-    return this._includeAPIResults.value;
+    return this._includeAPIResults.expressionText;
   }
-  set includeAPIResults(value: boolean) {
+  set includeAPIResults(value: string | boolean) {
     this._includeAPIResults = new BoolExpression(value);
   }
 
+  /**
+   * Gets or sets a value indicating the string index type to include in the the CLU request body.
+   * @returns A value indicating the string index type to include in the the CLU request body.
+   */
   get cluRequestBodyStringIndexType() {
-    return this._cluRequestBodyStringIndexType.value;
+    return this._cluRequestBodyStringIndexType.expressionText;
   }
   set cluRequestBodyStringIndexType(value: string) {
     this._cluRequestBodyStringIndexType = new StringExpression(value);
   }
 
+  /**
+   * Gets or sets a value indicating the CLU API version to use.
+   *
+   * This can be helpful combined with the includeAPIResults flag to get access to CLU features not yet in the SDK.
+   * @returns A value indicating the CLU API version to use.
+   */
   get cluApiVersion() {
-    return this._cluApiVersion.value;
+    return this._cluApiVersion.expressionText;
   }
   set cluApiVersion(value: string) {
     this._cluApiVersion = new StringExpression(value);
   }
 
+  /**
+   * @inheritdoc
+   */
   async recognize(
     dialogContext: DialogContext,
     activity: Activity,
@@ -107,6 +154,11 @@ export class CluAdaptiveRecognizer extends Recognizer {
     return result;
   }
 
+  /**
+   * Construct recognizer options from the current dialog context.
+   * @param dialogContext The current dialog context.
+   * @returns CLU Recognizer options.
+   */
   recognizerOptions(dialogContext: DialogContext): CluRecognizerOptions {
     const application = new CluApplication(
       this._projectName.getValue(dialogContext.state),
@@ -126,5 +178,54 @@ export class CluAdaptiveRecognizer extends Recognizer {
       ),
       cluApiVersion: this._cluApiVersion.getValue(dialogContext.state),
     });
+  }
+
+  /**
+   * @inheritdoc
+   */
+  protected fillRecognizerResultTelemetryProperties(
+    recognizerResult: RecognizerResult,
+    telemetryProperties: Record<string, string>,
+    dialogContext?: DialogContext
+  ): Record<string, string> {
+    // Get top two intents.
+    const [firstIntent, secondIntent] = Object.entries(recognizerResult.intents)
+      .map(([intent, { score = 0 }]) => ({ intent, score }))
+      .sort((a, b) => b.score - a.score);
+
+    // Add the intent score and conversation id properties
+    const properties: Record<string, string> = {
+      [CluConstants.Telemetry.ProjectNameProperty]: this._projectName.value,
+      [CluConstants.Telemetry.IntentProperty]: firstIntent?.intent ?? '',
+      [CluConstants.Telemetry
+        .IntentScoreProperty]: firstIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry.Intent2Property]: secondIntent?.intent ?? '',
+      [CluConstants.Telemetry
+        .IntentScore2Property]: secondIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry.FromIdProperty]: dialogContext?.context.activity
+        ?.from?.id!,
+    };
+
+    if (!recognizerResult.entities) {
+      properties[CluConstants.Telemetry.EntitiesProperty] =
+        recognizerResult.entities;
+    }
+
+    // Use the LogPersonalInformation flag to toggle logging PII data, text is a common example.
+    if (
+      this.logPersonalInformation &&
+      !dialogContext?.context.activity?.text?.trim()
+    ) {
+      properties[
+        CluConstants.Telemetry.QuestionProperty
+      ] = dialogContext?.context.activity.text!;
+    }
+
+    // Additional Properties can override "stock" properties.
+    if (telemetryProperties != null) {
+      return Object.assign({}, properties, telemetryProperties);
+    }
+
+    return properties;
   }
 }

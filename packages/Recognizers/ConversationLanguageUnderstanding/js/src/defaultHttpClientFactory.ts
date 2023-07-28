@@ -16,9 +16,16 @@ export const USER_AGENT = `Microsoft-BotFramework/3.1 ${
   botbuilderPackageJson.name
 }/${botbuilderPackageJson.version} ${getDefaultUserAgentValue()} `;
 
+/**
+ * HttpClientFactory that always returns the same HttpClient instance for CLU calls.
+ */
 export class DefaultHttpClientFactory {
   private readonly httpClient: HttpClient;
 
+  /**
+   * Initializes a new instance of the DefaultHttpClientFactory class.
+   * @param turnContext The current turn context.
+   */
   constructor(turnContext: TurnContext) {
     const connectorClient = turnContext.turnState.get<ConnectorClient>(
       turnContext.adapter.ConnectorClientKey
@@ -33,6 +40,10 @@ export class DefaultHttpClientFactory {
     });
   }
 
+  /**
+   * Returns the same default HttpClient instance.
+   * @returns The same HttpClient instance.
+   */
   create() {
     return this.httpClient;
   }

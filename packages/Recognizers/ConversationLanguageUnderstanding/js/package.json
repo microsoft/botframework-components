@@ -1,13 +1,15 @@
 {
   "name": "@microsoft/bot-components-clu-recognizer",
   "author": "Microsoft Corp.",
-  "description": "Rule system for the Microsoft BotBuilder adaptive dialog system, with integration specific to Microsoft Teams.",
+  "description": "This library implements .NET support for Composer with Conversation Language Understanding.",
   "version": "1.0.0",
   "license": "MIT",
   "keywords": [
     "msbot-component",
-    "msbot-action",
-    "msbot-trigger"
+    "msbot-recognizer",
+    "composer",
+    "botframework",
+    "botbuilder"
   ],
   "bugs": {
     "url": "https://github.com/microsoft/botframework-components/issues"

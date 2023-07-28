@@ -9,7 +9,14 @@ import {
 } from 'botbuilder-dialogs-adaptive-runtime-core';
 import { CluAdaptiveRecognizer } from './clu/cluAdaptiveRecognizer';
 
+/**
+ * CLU Recognizer BotComponent definition.
+ */
 export class CluRecognizerBotComponent extends BotComponent {
+  /**
+   * @param services Services collection to register dependency injection.
+   * @param _configuration Configuration for the bot component.
+   */
   configureServices(
     services: ServiceCollection,
     _configuration: Configuration

@@ -3,7 +3,15 @@
 
 import { IntentScore } from 'botbuilder';
 
+/**
+ * Utility class for CLU Results.
+ */
 export class CluExtensions {
+  /**
+   * Extract intents from a CLU Result.
+   * @param cluResult The CLU Result.
+   * @returns An object with the extracted intents.
+   */
   static extractIntents(cluResult: Record<string, IntentScore>) {
     const result: Record<string, IntentScore> = {};
     if (!!cluResult?.intents && Array.isArray(cluResult.intents)) {
@@ -18,6 +26,11 @@ export class CluExtensions {
     return result;
   }
 
+  /**
+   * Extract entities from a CLU Result.
+   * @param cluResult The CLU Result.
+   * @returns An object with the extracted entities.
+   */
   static extractEntities(cluResult: Record<string, any>) {
     const result: Record<string, any> = {};
     if (!!cluResult?.entities && Array.isArray(cluResult.entities)) {
