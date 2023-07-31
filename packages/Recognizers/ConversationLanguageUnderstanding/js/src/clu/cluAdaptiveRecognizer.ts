@@ -81,7 +81,7 @@ export class CluAdaptiveRecognizer extends Recognizer {
 
   /**
    * Gets or sets the flag to determine if personal information should be logged in telemetry.
-   * @returns The flag to indicate in personal information should be logged in telemetry.
+   * @returns The flag to indicate if personal information should be logged in telemetry.
    */
   get logPersonalInformation(): string | boolean {
     return this._logPersonalInformation.expressionText;
@@ -104,8 +104,8 @@ export class CluAdaptiveRecognizer extends Recognizer {
   }
 
   /**
-   * Gets or sets a value indicating the string index type to include in the the CLU request body.
-   * @returns A value indicating the string index type to include in the the CLU request body.
+   * Gets or sets a value indicating the string index type to include in the CLU request body.
+   * @returns A value indicating the string index type to include in the CLU request body.
    */
   get cluRequestBodyStringIndexType(): string {
     return this._cluRequestBodyStringIndexType.expressionText;

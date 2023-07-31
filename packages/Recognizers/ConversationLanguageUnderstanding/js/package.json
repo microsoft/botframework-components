@@ -1,7 +1,7 @@
 {
   "name": "@microsoft/bot-components-clu-recognizer",
   "author": "Microsoft Corp.",
-  "description": "This library implements .NET support for Composer with Conversation Language Understanding.",
+  "description": "This library implements node.js support for Composer with Conversation Language Understanding.",
   "version": "1.0.0",
   "license": "MIT",
   "keywords": [
