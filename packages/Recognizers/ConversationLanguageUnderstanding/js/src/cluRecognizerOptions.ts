@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* eslint-disable  @typescript-eslint/no-non-null-assertion */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { TurnContext, Activity, RecognizerResult } from 'botbuilder';
 import { DialogContext } from 'botbuilder-dialogs';
 import { HttpClient, HttpHeaders, WebResource } from '@azure/ms-rest-js';
@@ -24,7 +27,7 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
    */
   constructor(
     application: CluApplication,
-    fields?: CluRecognizerOptionsBaseFields
+    fields?: CluRecognizerOptionsBaseFields,
   ) {
     super(application, fields);
   }
@@ -34,14 +37,14 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
    */
   recognize(
     utterance: string,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
   /**
    * @inheritdoc
    */
   recognize(
     turnContext: TurnContext,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
   /**
    * @inheritdoc
@@ -49,17 +52,17 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
   recognize(
     dialogContext: DialogContext,
     activity: Activity,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
   recognize(
     utteranceOrContext: string | TurnContext | DialogContext,
     activityOrHttpClient: Activity | HttpClient,
-    httpClient?: HttpClient
+    httpClient?: HttpClient,
   ): Promise<RecognizerResult> {
     if (typeof utteranceOrContext === 'string') {
       return this.recognizeWithUtterance(
         utteranceOrContext,
-        activityOrHttpClient as HttpClient
+        activityOrHttpClient as HttpClient,
       );
     }
 
@@ -78,7 +81,7 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
   private async recognizeWithTurnContext(
     turnContext: TurnContext,
     utterance: string,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult> {
     let recognizerResult: RecognizerResult;
     let cluResponse = null;
@@ -89,7 +92,7 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
       cluResponse = await this.getCluResponse(utterance, httpClient);
       recognizerResult = this.buildRecognizerResultFromCluResponse(
         cluResponse,
-        utterance
+        utterance,
       );
     }
 
@@ -103,7 +106,7 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
       CluConstants.TraceOptions.ActivityName,
       traceInfo,
       CluConstants.TraceOptions.TraceType,
-      CluConstants.TraceOptions.TraceLabel
+      CluConstants.TraceOptions.TraceLabel,
     );
 
     return recognizerResult;
@@ -111,12 +114,12 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
 
   private async recognizeWithUtterance(
     utterance: string,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult> {
     if (!utterance?.trim()) {
       return { text: utterance, intents: {} };
     } else {
-      var cluResponse = await this.getCluResponse(utterance, httpClient);
+      const cluResponse = await this.getCluResponse(utterance, httpClient);
       return this.buildRecognizerResultFromCluResponse(cluResponse, utterance);
     }
   }
@@ -126,15 +129,15 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
     const body = this.buildRequestBody(utterance);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      [CluConstants.RequestOptions.SubscriptionKeyHeaderName]: this.application
-        .endpointKey,
+      [CluConstants.RequestOptions.SubscriptionKeyHeaderName]:
+        this.application.endpointKey,
     });
     const resource = new WebResource(
       uri.href,
       'POST',
       JSON.stringify(body),
       {},
-      headers
+      headers,
     );
     const response = await httpClient.sendRequest(resource);
 
@@ -162,9 +165,9 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
 
   private buildRecognizerResultFromCluResponse(
     cluResponse: any,
-    utterance: string
+    utterance: string,
   ): RecognizerResult {
-    var prediction =
+    const prediction =
       cluResponse[CluConstants.ResponseOptions.ResultKey]?.[
         CluConstants.ResponseOptions.PredictionKey
       ];
@@ -177,9 +180,8 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
     };
 
     if (this.includeAPIResults) {
-      recognizerResult[
-        CluConstants.RecognizerResultResponsePropertyName
-      ] = cluResponse;
+      recognizerResult[CluConstants.RecognizerResultResponsePropertyName] =
+        cluResponse;
     }
 
     return recognizerResult;
@@ -188,7 +190,7 @@ export class CluRecognizerOptions extends CluRecognizerOptionsBase {
   private buildUri(): URL {
     const uri = new URL(
       '/language/:analyze-conversations',
-      this.application.endpoint
+      this.application.endpoint,
     );
 
     uri.searchParams.append('api-version', this.cluApiVersion);

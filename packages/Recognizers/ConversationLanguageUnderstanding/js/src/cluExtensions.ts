@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { IntentScore } from 'botbuilder';
 
 /**
@@ -12,7 +14,9 @@ export class CluExtensions {
    * @param cluResult The CLU Result.
    * @returns An object with the extracted intents.
    */
-  static extractIntents(cluResult: Record<string, IntentScore>) {
+  static extractIntents(
+    cluResult: Record<string, IntentScore>,
+  ): Record<string, IntentScore> {
     const result: Record<string, IntentScore> = {};
     if (!!cluResult?.intents && Array.isArray(cluResult.intents)) {
       for (const intent of cluResult.intents) {
@@ -31,7 +35,7 @@ export class CluExtensions {
    * @param cluResult The CLU Result.
    * @returns An object with the extracted entities.
    */
-  static extractEntities(cluResult: Record<string, any>) {
+  static extractEntities(cluResult: Record<string, any>): Record<string, any> {
     const result: Record<string, any> = {};
     if (!!cluResult?.entities && Array.isArray(cluResult.entities)) {
       for (const entity of cluResult.entities) {

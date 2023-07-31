@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* eslint-disable  @typescript-eslint/no-non-null-assertion */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import {
   TurnContext,
   Activity,
@@ -38,7 +41,7 @@ export class CluMainRecognizer {
    */
   constructor(
     private readonly recognizerOptions: CluRecognizerOptionsBase,
-    private readonly httpClient: HttpClient
+    private readonly httpClient: HttpClient,
   ) {
     this.telemetryClient =
       recognizerOptions.telemetryClient ?? new NullTelemetryClient();
@@ -59,7 +62,7 @@ export class CluMainRecognizer {
    */
   recognize(
     utterance: string,
-    recognizerOptions?: CluRecognizerOptionsBase
+    recognizerOptions?: CluRecognizerOptionsBase,
   ): Promise<RecognizerResult>;
   /**
    * Return results of the analysis (Suggested actions and intents).
@@ -74,7 +77,7 @@ export class CluMainRecognizer {
     turnContext: TurnContext,
     recognizerOptions?: CluRecognizerOptionsBase,
     telemetryProperties?: Record<string, string>,
-    telemetryMetrics?: Record<string, number>
+    telemetryMetrics?: Record<string, number>,
   ): Promise<RecognizerResult>;
   /**
    * Return results of the analysis (Suggested actions and intents).
@@ -91,7 +94,7 @@ export class CluMainRecognizer {
     activity: Activity,
     recognizerOptions?: CluRecognizerOptionsBase,
     telemetryProperties?: Record<string, string>,
-    telemetryMetrics?: Record<string, number>
+    telemetryMetrics?: Record<string, number>,
   ): Promise<RecognizerResult>;
   recognize(
     utteranceOrContext: string | TurnContext | DialogContext,
@@ -102,7 +105,7 @@ export class CluMainRecognizer {
     }
 
     const params =
-      utteranceOrContext instanceof TurnContext ? [, ...rest] : rest;
+      utteranceOrContext instanceof TurnContext ? [null, ...rest] : rest;
     return this.recognizeWithContext(utteranceOrContext, ...params);
   }
 
@@ -117,14 +120,14 @@ export class CluMainRecognizer {
     recognizerResult: RecognizerResult,
     turnContext: TurnContext,
     telemetryProperties?: Record<string, string>,
-    telemetryMetrics?: Record<string, number>
-  ) {
+    telemetryMetrics?: Record<string, number>,
+  ): void {
     this.telemetryClient.trackEvent({
       name: CluConstants.Telemetry.CluResult,
       properties: this.fillCluEventProperties(
         recognizerResult,
         turnContext,
-        telemetryProperties
+        telemetryProperties,
       ),
       metrics: telemetryMetrics,
     });
@@ -141,8 +144,8 @@ export class CluMainRecognizer {
   protected fillCluEventProperties(
     recognizerResult: RecognizerResult,
     turnContext: TurnContext,
-    telemetryProperties?: Record<string, string>
-  ) {
+    telemetryProperties?: Record<string, string>,
+  ): Record<string, string> {
     // Get top two intents.
     const [firstIntent, secondIntent] = Object.entries(recognizerResult.intents)
       .map(([intent, { score = 0 }]) => ({ intent, score }))
@@ -150,14 +153,14 @@ export class CluMainRecognizer {
 
     // Add the intent score and conversation id properties.
     const properties = {
-      [CluConstants.Telemetry.ProjectNameProperty]: this.recognizerOptions
-        .application.projectName,
+      [CluConstants.Telemetry.ProjectNameProperty]:
+        this.recognizerOptions.application.projectName,
       [CluConstants.Telemetry.IntentProperty]: firstIntent?.intent ?? '',
-      [CluConstants.Telemetry
-        .IntentScoreProperty]: firstIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry.IntentScoreProperty]:
+        firstIntent?.score.toLocaleString('en-US'),
       [CluConstants.Telemetry.Intent2Property]: secondIntent?.intent ?? '',
-      [CluConstants.Telemetry
-        .IntentScore2Property]: secondIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry.IntentScore2Property]:
+        secondIntent?.score.toLocaleString('en-US'),
       [CluConstants.Telemetry.FromIdProperty]: turnContext.activity?.from?.id,
     };
 
@@ -188,7 +191,7 @@ export class CluMainRecognizer {
    */
   private recognizeWithUtterance(
     utterance: string,
-    predictionOptions?: CluRecognizerOptionsBase
+    predictionOptions?: CluRecognizerOptionsBase,
   ) {
     const recognizer = predictionOptions ?? this.recognizerOptions;
     return recognizer.recognize(utterance, this.httpClient);
@@ -208,7 +211,7 @@ export class CluMainRecognizer {
     activity?: Activity,
     predictionOptions?: CluRecognizerOptionsBase,
     telemetryProperties?: Record<string, string>,
-    telemetryMetrics?: Record<string, number>
+    telemetryMetrics?: Record<string, number>,
   ) {
     const turnContext =
       context instanceof TurnContext ? context : context.context;
@@ -233,7 +236,7 @@ export class CluMainRecognizer {
       result,
       turnContext,
       telemetryProperties,
-      telemetryMetrics
+      telemetryMetrics,
     );
 
     turnContext.turnState.set(this.cacheKey, result);

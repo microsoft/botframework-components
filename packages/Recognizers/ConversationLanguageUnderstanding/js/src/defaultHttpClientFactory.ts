@@ -11,7 +11,7 @@ import {
 import { TurnContext } from 'botbuilder';
 import { ConnectorClient } from 'botframework-connector';
 
-const botbuilderPackageJson = require('botbuilder/package.json');
+import botbuilderPackageJson from 'botbuilder/package.json';
 export const USER_AGENT = `Microsoft-BotFramework/3.1 ${
   botbuilderPackageJson.name
 }/${botbuilderPackageJson.version} ${getDefaultUserAgentValue()} `;
@@ -28,7 +28,7 @@ export class DefaultHttpClientFactory {
    */
   constructor(turnContext: TurnContext) {
     const connectorClient = turnContext.turnState.get<ConnectorClient>(
-      turnContext.adapter.ConnectorClientKey
+      turnContext.adapter.ConnectorClientKey,
     );
 
     this.httpClient = new ServiceClient(connectorClient.credentials, {
@@ -44,7 +44,7 @@ export class DefaultHttpClientFactory {
    * Returns the same default HttpClient instance.
    * @returns The same HttpClient instance.
    */
-  create() {
+  create(): HttpClient {
     return this.httpClient;
   }
 }

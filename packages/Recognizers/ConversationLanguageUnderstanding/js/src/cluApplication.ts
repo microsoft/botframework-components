@@ -16,7 +16,7 @@ export class CluApplication {
     public projectName: string,
     public endpointKey: string,
     public endpoint: string,
-    public deploymentName: string
+    public deploymentName: string,
   ) {
     if (!projectName?.trim()) {
       throw new Error(`CLU "projectName" parameter cannot be null or empty.`);
@@ -36,7 +36,7 @@ export class CluApplication {
 
     if (!deploymentName?.trim()) {
       throw new Error(
-        `CLU "deploymentName" parameter cannot be null or empty.`
+        `CLU "deploymentName" parameter cannot be null or empty.`,
       );
     }
   }
@@ -47,7 +47,8 @@ export class CluApplication {
    * @returns True if the GUID is well formated.
    */
   private isWellFormatedGUID(guid: string) {
-    var pattern = /^(((?=.*}$){)|((?!.*}$)))((?!.*-.*)|(?=(.*[-].*){4}))[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}?[}]?$/m;
+    const pattern =
+      /^(((?=.*}$){)|((?!.*}$)))((?!.*-.*)|(?=(.*[-].*){4}))[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}?[}]?$/m;
     return !!guid.match(pattern);
   }
 
@@ -63,7 +64,7 @@ export class CluApplication {
         (uriResult.toString() === uri || uriResult.toString() === `${uri}/`) &&
         (uriResult.protocol === 'https:' || uriResult.protocol === 'http:')
       );
-    } catch (err) {
+    } catch {
       return false;
     }
   }

@@ -2,7 +2,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "extends": [
-    "../../../.eslintrc.json",
+    "../../../../.eslintrc.json",
     "plugin:@typescript-eslint/recommended"
   ],
   "ignorePatterns": ["lib"],

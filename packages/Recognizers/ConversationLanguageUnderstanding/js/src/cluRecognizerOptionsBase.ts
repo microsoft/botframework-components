@@ -44,13 +44,13 @@ export abstract class CluRecognizerOptionsBase {
    * Gets or sets a value indicating whether to log personal information that came from the user to telemetry.
    * @returns If true, personal information is logged to Telemetry; otherwise the properties will be filtered.
    */
-  logPersonalInformation: boolean = false;
+  logPersonalInformation = false;
 
   /**
    * Gets or sets a value indicating whether flag to indicate if full results from the CLU API should be returned with the recognizer result.
    * @returns A value indicating whether full results from the CLU API should be returned with the recognizer result.
    */
-  includeAPIResults: boolean = false;
+  includeAPIResults = false;
 
   /**
    * Gets or sets a value indicating the string index type to include in the the CLU request body.
@@ -68,7 +68,7 @@ export abstract class CluRecognizerOptionsBase {
    * Gets the CLU application used to recognize text.
    * @returns The CLU application to use to recognize text.
    */
-  get application() {
+  get application(): CluApplication {
     return this._application;
   }
 
@@ -79,7 +79,7 @@ export abstract class CluRecognizerOptionsBase {
    */
   protected constructor(
     application: CluApplication,
-    fields?: CluRecognizerOptionsBaseFields
+    fields?: CluRecognizerOptionsBaseFields,
   ) {
     if (!application) {
       throw new Error();
@@ -98,17 +98,17 @@ export abstract class CluRecognizerOptionsBase {
 
   abstract recognize(
     turnContext: TurnContext,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
 
   abstract recognize(
     dialogContext: DialogContext,
     activity: Activity,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
 
   abstract recognize(
     utterance: string,
-    httpClient: HttpClient
+    httpClient: HttpClient,
   ): Promise<RecognizerResult>;
 }

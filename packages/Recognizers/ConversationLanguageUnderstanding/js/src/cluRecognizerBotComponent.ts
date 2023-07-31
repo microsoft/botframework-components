@@ -19,7 +19,7 @@ export class CluRecognizerBotComponent extends BotComponent {
    */
   configureServices(
     services: ServiceCollection,
-    _configuration: Configuration
+    _configuration: Configuration,
   ): void {
     services.composeFactory<ComponentDeclarativeTypes[]>(
       'declarativeTypes',
@@ -33,7 +33,7 @@ export class CluRecognizerBotComponent extends BotComponent {
               },
             ];
           },
-        })
+        }),
     );
   }
 }
