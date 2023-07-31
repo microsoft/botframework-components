@@ -20,13 +20,14 @@ export class CluAdaptiveRecognizer extends Recognizer {
   private _endpointKey: StringExpression = new StringExpression();
   private _deploymentName: StringExpression = new StringExpression();
   private _logPersonalInformation: BoolExpression = new BoolExpression(
-    '=settings.runtimeSettings.telemetry.logPersonalInformation',
+    '=settings.runtimeSettings.telemetry.logPersonalInformation'
   );
   private _includeAPIResults: BoolExpression = new BoolExpression();
-  private _cluRequestBodyStringIndexType: StringExpression =
-    new StringExpression(CluConstants.RequestOptions.StringIndexType);
+  private _cluRequestBodyStringIndexType: StringExpression = new StringExpression(
+    CluConstants.RequestOptions.StringIndexType
+  );
   private _cluApiVersion: StringExpression = new StringExpression(
-    CluConstants.RequestOptions.ApiVersion,
+    CluConstants.RequestOptions.ApiVersion
   );
 
   /**
@@ -133,11 +134,11 @@ export class CluAdaptiveRecognizer extends Recognizer {
     dialogContext: DialogContext,
     activity: Activity,
     telemetryProperties?: Record<string, string>,
-    telemetryMetrics?: Record<string, number>,
+    telemetryMetrics?: Record<string, number>
   ): Promise<RecognizerResult> {
     const recognizer = new CluMainRecognizer(
       this.recognizerOptions(dialogContext),
-      new DefaultHttpClientFactory(dialogContext.context).create(),
+      new DefaultHttpClientFactory(dialogContext.context).create()
     );
     const result = await recognizer.recognize(dialogContext, activity);
     this.trackRecognizerResult(
@@ -146,9 +147,9 @@ export class CluAdaptiveRecognizer extends Recognizer {
       this.fillRecognizerResultTelemetryProperties(
         result,
         telemetryProperties ?? {},
-        dialogContext,
+        dialogContext
       ),
-      telemetryMetrics,
+      telemetryMetrics
     );
     return result;
   }
@@ -163,17 +164,18 @@ export class CluAdaptiveRecognizer extends Recognizer {
       this._projectName.getValue(dialogContext.state),
       this._endpointKey.getValue(dialogContext.state),
       this._endpoint.getValue(dialogContext.state),
-      this._deploymentName.getValue(dialogContext.state),
+      this._deploymentName.getValue(dialogContext.state)
     );
 
     return new CluRecognizerOptions(application, {
       telemetryClient: this.telemetryClient,
       logPersonalInformation: this._logPersonalInformation.getValue(
-        dialogContext.state,
+        dialogContext.state
       ),
       includeAPIResults: this._includeAPIResults.getValue(dialogContext.state),
-      cluRequestBodyStringIndexType:
-        this._cluRequestBodyStringIndexType.getValue(dialogContext.state),
+      cluRequestBodyStringIndexType: this._cluRequestBodyStringIndexType.getValue(
+        dialogContext.state
+      ),
       cluApiVersion: this._cluApiVersion.getValue(dialogContext.state),
     });
   }
@@ -184,7 +186,7 @@ export class CluAdaptiveRecognizer extends Recognizer {
   protected fillRecognizerResultTelemetryProperties(
     recognizerResult: RecognizerResult,
     telemetryProperties: Record<string, string>,
-    dialogContext: DialogContext,
+    dialogContext: DialogContext
   ): Record<string, string> {
     // Get top two intents.
     const [firstIntent, secondIntent] = Object.entries(recognizerResult.intents)
@@ -195,11 +197,11 @@ export class CluAdaptiveRecognizer extends Recognizer {
     const properties: Record<string, string> = {
       [CluConstants.Telemetry.ProjectNameProperty]: this._projectName.value,
       [CluConstants.Telemetry.IntentProperty]: firstIntent?.intent ?? '',
-      [CluConstants.Telemetry.IntentScoreProperty]:
-        firstIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry
+        .IntentScoreProperty]: firstIntent?.score.toLocaleString('en-US'),
       [CluConstants.Telemetry.Intent2Property]: secondIntent?.intent ?? '',
-      [CluConstants.Telemetry.IntentScore2Property]:
-        secondIntent?.score.toLocaleString('en-US'),
+      [CluConstants.Telemetry
+        .IntentScore2Property]: secondIntent?.score.toLocaleString('en-US'),
       [CluConstants.Telemetry.FromIdProperty]:
         dialogContext.context.activity?.from?.id,
     };

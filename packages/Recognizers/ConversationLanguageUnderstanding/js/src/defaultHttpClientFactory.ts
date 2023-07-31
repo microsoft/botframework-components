@@ -28,7 +28,7 @@ export class DefaultHttpClientFactory {
    */
   constructor(turnContext: TurnContext) {
     const connectorClient = turnContext.turnState.get<ConnectorClient>(
-      turnContext.adapter.ConnectorClientKey,
+      turnContext.adapter.ConnectorClientKey
     );
 
     this.httpClient = new ServiceClient(connectorClient.credentials, {

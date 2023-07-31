@@ -79,7 +79,7 @@ export abstract class CluRecognizerOptionsBase {
    */
   protected constructor(
     application: CluApplication,
-    fields?: CluRecognizerOptionsBaseFields,
+    fields?: CluRecognizerOptionsBaseFields
   ) {
     if (!application) {
       throw new Error();
@@ -98,17 +98,17 @@ export abstract class CluRecognizerOptionsBase {
 
   abstract recognize(
     turnContext: TurnContext,
-    httpClient: HttpClient,
+    httpClient: HttpClient
   ): Promise<RecognizerResult>;
 
   abstract recognize(
     dialogContext: DialogContext,
     activity: Activity,
-    httpClient: HttpClient,
+    httpClient: HttpClient
   ): Promise<RecognizerResult>;
 
   abstract recognize(
     utterance: string,
-    httpClient: HttpClient,
+    httpClient: HttpClient
   ): Promise<RecognizerResult>;
 }

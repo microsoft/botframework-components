@@ -15,7 +15,7 @@ export class CluExtensions {
    * @returns An object with the extracted intents.
    */
   static extractIntents(
-    cluResult: Record<string, IntentScore>,
+    cluResult: Record<string, IntentScore>
   ): Record<string, IntentScore> {
     const result: Record<string, IntentScore> = {};
     if (!!cluResult?.intents && Array.isArray(cluResult.intents)) {
