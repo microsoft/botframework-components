@@ -114,13 +114,11 @@ describe('CluRecognizerOptions Tests', function () {
 
 class HttpClientMock implements HttpClient {
   sendRequest(httpRequest: WebResourceLike): Promise<HttpOperationResponse> {
-    return new Promise((resolve) => {
-      resolve({
-        parsedBody: responseContentStr,
-        headers: new HttpHeaders(),
-        request: httpRequest,
-        status: 200,
-      });
-    });
+    return Promise.resolve({
+          parsedBody: responseContentStr,
+          headers: new HttpHeaders(),
+          request: httpRequest,
+          status: 200,
+        });
   }
 }
