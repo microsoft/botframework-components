@@ -82,6 +82,6 @@ class CluRecognizerOptionsBaseMock extends CluRecognizerOptionsBase {
     _activity: unknown,
     _httpClient?: unknown
   ): Promise<RecognizerResult> {
-      return Promise.resolve({ text: 'text', intents: {}, entities: {} });
+    return Promise.resolve({ text: 'text', intents: {}, entities: {} });
   }
 }
