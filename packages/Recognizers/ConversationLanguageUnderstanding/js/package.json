@@ -1,5 +1,5 @@
 {
-  "name": "@microsoft/bot-components-clu-recognizer",
+  "name": "clu-recognizer",
   "author": "Microsoft Corp.",
   "description": "This library implements node.js support for Composer with Conversation Language Understanding.",
   "version": "1.0.0",
