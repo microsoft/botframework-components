@@ -9,7 +9,7 @@ extends:
   template: ../templates/component-template.yml
 
 variables:
-  BuildConfiguration: 'Release'
+  BuildConfiguration: Release
   BuildPlatform: anycpu
   ComponentType: codeExtension # codeExtension, declarativeAsset, or generator
   Language: js
