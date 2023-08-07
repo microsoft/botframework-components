@@ -1,10 +1,10 @@
-﻿# Conversation Language Understanding (CLU) Recognizer
+# Conversation Language Understanding (CLU) Recognizer
 
 ## Summary
 This recognizer helps you add a custom recognizer to an empty bot built with Bot Framework Composer in order to use the [Conversation Language Understanding Service](https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/conversational-language-understanding/overview) in place of the now deprecated LUIS.
 
 ## Installation
-In order to enable the CLU recognizer, you must first install the [CLU recognizer package](https://www.nuget.org/packages/Microsoft.Bot.Components.Recognizers.CLURecognizer) from NuGet in your Composer project. 
+In order to enable the CLU recognizer, you must first install the [CLU recognizer package](https://www.npmjs.com/package/@microsoft/bot-components-clu-recognizer) from NPM in your Composer project. 
 
 1. Create a new Composer bot using the `Empty Bot` template.
 
