@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+    "$role": "implements(Microsoft.IRecognizer)",
+    "title": "CLU Recognizer",
+    "description": "CLU recognizer.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Optional unique id using with RecognizerSet. Other recognizers should return 'DeferToRecognizer_{Id}' intent when cross training data for this recognizer."
+        },
+        "projectName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "CLU project name",
+            "description": "The project name of your CLU service."
+        },
+        "deploymentName": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "CLU deployment name",
+            "description": "The deployment name for your CLU service."
+        },
+        "endpoint": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "CLU endpoint",
+            "description": "Endpoint to use for CLU service like https://{your-clu-service-name}.cognitiveservices.azure.com."
+        },
+        "endpointKey": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "CLU endpoint key",
+            "description": "The endpoint key for your CLU service."
+        },
+        "includeAPIResults": {
+            "$ref": "schema:#/definitions/booleanExpression",
+            "title": "Include CLU API results",
+            "description": "Optional gets or sets a value indicating whether CLU API results should be included in the RecognizerResult returned. If null, then defaults to false."
+        },
+        "cluRequestBodyStringIndexType": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "The string index type to include in the CLU request body",
+            "description": "Optional value indicating the string index type to include in the the CLU request body. If null, then the TextElement_V8 string value is used."
+        },
+        "cluApiVersion": {
+            "$ref": "schema:#/definitions/stringExpression",
+            "title": "CLU API version",
+            "description": "Optional CLU version to target. If null, then the 2022-05-01 string value is used."
+        }
+    },
+    "required": [
+        "projectName",
+        "endpoint",
+        "endpointKey",
+        "deploymentName"
+    ]
+}
