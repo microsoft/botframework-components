@@ -3,7 +3,7 @@
 
 import 'mocha';
 import assert from 'assert';
-import { DefaultHttpClientFactory } from '@microsoft/bot-components-clu-recognizer/lib/defaultHttpClientFactory';
+import { DefaultHttpClientFactory } from 'clu-recognizer/lib/defaultHttpClientFactory';
 import { ActivityTypes, TestAdapter, TurnContext } from 'botbuilder';
 import {
   ConnectorClient,

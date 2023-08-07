@@ -3,7 +3,7 @@
 import { CluRecognizerBotComponent } from './cluRecognizerBotComponent';
 
 /**
- * @module @microsoft/bot-components-clu-recognizer
+ * @module clu-recognizer
  */
 
 export * from './cluApplication';

@@ -7,7 +7,7 @@ import {
   CluApplication,
   CluConstants,
   CluRecognizerOptionsBase,
-} from '@microsoft/bot-components-clu-recognizer';
+} from 'clu-recognizer';
 import { HttpClient } from '@azure/ms-rest-js';
 import {
   TurnContext,

@@ -3,7 +3,7 @@
 
 import 'mocha';
 import assert from 'assert';
-import { CluExtensions } from '@microsoft/bot-components-clu-recognizer/lib/cluExtensions';
+import { CluExtensions } from 'clu-recognizer/lib/cluExtensions';
 
 const expectedMappedIntents: Record<string, number> = {
   OrderPizza: 0.79148775,

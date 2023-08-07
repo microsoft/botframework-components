@@ -1,13 +1,12 @@
 {
-  "name": "@microsoft/bot-components-clu-recognizer-tests",
+  "name": "clu-recognizer-tests",
   "private": true,
   "scripts": {
-    "build:package": "yarn workspace @microsoft/bot-components-clu-recognizer build",
+    "build:package": "yarn workspaceclu-recognizer build",
     "test": "yarn run build:package && mocha --require ts-node/register tests/*.test.ts",
     "lint": "eslint . --ext .js,.ts --config ../../../../../packages/Recognizers/ConversationLanguageUnderstanding/js/.eslintrc.json"
   },
   "dependencies": {
-    "@microsoft/bot-components-clu-recognizer": "workspace:packages/Recognizers/ConversationLanguageUnderstanding/js",
     "@types/mocha": "^8.2.2",
     "@types/sinon": "^10.0.16",
     "@types/uuid": "^9.0.2",
@@ -15,6 +14,7 @@
     "botbuilder-dialogs-adaptive": "4.19.3-preview",
     "botbuilder-dialogs-adaptive-testing": "4.19.3-preview",
     "botframework-connector": "4.19.3",
+    "clu-recognizer": "workspace:packages/Recognizers/ConversationLanguageUnderstanding/js",
     "mocha": "^9.0.2",
     "nock": "^13.1.1",
     "ts-node": "^10.0.0",
