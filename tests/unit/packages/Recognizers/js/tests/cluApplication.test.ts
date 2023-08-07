@@ -3,7 +3,7 @@
 
 import 'mocha';
 import assert from 'assert';
-import { CluApplication } from '@microsoft/bot-components-clu-recognizer';
+import { CluApplication } from 'clu-recognizer';
 
 const ProjectName = 'MockProjectName';
 const EndpointKey = '4da536f842114fa68c657115d7312026';

@@ -918,47 +918,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/bot-components-clu-recognizer-tests@workspace:tests/unit/packages/Recognizers/js":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/bot-components-clu-recognizer-tests@workspace:tests/unit/packages/Recognizers/js"
-  dependencies:
-    "@microsoft/bot-components-clu-recognizer": "workspace:packages/Recognizers/ConversationLanguageUnderstanding/js"
-    "@types/mocha": ^8.2.2
-    "@types/sinon": ^10.0.16
-    "@types/uuid": ^9.0.2
-    botbuilder: 4.19.3
-    botbuilder-dialogs-adaptive: 4.19.3-preview
-    botbuilder-dialogs-adaptive-testing: 4.19.3-preview
-    botframework-connector: 4.19.3
-    eslint: ^7.30.0
-    mocha: ^9.0.2
-    nock: ^13.1.1
-    ts-node: ^10.0.0
-    uuid: ^8.3.2
-  languageName: unknown
-  linkType: soft
-
-"@microsoft/bot-components-clu-recognizer@workspace:packages/Recognizers/ConversationLanguageUnderstanding/js":
-  version: 0.0.0-use.local
-  resolution: "@microsoft/bot-components-clu-recognizer@workspace:packages/Recognizers/ConversationLanguageUnderstanding/js"
-  dependencies:
-    "@azure/ms-rest-js": ^2.7.0
-    "@tsconfig/recommended": ^1.0.1
-    "@typescript-eslint/eslint-plugin": ^4.28.2
-    "@typescript-eslint/parser": ^4.28.2
-    adaptive-expressions: 4.19.3
-    botbuilder: 4.19.3
-    botbuilder-dialogs: 4.19.3
-    botbuilder-dialogs-adaptive-runtime-core: 4.19.3-preview
-    botbuilder-dialogs-declarative: 4.19.3-preview
-    botframework-connector: 4.19.3
-    eslint: ^7.30.0
-    eslint-plugin-prettier: latest
-    rimraf: ^3.0.2
-    typescript: ^4.0.5
-  languageName: unknown
-  linkType: soft
-
 "@microsoft/bot-components-helpandcancel@workspace:packages/HelpAndCancel":
   version: 0.0.0-use.local
   resolution: "@microsoft/bot-components-helpandcancel@workspace:packages/HelpAndCancel"
@@ -3490,6 +3449,47 @@ __metadata:
   checksum: 35c463d18808821fc9c077c137ea9ff5d6f56a84b8debb5e7848290bb4cb043550515a421cdc8cc845481dc5f64f2761eedaa21b34879502d79c5bcdd554f392
   languageName: node
   linkType: hard
+
+"clu-recognizer-tests@workspace:tests/unit/packages/Recognizers/js":
+  version: 0.0.0-use.local
+  resolution: "clu-recognizer-tests@workspace:tests/unit/packages/Recognizers/js"
+  dependencies:
+    "@types/mocha": ^8.2.2
+    "@types/sinon": ^10.0.16
+    "@types/uuid": ^9.0.2
+    botbuilder: 4.19.3
+    botbuilder-dialogs-adaptive: 4.19.3-preview
+    botbuilder-dialogs-adaptive-testing: 4.19.3-preview
+    botframework-connector: 4.19.3
+    clu-recognizer: "workspace:packages/Recognizers/ConversationLanguageUnderstanding/js"
+    eslint: ^7.30.0
+    mocha: ^9.0.2
+    nock: ^13.1.1
+    ts-node: ^10.0.0
+    uuid: ^8.3.2
+  languageName: unknown
+  linkType: soft
+
+"clu-recognizer@workspace:packages/Recognizers/ConversationLanguageUnderstanding/js":
+  version: 0.0.0-use.local
+  resolution: "clu-recognizer@workspace:packages/Recognizers/ConversationLanguageUnderstanding/js"
+  dependencies:
+    "@azure/ms-rest-js": ^2.7.0
+    "@tsconfig/recommended": ^1.0.1
+    "@typescript-eslint/eslint-plugin": ^4.28.2
+    "@typescript-eslint/parser": ^4.28.2
+    adaptive-expressions: 4.19.3
+    botbuilder: 4.19.3
+    botbuilder-dialogs: 4.19.3
+    botbuilder-dialogs-adaptive-runtime-core: 4.19.3-preview
+    botbuilder-dialogs-declarative: 4.19.3-preview
+    botframework-connector: 4.19.3
+    eslint: ^7.30.0
+    eslint-plugin-prettier: latest
+    rimraf: ^3.0.2
+    typescript: ^4.0.5
+  languageName: unknown
+  linkType: soft
 
 "co@npm:^4.6.0":
   version: 4.6.0

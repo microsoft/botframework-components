@@ -12,7 +12,7 @@ import {
 import {
   CluApplication,
   CluRecognizerOptions,
-} from '@microsoft/bot-components-clu-recognizer';
+} from 'clu-recognizer';
 
 import { v4 } from 'uuid';
 
