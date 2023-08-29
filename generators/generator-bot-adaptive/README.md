@@ -5,8 +5,6 @@ This generator is for creating an Azure Bot Framework bot using the Adaptive Dia
 - The basic bot project (code files, root dialog, base schema) for your bot, based on the platform you choose (.NET or JavaScript)
 - The publishing environment for your bot (Azure Functions, or a Web App)
 
-You can also use our [generator for generating bot generators](https://github.com/microsoft/botframework-components/tree/main/generators/generator-bot-template-generator) to help you create your own generators and templates.
-
 ## Supported Languages
 
 - English (en-US)
