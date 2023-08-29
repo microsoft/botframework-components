@@ -29,7 +29,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "peerDependencies": {
-    "adaptive-expressions": "^4.20.0",
+    "adaptive-expressions": "4.20.0",
     "botbuilder": "4.20.0",
     "botbuilder-dialogs": "4.20.0",
     "botbuilder-dialogs-adaptive": "4.20.0-preview",
