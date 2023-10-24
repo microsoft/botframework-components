@@ -1,11 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
+		<TargetFrameworks Condition="'$(BuildTarget)' == ''">net6.0</TargetFrameworks>
+		<IsPackable>false</IsPackable>
+		<Configurations>Debug;Release</Configurations>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+		<SignAssembly>True</SignAssembly>
+		<DelaySign>true</DelaySign>
+	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.19.3-preview" />
