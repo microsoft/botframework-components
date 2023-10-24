@@ -3,7 +3,6 @@
 	<PropertyGroup>
       <TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
 	  <TargetFrameworks Condition="'$(BuildTarget)' == ''">net6.0</TargetFrameworks>
-	  <IsPackable>false</IsPackable>
 	  <Configurations>Debug;Release</Configurations>
 	  <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>

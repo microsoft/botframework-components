@@ -3,10 +3,9 @@
 	<PropertyGroup>
 		<TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
 		<TargetFrameworks Condition="'$(BuildTarget)' == ''">net6.0</TargetFrameworks>
-		<IsPackable>false</IsPackable>
 		<Configurations>Debug;Release</Configurations>
 		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<IsPackable>false</IsPackable>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
