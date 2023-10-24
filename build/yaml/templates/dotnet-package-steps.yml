@@ -10,12 +10,27 @@ steps:
     version: 6.0.x
   
 - task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet restore`'
+  inputs:
+    command: restore
+    projects: '$(WorkingDirectory)\*.csproj'
+    feedsToUse: config
+    nugetConfigPath: packages\NuGet.Config
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run `dotnet build`'
+  inputs:
+    command: build
+    projects: '$(WorkingDirectory)\*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
   displayName: 'Run `dotnet publish`'
   inputs:
     command: publish
     publishWebProjects: false
     projects: '$(WorkingDirectory)\*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)\bin'
+    arguments: '--configuration $(BuildConfiguration) --no-build --no-restore --output $(Build.ArtifactStagingDirectory)\bin'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish the binaries'
