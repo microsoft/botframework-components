@@ -13,10 +13,7 @@
 		<DelaySign>true</DelaySign>
 	</PropertyGroup>
 
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.19.3-preview" />
