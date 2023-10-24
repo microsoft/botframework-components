@@ -19,7 +19,7 @@ steps:
       failOnStderr: true
       script: |
         # Get Source
-        $sourceDotNetArtifacts = "https://pkgs.dev.azure.com/ConversationalAI/BotFramework/_packaging/SDK/nuget/v3/index.json" 
+        $sourceDotNetArtifacts = "https://pkgs.dev.azure.com/FuseLabs/_packaging/SDK_Dotnet_V4_org/nuget/v3/index.json" 
         $sourceDotNetMyGet = "https://botbuilder.myget.org/F/botbuilder-v4-dotnet-daily/api/v3/index.json"
         switch -regex ("${{ parameters.registry }}") {
           "^($null|)$" {
