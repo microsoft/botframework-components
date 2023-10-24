@@ -1,16 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
+		<TargetFrameworks Condition="'$(BuildTarget)' == ''">net6.0</TargetFrameworks>
+		<IsPackable>false</IsPackable>
+		<Configurations>Debug;Release</Configurations>
+		<LangVersion>latest</LangVersion>
+		<Nullable>disable</Nullable>
+		<IsPackable>false</IsPackable>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\..\..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+		<DelaySign>true</DelaySign>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive" Version="4.19.3" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Testing" Version="4.19.3-preview" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Declarative" Version="4.19.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
     <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
