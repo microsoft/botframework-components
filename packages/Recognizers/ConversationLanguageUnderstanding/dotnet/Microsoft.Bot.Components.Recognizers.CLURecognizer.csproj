@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Bot.Components.Recognizers.CLURecognizer</PackageId>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <PackageTags>msbot-component;msbot-recognizer;composer;botframework;botbuilder</PackageTags>
     <Title>Conversation Language Understanding Recognizer</Title>
     <Description>This library implements .NET support for Composer with Conversation Language Understanding.</Description>
@@ -25,7 +25,7 @@
     <Content Include="**/*.uischema" />
     <None Include="exported/**/*.*" Pack="true" PackagePath="exported" />
     <None Include="README.md" Condition="Exists('README.md')" Pack="true" PackagePath="" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.19.3" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.21.1" />
   </ItemGroup>
 
   <ItemGroup>
