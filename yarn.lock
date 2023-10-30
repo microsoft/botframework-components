@@ -2995,9 +2995,9 @@ __metadata:
   linkType: hard
 
 "decode-uri-component@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "decode-uri-component@npm:0.2.0"
-  checksum: d8cb28c33f7b0a70b159b5fa126aee821ba090396689bd46ad2c423c3a658c504d2743ab18060fd5ed1cae5377bdd3632760a8e98ba920ff49637d43dc6a9687
+  version: 0.2.2
+  resolution: "decode-uri-component@npm:0.2.2"
+  checksum: 8508e6a45de01edf05e262fd671fcfea073878aa54bb9acd7610933aee355071b9b9d116ada1a4fd1347942dbc741c488b7a815d7cfe5dbf5e0de6ae691a0018
   languageName: node
   linkType: hard
 
