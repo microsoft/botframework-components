@@ -1329,7 +1329,7 @@ __metadata:
     btoa-lite: ^1.0.0
     d3-format: ^1.4.4
     dayjs: ^1.10.3
-    fast-xml-parser: ^3.19.0
+    fast-xml-parser: ^4.2.5
     jspath: ^0.4.0
     lodash.isequal: ^4.5.0
     lru-cache: ^5.1.1
@@ -3884,14 +3884,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^3.19.0":
-  version: 3.20.3
-  resolution: "fast-xml-parser@npm:3.20.3"
+"fast-xml-parser@npm:^4.2.5":
+  version: 4.3.2
+  resolution: "fast-xml-parser@npm:4.3.2"
   dependencies:
-    strnum: ^1.0.4
+    strnum: ^1.0.5
   bin:
-    xml2js: cli.js
-  checksum: 8ecde8868ea5465b1b11a473f35649641dcd8a97de102d5a42179401465ebb259006e6e2f8eb2544b2bc908972816941d5b45970665125273713a68a3617ed80
+    fxparser: src/cli/cli.js
+  checksum: 752c43e48d50eb7157f5d4db6e76d7bbdc6fe2f1671d9628e4f0f335742762ed54d56106856a4a0bb93b2948f0784d48c3d82666302593a0ed104e45a39dce38
   languageName: node
   linkType: hard
 
@@ -8431,10 +8431,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strnum@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "strnum@npm:1.0.4"
-  checksum: 9edf1ca1846c81ea947f058bcd3b7f64f3873815ba8b491dc3f9194975c13269e7a9969ca44ce99d49fef10cb1a8e42cb9a681ad20f4034bbaf8a1e39d26844a
+"strnum@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "strnum@npm:1.0.5"
+  checksum: 8b73ef3de223bd07c662d1983fbadbfc8faedbbd75322e4d03a334e48ca5ca405d960a106bf7163f9f528e831b8cb173b9c9896bc37d6f97f8c78f8dd93ad7a2
   languageName: node
   linkType: hard
 
