@@ -9,6 +9,9 @@
       "property",
       "allowInterruptions",
       "alwaysPrompt",
+      "timeOutInMilliseconds",
+      "defaultValue",
+      "defaultValueResponse",
       "*"
     ],
     "properties": {
@@ -33,6 +36,21 @@
         ]
       },
       "alwaysPrompt": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "timeOutInMilliseconds": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "defaultValue": {
+        "intellisenseScopes": [
+          "variable-scopes"
+        ]
+      },
+      "defaultValueResponse": {
         "intellisenseScopes": [
           "variable-scopes"
         ]

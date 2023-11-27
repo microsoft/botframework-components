@@ -120,6 +120,8 @@ The Stop Recording action stops recording of the conversation. Note that it is n
 ## **Aggregate DTMF Input (n)**
 Prompts the user for multiple inputs that are aggregated until a specified character length is met or exceeded.
 Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
+When the Timeout parameter is set an integer greater than 0, a timer will be set whenever the Aggreate DTMF Input(n) node begins. This timer will be reset whenever the user responds to the bot, until the expected batch length is met.
+In case the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
 
 #### Parameters
 * Batch Length
@@ -127,16 +129,18 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 * Prompt
 * AllowInterruptions
 * AlwaysPrompt
+* Timeout
+* Default Value
+* Default Value Response
 
 #### Usage
 * After started, each input the user sends will be appended to the last message until the user provides a number of characters equal to or greater than the batch length.
 
 #### Dialog Flow
-* The dialog will only end and continue to the next dialog when the batch length is reached.
+* The dialog will only end and continue to the next dialog when the batch length is reached or the timeout is reached.
 * If AllowInterruptions is true, the parent dialog will receive non-digit input and can handle it as an intent.
 * After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
-* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
-
+* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.
 
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.
@@ -145,6 +149,8 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 ## **Aggregate DTMF Input (#)**
 Prompts the user for multiple inputs that are aggregated until the termination string is received.
 Speech, DTMF inputs, and chat provided characters can all be used to provide input, but any inputs that aren't the characters 1,2,3,4,5,6,7,8,9,0,#,*, or some combination of said characters are dropped.
+When the Timeout parameter is set an integer greater than 0, a timer will be set whenever the Aggreate DTMF Input(n) node begins. This timer will be reset whenever the user responds to the bot, until the expected batch length is met.
+In case the timeout is reached, the dialog will end and if the Default Value is set, its value will be assigned to the Property field. Also, a response can be sent to the user using the Default value Response field.
 
 #### Parameters
 * Termination Character
@@ -152,15 +158,18 @@ Speech, DTMF inputs, and chat provided characters can all be used to provide inp
 * Prompt
 * AllowInterruptions
 * AlwaysPrompt
+* Timeout
+* Default Value
+* Default Value Response
 
 #### Usage
 * After started, each input the user sends will be appended to the last message until the user sends the provided termination character
 
 #### Dialog Flow
-* The dialog will only end and continue to the next dialog when the termination character is sent.
+* The dialog will only end and continue to the next dialog when the termination character is sent or the timeout is reached.
 * If AllowInterruptions is true, the parent dialog will receive non-digit input and can handle it as an intent.
 * After the interruption is handled, control flow will resume with this dialog. If AlwaysPrompt is set to true, the dialog will attempt to start over, otherwise it will end this dialog without setting the output property.
-* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.'
+* Best practice recommendation when using interruptions is to validate that the output property has been set and handle the case in which it is and isn't set.
 
 #### Failures
 * In the event that an exception occurs within the dialog, the dialog will end and the normal exception flow can be followed.

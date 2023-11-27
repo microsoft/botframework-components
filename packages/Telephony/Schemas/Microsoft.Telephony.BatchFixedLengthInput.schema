@@ -49,6 +49,30 @@
       "$ref": "schema:#/definitions/booleanExpression",
       "title": "Always Prompt",
       "description": "When true, if batch is interrupted, it will attempt to restart the batch rather than abandon it."
+    },
+    "timeOutInMilliseconds": {
+      "$ref": "schema:#/definitions/integerExpression",
+      "title": "Timeout in milliseconds",
+      "description": "After the specified amount of milliseconds the dialog will complete with its default value if the user doesn't respond.",
+      "examples": [
+        "10",
+        "=conversation.xyz"
+      ]
+    },
+    "defaultValue": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Default value",
+      "description": "'Property' will be set to the value of this expression when a timeout is reached.",
+      "examples": [
+        "hello world",
+        "Hello ${user.name}",
+        "=concat(user.firstname, user.lastName)"
+      ]
+    },
+    "defaultValueResponse": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Default value response",
+      "description": "Message to send when a Timeout has been reached and the default value is selected as the value."
     }
   },
   "$policies": {
