@@ -2,7 +2,7 @@
   "name": "clu-recognizer",
   "author": "Microsoft Corp.",
   "description": "This library implements node.js support for Composer with Conversation Language Understanding.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "keywords": [
     "msbot-component",
