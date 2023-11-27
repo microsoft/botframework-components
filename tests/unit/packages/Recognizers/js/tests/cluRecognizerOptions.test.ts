@@ -9,10 +9,7 @@ import {
   HttpOperationResponse,
   WebResourceLike,
 } from '@azure/ms-rest-js';
-import {
-  CluApplication,
-  CluRecognizerOptions,
-} from 'clu-recognizer';
+import { CluApplication, CluRecognizerOptions } from 'clu-recognizer';
 
 import { v4 } from 'uuid';
 

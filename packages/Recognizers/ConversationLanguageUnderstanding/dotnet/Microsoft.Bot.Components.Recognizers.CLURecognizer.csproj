@@ -25,7 +25,7 @@
     <Content Include="**/*.uischema" />
     <None Include="exported/**/*.*" Pack="true" PackagePath="exported" />
     <None Include="README.md" Condition="Exists('README.md')" Pack="true" PackagePath="" />
-    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.21.1" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.21.2" />
   </ItemGroup>
 
   <ItemGroup>
