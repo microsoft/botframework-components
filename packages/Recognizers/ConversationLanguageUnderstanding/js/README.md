@@ -10,7 +10,7 @@ In order to enable the CLU recognizer, you must first install the [CLU recognize
 
 2. Open the Package Manager in Composer.
 
-3. Search for `ConversationLanguageUnderstandingRecognizer` and install the package.
+3. Search for `Microsoft.Bot.Components.Recognizers.CLURecognizer` and install the package.
 
 ## Configuration
 To enable the Conversation Language Understanding recognizer, complete the following steps:
