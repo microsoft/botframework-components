@@ -37,8 +37,8 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
 
     const botProjectGuidExpression = new RegExp(
       `Project\\(\\"\\{${projectType}\\}\\"\\) = \\"${botName}\\", ` +
-        `\\"${botName}\\\\${botName}.csproj\\", ` +
-        `\\"\\{(.+)\\}\\"`,
+      `\\"${botName}\\\\${botName}.csproj\\", ` +
+      `\\"\\{(.+)\\}\\"`,
       'gi'
     );
 
@@ -106,7 +106,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
       {
         botName,
         packageReferences: '',
-        sdkVersion: '4.21.2',
+        sdkVersion: '4.22.4',
       }
     );
 
