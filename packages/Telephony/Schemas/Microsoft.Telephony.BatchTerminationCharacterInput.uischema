@@ -9,6 +9,9 @@
       "property",
       "allowInterruptions",
       "alwaysPrompt",
+      "timeOutInMilliseconds",
+      "defaultValue",
+      "defaultValueResponse",
       "*"
     ],
     "properties": {
