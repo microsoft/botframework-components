@@ -1,3 +1,6 @@
+# PRE-ARCHIVE NOTICE: 
+This project is no longer actively maintained and will be archived in January of 2025.  Functions of this project were superseded by [Microsoft Copilot Studio](https://aka.ms/copilotstudio) 
+
 # Bot Framework Components
 
 This repository contains *components* published by Microsoft for bots built on the Azure Bot Framework technology stack. They are part of the component model for building bots with re-usable building blocks. The model is built on a configurable [adaptive runtime](#adaptive-runtime), that can be extended by adding your own code, importing [packages](#packages) of functionality or connecting to other bots as [skills](#skills). Getting started [templates](#templates) provide dynamic code scaffolding, helping users get started quickly based on their scenario.
