@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-      <TargetFramework Condition="'$(BuildTarget)' == 'net6'">net6.0</TargetFramework>
-	  <TargetFrameworks Condition="'$(BuildTarget)' == ''">net6.0</TargetFrameworks>
+      <TargetFramework Condition="'$(BuildTarget)' == 'net8'">net8.0</TargetFramework>
+	  <TargetFrameworks Condition="'$(BuildTarget)' == ''">net8.0</TargetFrameworks>
 	  <Configurations>Debug;Release</Configurations>
 	  <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>

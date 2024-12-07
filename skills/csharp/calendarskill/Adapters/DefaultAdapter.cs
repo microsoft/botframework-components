@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading.Tasks;
 using CalendarSkill.Responses.Shared;
 using CalendarSkill.Services;
 using Microsoft.Bot.Builder;
@@ -16,6 +14,9 @@ using Microsoft.Bot.Solutions.Middleware;
 using Microsoft.Bot.Solutions.Responses;
 using Microsoft.Extensions.Logging;
 using SkillServiceLibrary.Utilities;
+using System;
+using System.Threading.Tasks;
+using SetSpeakMiddleware = Microsoft.Bot.Solutions.Middleware.SetSpeakMiddleware;
 
 namespace CalendarSkill.Adapters
 {

@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SkillServiceLibrary.Utilities;
+using AllowedCallersClaimsValidator = SkillServiceLibrary.Utilities.AllowedCallersClaimsValidator;
 
 namespace CalendarSkill
 {

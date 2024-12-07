@@ -57,7 +57,7 @@ if (Test-Path $zipPath) {
 }
 
 # Perform dotnet publish step ahead of zipping up
-$publishFolder = $(Join-Path $projFolder 'bin\Release\net6.0')
+$publishFolder = $(Join-Path $projFolder 'bin\Release\net8.0')
 dotnet publish -c release -o $publishFolder -v q > $logFile
 
 # Copy bot files to running folder

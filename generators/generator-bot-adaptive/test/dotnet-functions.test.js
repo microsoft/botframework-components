@@ -90,7 +90,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
           command: `func start --script-root ${path.join(
             'bin',
             'Debug',
-            'net6.0'
+            'net8.0'
           )}`,
           key: `adaptive-runtime-${platform}-${integration}`,
         },
@@ -125,7 +125,7 @@ describe(`generator-bot-adaptive --platform ${platform} --integration ${integrat
       {
         botName,
         packageReferences: '',
-        sdkVersion: '4.21.2',
+        sdkVersion: '4.22.4',
       }
     );
 

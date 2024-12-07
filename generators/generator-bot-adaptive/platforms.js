@@ -3,7 +3,7 @@
 
 const dotnet = {
   name: 'dotnet',
-  defaultSdkVersion: '4.21.2',
+  defaultSdkVersion: '4.22.4',
 };
 
 const js = {
