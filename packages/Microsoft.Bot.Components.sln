@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.CLURecognizer", "Recognizers\ConversationLanguageUnderstanding\dotnet\Microsoft.Bot.Components.Recognizers.CLURecognizer.csproj", "{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.Recognizers.OrchestrationRecognizer", "Recognizers\OrchestrationWorkflow\dotnet\Microsoft.Bot.Components.Recognizers.OrchestrationRecognizer.csproj", "{E2CD0D37-B533-490C-9AF6-D175B02CA2AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5432DA4A-3A85-4FFD-9593-F1E55F97B4F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CD0D37-B533-490C-9AF6-D175B02CA2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CD0D37-B533-490C-9AF6-D175B02CA2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CD0D37-B533-490C-9AF6-D175B02CA2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CD0D37-B533-490C-9AF6-D175B02CA2AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
