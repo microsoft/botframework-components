@@ -503,7 +503,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@microsoft/generator-bot-adaptive@workspace:generators/generator-bot-adaptive"
   dependencies:
-    ejs: ^3.1.8
+    ejs: ^3.1.10
     eslint: latest
     eslint-config-prettier: latest
     eslint-plugin-prettier: latest
