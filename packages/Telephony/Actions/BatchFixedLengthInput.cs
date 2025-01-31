@@ -66,16 +66,23 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         }
 
         /// <inheritdoc/>
-        public override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
+        public async override Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
             if ((dc.Context.Activity.Type == ActivityTypes.Message) &&
                 (Regex.Match(dc.Context.Activity.Text, _dtmfCharacterRegex).Success || dc.State.GetValue(TurnPath.Interrupted, () => false)))
             {
-                return base.ContinueDialogAsync(dc, cancellationToken);
+                return await base.ContinueDialogAsync(dc, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return Task.FromResult(new DialogTurnResult(DialogTurnStatus.Waiting));
+                if (dc.Context.Activity.Name == ActivityEventNames.ContinueConversation)
+                {
+                    return await EndDialogAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
             }
         }
     }

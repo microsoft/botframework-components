@@ -4,12 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Components.Telephony.Common;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
@@ -23,6 +26,8 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("$kind")]
         public const string Kind = "Microsoft.Telephony.BatchRegexInput";
         protected const string AggregationDialogMemory = "this.aggregation";
+        private const string TimerId = "this.TimerId";
+        private static IStateMatrix stateMatrix = new LatchingStateMatrix();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchRegexInput"/> class.
@@ -85,9 +90,36 @@ namespace Microsoft.Bot.Components.Telephony.Actions
         [JsonProperty("interruptionMask")]
         public StringExpression InterruptionMask { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating how long to wait for before timing out and using the default value.
+        /// </summary>
+        [JsonProperty("timeOutInMilliseconds")]
+        public IntExpression TimeOutInMilliseconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default value for the input dialog when a Timeout is reached.
+        /// </summary>
+        /// <value>
+        /// Value or expression which evaluates to a value.
+        /// </value>
+        [JsonProperty("defaultValue")]
+        public ValueExpression DefaultValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets the activity template to send when a Timeout is reached and the default value is used.
+        /// </summary>
+        /// <value>
+        /// An activity template.
+        /// </value>
+        [JsonProperty("defaultValueResponse")]
+        public ITemplate<Activity> DefaultValueResponse { get; set; }
+
         /// <inheritdoc/>
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            //start a timer that will continue this conversation
+            await InitTimeoutTimerAsync(dc, cancellationToken).ConfigureAwait(false);
+
             return await PromptUserAsync(dc, cancellationToken).ConfigureAwait(false);
         }
 
@@ -120,6 +152,18 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
             else
             {
+                //If we didn't timeout then we have to manage our timer somehow.
+                //For starters, complete our existing timer.
+                string timerId = dc.State.GetValue<string>(TimerId);
+
+                if (timerId != null)
+                {
+                    await stateMatrix.CompleteAsync(timerId).ConfigureAwait(false);
+
+                    // Restart the timeout timer
+                    await InitTimeoutTimerAsync(dc, cancellationToken).ConfigureAwait(false);
+                }
+
                 //else, save the updated aggregation and end the turn
                 dc.State.SetValue(AggregationDialogMemory, existingAggregation);
                 return new DialogTurnResult(DialogTurnStatus.Waiting);
@@ -156,6 +200,30 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             }
 
             return false;
+        }
+
+        protected async Task<DialogTurnResult> EndDialogAsync(DialogContext dc, CancellationToken cancellationToken)
+        {
+            // Set the default value to the output property and send the default value response to the user
+            if (this.DefaultValue != null)
+            {
+                var (value, error) = this.DefaultValue.TryGetValue(dc.State);
+                if (this.DefaultValueResponse != null)
+                {
+                    var response = await this.DefaultValueResponse.BindAsync(dc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    if (response != null)
+                    {
+                        await dc.Context.SendActivityAsync(response, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+
+                // Set output property
+                dc.State.SetValue(this.Property.GetValue(dc.State), value);
+
+                return await dc.EndDialogAsync(value, cancellationToken).ConfigureAwait(false);
+            }
+
+            return await dc.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<DialogTurnResult> PromptUserAsync(DialogContext dc, CancellationToken cancellationToken = default(CancellationToken))
@@ -197,6 +265,44 @@ namespace Microsoft.Bot.Components.Telephony.Actions
             await dc.Context.SendActivityAsync(msg, cancellationToken).ConfigureAwait(false);
 
             return new DialogTurnResult(DialogTurnStatus.Waiting);
+        }
+
+        private void CreateTimerForConversation(DialogContext dc, int timeout, string timerId, CancellationToken cancellationToken)
+        {
+            var adapter = dc.Context.Adapter;
+            var conversationReference = dc.Context.Activity.GetConversationReference();
+            var identity = dc.Context.TurnState.Get<ClaimsIdentity>("BotIdentity");
+            var audience = dc.Context.TurnState.Get<string>(BotAdapter.OAuthScopeKey);
+
+            //Question remaining to be answered: Will this task get garbage collected? If so, we need to maintain a handle for it.
+            Task.Run(async () =>
+            {
+                await Task.Delay(timeout).ConfigureAwait(false);
+
+                //if we aren't already complete, go ahead and timeout
+                await stateMatrix.RunForStatusAsync(timerId, StateStatus.Running, async () =>
+                {
+                    await adapter.ContinueConversationAsync(
+                        identity,
+                        conversationReference,
+                        audience,
+                        BotWithLookup.OnTurn, //Leverage dirty hack to achieve Bot lookup from component
+                        cancellationToken).ConfigureAwait(false);
+                }).ConfigureAwait(false);
+            });
+        }
+
+        private async Task InitTimeoutTimerAsync(DialogContext dc, CancellationToken cancellationToken)
+        {
+            var timeout = this.TimeOutInMilliseconds?.GetValue(dc.State) ?? 0;
+
+            if (timeout > 0)
+            {
+                var timerId = Guid.NewGuid().ToString();
+                CreateTimerForConversation(dc, timeout, timerId, cancellationToken);
+                await stateMatrix.StartAsync(timerId).ConfigureAwait(false);
+                dc.State.SetValue(TimerId, timerId);
+            }
         }
     }
 }
